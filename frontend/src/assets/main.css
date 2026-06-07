@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-ink antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  min-height: 100dvh;
+  margin: 0;
+}
+
+#app {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  min-height: 100dvh;
+}
+
+input, textarea, select {
+  @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/15;
+}
+
+label {
+  @apply text-xs font-semibold uppercase tracking-wide text-slate-500;
+}

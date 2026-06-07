@@ -1,0 +1,22 @@
+en:
+  api:
+    auth:
+      signed_out: "Signed out successfully."
+      password_sent: "Password reset instructions sent."
+      invalid_credentials: "Invalid email, username, or password."
+    errors:
+      unauthorized: "You need to sign in before continuing."
+      not_found: "The requested record could not be found."
+      email_taken: "Email already exists."
+      username_taken: "Username already exists."
+      username_format: "only allows letters, numbers, and underscores."
+      password_invalid: "Password must be at least 6 characters."
+      duplicate_record: "This record already exists."
+      feature_interest_identity_required: "Email or account is required to register interest."
+      feature_interest_duplicate: "You are already registered for this feature."
+      feature_interest_removed: "Interest removed successfully."
+  devise:
+    failure:
+      suspended: "Your account has been suspended. Please contact support."
+      user:
+        suspended: "Your account has been suspended. Please contact support."

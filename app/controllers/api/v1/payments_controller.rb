@@ -1,0 +1,91 @@
+require "openssl"
+require "securerandom"
+require "net/http"
+require "json"
+
+module Api
+  module V1
+    class PaymentsController < ApplicationController
+      before_action :authenticate_api_user!
+
+      def create
+        plan = params.require(:plan).to_s
+        return render json: { error: "Free plan does not need payment." }, status: :unprocessable_entity if plan == "free"
+        return render json: { error: "Unknown plan." }, status: :unprocessable_entity unless PaymentOrder::PLANS.key?(plan)
+
+        order = current_user.payment_orders.create!(plan: plan, metadata: { source: "checkout" })
+        order.update!(razorpay_order_id: create_razorpay_order(order))
+
+        render json: {
+          order: payment_order_payload(order),
+          razorpay_key_id: ENV["RAZORPAY_KEY_ID"].presence || ENV["VITE_RAZORPAY_KEY_ID"].presence
+        }, status: :created
+      end
+
+      def verify
+        order = current_user.payment_orders.find_by!(razorpay_order_id: params.require(:razorpay_order_id))
+        order.assign_attributes(
+          razorpay_payment_id: params[:razorpay_payment_id].presence || "manual_#{SecureRandom.hex(8)}",
+          razorpay_signature: params[:razorpay_signature]
+        )
+
+        if razorpay_secret.present? && order.razorpay_signature.present?
+          expected = OpenSSL::HMAC.hexdigest("SHA256", razorpay_secret, "#{order.razorpay_order_id}|#{order.razorpay_payment_id}")
+          return render json: { error: "Payment signature could not be verified." }, status: :unprocessable_entity unless secure_compare(expected, order.razorpay_signature)
+        end
+
+        order.activate!
+        render json: { user: UserSerializer.new(current_user.reload).as_json, order: payment_order_payload(order) }
+      end
+
+      private
+
+      def payment_order_payload(order)
+        {
+          id: order.id,
+          plan: order.plan,
+          amount_paise: order.amount_paise,
+          amount: order.amount_paise / 100.0,
+          currency: order.currency,
+          status: order.status,
+          razorpay_order_id: order.razorpay_order_id
+        }
+      end
+
+      def razorpay_secret
+        ENV["RAZORPAY_KEY_SECRET"].presence || ENV["RAZORPAY_SECRET"].presence
+      end
+
+      def razorpay_key_id
+        ENV["RAZORPAY_KEY_ID"].presence || ENV["VITE_RAZORPAY_KEY_ID"].presence
+      end
+
+      def create_razorpay_order(order)
+        return "order_#{SecureRandom.hex(10)}" if razorpay_key_id.blank? || razorpay_secret.blank?
+
+        uri = URI("https://api.razorpay.com/v1/orders")
+        request = Net::HTTP::Post.new(uri)
+        request.basic_auth(razorpay_key_id, razorpay_secret)
+        request["Content-Type"] = "application/json"
+        request.body = {
+          amount: order.amount_paise,
+          currency: order.currency,
+          receipt: "careerai_#{order.id}",
+          notes: { user_id: current_user.id, plan: order.plan }
+        }.to_json
+
+        response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(request) }
+        body = JSON.parse(response.body)
+        raise "Razorpay order creation failed: #{body["error"]&.dig("description") || response.body}" unless response.is_a?(Net::HTTPSuccess)
+
+        body.fetch("id")
+      end
+
+      def secure_compare(expected, actual)
+        ActiveSupport::SecurityUtils.secure_compare(expected, actual.to_s)
+      rescue ArgumentError
+        false
+      end
+    end
+  end
+end

@@ -1,0 +1,28 @@
+module Api
+  module V1
+    module Auth
+      class RegistrationsController < Devise::RegistrationsController
+        respond_to :json
+
+        def create
+          build_resource(sign_up_params)
+
+          if resource.save
+            sign_up(resource_name, resource)
+            resource.update(last_login_at: Time.current)
+            resource.login_sessions.create!(
+              ip_address: request.remote_ip,
+              user_agent: request.user_agent,
+              session_id: request.session_options[:id],
+              logged_in_at: Time.current
+            )
+            render json: { user: UserSerializer.new(resource).as_json }, status: :created
+          else
+            sign_out(resource_name)
+            render json: { errors: friendly_validation_errors(resource) }, status: :unprocessable_entity
+          end
+        end
+      end
+    end
+  end
+end
