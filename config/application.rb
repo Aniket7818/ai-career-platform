@@ -44,6 +44,15 @@ module AiCareerPlatform
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: "_ai_career_platform_session", same_site: :lax, secure: Rails.env.production?
+
+    # Dynamic session cookie config for cross-origin auth (Vercel frontend → Render backend)
+    # In production, set COOKIE_SAME_SITE=none and COOKIE_SECURE=true in Render env vars.
+    # For local dev, default is same_site=lax, secure=false.
+    cookie_same_site = ENV.fetch("COOKIE_SAME_SITE", "lax").to_sym
+    cookie_secure = ENV.fetch("COOKIE_SECURE", "false") == "true"
+    config.middleware.use ActionDispatch::Session::CookieStore,
+      key: "_ai_career_platform_session",
+      same_site: cookie_same_site,
+      secure: cookie_secure
   end
 end

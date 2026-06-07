@@ -18,10 +18,12 @@ module Api
           end
 
           resource.update(last_login_at: Time.current, verified_at: resource.verified_at || Time.current)
+          # Force session to load before reading its id
+          session[:init] = true
           resource.login_sessions.create!(
             ip_address: request.remote_ip,
             user_agent: request.user_agent,
-            session_id: request.session_options[:id],
+            session_id: session.id,
             logged_in_at: Time.current
           )
           sign_in(resource_name, resource)
@@ -29,7 +31,13 @@ module Api
         end
 
         def destroy
+          # Record logout time on the current login session if available
+          if user_signed_in?
+            current_user.login_sessions.where(logged_out_at: nil).order(logged_in_at: :desc).first&.update!(logged_out_at: Time.current)
+          end
           sign_out(resource_name)
+          # Explicitly clear the session cookie
+          cookies.delete("_ai_career_platform_session", domain: :all)
           render json: { message: I18n.t("api.auth.signed_out") }, status: :ok
         end
 

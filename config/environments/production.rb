@@ -54,7 +54,13 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Session / Cookie config for cross-origin auth between Vercel frontend and Render backend.
+  # Set these environment variables on Render:
+  #   FRONTEND_URL=https://ai-career-platform-tan.vercel.app
+  #   COOKIE_SAME_SITE=none
+  #   COOKIE_SECURE=true
+  #   RAILS_MASTER_KEY=<your production key>
+  config.action_mailer.default_url_options = { host: ENV.fetch("FRONTEND_URL", "example.com") }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {

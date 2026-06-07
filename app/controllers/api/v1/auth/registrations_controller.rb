@@ -10,10 +10,12 @@ module Api
           if resource.save
             sign_up(resource_name, resource)
             resource.update(last_login_at: Time.current)
+            # Force session to load before reading its id
+            session[:init] = true
             resource.login_sessions.create!(
               ip_address: request.remote_ip,
               user_agent: request.user_agent,
-              session_id: request.session_options[:id],
+              session_id: session.id,
               logged_in_at: Time.current
             )
             render json: { user: UserSerializer.new(resource).as_json }, status: :created
