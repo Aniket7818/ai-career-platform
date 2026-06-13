@@ -77,7 +77,7 @@
             <div class="flex items-center gap-2">
               <p class="truncate text-sm font-semibold">{{ user?.full_name || user?.username || user?.email }}</p>
               <div v-if="user?.verified" class="size-2 shrink-0 rounded-full bg-green-500" title="Verified" />
-              <div v-else class="size-2 shrink-0 rounded-full bg-red-500" title="Pending / Not Verified" />
+              <div v-else class="size-2 shrink-0 rounded-full bg-orange-500" title="Pending / Not Verified" />
             </div>
             <p class="truncate text-xs text-slate-400">{{ user?.email }}</p>
           </div>

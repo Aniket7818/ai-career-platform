@@ -36,6 +36,7 @@ const routes = [
   { path: '/login', name: ROUTE_NAMES.LOGIN, component: AuthGateway, props: { mode: 'login' }, meta: { guestOnly: true } },
   { path: '/signup', name: ROUTE_NAMES.SIGNUP, component: AuthGateway, props: { mode: 'signup' }, meta: { guestOnly: true } },
   { path: '/forgot-password', name: ROUTE_NAMES.FORGOT_PASSWORD, component: ForgotPasswordPage, meta: { guestOnly: true } },
+  { path: '/verify-email', name: 'verify-email', component: () => import('../modules/auth/VerifyEmailPage.vue') },
   { path: '/dashboard', name: ROUTE_NAMES.DASHBOARD, component: DashboardPage, meta: { requiresAuth: true } },
   { path: '/admin', name: ROUTE_NAMES.ADMIN, component: AdminDashboardPage, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/profile', name: ROUTE_NAMES.PROFILE, component: ProfilePage, meta: { requiresAuth: true } },
@@ -54,6 +55,15 @@ router.beforeEach(async (to) => {
   if (to.meta.guestOnly && user) return '/'
   if (to.meta.requiresAuth && !user) return '/login'
   if (to.meta.requiresAdmin && !['admin', 'super_admin'].includes(user?.role)) return '/dashboard'
+
+  // Restrict access if unverified
+  if (to.meta.requiresAuth && user && !user.verified) {
+    // allow dashboard, profile, and email verification
+    const allowedForUnverified = [ROUTE_NAMES.DASHBOARD, ROUTE_NAMES.PROFILE, 'verify-email', 'settings']
+    if (!allowedForUnverified.includes(to.name)) {
+      return { name: ROUTE_NAMES.DASHBOARD, query: { verify_required: '1' } }
+    }
+  }
 
   return true
 })

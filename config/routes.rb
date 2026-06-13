@@ -29,6 +29,12 @@ Rails.application.routes.draw do
       resources :feature_interests, only: [:create]
       delete "feature_interests", to: "feature_interests#destroy"
       get "auth/me", to: "current_user#show"
+      
+      resources :verifications, only: [:create] do
+        collection do
+          post :verify
+        end
+      end
     end
   end
 

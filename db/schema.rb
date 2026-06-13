@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_07_013347) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_13_185920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,14 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_07_013347) do
     t.index ["actor_id"], name: "index_audit_logs_on_actor_id"
     t.index ["created_at"], name: "index_audit_logs_on_created_at"
     t.index ["user_id"], name: "index_audit_logs_on_user_id"
+  end
+
+  create_table "email_verification_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_email_verification_logs_on_user_id"
   end
 
   create_table "feature_interests", force: :cascade do |t|
@@ -124,6 +132,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_07_013347) do
     t.string "razorpay_customer_id"
     t.string "razorpay_subscription_id"
     t.integer "resume_downloads_count", default: 0, null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["razorpay_subscription_id"], name: "index_users_on_razorpay_subscription_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -136,6 +149,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_07_013347) do
 
   add_foreign_key "audit_logs", "users"
   add_foreign_key "audit_logs", "users", column: "actor_id"
+  add_foreign_key "email_verification_logs", "users"
   add_foreign_key "feature_interests", "users"
   add_foreign_key "login_sessions", "users"
   add_foreign_key "payment_orders", "users"

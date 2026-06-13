@@ -13,6 +13,31 @@
         </template>
       </PageHero>
 
+      <!-- Verification Banner -->
+      <div v-if="user && !user.verified" class="rounded-2xl border-2 border-red-500 bg-red-50 p-6 shadow-lg transition-all" :class="{ 'animate-pulse ring-4 ring-red-500/50': showVerifyBlink }">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-red-700 flex items-center gap-2">
+              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              Account Verification Required
+            </h3>
+            <p class="mt-2 text-red-600">You must verify your email address to unlock full access. Creating, editing, or downloading resumes is disabled until verification is complete.</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 shrink-0">
+            <button 
+              @click="sendVerificationEmail" 
+              :disabled="sendingVerification || retryTimer > 0"
+              class="rounded-xl bg-red-600 px-6 py-3 font-bold text-white shadow-lg shadow-red-600/30 transition hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+            >
+              {{ sendingVerification ? 'Sending...' : retryTimer > 0 ? `Retry in ${formatTimer(retryTimer)}` : 'Send Verification Email' }}
+            </button>
+            <p v-if="verificationMsg" class="text-sm font-medium" :class="verificationMsg.type === 'error' ? 'text-red-700' : 'text-green-600'">
+              {{ verificationMsg.text }}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           v-for="card in cards"
@@ -119,8 +144,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
+import http from '../../services/http'
 import AppShell from '../../components/layout/AppShell.vue'
 import LoadingState from '../../components/ui/LoadingState.vue'
 import PageHero from '../../components/ui/PageHero.vue'
@@ -130,7 +157,57 @@ import MiniSparkline from '../../components/coming-soon/MiniSparkline.vue'
 import { t } from '../../utils/i18n'
 
 const store = useStore()
-onMounted(() => store.dispatch('dashboard/load'))
+const route = useRoute()
+const router = useRouter()
+
+const showVerifyBlink = ref(false)
+const sendingVerification = ref(false)
+const verificationMsg = ref(null)
+const retryTimer = ref(0)
+let timerInterval = null
+
+onMounted(() => {
+  store.dispatch('dashboard/load')
+  if (route.query.verify_required) {
+    showVerifyBlink.value = true
+    setTimeout(() => { showVerifyBlink.value = false }, 3000)
+    // Clean up URL
+    router.replace({ query: {} })
+  }
+})
+
+const sendVerificationEmail = async () => {
+  sendingVerification.value = true
+  verificationMsg.value = null
+  try {
+    const res = await http.post('/verifications')
+    verificationMsg.value = { type: 'success', text: 'Verification email sent! Check your inbox.' }
+    startTimer(300) // 5 minutes
+  } catch (err) {
+    const data = err.response?.data
+    verificationMsg.value = { type: 'error', text: data?.error || 'Failed to send email.' }
+    if (data?.retry_after) {
+      startTimer(data.retry_after)
+    }
+  } finally {
+    sendingVerification.value = false
+  }
+}
+
+const startTimer = (seconds) => {
+  retryTimer.value = seconds
+  clearInterval(timerInterval)
+  timerInterval = setInterval(() => {
+    retryTimer.value--
+    if (retryTimer.value <= 0) clearInterval(timerInterval)
+  }, 1000)
+}
+
+const formatTimer = (totalSeconds) => {
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m}:${s.toString().padStart(2, '0')}`
+}
 
 const user = computed(() => store.state.dashboard.user || store.state.auth.user)
 const loading = computed(() => store.state.dashboard.loading)

@@ -3,13 +3,14 @@ class User < ApplicationRecord
   STATUSES = %w[active suspended].freeze
   SUBSCRIPTION_PLANS = %w[free pro team].freeze
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :resumes, dependent: :destroy
   has_many :feature_interests, dependent: :destroy
   has_many :audit_logs, dependent: :nullify
   has_many :payment_orders, dependent: :destroy
   has_many :login_sessions, dependent: :destroy
+  has_many :email_verification_logs, dependent: :destroy
 
   validates :role, inclusion: { in: ROLES }
   validates :status, inclusion: { in: STATUSES }
@@ -37,7 +38,11 @@ class User < ApplicationRecord
   end
 
   def verified?
-    verified_at.present?
+    confirmed_at.present? || verified_at.present?
+  end
+
+  def send_on_create_confirmation_instructions
+    false
   end
 
   def paid_plan?
