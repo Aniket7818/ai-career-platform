@@ -5,17 +5,30 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-# Dynamic CORS origin from FRONTEND_URL env var (set on Render).
-# Falls back to localhost:5173 for development.
-frontend_url = ENV.fetch("FRONTEND_URL", "http://localhost:5173")
-
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins(
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-      frontend_url
-    )
+    origins do |source, env|
+      # Base allowed origins
+      allowed = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://ai-career-platform-tan.vercel.app",
+        "https://aicareerplatform.online",
+        "https://www.aicareerplatform.online"
+      ]
+
+      # Add origins from FRONTEND_URL if set
+      if ENV["FRONTEND_URL"].present?
+        allowed << ENV["FRONTEND_URL"]
+      end
+
+      # Add origins from CORS_ORIGINS if set (comma separated)
+      if ENV["CORS_ORIGINS"].present?
+        allowed.concat(ENV["CORS_ORIGINS"].split(",").map(&:strip))
+      end
+
+      allowed.uniq.include?(source)
+    end
 
     resource "*",
              headers: :any,
