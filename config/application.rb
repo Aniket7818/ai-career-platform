@@ -53,6 +53,7 @@ module AiCareerPlatform
     config.middleware.use ActionDispatch::Session::CookieStore,
       key: "_ai_career_platform_session",
       same_site: cookie_same_site,
-      secure: cookie_secure
+      secure: cookie_secure,
+      expire_after: 7.days
   end
 end
