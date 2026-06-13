@@ -9,6 +9,12 @@ Rails.application.routes.draw do
              },
              defaults: { format: :json }
 
+  devise_scope :user do
+    post "api/v1/auth/forgot_password", to: "api/v1/auth/passwords#create"
+    post "api/v1/auth/reset_password", to: "api/v1/auth/passwords#update"
+    get "api/v1/auth/validate_reset_token", to: "api/v1/auth/passwords#validate_token"
+  end
+
   namespace :api do
     namespace :v1 do
       resource :profile, only: %i[show update]

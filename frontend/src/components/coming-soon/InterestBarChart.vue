@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-48 items-end gap-2">
-    <div v-for="(item, index) in items" :key="item.key" class="group flex flex-1 flex-col items-center gap-2">
+    <div v-for="(item, index) in items" :key="item.key" class="group flex min-w-0 flex-1 flex-col items-center gap-2">
       <span class="text-xs font-semibold text-slate-300 opacity-0 transition group-hover:opacity-100">{{ item.count }}</span>
       <div class="relative w-full overflow-hidden rounded-t-md bg-white/5" :style="{ height: `${barHeight(item.count)}%` }">
         <div

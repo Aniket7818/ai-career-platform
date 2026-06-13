@@ -4,6 +4,7 @@ import { ROUTE_NAMES } from '../constants/routes'
 import LandingPage from '../modules/LandingPage.vue'
 import AuthGateway from '../modules/auth/AuthGateway.vue'
 import ForgotPasswordPage from '../modules/auth/ForgotPasswordPage.vue'
+import ResetPasswordPage from '../modules/auth/ResetPasswordPage.vue'
 import DashboardPage from '../modules/dashboard/DashboardPage.vue'
 import AdminDashboardPage from '../modules/admin/AdminDashboardPage.vue'
 import ResumeListPage from '../modules/resumes/ResumeListPage.vue'
@@ -35,7 +36,8 @@ const routes = [
   ...staticPages.map(({ path, name, pageKey }) => ({ path, name, component: StaticPage, meta: { pageKey } })),
   { path: '/login', name: ROUTE_NAMES.LOGIN, component: AuthGateway, props: { mode: 'login' }, meta: { guestOnly: true } },
   { path: '/signup', name: ROUTE_NAMES.SIGNUP, component: AuthGateway, props: { mode: 'signup' }, meta: { guestOnly: true } },
-  { path: '/forgot-password', name: ROUTE_NAMES.FORGOT_PASSWORD, component: ForgotPasswordPage, meta: { guestOnly: true } },
+  { path: '/forgot-password', name: ROUTE_NAMES.FORGOT_PASSWORD, component: ForgotPasswordPage },
+  { path: '/reset-password', name: 'reset-password', component: ResetPasswordPage },
   { path: '/verify-email', name: 'verify-email', component: () => import('../modules/auth/VerifyEmailPage.vue') },
   { path: '/dashboard', name: ROUTE_NAMES.DASHBOARD, component: DashboardPage, meta: { requiresAuth: true } },
   { path: '/admin', name: ROUTE_NAMES.ADMIN, component: AdminDashboardPage, meta: { requiresAuth: true, requiresAdmin: true } },
@@ -49,6 +51,11 @@ const routes = [
 const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach(async (to) => {
+  // Clear any global auth errors when navigating to a new page
+  if (store.state.auth.error) {
+    store.commit('auth/setError', null)
+  }
+
   const needsSessionCheck = to.meta.requiresAuth || to.meta.guestOnly
   const user = needsSessionCheck ? store.state.auth.user || await store.dispatch('auth/fetchMe') : store.state.auth.user
 

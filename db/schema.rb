@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_13_185920) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -136,6 +136,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_185920) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "reset_emails_sent_count", default: 0
+    t.datetime "last_reset_request_at"
+    t.integer "password_reset_strikes", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["razorpay_subscription_id"], name: "index_users_on_razorpay_subscription_id"

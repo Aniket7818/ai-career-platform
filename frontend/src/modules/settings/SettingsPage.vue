@@ -20,7 +20,9 @@
               <input :value="user?.username" disabled class="bg-slate-50 text-slate-500" />
             </div>
           </div>
-          <RouterLink class="mt-4 inline-flex text-sm font-semibold text-brand" to="/forgot-password">{{ t('auth.forgot') }}</RouterLink>
+          <div class="mt-4 flex gap-4">
+            <RouterLink class="inline-flex text-sm font-semibold text-brand" to="/forgot-password">Change Password</RouterLink>
+          </div>
         </section>
 
         <!-- Subscription / Plans Section -->

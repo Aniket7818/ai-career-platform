@@ -44,16 +44,16 @@
     >
       <div v-if="isOpen" class="border-t border-slate-100 bg-white px-5 py-4 shadow-lg md:hidden">
         <nav class="flex flex-col gap-1">
-          <a class="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#features" @click="close">{{ t('nav.features') }}</a>
-          <RouterLink class="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/coming-soon" @click="close">{{ t('nav.comingSoon') }}</RouterLink>
-          <a class="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#pricing" @click="close">{{ t('nav.pricing') }}</a>
+          <a class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#features" @click="close">{{ t('nav.features') }}</a>
+          <RouterLink class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/coming-soon" @click="close">{{ t('nav.comingSoon') }}</RouterLink>
+          <a class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#pricing" @click="close">{{ t('nav.pricing') }}</a>
           <template v-if="user">
-            <RouterLink class="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/dashboard" @click="close">{{ t('nav.dashboard') }}</RouterLink>
-            <RouterLink v-if="['admin', 'super_admin'].includes(user.role)" class="rounded-xl px-4 py-3 text-sm font-medium text-brand transition hover:bg-brand/5" to="/admin" @click="close">Admin</RouterLink>
-            <button class="mt-2 w-full rounded-xl bg-ink px-4 py-3 text-sm font-semibold text-white" @click="logout">{{ t('nav.logout') }}</button>
+            <RouterLink class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/dashboard" @click="close">{{ t('nav.dashboard') }}</RouterLink>
+            <RouterLink v-if="['admin', 'super_admin'].includes(user.role)" class="block rounded-xl px-4 py-3 text-sm font-medium text-brand transition hover:bg-brand/5" to="/admin" @click="close">Admin</RouterLink>
+            <button class="mt-2 block w-full rounded-xl bg-ink px-4 py-3 text-sm font-semibold text-white" @click="logout">{{ t('nav.logout') }}</button>
           </template>
           <template v-else>
-            <RouterLink class="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/login" @click="close">{{ t('nav.login') }}</RouterLink>
+            <RouterLink class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/login" @click="close">{{ t('nav.login') }}</RouterLink>
             <RouterLink class="mt-2 block rounded-xl bg-brand px-4 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-brand/20" to="/signup" @click="close">{{ t('nav.signup') }}</RouterLink>
           </template>
         </nav>
