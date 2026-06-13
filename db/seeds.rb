@@ -8,19 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-admin = User.find_by("LOWER(username) = ? OR LOWER(email) = ?", "aniket", "aniket1!gmail.com")
-admin ||= User.new(username: "aniket", email: "aniket1@gmail.com")
-
-admin.assign_attributes(
-  first_name: admin.first_name.presence || "Aniket",
-  password: "aniket123",
-  password_confirmation: "aniket123",
-  role: "super_admin",
-  status: "active",
-  subscription_plan: "pro",
-  verified_at: admin.verified_at || Time.current
-)
-admin.save!(validate: false)
 
 AdminSetting.find_or_create_by!(key: "feature_flags") do |setting|
   setting.value = { ats_checker: true, mock_interview: false, portfolio_generator: false }
