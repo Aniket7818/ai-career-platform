@@ -97,7 +97,7 @@
           </div>
         </div>
       </header>
-      <main class="min-w-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 lg:p-8"><slot /></main>
+      <main class="min-w-0 flex-1 lg:overflow-y-auto lg:overscroll-contain p-4 sm:p-5 lg:p-8"><slot /></main>
     </div>
   </div>
 </template>

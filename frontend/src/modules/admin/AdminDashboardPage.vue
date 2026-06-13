@@ -103,7 +103,7 @@
           <p class="mt-1 text-sm text-slate-500">View, edit, suspend, activate, delete, promote, and adjust subscriptions.</p>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full text-left text-sm">
+          <table class="w-full text-left text-sm whitespace-nowrap">
             <thead class="bg-white/[0.03] text-[11px] uppercase tracking-wider text-slate-500">
               <tr>
                 <th v-for="head in userHeads" :key="head" class="px-5 py-4 font-bold">{{ head }}</th>
@@ -142,10 +142,9 @@
                 <td class="px-5 py-4">
                   <div class="flex flex-wrap gap-1.5">
                     <button class="admin-btn" @click="selectedUser = user">View</button>
-                    <button class="admin-btn" @click="saveUser(user.id, { verified_at: new Date().toISOString() })">Verify</button>
+                    <button class="admin-btn" :disabled="user.verified" @click="saveUser(user.id, { verified_at: new Date().toISOString() })">{{ user.verified ? 'Verified' : 'Verify' }}</button>
                     <button v-if="user.status === 'active'" class="admin-btn warn" @click="suspend(user.id)">Suspend</button>
                     <button v-else class="admin-btn ok" @click="activate(user.id)">Activate</button>
-                    <button v-if="currentUser.role === 'super_admin' && !isSelf(user)" class="admin-btn" @click="promote(user.id)">Promote</button>
                     <button class="admin-btn danger" @click="deleteUser(user.id)">Delete</button>
                   </div>
                 </td>
@@ -230,7 +229,7 @@
           <p class="mt-1 text-sm text-slate-500">Track admin actions, plan changes, and sensitive updates.</p>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full text-left text-sm">
+          <table class="w-full text-left text-sm whitespace-nowrap">
             <thead class="bg-white/[0.03] text-[11px] uppercase tracking-wider text-slate-500">
               <tr>
                 <th class="px-5 py-4">Action</th>
@@ -260,7 +259,7 @@
           <p class="mt-1 text-sm text-slate-500">IP address, browser, and login time for user sessions.</p>
         </div>
         <div class="overflow-x-auto">
-          <table class="min-w-full text-left text-sm">
+          <table class="w-full text-left text-sm whitespace-nowrap">
             <thead class="bg-white/[0.03] text-[11px] uppercase tracking-wider text-slate-500">
               <tr><th class="px-5 py-4">User</th><th class="px-5 py-4">IP</th><th class="px-5 py-4">User Agent</th><th class="px-5 py-4">Login Time</th></tr>
             </thead>
@@ -379,6 +378,7 @@ const analyticsCards = computed(() => {
     { label: 'New Today', value: a.new_users_today ?? 0, icon: iconSvg('M12 5v14M5 12h14'), hint: 'Signed up today' },
     { label: 'Active Users', value: a.active_users ?? 0, icon: iconSvg('M22 12h-4l-3 9L9 3l-3 9H2'), hint: 'Not suspended' },
     { label: 'Verified Users', value: a.verified_users ?? 0, icon: iconSvg('M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3'), hint: 'Email verified' },
+    { label: 'Unverified Users', value: a.unverified_users ?? 0, icon: iconSvg('M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'), hint: 'Pending verification' },
     { label: 'Total Resumes', value: a.total_resumes ?? 0, icon: iconSvg('M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6'), hint: 'Across platform' },
     { label: 'Draft Resumes', value: a.draft_resumes ?? 0, icon: iconSvg('M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7'), hint: 'In progress' },
     { label: 'Published', value: a.published_resumes ?? 0, icon: iconSvg('M20 6L9 17l-5-5'), hint: 'Ready to share' }
@@ -451,7 +451,6 @@ const saveUser = async (id, payload) => {
 
 const suspend = async (id) => { const r = await adminService.suspendUser(id); replaceUser(r.data.user); data.value.audit_logs = r.data.audit_logs }
 const activate = async (id) => { const r = await adminService.activateUser(id); replaceUser(r.data.user); data.value.audit_logs = r.data.audit_logs }
-const promote = async (id) => { const r = await adminService.promoteUser(id); replaceUser(r.data.user); data.value.audit_logs = r.data.audit_logs }
 
 const deleteUser = async (id) => {
   if (!confirm('Delete this user and all dependent records?')) return
@@ -503,7 +502,8 @@ const rupees = (value) => new Intl.NumberFormat('en-IN', { style: 'currency', cu
   color: #cbd5e1;
   transition: all 0.15s;
 }
-.admin-btn:hover { border-color: rgba(109, 74, 255, 0.5); color: #fff; background: rgba(109, 74, 255, 0.15); }
+.admin-btn:hover:not(:disabled) { border-color: rgba(109, 74, 255, 0.5); color: #fff; background: rgba(109, 74, 255, 0.15); }
+.admin-btn:disabled { opacity: 0.4; cursor: not-allowed; background: rgba(255, 255, 255, 0.02); }
 .admin-btn.danger { color: #fb7185; }
 .admin-btn.warn { color: #fbbf24; }
 .admin-btn.ok { color: #34d399; }

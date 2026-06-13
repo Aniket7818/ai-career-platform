@@ -47,8 +47,25 @@ module Api
           end
         end
 
-        user.update!(attrs)
-        log!("admin_updated_user", user, "Updated #{user.email}")
+        user.assign_attributes(attrs)
+        changes = user.changes.except("updated_at")
+        
+        change_details = changes.map do |k, v|
+          if k == "verified_at" && v[0].nil? && v[1].present?
+            "verified their account"
+          elsif k == "subscription_plan"
+            "changed plan to #{v[1]}"
+          elsif k == "role"
+            "changed role to #{v[1].humanize.downcase}"
+          else
+            "changed #{k.humanize.downcase} from '#{v[0]}' to '#{v[1]}'"
+          end
+        end.join(", ")
+
+        user.save!
+        
+        detail_msg = change_details.present? ? "Updated #{user.email}: #{change_details}" : "Updated #{user.email}"
+        log!("admin_updated_user", user, detail_msg)
         render json: { user: admin_user_payload(user), audit_logs: audit_logs_payload }
       end
 
@@ -106,6 +123,7 @@ module Api
           new_users_today: User.where(created_at: Time.current.all_day).count,
           active_users: User.where(status: "active").count,
           verified_users: User.where.not(verified_at: nil).count,
+          unverified_users: User.where(verified_at: nil).count,
           total_resumes: Resume.count,
           draft_resumes: Resume.where(status: "draft").count,
           published_resumes: Resume.where(status: "published").count

@@ -14,7 +14,7 @@
       </PageHero>
 
       <!-- Verification Banner -->
-      <div v-if="user && !user.verified" class="rounded-2xl border-2 border-red-500 bg-red-50 p-6 shadow-lg transition-all" :class="{ 'animate-pulse ring-4 ring-red-500/50': showVerifyBlink }">
+      <div v-if="user && !user.verified" class="rounded-2xl border-2 border-red-500 bg-red-50 p-6 shadow-lg transition-all duration-500" :class="{ 'ring-4 ring-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.4)] scale-[1.02] bg-red-100/50': showVerifyBlink }">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 class="text-lg font-bold text-red-700 flex items-center gap-2">

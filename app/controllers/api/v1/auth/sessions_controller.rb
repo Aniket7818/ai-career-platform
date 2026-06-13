@@ -23,7 +23,7 @@ module Api
             return render json: { error: error_message }, status: :forbidden
           end
 
-          resource.update(last_login_at: Time.current, verified_at: resource.verified_at || Time.current)
+          resource.update(last_login_at: Time.current)
           # Force session to load before reading its id
           session[:init] = true
           resource.login_sessions.create!(
