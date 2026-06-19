@@ -23,5 +23,8 @@ export const ROUTE_NAMES = Object.freeze({
   TERMS: 'terms',
   COOKIES: 'cookies',
   REFUND: 'refund',
-  SHIPPING: 'shipping'
+  SHIPPING: 'shipping',
+  INTERVIEW_PREP: 'interview-prep',
+  INTERVIEW_PREP_SUBJECT: 'interview-prep-subject',
+  INTERVIEW_PREP_QUESTION: 'interview-prep-question'
 })

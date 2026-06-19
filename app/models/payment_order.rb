@@ -1,7 +1,7 @@
 class PaymentOrder < ApplicationRecord
   PLANS = {
-    "pro" => { amount_paise: 100, label: "Pro" },
-    "team" => { amount_paise: 200, label: "Team" }
+    "pro" => { amount_paise: 9900, label: "Pro" },
+    "team" => { amount_paise: 19900, label: "Team" }
   }.freeze
 
   belongs_to :user

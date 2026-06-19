@@ -29,8 +29,8 @@ export default {
     ],
     pricingCards: [
       { id: 'free', name: 'Starter', price: 'Free', period: 'forever', description: 'Perfect for students and first-time job seekers.', features: ['3 free PDF downloads', 'Unlimited edits to saved drafts', 'Live preview builder', 'Profile management'], highlighted: false },
-      { id: 'pro', name: 'Pro', price: '₹1', period: '/month', description: 'For professionals who want more power and polish.', features: ['Unlimited PDF downloads', 'Priority support', 'Advanced templates', 'AI features (coming soon)'], highlighted: true },
-      { id: 'team', name: 'Team', price: '₹2', period: '/month', description: 'Built for career centers, bootcamps, and mentors.', features: ['Everything in Pro', 'Team dashboard', 'Bulk resume review', 'Custom branding'], highlighted: false }
+      { id: 'pro', name: 'Pro', price: '₹99', period: '/month', description: 'For professionals who want more power and polish.', features: ['Unlimited PDF downloads', 'Priority support', 'Advanced templates', 'AI features (coming soon)'], highlighted: true },
+      { id: 'team', name: 'Team', price: '₹199', period: '/month', description: 'Built for career centers, bootcamps, and mentors.', features: ['Everything in Pro', 'Team dashboard', 'Bulk resume review', 'Custom branding'], highlighted: false }
     ],
     testimonials: [
       { quote: 'CareerAI replaced three scattered docs with one clean workspace. I shipped my resume update in an afternoon.', name: 'Priya Sharma', role: 'Software Engineer' },

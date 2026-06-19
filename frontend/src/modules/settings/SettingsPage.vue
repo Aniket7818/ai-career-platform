@@ -249,7 +249,7 @@ const plans = computed(() => {
     {
       id: 'pro',
       name: 'Pro',
-      price: '₹1/month',
+      price: '₹99/month',
       description: 'For professionals who want more power and polish.',
       state: currentPlan === 'pro' ? 'active' : currentIndex < PLAN_ORDER.indexOf('pro') ? 'upgrade' : 'deactivated',
       features: ['Unlimited PDF downloads', 'Priority support', 'Advanced templates', 'AI features (coming soon)']
@@ -257,7 +257,7 @@ const plans = computed(() => {
     {
       id: 'team',
       name: 'Team',
-      price: '₹2/month',
+      price: '₹199/month',
       description: 'Built for career centers, bootcamps, and mentors.',
       state: currentPlan === 'team' ? 'active' : currentIndex < PLAN_ORDER.indexOf('team') ? 'upgrade' : 'deactivated',
       features: ['Everything in Pro', 'Team dashboard', 'Bulk resume review', 'Custom branding']

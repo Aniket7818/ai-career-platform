@@ -41,6 +41,10 @@ Rails.application.routes.draw do
           post :verify
         end
       end
+
+      get "interview-prep", to: "interview_prep#index"
+      get "interview-prep/:subject", to: "interview_prep#show"
+      get "interview-prep/:subject/:question_id", to: "interview_prep#question"
     end
   end
 

@@ -135,8 +135,8 @@
                 <td class="px-5 py-4">
                   <select class="admin-select plan-select" :value="user.subscription_plan" @change="saveUser(user.id, { subscription_plan: $event.target.value })">
                     <option value="free">Free</option>
-                    <option value="pro">Pro - ₹1/mo</option>
-                    <option value="team">Team - ₹2/mo</option>
+                    <option value="pro">Pro - ₹99/mo</option>
+                    <option value="team">Team - ₹199/mo</option>
                   </select>
                 </td>
                 <td class="px-5 py-4">
