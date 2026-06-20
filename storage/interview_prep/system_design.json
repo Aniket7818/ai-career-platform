@@ -1,0 +1,1355 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: Scalability, Microservices, Databases, Caching, Load Balancing\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "System Design",
+      "topic": "Introduction to System Design",
+      "difficulty": "Easy",
+      "title": "What is System Design?",
+      "question": "What is System Design? Explain its purpose, importance, key objectives, and real-world applications.",
+      "answer": "System Design is the process of defining the architecture, components, modules, interfaces, and data flow of a software system to satisfy specific business and technical requirements. It acts as a blueprint that guides developers in building scalable, reliable, maintainable, and efficient applications. System Design focuses on how different parts of a system interact with each other, how data is stored and processed, and how the system handles growth, failures, security, and performance requirements. Modern applications such as social media platforms, e-commerce websites, banking systems, video streaming services, and cloud platforms rely heavily on well-designed systems to serve millions of users efficiently.",
+      "explanation": "Imagine constructing a large shopping mall. Before construction begins, architects create detailed blueprints that define the structure, electrical systems, water supply, emergency exits, and parking areas. Without proper planning, the building may become unsafe, inefficient, or difficult to maintain.\n\nSimilarly, before developing a software application, engineers create a system design. The design specifies how users interact with the application, how requests are processed, where data is stored, how security is implemented, and how the system scales when the number of users increases.\n\nFor example, when designing an online shopping platform such as Amazon, engineers must decide how product data will be stored, how orders will be processed, how payments will be handled, and how the platform will continue working even if some servers fail. System Design provides solutions to these challenges and ensures the application can grow successfully over time.",
+      "code_example": "// High-Level Components\nUser -> Load Balancer -> Application Servers -> Database\n                           |\n                           -> Cache",
+      "key_takeaways": [
+        "System Design is the blueprint of a software system.",
+        "It focuses on scalability, reliability, and maintainability.",
+        "It defines architecture, components, and data flow.",
+        "Used in designing large-scale applications.",
+        "Helps engineers build efficient and fault-tolerant systems."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "System Design",
+      "topic": "System Design Fundamentals",
+      "difficulty": "Easy",
+      "title": "Functional and Non-Functional Requirements",
+      "question": "What are Functional Requirements and Non-Functional Requirements in System Design? Explain their differences with examples.",
+      "answer": "Functional Requirements define what a system should do. They describe the features, functionalities, and operations that users expect from the system. Examples include user registration, login functionality, payment processing, product search, and order placement. Non-Functional Requirements define how the system should perform while delivering those functionalities. They include scalability, reliability, performance, security, availability, maintainability, and fault tolerance. Both types of requirements are essential because functional requirements define system behavior, while non-functional requirements determine system quality and user experience.",
+      "explanation": "Consider an online food delivery application.\n\nFunctional Requirements:\n- Users can register and log in.\n- Users can search restaurants.\n- Users can place orders.\n- Delivery agents can accept orders.\n\nNon-Functional Requirements:\n- The application should support 1 million users.\n- Pages should load within 2 seconds.\n- The system should be available 99.99% of the time.\n- User data should be encrypted.\n\nThink of building a car. Functional requirements define what the car can do, such as accelerating, braking, and turning. Non-functional requirements define how well it performs, such as fuel efficiency, speed, safety, and reliability. Both are required to create a successful product.",
+      "code_example": "// Functional Requirement\nUser can upload photos.\n\n// Non-Functional Requirement\nPhoto upload should complete within 3 seconds.",
+      "key_takeaways": [
+        "Functional requirements define what a system does.",
+        "Non-functional requirements define how a system performs.",
+        "Both are critical for successful system design.",
+        "Scalability and performance are non-functional requirements.",
+        "Features such as login and payment are functional requirements."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "System Design",
+      "topic": "Scalability",
+      "difficulty": "Medium",
+      "title": "What is Scalability?",
+      "question": "What is Scalability in System Design? Explain its types, importance, and practical examples.",
+      "answer": "Scalability is the ability of a system to handle increasing workloads, users, transactions, and data volumes without significant degradation in performance. A scalable system can continue operating efficiently as demand grows. Scalability is one of the most important goals in modern system design because successful applications often experience rapid growth in traffic and usage. Engineers design scalable systems to ensure future expansion without requiring a complete redesign of the architecture.",
+      "explanation": "Imagine a restaurant designed to serve 50 customers per day. If suddenly 5,000 customers arrive daily, the restaurant will fail unless it expands its seating, staff, and kitchen capacity.\n\nSoftware systems face similar challenges.\n\nFor example, Instagram initially served a small number of users. As millions joined the platform, engineers had to scale databases, application servers, storage systems, and content delivery networks.\n\nThere are two primary types of scalability:\n\nVertical Scaling (Scale Up):\nIncreasing resources of a single server such as CPU, RAM, or storage.\n\nHorizontal Scaling (Scale Out):\nAdding more servers to distribute the workload.\n\nLarge internet companies prefer horizontal scaling because it provides better fault tolerance and supports massive growth.",
+      "code_example": "// Vertical Scaling\nServer: 8GB RAM -> 64GB RAM\n\n// Horizontal Scaling\n1 Server -> 10 Servers -> 100 Servers",
+      "key_takeaways": [
+        "Scalability is the ability to handle growth.",
+        "Vertical scaling increases server resources.",
+        "Horizontal scaling adds more servers.",
+        "Scalability is critical for large applications.",
+        "Proper scalability planning prevents future bottlenecks."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "System Design",
+      "topic": "Availability",
+      "difficulty": "Medium",
+      "title": "What is Availability?",
+      "question": "What is Availability in System Design? Explain its importance, measurement, and techniques used to achieve high availability.",
+      "answer": "Availability refers to the percentage of time a system remains operational and accessible to users. A highly available system continues functioning even when individual components fail. Availability is usually measured as a percentage known as uptime. Modern internet-scale applications often target 99.9%, 99.99%, or even 99.999% availability. High availability is crucial for banking systems, healthcare applications, e-commerce platforms, and cloud services where downtime can lead to financial losses and poor user experiences.",
+      "explanation": "Consider an online payment system.\n\nIf the service becomes unavailable during a major shopping event, customers cannot complete purchases and the business loses revenue.\n\nTo improve availability, engineers use:\n\nRedundancy:\nMultiple servers performing the same tasks.\n\nLoad Balancers:\nDistribute traffic across multiple servers.\n\nFailover Systems:\nAutomatically switch to backup systems during failures.\n\nReplication:\nMaintain multiple copies of critical data.\n\nMonitoring:\nDetect issues before users notice them.\n\nFor example, if one server crashes, a load balancer redirects users to healthy servers without interruption.",
+      "code_example": "Users\n  |\nLoad Balancer\n /      \\\nServer1 Server2\n   |\n Database Replicas",
+      "key_takeaways": [
+        "Availability measures system uptime.",
+        "High availability minimizes downtime.",
+        "Redundancy improves availability.",
+        "Load balancing helps distribute traffic.",
+        "Availability is critical for business continuity."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "System Design",
+      "topic": "Load Balancing",
+      "difficulty": "Medium",
+      "title": "What is a Load Balancer?",
+      "question": "What is a Load Balancer? Explain its working, types, benefits, and role in modern distributed systems.",
+      "answer": "A Load Balancer is a system component that distributes incoming network traffic across multiple servers to ensure no single server becomes overloaded. It acts as a traffic manager positioned between users and backend servers. Load balancers improve performance, availability, fault tolerance, and scalability by efficiently utilizing available resources. They are fundamental building blocks of modern distributed systems and are commonly used in cloud computing, web applications, microservices architectures, and enterprise systems.",
+      "explanation": "Imagine a supermarket with only one checkout counter. As customer traffic increases, long queues develop and service becomes slow.\n\nIf multiple checkout counters are available and customers are distributed among them, service becomes faster and more efficient.\n\nA load balancer performs a similar role in software systems.\n\nWhen users send requests:\n\nUser Requests\n      ↓\n Load Balancer\n   ↓   ↓   ↓\nServer1 Server2 Server3\n\nThe load balancer decides which server should handle each request.\n\nCommon algorithms include:\n\nRound Robin\nLeast Connections\nWeighted Round Robin\nIP Hashing\n\nIf one server fails, the load balancer automatically routes traffic to healthy servers, improving reliability and availability.",
+      "code_example": "Client Requests\n      |\nLoad Balancer\n /   |   \\\nS1   S2   S3",
+      "key_takeaways": [
+        "Load balancers distribute incoming traffic.",
+        "They prevent server overload.",
+        "Improve availability and scalability.",
+        "Support fault tolerance.",
+        "Essential in modern distributed architectures."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Medium",
+      "title": "What is Caching?",
+      "question": "What is Caching in System Design? Explain its working, benefits, challenges, and real-world applications.",
+      "answer": "Caching is a technique used to store frequently accessed data in a temporary high-speed storage layer called a cache. Instead of repeatedly fetching data from slower systems such as databases or external services, applications retrieve data from the cache, significantly reducing response time and system load. Caching is one of the most effective optimization techniques used in large-scale systems because it improves performance, reduces latency, lowers infrastructure costs, and enhances user experience. Modern platforms such as Google, YouTube, Netflix, Facebook, Amazon, and Instagram heavily rely on caching to serve billions of requests efficiently.",
+      "explanation": "Imagine a student studying from a library book.\n\nIf the student has to visit the library every time they need information, it takes time and effort. Instead, they may keep important notes on their desk for quick access.\n\nA cache works similarly.\n\nWithout Cache:\nUser → Application → Database → Response\n\nWith Cache:\nUser → Application → Cache → Response\n\nIf data exists in the cache (Cache Hit), it is returned immediately.\nIf data does not exist (Cache Miss), the application retrieves it from the database and stores it in the cache for future requests.\n\nCommon caching systems include Redis and Memcached. Large-scale applications use caching for user profiles, product information, search results, session management, and API responses.",
+      "code_example": "User Request\n     |\n Application\n     |\n    Cache\n   /    \\\nHit     Miss\n |        |\nData   Database",
+      "key_takeaways": [
+        "Caching improves performance and reduces latency.",
+        "Frequently accessed data is stored temporarily.",
+        "Cache hits are faster than database queries.",
+        "Reduces database load significantly.",
+        "Redis and Memcached are popular caching systems."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "System Design",
+      "topic": "Database Scaling",
+      "difficulty": "Medium",
+      "title": "Database Replication",
+      "question": "What is Database Replication? Explain its working, types, advantages, and challenges.",
+      "answer": "Database Replication is the process of creating and maintaining multiple copies of the same database across different servers. Changes made to the primary database are synchronized with replica databases. Replication improves availability, fault tolerance, disaster recovery, and read scalability. It is widely used in distributed systems where millions of users access data simultaneously and a single database server cannot handle all requests efficiently.",
+      "explanation": "Suppose an e-commerce website receives millions of product search requests every day.\n\nIf all requests are sent to a single database server, performance may degrade.\n\nReplication solves this problem.\n\nPrimary Database:\nHandles write operations.\n\nReplica Databases:\nHandle read operations.\n\nUser Requests\n      |\nApplication\n   /      \\\nPrimary   Replica Servers\n\nAdvantages:\nImproved availability.\nRead scalability.\nDisaster recovery.\nReduced database load.\n\nChallenges:\nReplication lag.\nConsistency management.\nIncreased infrastructure complexity.",
+      "code_example": "Primary DB\n   |\n----------------\n|      |       |\nR1     R2      R3",
+      "key_takeaways": [
+        "Replication creates multiple database copies.",
+        "Improves availability and fault tolerance.",
+        "Supports read scalability.",
+        "Primary handles writes.",
+        "Replicas handle read requests."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "System Design",
+      "topic": "Database Scaling",
+      "difficulty": "Hard",
+      "title": "Database Sharding",
+      "question": "What is Database Sharding? Explain its architecture, benefits, challenges, and practical use cases.",
+      "answer": "Database Sharding is a horizontal scaling technique in which a large database is divided into smaller independent databases called shards. Each shard contains a subset of the overall data and operates as a separate database server. Sharding distributes storage and workload across multiple machines, allowing systems to handle massive amounts of data and traffic. It is commonly used by large-scale applications such as social media platforms, online gaming systems, and global e-commerce websites.",
+      "explanation": "Imagine a library containing 100 million books.\n\nManaging all books in a single room would be difficult.\n\nInstead, books may be divided into different sections based on categories.\n\nSimilarly, databases can be divided into shards.\n\nShard 1:\nUsers 1 - 1 Million\n\nShard 2:\nUsers 1 Million - 2 Million\n\nShard 3:\nUsers 2 Million - 3 Million\n\nBenefits:\nHorizontal scalability.\nImproved performance.\nReduced database bottlenecks.\n\nChallenges:\nComplex queries.\nCross-shard joins.\nData rebalancing.\nOperational complexity.",
+      "code_example": "Users\n |\nShard Router\n |--- Shard A\n |--- Shard B\n |--- Shard C",
+      "key_takeaways": [
+        "Sharding divides databases into smaller parts.",
+        "Supports horizontal scaling.",
+        "Improves performance for large datasets.",
+        "Used by internet-scale applications.",
+        "Introduces operational complexity."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "System Design",
+      "topic": "CAP Theorem",
+      "difficulty": "Hard",
+      "title": "CAP Theorem",
+      "question": "What is the CAP Theorem? Explain Consistency, Availability, Partition Tolerance, and their trade-offs.",
+      "answer": "The CAP Theorem states that a distributed system can guarantee at most two of the following three properties simultaneously: Consistency, Availability, and Partition Tolerance. Proposed by Eric Brewer, the theorem is one of the most fundamental concepts in distributed system design. It helps architects understand trade-offs when designing large-scale distributed systems.",
+      "explanation": "Consistency:\nEvery node sees the same data at the same time.\n\nAvailability:\nEvery request receives a response.\n\nPartition Tolerance:\nThe system continues operating despite network failures.\n\nExample:\nIf network communication between servers fails, the system must choose between consistency and availability.\n\nCP Systems:\nPrioritize consistency.\nExample: Traditional banking systems.\n\nAP Systems:\nPrioritize availability.\nExample: Social media platforms.\n\nPartition tolerance is mandatory in distributed environments because network failures are unavoidable.",
+      "code_example": "CAP\n / | \\\nC  A  P",
+      "key_takeaways": [
+        "CAP Theorem applies to distributed systems.",
+        "Only two properties can be fully guaranteed simultaneously.",
+        "Consistency ensures identical data views.",
+        "Availability ensures responses.",
+        "Partition tolerance handles network failures."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "System Design",
+      "topic": "Consistency Models",
+      "difficulty": "Hard",
+      "title": "Strong Consistency vs Eventual Consistency",
+      "question": "What are Strong Consistency and Eventual Consistency? Compare both approaches with examples.",
+      "answer": "Consistency models define how and when updates become visible across distributed systems. Strong Consistency guarantees that all users immediately see the latest data after an update. Eventual Consistency guarantees that all replicas will eventually become consistent, but temporary differences may exist. Choosing the appropriate consistency model depends on business requirements, performance expectations, and system architecture.",
+      "explanation": "Strong Consistency Example:\nBank Account Balance.\n\nIf ₹1000 is deposited, every user must immediately see the updated balance.\n\nEventual Consistency Example:\nSocial Media Likes.\n\nWhen a user likes a post, some users may see the updated count immediately while others may see it a few seconds later.\n\nStrong consistency provides accuracy but may reduce performance.\n\nEventual consistency improves scalability and availability but allows temporary inconsistencies.",
+      "code_example": "User A Update\n      |\n Distributed System\n      |\nAll Nodes Updated",
+      "key_takeaways": [
+        "Strong consistency guarantees immediate synchronization.",
+        "Eventual consistency allows temporary differences.",
+        "Banking systems often require strong consistency.",
+        "Social media commonly uses eventual consistency.",
+        "Consistency choices affect scalability."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "System Design",
+      "topic": "Content Delivery Network",
+      "difficulty": "Medium",
+      "title": "Content Delivery Network (CDN)",
+      "question": "What is a CDN? Explain its architecture, benefits, and importance in modern web applications.",
+      "answer": "A Content Delivery Network (CDN) is a geographically distributed network of servers that delivers static and dynamic content to users from locations closer to them. Instead of serving all requests from a single origin server, CDNs cache content at multiple edge locations worldwide. This reduces latency, improves page load speed, lowers bandwidth costs, and enhances availability.",
+      "explanation": "Suppose a website is hosted in India.\n\nA user in the United States requests an image.\n\nWithout CDN:\nRequest travels to India.\n\nWith CDN:\nImage is served from a nearby US edge server.\n\nBenefits:\nLower latency.\nFaster content delivery.\nReduced server load.\nImproved availability.\nProtection against traffic spikes.\n\nPopular CDNs include Cloudflare, Akamai, and Amazon CloudFront.",
+      "code_example": "User\n |\nNearest CDN Edge\n |\nOrigin Server",
+      "key_takeaways": [
+        "CDNs deliver content from nearby servers.",
+        "Reduce latency and load times.",
+        "Lower origin server load.",
+        "Improve availability.",
+        "Essential for global applications."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "System Design",
+      "topic": "Message Queues",
+      "difficulty": "Hard",
+      "title": "Message Queue",
+      "question": "What is a Message Queue? Explain its architecture, advantages, and common use cases.",
+      "answer": "A Message Queue is a communication mechanism that enables asynchronous interaction between different components of a distributed system. Producers send messages to a queue, and consumers process them independently. Message queues improve scalability, fault tolerance, reliability, and system decoupling. They are widely used in microservices, event-driven architectures, background job processing, and large-scale distributed applications.",
+      "explanation": "Consider an e-commerce platform.\n\nWhen a user places an order, multiple tasks must occur:\n\nSend confirmation email.\nUpdate inventory.\nGenerate invoice.\nNotify warehouse.\n\nInstead of performing everything immediately, the order service places messages into a queue.\n\nBackground workers process these tasks asynchronously.\n\nThis improves response time and prevents system overload.",
+      "code_example": "Producer\n   |\n Message Queue\n   |\nConsumer",
+      "key_takeaways": [
+        "Message queues support asynchronous communication.",
+        "Improve scalability and reliability.",
+        "Decouple system components.",
+        "Useful for background processing.",
+        "Common technologies include RabbitMQ and Kafka."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "System Design",
+      "topic": "Microservices",
+      "difficulty": "Hard",
+      "title": "Microservices Architecture",
+      "question": "What is Microservices Architecture? Explain its advantages, disadvantages, and practical applications.",
+      "answer": "Microservices Architecture is a software design approach where an application is divided into small, independent services that communicate through APIs or messaging systems. Each service focuses on a specific business capability and can be developed, deployed, scaled, and maintained independently. Microservices have become popular because they improve scalability, flexibility, and development velocity in large organizations.",
+      "explanation": "Consider an e-commerce platform.\n\nInstead of one large application, it can be divided into:\n\nUser Service.\nProduct Service.\nOrder Service.\nPayment Service.\nNotification Service.\n\nAdvantages:\nIndependent deployment.\nTechnology flexibility.\nFault isolation.\nBetter scalability.\n\nDisadvantages:\nOperational complexity.\nNetwork overhead.\nDistributed debugging challenges.\n\nCompanies such as Netflix, Amazon, Uber, and Spotify use microservices extensively.",
+      "code_example": "User Service\nProduct Service\nOrder Service\nPayment Service",
+      "key_takeaways": [
+        "Microservices divide applications into smaller services.",
+        "Each service has a specific responsibility.",
+        "Supports independent deployment.",
+        "Improves scalability.",
+        "Introduces operational complexity."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "System Design",
+      "topic": "API Gateway",
+      "difficulty": "Medium",
+      "title": "API Gateway",
+      "question": "What is an API Gateway? Explain its responsibilities and benefits in microservices architecture.",
+      "answer": "An API Gateway is a centralized entry point that sits between clients and backend services. It handles request routing, authentication, authorization, rate limiting, monitoring, logging, caching, and protocol translation. API Gateways simplify client interactions by providing a unified interface for accessing multiple services.",
+      "explanation": "Without an API Gateway:\n\nClients communicate directly with multiple services.\n\nWith an API Gateway:\n\nClients communicate with one endpoint.\n\nThe gateway forwards requests to appropriate services.\n\nBenefits:\nSimplified client communication.\nImproved security.\nCentralized monitoring.\nReduced complexity.\n\nAPI Gateways are commonly used in microservices ecosystems.",
+      "code_example": "Client\n  |\nAPI Gateway\n |\nServices",
+      "key_takeaways": [
+        "API Gateway is a single entry point.",
+        "Handles routing and authentication.",
+        "Improves security.",
+        "Simplifies client interactions.",
+        "Common in microservices architecture."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "System Design",
+      "topic": "Rate Limiting",
+      "difficulty": "Medium",
+      "title": "Rate Limiting",
+      "question": "What is Rate Limiting? Explain its purpose, techniques, and real-world applications.",
+      "answer": "Rate Limiting is a mechanism used to control the number of requests a client can make within a specific time period. It protects systems from abuse, prevents overload, improves fairness among users, and enhances security. Rate limiting is commonly implemented in APIs, web services, and cloud platforms.",
+      "explanation": "Imagine a ticket booking website.\n\nWithout rate limiting, a malicious user could send thousands of requests per second, overwhelming the system.\n\nRate limiting restricts request frequency.\n\nCommon Algorithms:\n\nToken Bucket.\nLeaky Bucket.\nFixed Window Counter.\nSliding Window Counter.\n\nBenefits:\nPrevents abuse.\nProtects infrastructure.\nImproves service stability.\nEnsures fair usage.",
+      "code_example": "User Limit:\n100 Requests / Minute",
+      "key_takeaways": [
+        "Rate limiting controls request frequency.",
+        "Protects systems from abuse.",
+        "Improves stability and fairness.",
+        "Common in APIs and cloud services.",
+        "Uses algorithms such as Token Bucket."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "System Design",
+      "topic": "Proxy Servers",
+      "difficulty": "Medium",
+      "title": "What is a Proxy Server?",
+      "question": "What is a Proxy Server in System Design? Explain its working, types, advantages, and practical applications.",
+      "answer": "A Proxy Server is an intermediary server that sits between clients and destination servers. Instead of clients communicating directly with backend services, requests are first sent to the proxy server, which then forwards them to the appropriate destination. Proxy servers improve security, performance, monitoring, access control, caching, and anonymity. They are widely used in enterprise networks, cloud platforms, content delivery systems, and large-scale distributed architectures. Proxy servers can also reduce server load by caching frequently requested content and filtering unwanted traffic.",
+      "explanation": "Suppose a company has thousands of employees accessing the internet.\n\nInstead of allowing direct internet access, all requests pass through a proxy server.\n\nThe proxy can:\n\nMonitor requests.\nBlock malicious websites.\nCache frequently accessed pages.\nHide internal network details.\n\nTypes of Proxy Servers:\n\nForward Proxy:\nActs on behalf of clients.\n\nReverse Proxy:\nActs on behalf of servers.\n\nExamples include Nginx, HAProxy, and Cloudflare.\n\nMany modern applications use reverse proxies to improve security, scalability, and performance.",
+      "code_example": "Client\n  |\nProxy Server\n  |\nDestination Server",
+      "key_takeaways": [
+        "Proxy servers act as intermediaries.",
+        "Improve security and performance.",
+        "Support caching and monitoring.",
+        "Can hide client or server details.",
+        "Widely used in modern architectures."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "System Design",
+      "topic": "Reverse Proxy",
+      "difficulty": "Medium",
+      "title": "Reverse Proxy",
+      "question": "What is a Reverse Proxy? Explain its architecture, advantages, and real-world usage.",
+      "answer": "A Reverse Proxy is a server positioned between clients and backend servers. Clients communicate with the reverse proxy, which forwards requests to backend servers and returns responses. Unlike forward proxies that represent clients, reverse proxies represent servers. Reverse proxies are commonly used for load balancing, SSL termination, caching, security, traffic routing, and high availability.",
+      "explanation": "When millions of users access a website, exposing backend servers directly can create security and scalability challenges.\n\nA reverse proxy provides a protective layer.\n\nUser Requests\n      |\nReverse Proxy\n  /    |    \\\nS1    S2    S3\n\nBenefits:\n\nLoad balancing.\nImproved security.\nDDoS protection.\nSSL certificate management.\nCaching support.\n\nPopular reverse proxy solutions include Nginx, HAProxy, Envoy, and Traefik.",
+      "code_example": "Internet Users\n      |\nReverse Proxy\n      |\nBackend Servers",
+      "key_takeaways": [
+        "Reverse proxies represent servers.",
+        "Improve security and scalability.",
+        "Often perform load balancing.",
+        "Support SSL termination.",
+        "Commonly implemented using Nginx."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "System Design",
+      "topic": "Latency",
+      "difficulty": "Medium",
+      "title": "What is Latency?",
+      "question": "What is Latency in System Design? Explain its causes, impact, and optimization techniques.",
+      "answer": "Latency is the time required for a request to travel from a client to a server and receive a response. It is usually measured in milliseconds (ms). Low latency is essential for providing responsive user experiences in applications such as online gaming, video conferencing, stock trading, and social media platforms. High latency can lead to slow performance, user frustration, and reduced engagement.",
+      "explanation": "Suppose a user clicks a button in an application.\n\nThe request must travel through:\n\nNetwork.\nLoad Balancer.\nApplication Server.\nDatabase.\n\nThe response then returns to the user.\n\nFactors affecting latency:\n\nNetwork distance.\nDatabase queries.\nServer processing.\nAPI calls.\nDisk operations.\n\nOptimization techniques:\n\nCaching.\nCDNs.\nDatabase indexing.\nLoad balancing.\nQuery optimization.\n\nReducing latency is one of the primary goals of system architects.",
+      "code_example": "User Request -> Server -> Response\nLatency = Total Time Taken",
+      "key_takeaways": [
+        "Latency measures response time.",
+        "Lower latency improves user experience.",
+        "Network distance affects latency.",
+        "Caching helps reduce latency.",
+        "Important for real-time applications."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "System Design",
+      "topic": "Throughput",
+      "difficulty": "Medium",
+      "title": "What is Throughput?",
+      "question": "What is Throughput in System Design? Explain its significance and relationship with performance.",
+      "answer": "Throughput refers to the amount of work a system can process within a given time period. It is commonly measured in requests per second, transactions per second, messages per second, or data processed per second. Throughput is a critical performance metric because it indicates the capacity of a system to handle workloads efficiently.",
+      "explanation": "Consider an API server.\n\nIf it can process 10,000 requests per second, its throughput is 10,000 RPS.\n\nA system with high throughput can serve more users and handle larger workloads.\n\nFactors affecting throughput include:\n\nCPU resources.\nMemory.\nNetwork bandwidth.\nDatabase performance.\nConcurrency mechanisms.\n\nSystem designers often optimize throughput when building large-scale platforms such as search engines, payment systems, and streaming services.",
+      "code_example": "10000 Requests Processed\n1 Second\nThroughput = 10000 RPS",
+      "key_takeaways": [
+        "Throughput measures processing capacity.",
+        "Often measured in requests per second.",
+        "Higher throughput supports more users.",
+        "Important for scalability planning.",
+        "Different from latency."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "System Design",
+      "topic": "Horizontal vs Vertical Scaling",
+      "difficulty": "Medium",
+      "title": "Horizontal Scaling vs Vertical Scaling",
+      "question": "Differentiate between Horizontal Scaling and Vertical Scaling. Explain advantages and disadvantages of both approaches.",
+      "answer": "Horizontal Scaling and Vertical Scaling are two approaches used to increase system capacity. Vertical Scaling involves increasing the resources of a single machine, such as CPU, RAM, or storage. Horizontal Scaling involves adding more machines to distribute the workload. Both approaches have advantages and trade-offs, and architects choose between them based on system requirements.",
+      "explanation": "Vertical Scaling Example:\n\nUpgrade server from:\n8 GB RAM → 64 GB RAM.\n\nAdvantages:\nSimple implementation.\nNo application changes.\n\nDisadvantages:\nHardware limits.\nSingle point of failure.\n\nHorizontal Scaling Example:\n\n1 Server → 10 Servers → 100 Servers.\n\nAdvantages:\nHigh availability.\nBetter fault tolerance.\nUnlimited growth potential.\n\nDisadvantages:\nMore complexity.\nDistributed system challenges.\n\nLarge internet companies primarily use horizontal scaling.",
+      "code_example": "Vertical: 1 Bigger Server\nHorizontal: Multiple Servers",
+      "key_takeaways": [
+        "Vertical scaling upgrades hardware.",
+        "Horizontal scaling adds servers.",
+        "Horizontal scaling improves fault tolerance.",
+        "Vertical scaling is simpler initially.",
+        "Large-scale systems prefer horizontal scaling."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Distributed System",
+      "question": "What is a Distributed System? Explain its characteristics, benefits, challenges, and applications.",
+      "answer": "A Distributed System is a collection of independent computers that work together as a single unified system. These computers communicate over a network and coordinate their actions to achieve common goals. Distributed systems provide scalability, fault tolerance, resource sharing, and high availability. Most modern internet applications are built using distributed system principles.",
+      "explanation": "Examples include:\n\nGoogle Search.\nNetflix.\nAmazon.\nFacebook.\nUber.\n\nCharacteristics:\n\nMultiple nodes.\nNetwork communication.\nResource sharing.\nFault tolerance.\nScalability.\n\nChallenges:\n\nNetwork failures.\nConsistency management.\nData synchronization.\nSecurity.\nMonitoring.\n\nDistributed systems allow organizations to serve millions of users across different geographic regions.",
+      "code_example": "Node1\nNode2\nNode3\nNode4\n\nWorking Together",
+      "key_takeaways": [
+        "Distributed systems use multiple computers.",
+        "Provide scalability and availability.",
+        "Support large-scale applications.",
+        "Require network communication.",
+        "Introduce consistency challenges."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "System Design",
+      "topic": "Fault Tolerance",
+      "difficulty": "Hard",
+      "title": "Fault Tolerance",
+      "question": "What is Fault Tolerance in System Design? Explain techniques used to achieve fault tolerance.",
+      "answer": "Fault Tolerance is the ability of a system to continue functioning correctly even when some components fail. Since hardware failures, software bugs, network outages, and infrastructure issues are inevitable, modern systems are designed to tolerate failures without significant disruption. Fault tolerance improves reliability, availability, and business continuity.",
+      "explanation": "Suppose a server crashes.\n\nWithout fault tolerance:\nApplication becomes unavailable.\n\nWith fault tolerance:\nTraffic automatically shifts to healthy servers.\n\nTechniques:\n\nRedundancy.\nReplication.\nFailover systems.\nLoad balancing.\nHealth checks.\nAutomatic recovery.\n\nFault tolerance is essential for banking systems, cloud platforms, healthcare systems, and mission-critical applications.",
+      "code_example": "Server A (Fails)\n     |\nFailover\n     |\nServer B",
+      "key_takeaways": [
+        "Fault tolerance handles failures gracefully.",
+        "Improves reliability.",
+        "Uses redundancy and failover.",
+        "Critical for high-availability systems.",
+        "Reduces downtime."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "System Design",
+      "topic": "Failover",
+      "difficulty": "Medium",
+      "title": "Failover Mechanism",
+      "question": "What is Failover in System Design? Explain how it works and why it is important.",
+      "answer": "Failover is a mechanism that automatically transfers operations from a failed component to a backup component. The goal of failover is to minimize downtime and maintain service availability. Failover systems are commonly used in servers, databases, cloud platforms, networking equipment, and distributed applications.",
+      "explanation": "Suppose a primary database server crashes.\n\nWithout failover:\nApplication stops working.\n\nWith failover:\nBackup database automatically becomes active.\n\nTypes:\n\nActive-Passive Failover.\nActive-Active Failover.\n\nFailover improves business continuity and reduces service interruptions during unexpected failures.",
+      "code_example": "Primary Server\n      |\n Failure\n      |\nBackup Server Activated",
+      "key_takeaways": [
+        "Failover reduces downtime.",
+        "Automatically switches to backups.",
+        "Improves availability.",
+        "Used in databases and servers.",
+        "Important for mission-critical systems."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "System Design",
+      "topic": "Data Partitioning",
+      "difficulty": "Hard",
+      "title": "Data Partitioning",
+      "question": "What is Data Partitioning? Explain its types, benefits, and challenges.",
+      "answer": "Data Partitioning is the process of dividing large datasets into smaller, manageable segments called partitions. Partitioning improves performance, scalability, and maintainability by distributing data across multiple storage units. It is commonly used in large databases and distributed systems handling massive volumes of information.",
+      "explanation": "Types:\n\nHorizontal Partitioning:\nRows are divided.\n\nVertical Partitioning:\nColumns are divided.\n\nRange Partitioning.\nHash Partitioning.\nList Partitioning.\n\nBenefits:\nImproved performance.\nBetter scalability.\nReduced maintenance complexity.\n\nChallenges:\nCross-partition queries.\nData balancing.\nOperational complexity.",
+      "code_example": "Users 1-1M -> Partition A\nUsers 1M-2M -> Partition B",
+      "key_takeaways": [
+        "Partitioning divides large datasets.",
+        "Improves scalability.",
+        "Reduces database bottlenecks.",
+        "Supports distributed storage.",
+        "Introduces management complexity."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "System Design",
+      "topic": "System Design Interview",
+      "difficulty": "Medium",
+      "title": "High-Level Design (HLD)",
+      "question": "What is High-Level Design (HLD)? Explain its purpose and major components.",
+      "answer": "High-Level Design (HLD) is the architectural view of a system that describes major components, interactions, technologies, databases, APIs, and infrastructure. HLD focuses on the overall structure rather than implementation details. It helps stakeholders understand how the system will operate at a macro level.",
+      "explanation": "When designing YouTube, HLD may include:\n\nLoad Balancers.\nApplication Servers.\nVideo Storage.\nDatabases.\nCDN.\nRecommendation Engine.\n\nThe goal is to understand system architecture before discussing implementation details.\n\nHLD is commonly discussed during system design interviews.",
+      "code_example": "Users\n |\nLoad Balancer\n |\nApplication Layer\n |\nDatabase",
+      "key_takeaways": [
+        "HLD focuses on architecture.",
+        "Shows major system components.",
+        "Used in system design interviews.",
+        "Defines overall structure.",
+        "Precedes detailed implementation."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "System Design",
+      "topic": "System Design Interview",
+      "difficulty": "Medium",
+      "title": "Low-Level Design (LLD)",
+      "question": "What is Low-Level Design (LLD)? Explain its purpose, components, and importance in software development.",
+      "answer": "Low-Level Design (LLD) is the detailed design phase of a software system where individual classes, objects, methods, interfaces, database schemas, APIs, and internal component interactions are defined. While High-Level Design focuses on the overall architecture, Low-Level Design focuses on implementation details. LLD provides developers with a clear blueprint for coding and ensures consistency across the development team. It helps identify design patterns, relationships between classes, object interactions, and module responsibilities before actual implementation begins.",
+      "explanation": "Suppose we are designing a Food Delivery Application.\n\nHigh-Level Design may define:\nUser Service\nRestaurant Service\nOrder Service\nPayment Service\n\nLow-Level Design goes deeper and defines:\nUser Class\nOrder Class\nRestaurant Class\nPayment Interface\nDatabase Tables\nAPI Endpoints\n\nLLD often includes UML diagrams, class diagrams, sequence diagrams, and database schema definitions. It helps developers understand exactly how the system should be implemented.",
+      "code_example": "class User {\n  int userId;\n  String name;\n  String email;\n}",
+      "key_takeaways": [
+        "LLD focuses on implementation details.",
+        "Defines classes, methods, and interfaces.",
+        "Used before coding begins.",
+        "Improves maintainability and consistency.",
+        "Complements High-Level Design."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "System Design",
+      "topic": "Database Selection",
+      "difficulty": "Hard",
+      "title": "SQL vs NoSQL Databases",
+      "question": "Compare SQL and NoSQL databases. Explain when to choose each type in system design.",
+      "answer": "SQL databases are relational databases that store data in structured tables with predefined schemas. They support ACID transactions and are ideal for applications requiring strong consistency. NoSQL databases are non-relational databases designed for scalability, flexibility, and handling large volumes of semi-structured or unstructured data. Choosing between SQL and NoSQL depends on business requirements, scalability needs, consistency requirements, and data structure complexity.",
+      "explanation": "SQL Examples:\nMySQL\nPostgreSQL\nOracle\nSQL Server\n\nNoSQL Examples:\nMongoDB\nCassandra\nRedis\nDynamoDB\n\nChoose SQL When:\nBanking systems.\nFinancial transactions.\nInventory management.\n\nChoose NoSQL When:\nSocial media platforms.\nReal-time analytics.\nLarge-scale distributed systems.\n\nSQL prioritizes consistency.\nNoSQL prioritizes scalability and flexibility.",
+      "code_example": "-- SQL Table\nCREATE TABLE Users (\n id INT PRIMARY KEY,\n name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "SQL databases are relational.",
+        "NoSQL databases are non-relational.",
+        "SQL supports ACID transactions.",
+        "NoSQL scales horizontally more easily.",
+        "Selection depends on business requirements."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "System Design",
+      "topic": "Storage Systems",
+      "difficulty": "Hard",
+      "title": "Blob Storage",
+      "question": "What is Blob Storage? Explain its architecture, advantages, and common use cases.",
+      "answer": "Blob Storage (Binary Large Object Storage) is a storage solution designed to store large amounts of unstructured data such as images, videos, documents, backups, logs, and media files. Blob storage systems are highly scalable, durable, and cost-effective. They are commonly used in cloud platforms such as AWS S3, Azure Blob Storage, and Google Cloud Storage. Blob storage separates large files from application databases, improving overall system performance and scalability.",
+      "explanation": "Imagine YouTube storing billions of videos.\n\nStoring videos directly inside relational databases would be inefficient.\n\nInstead:\nMetadata → Database\nVideos → Blob Storage\n\nBenefits:\nMassive scalability.\nHigh durability.\nCost efficiency.\nGlobal accessibility.\n\nBlob storage is commonly used in content platforms, backup systems, document management systems, and cloud applications.",
+      "code_example": "User Uploads Video\n      |\nApplication\n      |\nBlob Storage",
+      "key_takeaways": [
+        "Blob storage stores unstructured data.",
+        "Ideal for images and videos.",
+        "Highly scalable and durable.",
+        "Used in cloud platforms.",
+        "Separates files from databases."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "System Design",
+      "topic": "Search Systems",
+      "difficulty": "Hard",
+      "title": "Full-Text Search",
+      "question": "What is Full-Text Search? Explain how it works and why it is important in large-scale systems.",
+      "answer": "Full-Text Search is a search technique that allows users to search through large amounts of textual data efficiently. Unlike traditional database searches that perform exact matches, full-text search systems analyze text, tokenize words, build indexes, and support relevance ranking. Full-text search is widely used in search engines, e-commerce platforms, document management systems, and content-driven applications.",
+      "explanation": "Suppose a user searches:\n\n'Best wireless headphones'\n\nA traditional database query may struggle with word variations.\n\nA search engine such as Elasticsearch:\n\nTokenizes words.\nCreates inverted indexes.\nRanks results by relevance.\nHandles synonyms and stemming.\n\nThis allows users to receive fast and accurate search results even across millions of records.",
+      "code_example": "User Query\n      |\nSearch Engine\n      |\nRanked Results",
+      "key_takeaways": [
+        "Full-text search improves text searching.",
+        "Uses indexing techniques.",
+        "Provides relevance ranking.",
+        "Supports large datasets.",
+        "Commonly implemented using Elasticsearch."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "System Design",
+      "topic": "Search Systems",
+      "difficulty": "Hard",
+      "title": "Inverted Index",
+      "question": "What is an Inverted Index? Explain its structure and role in search engines.",
+      "answer": "An Inverted Index is a data structure used by search engines to quickly locate documents containing specific words. Instead of storing documents and searching through them one by one, an inverted index maps words to the documents in which they appear. This significantly improves search performance and scalability.",
+      "explanation": "Suppose we have three documents:\n\nDoc1: Java Programming\nDoc2: Python Programming\nDoc3: Java Database\n\nInverted Index:\nJava -> Doc1, Doc3\nProgramming -> Doc1, Doc2\nPython -> Doc2\nDatabase -> Doc3\n\nWhen a user searches for 'Java', the system immediately retrieves Doc1 and Doc3 without scanning every document.",
+      "code_example": "Java -> [Doc1, Doc3]\nPython -> [Doc2]",
+      "key_takeaways": [
+        "Inverted Index powers search engines.",
+        "Maps terms to documents.",
+        "Improves search speed.",
+        "Used in Elasticsearch and Lucene.",
+        "Supports large-scale text search."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "System Design",
+      "topic": "Streaming Systems",
+      "difficulty": "Hard",
+      "title": "Video Streaming Architecture",
+      "question": "How does a Video Streaming System like YouTube or Netflix work? Explain the architecture in detail.",
+      "answer": "A Video Streaming System is designed to store, process, distribute, and stream video content efficiently to millions of users. The architecture includes video upload services, transcoding pipelines, storage systems, CDNs, recommendation systems, metadata databases, and playback services. Such systems prioritize scalability, availability, low latency, and global content delivery.",
+      "explanation": "Workflow:\n\nUser uploads video.\n\nVideo is stored in Blob Storage.\n\nTranscoding service converts the video into multiple resolutions.\n\nMetadata is stored in databases.\n\nCDNs distribute videos globally.\n\nUsers stream content from nearby CDN servers.\n\nNetflix and YouTube use thousands of servers worldwide to provide smooth playback even during massive traffic spikes.",
+      "code_example": "Upload -> Storage -> Transcoding -> CDN -> User",
+      "key_takeaways": [
+        "Videos are stored separately from metadata.",
+        "CDNs reduce latency.",
+        "Transcoding creates multiple resolutions.",
+        "Architecture supports global scale.",
+        "Used by Netflix and YouTube."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "System Design",
+      "topic": "Notification Systems",
+      "difficulty": "Medium",
+      "title": "Push Notification System",
+      "question": "How does a Push Notification System work? Explain its architecture and challenges.",
+      "answer": "A Push Notification System is designed to deliver real-time messages to users across mobile devices, web applications, and desktops. The system receives notification requests, processes them, stores delivery information, and sends messages through platforms such as Firebase Cloud Messaging (FCM) and Apple Push Notification Service (APNS). Push notification systems must handle scalability, reliability, delivery tracking, and user preferences.",
+      "explanation": "Example:\n\nUser receives a message on WhatsApp.\n\nMessage Service generates notification.\n\nNotification Service processes request.\n\nFCM/APNS delivers notification.\n\nChallenges:\n\nMassive scale.\nDuplicate notifications.\nDelivery guarantees.\nRate limiting.\nUser preferences.\n\nModern systems often use queues and asynchronous processing for notification delivery.",
+      "code_example": "Application\n    |\nNotification Service\n    |\nFCM / APNS\n    |\nUser Device",
+      "key_takeaways": [
+        "Push notifications provide real-time updates.",
+        "Use FCM and APNS.",
+        "Require scalability.",
+        "Often use message queues.",
+        "Important for user engagement."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "System Design",
+      "topic": "Monitoring",
+      "difficulty": "Medium",
+      "title": "System Monitoring",
+      "question": "What is System Monitoring? Explain its importance and major metrics tracked in distributed systems.",
+      "answer": "System Monitoring is the process of continuously observing the health, performance, availability, and behavior of software systems and infrastructure. Monitoring helps engineers detect issues early, troubleshoot failures, optimize performance, and ensure service reliability. Without monitoring, identifying production problems becomes extremely difficult.",
+      "explanation": "Common Metrics:\n\nCPU Usage.\nMemory Usage.\nDisk Utilization.\nNetwork Traffic.\nRequest Latency.\nError Rates.\nThroughput.\nAvailability.\n\nMonitoring Tools:\nPrometheus.\nGrafana.\nDatadog.\nNew Relic.\nCloudWatch.\n\nMonitoring provides visibility into system behavior and enables proactive issue resolution.",
+      "code_example": "CPU: 70%\nMemory: 65%\nLatency: 120ms",
+      "key_takeaways": [
+        "Monitoring improves reliability.",
+        "Tracks performance metrics.",
+        "Helps detect failures early.",
+        "Supports troubleshooting.",
+        "Essential for production systems."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "System Design",
+      "topic": "Logging",
+      "difficulty": "Medium",
+      "title": "Centralized Logging",
+      "question": "What is Centralized Logging? Explain its architecture and benefits in distributed systems.",
+      "answer": "Centralized Logging is the practice of collecting logs from multiple servers, services, and applications into a centralized storage and analysis platform. Instead of manually checking logs on individual machines, engineers can search, analyze, and monitor logs from a single location. Centralized logging improves observability, debugging, auditing, and incident response.",
+      "explanation": "Without Centralized Logging:\n\nLogs are scattered across servers.\n\nTroubleshooting becomes difficult.\n\nWith Centralized Logging:\n\nAll logs are aggregated.\n\nEngineers can search events quickly.\n\nPopular Tools:\nELK Stack.\nSplunk.\nDatadog.\nGraylog.\n\nLarge organizations process billions of log events daily using centralized logging platforms.",
+      "code_example": "Server1 Logs\nServer2 Logs\nServer3 Logs\n      |\nCentral Log System",
+      "key_takeaways": [
+        "Centralized logging improves observability.",
+        "Aggregates logs from multiple services.",
+        "Simplifies debugging.",
+        "Supports auditing and compliance.",
+        "Commonly uses ELK Stack."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "System Design",
+      "topic": "Observability",
+      "difficulty": "Hard",
+      "title": "Observability",
+      "question": "What is Observability in System Design? Explain its pillars and significance.",
+      "answer": "Observability is the ability to understand the internal state of a system by analyzing external outputs such as logs, metrics, and traces. Observability helps engineers diagnose issues, understand system behavior, and improve reliability. It is especially important in distributed systems where failures can occur across multiple services and infrastructure components.",
+      "explanation": "Three Pillars of Observability:\n\nMetrics:\nNumerical measurements.\n\nLogs:\nEvent records.\n\nTraces:\nRequest journey across services.\n\nExample:\nIf an API becomes slow, observability helps determine whether the issue originates from the application server, database, network, or external dependency.\n\nModern cloud-native systems rely heavily on observability practices.",
+      "code_example": "Metrics + Logs + Traces = Observability",
+      "key_takeaways": [
+        "Observability improves system understanding.",
+        "Built on metrics, logs, and traces.",
+        "Essential for distributed systems.",
+        "Improves troubleshooting.",
+        "Supports reliability engineering."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Leader Election",
+      "question": "What is Leader Election in Distributed Systems? Explain why it is needed, how it works, and common algorithms used for leader election.",
+      "answer": "Leader Election is the process of selecting a single node from a group of distributed nodes to act as the coordinator or leader. The leader is responsible for making critical decisions, coordinating tasks, managing shared resources, and maintaining consistency across the system. Leader election is necessary because having multiple nodes perform the same coordination tasks simultaneously can lead to conflicts, inconsistencies, and duplicated work. Distributed systems use leader election to ensure organized operation, fault tolerance, and efficient coordination.",
+      "explanation": "Imagine a classroom project with ten students.\n\nIf everyone tries to make decisions independently, confusion occurs.\n\nInstead, one student is selected as the team leader.\n\nSimilarly, distributed systems elect a leader.\n\nResponsibilities may include:\n\nCoordinating tasks.\nManaging resource allocation.\nHandling distributed locks.\nMaintaining cluster configuration.\n\nIf the leader fails, a new leader must be elected automatically.\n\nPopular algorithms:\n\nBully Algorithm.\nRing Algorithm.\nRaft.\nZooKeeper-based leader election.\n\nLeader election is heavily used in distributed databases, Kubernetes clusters, and messaging systems.",
+      "code_example": "Node1\nNode2\nNode3 -> Leader\nNode4\nNode5",
+      "key_takeaways": [
+        "Leader election selects a coordinator node.",
+        "Improves distributed coordination.",
+        "Supports fault tolerance.",
+        "Leaders can be replaced automatically.",
+        "Used in Kubernetes and distributed databases."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Consensus Algorithms",
+      "question": "What are Consensus Algorithms? Explain their purpose and importance in distributed systems.",
+      "answer": "Consensus Algorithms are protocols used in distributed systems to ensure that multiple nodes agree on a single value or decision even when failures occur. Since distributed systems operate across different machines connected through networks, disagreements can arise due to network delays, crashes, or hardware failures. Consensus algorithms help maintain consistency, reliability, and correctness by ensuring all healthy nodes eventually reach the same decision.",
+      "explanation": "Suppose five servers store banking transactions.\n\nWhen a new transaction occurs, all servers must agree that the transaction is valid.\n\nWithout consensus, some servers may accept the transaction while others reject it.\n\nConsensus algorithms solve this problem.\n\nPopular Algorithms:\n\nRaft.\nPaxos.\nMulti-Paxos.\nViewstamped Replication.\n\nApplications:\n\nDistributed databases.\nBlockchain systems.\nCluster management.\nConfiguration management.\n\nConsensus is one of the most important concepts in distributed system design.",
+      "code_example": "Node1 -> Agree\nNode2 -> Agree\nNode3 -> Agree\nDecision Accepted",
+      "key_takeaways": [
+        "Consensus ensures agreement among nodes.",
+        "Maintains consistency in distributed systems.",
+        "Handles failures and network issues.",
+        "Raft and Paxos are popular algorithms.",
+        "Used in databases and distributed platforms."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Raft Consensus Algorithm",
+      "question": "What is the Raft Consensus Algorithm? Explain its working, components, and advantages.",
+      "answer": "Raft is a consensus algorithm designed to manage replicated logs in distributed systems. It was created to be easier to understand and implement compared to Paxos while providing similar guarantees. Raft ensures consistency among distributed nodes by electing a leader, replicating logs, and maintaining synchronized state across the cluster. It is widely used in modern distributed systems such as etcd, Consul, and Kubernetes control planes.",
+      "explanation": "Raft consists of three roles:\n\nLeader.\nFollower.\nCandidate.\n\nWorkflow:\n\nLeader receives requests.\nLeader replicates logs.\nFollowers acknowledge updates.\nData is committed after majority agreement.\n\nIf the leader fails:\n\nFollowers become candidates.\nVoting occurs.\nA new leader is elected.\n\nRaft simplifies distributed consensus while maintaining reliability and consistency.",
+      "code_example": "Leader\n |\nFollowers\n |\nReplicated Logs",
+      "key_takeaways": [
+        "Raft is a consensus algorithm.",
+        "Uses leader-based replication.",
+        "Supports automatic leader election.",
+        "Simpler than Paxos.",
+        "Used in Kubernetes and etcd."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "System Design",
+      "topic": "Microservices",
+      "difficulty": "Hard",
+      "title": "Service Discovery",
+      "question": "What is Service Discovery in Microservices Architecture? Explain its importance and implementation approaches.",
+      "answer": "Service Discovery is the mechanism through which services dynamically locate and communicate with other services in a distributed environment. Since microservices can scale up, scale down, restart, or move across servers, their network locations may change frequently. Service discovery ensures that services can automatically find each other without requiring hardcoded addresses.",
+      "explanation": "Suppose an Order Service needs to communicate with a Payment Service.\n\nInstead of storing a fixed server address, it asks a service registry.\n\nThe registry provides the latest location of the Payment Service.\n\nApproaches:\n\nClient-Side Discovery.\nServer-Side Discovery.\n\nPopular Tools:\n\nConsul.\nEureka.\nZooKeeper.\nKubernetes Service Discovery.\n\nService discovery is essential in cloud-native and microservices architectures.",
+      "code_example": "Order Service\n      |\nService Registry\n      |\nPayment Service",
+      "key_takeaways": [
+        "Service discovery enables dynamic communication.",
+        "Removes hardcoded addresses.",
+        "Supports microservices scalability.",
+        "Uses service registries.",
+        "Common in Kubernetes environments."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "System Design",
+      "topic": "Microservices",
+      "difficulty": "Hard",
+      "title": "Circuit Breaker Pattern",
+      "question": "What is the Circuit Breaker Pattern? Explain its working and benefits in distributed systems.",
+      "answer": "The Circuit Breaker Pattern is a fault tolerance design pattern that prevents repeated calls to failing services. Instead of continuously sending requests to an unhealthy service, the circuit breaker temporarily blocks requests and allows the system to recover. This prevents cascading failures and improves overall system stability.",
+      "explanation": "Imagine an Order Service calling a Payment Service.\n\nIf the Payment Service becomes unavailable:\n\nWithout Circuit Breaker:\nThousands of requests continue failing.\n\nWith Circuit Breaker:\nRequests are stopped temporarily.\nFallback responses are returned.\n\nStates:\n\nClosed.\nOpen.\nHalf-Open.\n\nBenefits:\nReduced failures.\nImproved stability.\nFaster recovery.\nBetter user experience.",
+      "code_example": "Request\n  |\nCircuit Breaker\n  |\nPayment Service",
+      "key_takeaways": [
+        "Prevents cascading failures.",
+        "Improves fault tolerance.",
+        "Uses Closed, Open, and Half-Open states.",
+        "Protects dependent services.",
+        "Common in microservices."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "System Design",
+      "topic": "Microservices",
+      "difficulty": "Hard",
+      "title": "Saga Pattern",
+      "question": "What is the Saga Pattern? Explain how distributed transactions are managed using Saga Architecture.",
+      "answer": "The Saga Pattern is a design pattern used to manage distributed transactions across multiple microservices. Instead of using a single global transaction, a saga breaks a business process into multiple local transactions. If a step fails, compensating transactions are executed to undo previously completed operations. This approach improves scalability and avoids the limitations of traditional distributed transactions.",
+      "explanation": "Example: Online Order Placement.\n\nOrder Service creates order.\nPayment Service processes payment.\nInventory Service reserves stock.\nShipping Service schedules delivery.\n\nIf inventory reservation fails:\n\nPayment is refunded.\nOrder is cancelled.\n\nThese rollback operations are called compensating transactions.\n\nSaga patterns are widely used in modern microservices systems.",
+      "code_example": "Order -> Payment -> Inventory -> Shipping",
+      "key_takeaways": [
+        "Saga manages distributed transactions.",
+        "Uses local transactions.",
+        "Supports compensating actions.",
+        "Improves scalability.",
+        "Common in microservices architectures."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "System Design",
+      "topic": "Databases",
+      "difficulty": "Hard",
+      "title": "Read Replicas",
+      "question": "What are Read Replicas? Explain their architecture, advantages, and limitations.",
+      "answer": "Read Replicas are copies of a primary database that handle read-only workloads. They help distribute query traffic, improve scalability, and reduce load on the primary database. Read replicas are commonly used in applications where read operations significantly outnumber write operations.",
+      "explanation": "Suppose an e-commerce website receives:\n\n1 million product searches.\n10,000 product updates.\n\nInstead of sending all requests to one database:\n\nWrites → Primary Database.\nReads → Read Replicas.\n\nBenefits:\nImproved performance.\nBetter scalability.\nReduced primary load.\n\nLimitations:\nReplication lag.\nEventual consistency issues.\n\nLarge-scale applications frequently use multiple replicas.",
+      "code_example": "Primary DB\n |\nReplica1\nReplica2\nReplica3",
+      "key_takeaways": [
+        "Read replicas improve scalability.",
+        "Handle read-only workloads.",
+        "Reduce database bottlenecks.",
+        "Support high traffic applications.",
+        "May introduce replication lag."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Hard",
+      "title": "Cache Invalidation",
+      "question": "What is Cache Invalidation? Why is it considered one of the hardest problems in system design?",
+      "answer": "Cache Invalidation is the process of removing or updating stale data stored in a cache when the underlying source data changes. It ensures users receive accurate and up-to-date information. Cache invalidation is difficult because systems must balance performance benefits with data consistency requirements. Incorrect invalidation strategies can result in stale data, inconsistent user experiences, and application bugs.",
+      "explanation": "Suppose a product price changes from ₹500 to ₹400.\n\nDatabase contains ₹400.\nCache still contains ₹500.\n\nUsers may see incorrect pricing.\n\nCommon Strategies:\n\nTime-To-Live (TTL).\nWrite-Through Cache.\nWrite-Behind Cache.\nCache Eviction.\nExplicit Invalidation.\n\nLarge-scale systems invest significant effort into designing efficient cache invalidation mechanisms.",
+      "code_example": "Database Updated\n      |\nInvalidate Cache\n      |\nNew Data Loaded",
+      "key_takeaways": [
+        "Cache invalidation maintains consistency.",
+        "Prevents stale data.",
+        "TTL is a common strategy.",
+        "Affects user experience significantly.",
+        "One of the hardest distributed system problems."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Hard",
+      "title": "Cache Eviction Policies",
+      "question": "What are Cache Eviction Policies? Explain common eviction algorithms and their use cases.",
+      "answer": "Cache Eviction Policies determine which items should be removed from a cache when storage capacity becomes full. Since cache memory is limited, systems must intelligently decide which entries to keep and which to remove. Effective eviction policies maximize cache efficiency and improve overall performance.",
+      "explanation": "Popular Policies:\n\nLRU (Least Recently Used)\nRemoves least recently accessed items.\n\nLFU (Least Frequently Used)\nRemoves least frequently accessed items.\n\nFIFO (First In First Out)\nRemoves oldest entries.\n\nRandom Replacement\nRemoves random entries.\n\nExample:\nIf a cache can store only 100 items and item 101 arrives, one existing item must be removed according to the selected policy.",
+      "code_example": "Cache Full\n |\nApply LRU Policy\n |\nRemove Old Entry",
+      "key_takeaways": [
+        "Eviction policies manage cache storage.",
+        "LRU is widely used.",
+        "LFU considers access frequency.",
+        "FIFO removes oldest entries.",
+        "Policy choice affects performance."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "System Design",
+      "topic": "Security",
+      "difficulty": "Medium",
+      "title": "Authentication vs Authorization",
+      "question": "Differentiate between Authentication and Authorization in System Design with practical examples.",
+      "answer": "Authentication is the process of verifying the identity of a user, service, or system. Authorization is the process of determining what actions an authenticated entity is allowed to perform. Authentication answers the question 'Who are you?' while authorization answers the question 'What are you allowed to do?'. Both are fundamental security concepts used in modern software systems.",
+      "explanation": "Example:\n\nA user logs into an application using email and password.\n\nAuthentication:\nVerifies the user's identity.\n\nAuthorization:\nDetermines whether the user can access admin features, edit records, or view reports.\n\nCommon Authentication Methods:\n\nPasswords.\nOAuth.\nJWT.\nMulti-Factor Authentication.\n\nAuthorization Models:\n\nRole-Based Access Control (RBAC).\nAttribute-Based Access Control (ABAC).",
+      "code_example": "Login -> Authentication\nAccess Resource -> Authorization",
+      "key_takeaways": [
+        "Authentication verifies identity.",
+        "Authorization controls permissions.",
+        "Authentication happens first.",
+        "Authorization follows authentication.",
+        "Both are critical for security."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "System Design",
+      "topic": "Security",
+      "difficulty": "Medium",
+      "title": "JWT Authentication",
+      "question": "What is JWT (JSON Web Token)? Explain its structure, working, advantages, disadvantages, and use cases in modern system design.",
+      "answer": "JWT (JSON Web Token) is a compact, self-contained, and secure mechanism used for transmitting information between parties as a JSON object. It is commonly used for authentication and authorization in web applications, mobile applications, APIs, and microservices architectures. JWT contains encoded user information and is digitally signed to prevent tampering. Because JWT is stateless, servers do not need to store session information, making it highly scalable for distributed systems. Modern applications frequently use JWT for Single Sign-On (SSO), API authentication, and user session management.",
+      "explanation": "A JWT consists of three parts:\n\nHeader\nContains token type and algorithm.\n\nPayload\nContains user information and claims.\n\nSignature\nVerifies token authenticity.\n\nWorkflow:\n\nUser logs in.\nServer verifies credentials.\nServer generates JWT.\nClient stores JWT.\nClient sends JWT with future requests.\nServer validates JWT.\n\nAdvantages:\nStateless authentication.\nScalability.\nCross-platform support.\n\nDisadvantages:\nToken revocation complexity.\nLarger payload sizes.\nSecurity risks if tokens are exposed.",
+      "code_example": "Header.Payload.Signature",
+      "key_takeaways": [
+        "JWT is widely used for authentication.",
+        "Contains Header, Payload, and Signature.",
+        "Supports stateless systems.",
+        "Popular in APIs and microservices.",
+        "Requires secure storage and handling."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "System Design",
+      "topic": "Security",
+      "difficulty": "Hard",
+      "title": "OAuth 2.0",
+      "question": "What is OAuth 2.0? Explain its architecture, flow, advantages, and real-world applications.",
+      "answer": "OAuth 2.0 is an authorization framework that allows third-party applications to access resources on behalf of a user without exposing the user's credentials. It separates authentication from authorization and provides secure delegated access. OAuth is widely used by platforms such as Google, Facebook, GitHub, LinkedIn, and Microsoft to allow users to log into external applications securely.",
+      "explanation": "Example:\n\nA user wants to log into a website using Google.\n\nInstead of sharing the Google password with the website:\n\nUser is redirected to Google.\nGoogle authenticates the user.\nGoogle provides an access token.\nThe application uses the token to access approved information.\n\nBenefits:\nImproved security.\nReduced password sharing.\nDelegated access.\nBetter user experience.\n\nOAuth is one of the most commonly used authorization standards on the internet.",
+      "code_example": "User -> Google Login\n      |\n Access Token\n      |\nApplication",
+      "key_takeaways": [
+        "OAuth enables delegated authorization.",
+        "Reduces password exposure.",
+        "Widely used by major platforms.",
+        "Uses access tokens.",
+        "Supports secure third-party access."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "System Design",
+      "topic": "Security",
+      "difficulty": "Hard",
+      "title": "Rate Limiting Algorithms",
+      "question": "Explain the major Rate Limiting Algorithms used in system design and compare their advantages.",
+      "answer": "Rate Limiting Algorithms are mechanisms used to restrict the number of requests clients can make within a specified period. They help prevent abuse, protect infrastructure, and ensure fair resource usage. Different algorithms provide different trade-offs between accuracy, complexity, and performance. Choosing the correct algorithm depends on system requirements and traffic patterns.",
+      "explanation": "Common Algorithms:\n\nFixed Window Counter:\nSimple implementation but may allow traffic spikes.\n\nSliding Window Counter:\nMore accurate request control.\n\nToken Bucket:\nAllows controlled bursts.\n\nLeaky Bucket:\nProvides smooth traffic flow.\n\nExample:\nAPI allows 100 requests per minute.\n\nThese algorithms ensure no user can overwhelm the system while maintaining good user experience.",
+      "code_example": "Limit: 100 Requests/Minute\nUser -> Rate Limiter -> API",
+      "key_takeaways": [
+        "Rate limiting prevents abuse.",
+        "Token Bucket is widely used.",
+        "Sliding Window offers better accuracy.",
+        "Protects infrastructure.",
+        "Improves system stability."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "System Design",
+      "topic": "Data Storage",
+      "difficulty": "Hard",
+      "title": "Object Storage vs Block Storage",
+      "question": "Compare Object Storage and Block Storage. Explain their architectures, advantages, disadvantages, and use cases.",
+      "answer": "Object Storage and Block Storage are two popular storage models used in modern system architectures. Object Storage stores data as objects containing data, metadata, and unique identifiers. Block Storage divides data into fixed-size blocks and stores them separately. Both approaches serve different purposes depending on application requirements, scalability needs, and performance expectations.",
+      "explanation": "Object Storage:\n\nStores files as objects.\nHighly scalable.\nSuitable for images, videos, backups.\nExamples: AWS S3, Azure Blob Storage.\n\nBlock Storage:\n\nStores data in blocks.\nHigh performance.\nSuitable for databases and operating systems.\nExamples: AWS EBS.\n\nObject Storage prioritizes scalability.\nBlock Storage prioritizes performance and low latency.",
+      "code_example": "Object Storage -> Images, Videos\nBlock Storage -> Databases",
+      "key_takeaways": [
+        "Object Storage stores objects.",
+        "Block Storage stores blocks.",
+        "Object Storage scales easily.",
+        "Block Storage provides high performance.",
+        "Used for different workloads."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "System Design",
+      "topic": "Storage Systems",
+      "difficulty": "Medium",
+      "title": "Data Compression",
+      "question": "What is Data Compression? Explain its role, techniques, advantages, and trade-offs in large-scale systems.",
+      "answer": "Data Compression is the process of reducing the size of data to save storage space and reduce network bandwidth consumption. Compression improves storage efficiency, reduces costs, accelerates data transfer, and enhances scalability. Large-scale systems frequently use compression for logs, backups, databases, images, videos, and network communication.",
+      "explanation": "Suppose a 100 MB file is compressed to 20 MB.\n\nBenefits:\nFaster transfer.\nReduced storage costs.\nLower bandwidth usage.\n\nTypes:\n\nLossless Compression:\nOriginal data can be fully restored.\nExamples: ZIP, GZIP.\n\nLossy Compression:\nSome information is discarded.\nExamples: JPEG, MP3.\n\nChoosing the correct compression strategy depends on the application.",
+      "code_example": "100 MB File\n   |\nCompression\n   |\n20 MB File",
+      "key_takeaways": [
+        "Compression reduces data size.",
+        "Saves storage costs.",
+        "Improves transfer speeds.",
+        "Lossless preserves data.",
+        "Lossy sacrifices some information."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "System Design",
+      "topic": "Event-Driven Architecture",
+      "difficulty": "Hard",
+      "title": "Event-Driven Architecture",
+      "question": "What is Event-Driven Architecture (EDA)? Explain its components, benefits, and challenges.",
+      "answer": "Event-Driven Architecture (EDA) is a software architecture pattern where components communicate through events. Instead of directly invoking services, systems publish events whenever significant actions occur. Other services subscribe to relevant events and react accordingly. This approach improves scalability, flexibility, and decoupling in distributed systems.",
+      "explanation": "Example:\n\nUser places an order.\n\nOrder Service publishes an event.\n\nPayment Service processes payment.\nInventory Service updates stock.\nNotification Service sends confirmation.\n\nBenefits:\nLoose coupling.\nScalability.\nFlexibility.\nAsynchronous processing.\n\nChallenges:\nDebugging complexity.\nEvent ordering.\nConsistency management.",
+      "code_example": "Order Created Event\n      |\nEvent Bus\n /    |    \\\nPayment Inventory Notification",
+      "key_takeaways": [
+        "EDA uses events for communication.",
+        "Improves scalability.",
+        "Reduces coupling.",
+        "Supports asynchronous processing.",
+        "Common in microservices."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "System Design",
+      "topic": "Streaming Platforms",
+      "difficulty": "Hard",
+      "title": "Apache Kafka",
+      "question": "What is Apache Kafka? Explain its architecture, components, and use cases in distributed systems.",
+      "answer": "Apache Kafka is a distributed event streaming platform designed for high-throughput, fault-tolerant, and scalable real-time data processing. Kafka enables applications to publish, subscribe, store, and process streams of records efficiently. It is widely used for event streaming, log aggregation, real-time analytics, monitoring, and microservices communication.",
+      "explanation": "Core Components:\n\nProducer:\nPublishes messages.\n\nBroker:\nStores messages.\n\nTopic:\nLogical category of messages.\n\nConsumer:\nReads messages.\n\nKafka Cluster:\nMultiple brokers working together.\n\nCompanies use Kafka for:\nReal-time analytics.\nFraud detection.\nActivity tracking.\nLog processing.\nEvent-driven systems.",
+      "code_example": "Producer -> Kafka Topic -> Consumer",
+      "key_takeaways": [
+        "Kafka is a distributed streaming platform.",
+        "Supports high throughput.",
+        "Uses producers and consumers.",
+        "Provides fault tolerance.",
+        "Widely used in modern architectures."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "System Design",
+      "topic": "Data Processing",
+      "difficulty": "Hard",
+      "title": "Batch Processing vs Stream Processing",
+      "question": "Differentiate between Batch Processing and Stream Processing with examples and use cases.",
+      "answer": "Batch Processing and Stream Processing are two approaches used to process data. Batch Processing handles large volumes of accumulated data at scheduled intervals, while Stream Processing processes data continuously as it arrives. Both approaches serve different business requirements and performance objectives.",
+      "explanation": "Batch Processing Example:\n\nDaily payroll processing.\nMonthly reports.\nData warehouse updates.\n\nStream Processing Example:\n\nFraud detection.\nStock trading.\nLive analytics.\nSocial media feeds.\n\nBatch processing is efficient for large periodic jobs.\n\nStream processing is ideal for real-time decision-making and event handling.",
+      "code_example": "Batch -> Daily Reports\nStream -> Real-Time Events",
+      "key_takeaways": [
+        "Batch processes accumulated data.",
+        "Stream processes real-time data.",
+        "Batch is periodic.",
+        "Stream is continuous.",
+        "Used for different business needs."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "System Design",
+      "topic": "Scalability",
+      "difficulty": "Hard",
+      "title": "Hotspot Problem",
+      "question": "What is the Hotspot Problem in Distributed Systems? Explain its causes, impact, and solutions.",
+      "answer": "The Hotspot Problem occurs when a disproportionate amount of traffic, requests, or data is directed toward a specific server, partition, database shard, or resource. As a result, that resource becomes overloaded while others remain underutilized. Hotspots can significantly impact performance, scalability, and availability in distributed systems.",
+      "explanation": "Example:\n\nSuppose user IDs are assigned sequentially.\n\nMost new users are stored in the latest shard.\n\nThat shard receives most writes.\n\nConsequences:\nIncreased latency.\nReduced throughput.\nSystem instability.\n\nSolutions:\nHash-based partitioning.\nLoad balancing.\nConsistent hashing.\nTraffic distribution.\nData rebalancing.",
+      "code_example": "Shard A -> 90% Traffic\nShard B -> 5%\nShard C -> 5%",
+      "key_takeaways": [
+        "Hotspots overload specific resources.",
+        "Cause performance bottlenecks.",
+        "Common in partitioned systems.",
+        "Hashing helps prevent hotspots.",
+        "Traffic balancing is essential."
+      ]
+    },
+    {
+      "id": 55,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Consistent Hashing",
+      "question": "What is Consistent Hashing? Explain how it works and why it is important in scalable systems.",
+      "answer": "Consistent Hashing is a partitioning technique used to distribute data across multiple servers while minimizing data movement when servers are added or removed. Traditional hashing often requires massive redistribution of data whenever infrastructure changes. Consistent hashing solves this problem by organizing nodes and keys on a logical hash ring, allowing only a small portion of data to be reassigned during topology changes.",
+      "explanation": "Without Consistent Hashing:\n\nAdding one server may require redistributing nearly all data.\n\nWith Consistent Hashing:\n\nOnly a small subset of keys moves.\n\nBenefits:\nImproved scalability.\nEfficient server additions.\nEfficient server removals.\nBetter load distribution.\nReduced operational overhead.\n\nUsed by systems such as DynamoDB, Cassandra, Redis clusters, and distributed caches.",
+      "code_example": "Hash Ring\n[Node A] -> [Node B] -> [Node C]",
+      "key_takeaways": [
+        "Consistent hashing reduces data movement.",
+        "Improves scalability.",
+        "Supports dynamic infrastructure.",
+        "Used in distributed databases.",
+        "Helps balance workloads efficiently."
+      ]
+    },
+    {
+      "id": 56,
+      "subject": "System Design",
+      "topic": "Load Balancing",
+      "difficulty": "Hard",
+      "title": "Load Balancing Algorithms",
+      "question": "What are Load Balancing Algorithms? Explain the most commonly used algorithms, their advantages, disadvantages, and practical use cases.",
+      "answer": "Load Balancing Algorithms are strategies used by load balancers to determine how incoming requests should be distributed among backend servers. The primary goal is to ensure efficient resource utilization, prevent server overload, improve availability, and maintain low response times. Different algorithms are suitable for different workloads depending on server capacity, traffic patterns, and system architecture. Modern distributed systems rely heavily on load balancing algorithms to support scalability and fault tolerance.",
+      "explanation": "Common Algorithms:\n\nRound Robin:\nRequests are distributed sequentially among servers.\n\nWeighted Round Robin:\nMore powerful servers receive more requests.\n\nLeast Connections:\nRequests go to the server with the fewest active connections.\n\nIP Hash:\nRequests from the same client are routed consistently to the same server.\n\nLeast Response Time:\nTraffic is directed to the fastest server.\n\nExample:\nIf three servers exist and one server is twice as powerful as the others, Weighted Round Robin ensures it handles more requests. Choosing the right algorithm significantly impacts application performance and resource utilization.",
+      "code_example": "Request1 -> Server1\nRequest2 -> Server2\nRequest3 -> Server3",
+      "key_takeaways": [
+        "Load balancing distributes traffic efficiently.",
+        "Different algorithms suit different workloads.",
+        "Round Robin is simple and popular.",
+        "Least Connections adapts dynamically.",
+        "Proper balancing improves scalability."
+      ]
+    },
+    {
+      "id": 57,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Split Brain Problem",
+      "question": "What is the Split Brain Problem in Distributed Systems? Explain its causes, consequences, and prevention techniques.",
+      "answer": "The Split Brain Problem occurs when a distributed cluster becomes partitioned and multiple nodes incorrectly believe they are the primary leader. As a result, conflicting operations may occur simultaneously, causing data inconsistency, corruption, and system instability. Split brain situations are particularly dangerous in distributed databases, storage systems, and cluster management platforms where consistency is critical.",
+      "explanation": "Imagine a cluster with two servers.\n\nServer A and Server B communicate normally.\n\nA network failure occurs.\n\nServer A believes Server B has failed.\nServer B believes Server A has failed.\n\nBoth become leaders.\n\nNow conflicting writes occur.\n\nSolutions include:\n\nQuorum-based voting.\nConsensus algorithms such as Raft.\nWitness nodes.\nCluster fencing.\n\nPreventing split brain is essential for maintaining consistency and reliability in distributed environments.",
+      "code_example": "Network Failure\n   |\nNode A -> Leader\nNode B -> Leader",
+      "key_takeaways": [
+        "Split brain causes multiple leaders.",
+        "Leads to inconsistent data.",
+        "Usually caused by network partitions.",
+        "Consensus algorithms help prevent it.",
+        "Critical concern in distributed systems."
+      ]
+    },
+    {
+      "id": 58,
+      "subject": "System Design",
+      "topic": "Databases",
+      "difficulty": "Hard",
+      "title": "Quorum-Based Systems",
+      "question": "What is Quorum in Distributed Databases? Explain read quorum, write quorum, and their significance.",
+      "answer": "A Quorum is the minimum number of nodes that must participate in a distributed operation before it is considered successful. Quorum mechanisms help maintain consistency while balancing availability and fault tolerance. Distributed databases use read and write quorums to ensure that data remains synchronized across replicas even when failures occur.",
+      "explanation": "Suppose a database has 5 replicas.\n\nWrite Quorum (W):\nMinimum replicas required to accept a write.\n\nRead Quorum (R):\nMinimum replicas required for a read.\n\nIf:\nN = 5\nW = 3\nR = 3\n\nThen R + W > N.\n\nThis guarantees overlap between reads and writes, improving consistency.\n\nQuorum systems are used in Cassandra, DynamoDB, Riak, and other distributed databases.",
+      "code_example": "Total Nodes = 5\nWrite Quorum = 3\nRead Quorum = 3",
+      "key_takeaways": [
+        "Quorum controls distributed operations.",
+        "Improves consistency.",
+        "Balances availability and reliability.",
+        "Uses read and write thresholds.",
+        "Common in distributed databases."
+      ]
+    },
+    {
+      "id": 59,
+      "subject": "System Design",
+      "topic": "Databases",
+      "difficulty": "Hard",
+      "title": "Database Indexing",
+      "question": "What is Database Indexing? Explain its working, advantages, disadvantages, and practical applications.",
+      "answer": "Database Indexing is a technique used to improve data retrieval performance by creating additional data structures that allow faster searching. Instead of scanning every row in a table, the database can use an index to locate records efficiently. Indexing significantly improves query performance, especially for large datasets containing millions of records.",
+      "explanation": "Imagine a book containing 1,000 pages.\n\nWithout an index, finding a topic requires scanning page by page.\n\nWith an index, you can immediately locate the desired page.\n\nSimilarly, database indexes provide shortcuts for data retrieval.\n\nAdvantages:\nFaster queries.\nReduced search time.\nImproved application performance.\n\nDisadvantages:\nAdditional storage usage.\nSlower write operations.\nMaintenance overhead.\n\nIndexes are fundamental to modern database optimization.",
+      "code_example": "CREATE INDEX idx_user_email\nON Users(email);",
+      "key_takeaways": [
+        "Indexes improve query performance.",
+        "Reduce table scanning.",
+        "Require additional storage.",
+        "Can slow writes slightly.",
+        "Essential for large databases."
+      ]
+    },
+    {
+      "id": 60,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Hard",
+      "title": "Cache Aside Pattern",
+      "question": "What is the Cache Aside Pattern? Explain its workflow, advantages, disadvantages, and use cases.",
+      "answer": "The Cache Aside Pattern is one of the most commonly used caching strategies. In this pattern, the application first checks the cache for data. If the data is found, it is returned immediately. If the data is missing, the application retrieves it from the database, stores it in the cache, and then returns it to the user. This approach allows applications to control cache population and maintain flexibility.",
+      "explanation": "Workflow:\n\nApplication checks cache.\n\nCache Hit:\nReturn data.\n\nCache Miss:\nQuery database.\nStore result in cache.\nReturn data.\n\nAdvantages:\nSimple implementation.\nReduced database load.\nImproved performance.\n\nChallenges:\nCache invalidation.\nCold starts.\nPotential stale data.\n\nCache Aside is widely used in Redis-based architectures.",
+      "code_example": "Check Cache\n   |\nHit -> Return Data\nMiss -> Database -> Cache",
+      "key_takeaways": [
+        "Cache Aside is widely used.",
+        "Applications manage cache population.",
+        "Reduces database load.",
+        "Improves response times.",
+        "Requires cache invalidation strategies."
+      ]
+    },
+    {
+      "id": 61,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Hard",
+      "title": "Write Through Cache",
+      "question": "What is Write Through Caching? Explain how it works and compare it with Cache Aside.",
+      "answer": "Write Through Cache is a caching strategy in which every write operation updates both the cache and the database simultaneously. This ensures that cached data remains consistent with the source of truth. Unlike Cache Aside, where the application manages cache population during reads, Write Through automatically keeps cache contents synchronized after writes.",
+      "explanation": "Workflow:\n\nApplication writes data.\n\nCache updated.\nDatabase updated.\nOperation succeeds.\n\nAdvantages:\nStrong consistency.\nReduced cache misses.\nSimplified reads.\n\nDisadvantages:\nHigher write latency.\nAdditional storage overhead.\n\nWrite Through is useful when read performance is critical and data consistency must be maintained.",
+      "code_example": "Application\n   |\nCache Update\n   |\nDatabase Update",
+      "key_takeaways": [
+        "Write Through updates cache and database together.",
+        "Maintains consistency.",
+        "Improves read performance.",
+        "May increase write latency.",
+        "Useful for read-heavy systems."
+      ]
+    },
+    {
+      "id": 62,
+      "subject": "System Design",
+      "topic": "Caching",
+      "difficulty": "Hard",
+      "title": "Write Back Cache",
+      "question": "What is Write Back Caching? Explain its architecture, benefits, risks, and use cases.",
+      "answer": "Write Back Caching is a caching strategy where write operations are initially stored in the cache and written to the database later, often asynchronously. This approach improves write performance because applications do not wait for database updates to complete. However, it introduces risks related to data durability and consistency if failures occur before data is persisted.",
+      "explanation": "Workflow:\n\nApplication writes data.\n\nCache updated immediately.\n\nDatabase updated later.\n\nAdvantages:\nVery fast writes.\nReduced database pressure.\nImproved throughput.\n\nDisadvantages:\nPotential data loss.\nRecovery complexity.\nConsistency challenges.\n\nWrite Back caching is often used in high-performance systems where speed is prioritized.",
+      "code_example": "Application\n   |\nCache\n   |\nAsync Database Write",
+      "key_takeaways": [
+        "Write Back prioritizes performance.",
+        "Database updates occur later.",
+        "Improves throughput.",
+        "Can risk data loss.",
+        "Requires careful recovery planning."
+      ]
+    },
+    {
+      "id": 63,
+      "subject": "System Design",
+      "topic": "API Design",
+      "difficulty": "Medium",
+      "title": "REST API Design Principles",
+      "question": "What are REST APIs? Explain REST principles, advantages, and best practices.",
+      "answer": "REST (Representational State Transfer) is an architectural style used for designing web services and APIs. REST APIs use standard HTTP methods and resources to enable communication between clients and servers. REST emphasizes simplicity, scalability, stateless communication, and resource-oriented design. It has become one of the most widely adopted API styles in modern software development.",
+      "explanation": "HTTP Methods:\n\nGET -> Retrieve Data.\nPOST -> Create Data.\nPUT -> Update Data.\nDELETE -> Remove Data.\n\nExample:\n\nGET /users\nPOST /orders\nPUT /products/10\nDELETE /comments/5\n\nREST Best Practices:\n\nUse meaningful URLs.\nUse proper HTTP methods.\nMaintain statelessness.\nVersion APIs.\nReturn appropriate status codes.",
+      "code_example": "GET /api/users/101",
+      "key_takeaways": [
+        "REST is resource-oriented.",
+        "Uses standard HTTP methods.",
+        "Supports stateless communication.",
+        "Widely used in web applications.",
+        "Simple and scalable."
+      ]
+    },
+    {
+      "id": 64,
+      "subject": "System Design",
+      "topic": "API Design",
+      "difficulty": "Hard",
+      "title": "GraphQL vs REST",
+      "question": "Compare GraphQL and REST APIs. Explain advantages, disadvantages, and when to use each.",
+      "answer": "GraphQL and REST are two popular approaches for building APIs. REST exposes multiple endpoints representing resources, while GraphQL exposes a single endpoint through which clients can request exactly the data they need. GraphQL reduces over-fetching and under-fetching problems but introduces additional complexity compared to REST.",
+      "explanation": "REST Example:\n\n/users\n/orders\n/products\n\nGraphQL Example:\n\n/graphql\n\nAdvantages of GraphQL:\nFlexible queries.\nReduced network calls.\nEfficient data retrieval.\n\nAdvantages of REST:\nSimplicity.\nMature ecosystem.\nEasy caching.\n\nGraphQL is useful for complex frontends while REST remains popular for general-purpose APIs.",
+      "code_example": "query {\n user(id:1){\n  name\n  email\n }\n}",
+      "key_takeaways": [
+        "REST uses multiple endpoints.",
+        "GraphQL uses a single endpoint.",
+        "GraphQL allows custom queries.",
+        "REST is simpler to implement.",
+        "Choice depends on application needs."
+      ]
+    },
+    {
+      "id": 65,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Distributed Locking",
+      "question": "What is Distributed Locking? Explain its purpose, challenges, and implementation approaches.",
+      "answer": "Distributed Locking is a mechanism used to ensure that only one process, service, or node can access a shared resource at a given time in a distributed environment. Since multiple servers may attempt to modify the same resource concurrently, distributed locks help prevent race conditions, duplicate operations, and data inconsistencies. Distributed locking is widely used in microservices, distributed databases, task schedulers, and financial systems.",
+      "explanation": "Suppose multiple servers process payment requests.\n\nWithout locking:\n\nTwo servers may process the same transaction.\n\nWith distributed locking:\n\nOne server acquires the lock.\nOther servers wait.\n\nAfter completion:\nLock is released.\n\nImplementation Approaches:\n\nRedis Locks.\nZooKeeper.\netcd.\nDatabase Locks.\n\nDistributed locking is essential when strong coordination is required.",
+      "code_example": "Acquire Lock\n   |\nPerform Task\n   |\nRelease Lock",
+      "key_takeaways": [
+        "Distributed locks coordinate shared resources.",
+        "Prevent duplicate processing.",
+        "Avoid race conditions.",
+        "Used in distributed applications.",
+        "Can be implemented using Redis or ZooKeeper."
+      ]
+    },
+    {
+      "id": 66,
+      "subject": "System Design",
+      "topic": "System Design Fundamentals",
+      "difficulty": "Hard",
+      "title": "Designing a URL Shortener",
+      "question": "How would you design a URL Shortener service like Bitly or TinyURL? Explain the architecture, components, database design, scalability considerations, challenges, and optimizations in detail.",
+      "answer": "A URL Shortener is a service that converts long URLs into short, unique URLs that are easier to share, store, and manage. The system accepts a long URL from a user, generates a unique short code, stores the mapping, and redirects users to the original URL whenever the shortened link is accessed. Designing such a system involves handling URL generation, redirection performance, scalability, analytics tracking, reliability, caching, database design, and security considerations. Since popular URL shorteners may process billions of redirects daily, the system must be highly available, fault tolerant, and capable of serving requests with extremely low latency.",
+      "explanation": "Functional Requirements:\n\nCreate short URLs.\nRedirect short URLs.\nTrack click analytics.\nSupport custom aliases.\nSupport URL expiration.\n\nNon-Functional Requirements:\n\nHigh availability.\nLow latency.\nMassive scalability.\nFault tolerance.\n\nArchitecture:\n\nUser -> API Server -> URL Service -> Database\n                        |\n                      Cache\n\nKey Challenges:\n\nGenerating unique IDs.\nPreventing collisions.\nHandling billions of redirects.\nManaging analytics.\n\nOptimization Techniques:\n\nCaching popular URLs.\nDatabase partitioning.\nCDN usage.\nRead replicas.\n\nPopular ID generation techniques include Base62 encoding, Snowflake IDs, and distributed sequence generators.",
+      "code_example": "https://tinyurl.com/AbX92\n      |\nDatabase Mapping\n      |\nhttps://very-long-url-example.com",
+      "key_takeaways": [
+        "URL shorteners map short codes to long URLs.",
+        "Low latency redirection is critical.",
+        "Caching improves performance significantly.",
+        "Unique ID generation is a major challenge.",
+        "Scalability is essential for large deployments."
+      ]
+    },
+    {
+      "id": 67,
+      "subject": "System Design",
+      "topic": "System Design Fundamentals",
+      "difficulty": "Hard",
+      "title": "Designing a Chat Application",
+      "question": "How would you design a real-time chat application like WhatsApp, Telegram, or Messenger? Explain the architecture, scalability requirements, message delivery mechanisms, and reliability considerations.",
+      "answer": "A real-time chat application enables users to exchange messages instantly across devices and platforms. Designing such a system requires support for message delivery, online status tracking, message persistence, media sharing, group conversations, synchronization across devices, and reliable notifications. Since chat platforms may handle billions of messages per day, the architecture must support low latency communication, horizontal scalability, high availability, and fault tolerance. Modern chat systems typically combine WebSockets, message queues, distributed databases, and push notification services.",
+      "explanation": "Core Components:\n\nAuthentication Service.\nUser Service.\nMessage Service.\nNotification Service.\nMedia Service.\nPresence Service.\n\nWorkflow:\n\nUser sends message.\nMessage stored in database.\nMessage pushed to recipient.\nDelivery status updated.\nRead receipts tracked.\n\nChallenges:\n\nOffline users.\nMessage ordering.\nGlobal scale.\nGroup messaging.\nMedia storage.\n\nTechnologies:\n\nWebSockets.\nKafka.\nRedis.\nDistributed Databases.\nPush Notifications.\n\nLarge chat systems must guarantee message durability while maintaining near real-time delivery.",
+      "code_example": "Sender\n  |\nChat Server\n  |\nRecipient",
+      "key_takeaways": [
+        "Chat systems require low latency.",
+        "WebSockets enable real-time communication.",
+        "Message persistence is critical.",
+        "Scalability challenges increase with users.",
+        "Push notifications support offline delivery."
+      ]
+    },
+    {
+      "id": 68,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Designing a News Feed System",
+      "question": "How would you design a News Feed system like Facebook, Instagram, or LinkedIn? Explain feed generation strategies, scalability challenges, and architecture decisions.",
+      "answer": "A News Feed System generates personalized content streams for users based on their connections, interests, and activities. The system must efficiently handle content creation, feed generation, ranking, personalization, caching, and content delivery. Since social media platforms serve hundreds of millions of users, feed systems must process enormous amounts of data while maintaining low latency and high availability.",
+      "explanation": "Feed Generation Approaches:\n\nFan-Out on Write:\nFeed updates generated when content is created.\n\nFan-Out on Read:\nFeed generated when users request it.\n\nArchitecture:\n\nUser Service.\nPost Service.\nFeed Generator.\nRanking Engine.\nCache Layer.\nDatabase.\n\nChallenges:\n\nCelebrity users with millions of followers.\nFeed ranking.\nData freshness.\nStorage costs.\nScalability.\n\nHybrid approaches are often used to balance performance and storage requirements.",
+      "code_example": "Post Created\n      |\nFeed Generator\n      |\nUser Feeds",
+      "key_takeaways": [
+        "News feeds require personalization.",
+        "Fan-Out strategies affect scalability.",
+        "Caching improves performance.",
+        "Ranking algorithms are critical.",
+        "Social networks rely heavily on feed optimization."
+      ]
+    },
+    {
+      "id": 69,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Designing a Distributed Cache",
+      "question": "How would you design a Distributed Cache system like Redis Cluster? Explain architecture, partitioning, replication, and fault tolerance mechanisms.",
+      "answer": "A Distributed Cache is a caching system that spans multiple servers and provides fast access to frequently used data. It is designed to reduce database load, improve response times, and support large-scale applications. Distributed caches partition data across nodes and often implement replication to ensure availability and durability. Such systems must handle node failures, data distribution, consistency, and scalability efficiently.",
+      "explanation": "Core Features:\n\nHigh-speed data access.\nHorizontal scaling.\nReplication.\nAutomatic failover.\nData partitioning.\n\nChallenges:\n\nCache invalidation.\nData consistency.\nNode failures.\nRebalancing.\n\nTechnologies:\n\nRedis Cluster.\nMemcached.\nHazelcast.\n\nDistributed caches are often positioned between application servers and databases to reduce expensive database operations.",
+      "code_example": "App\n |\nDistributed Cache\n |\nDatabase",
+      "key_takeaways": [
+        "Distributed caches improve performance.",
+        "Reduce database traffic.",
+        "Require partitioning and replication.",
+        "Must handle node failures gracefully.",
+        "Common in large-scale applications."
+      ]
+    },
+    {
+      "id": 70,
+      "subject": "System Design",
+      "topic": "Storage Systems",
+      "difficulty": "Hard",
+      "title": "Designing a File Storage Service",
+      "question": "How would you design a cloud file storage service similar to Google Drive or Dropbox?",
+      "answer": "A cloud file storage service allows users to upload, store, synchronize, share, and retrieve files across devices. The system must support massive storage requirements, file versioning, synchronization, sharing permissions, security, backups, and disaster recovery. Scalability and durability are critical because users trust the platform with important personal and business files.",
+      "explanation": "Components:\n\nAuthentication Service.\nFile Metadata Service.\nBlob Storage.\nSearch Service.\nSharing Service.\nNotification Service.\n\nFeatures:\n\nFile Uploads.\nFile Downloads.\nVersion Control.\nSharing Permissions.\nDevice Synchronization.\n\nChallenges:\n\nStorage optimization.\nData durability.\nGlobal distribution.\nLarge file uploads.\nConflict resolution.\n\nFiles are typically stored in object storage while metadata is maintained in databases.",
+      "code_example": "User -> Upload Service -> Blob Storage",
+      "key_takeaways": [
+        "File systems require durable storage.",
+        "Metadata and files are separated.",
+        "Synchronization is a major challenge.",
+        "Versioning improves reliability.",
+        "Object storage is commonly used."
+      ]
+    },
+    {
+      "id": 71,
+      "subject": "System Design",
+      "topic": "Search Systems",
+      "difficulty": "Hard",
+      "title": "Designing a Search Engine",
+      "question": "How would you design a search engine like Google? Explain crawling, indexing, ranking, and query processing components.",
+      "answer": "A Search Engine is a large-scale information retrieval system designed to discover, index, rank, and retrieve relevant documents from massive datasets. Search engines continuously crawl web pages, process content, build indexes, and rank results according to relevance. Designing such a system requires handling enormous data volumes, real-time updates, low latency queries, and sophisticated ranking algorithms.",
+      "explanation": "Major Components:\n\nWeb Crawler.\nIndexer.\nInverted Index.\nRanking Engine.\nQuery Processor.\nStorage Layer.\n\nWorkflow:\n\nCrawl pages.\nExtract content.\nBuild indexes.\nProcess queries.\nRank results.\nReturn responses.\n\nChallenges:\n\nMassive scale.\nFreshness of content.\nSpam detection.\nRanking quality.\nDistributed storage.\n\nSearch engines are among the most complex distributed systems ever built.",
+      "code_example": "Crawler -> Indexer -> Search Engine -> Results",
+      "key_takeaways": [
+        "Search engines rely on indexing.",
+        "Inverted indexes improve performance.",
+        "Ranking determines relevance.",
+        "Crawling discovers content.",
+        "Scale is a major challenge."
+      ]
+    },
+    {
+      "id": 72,
+      "subject": "System Design",
+      "topic": "Recommendation Systems",
+      "difficulty": "Hard",
+      "title": "Designing a Recommendation System",
+      "question": "How would you design a recommendation system like Netflix, YouTube, or Amazon?",
+      "answer": "A Recommendation System suggests relevant content, products, videos, or services to users based on behavior, preferences, and historical interactions. The goal is to increase engagement, improve user experience, and drive business growth. Recommendation systems process massive amounts of user activity data and use machine learning models to predict what users are most likely to consume next.",
+      "explanation": "Inputs:\n\nWatch History.\nSearch History.\nPurchase History.\nUser Preferences.\nRatings.\n\nApproaches:\n\nCollaborative Filtering.\nContent-Based Filtering.\nHybrid Models.\n\nChallenges:\n\nCold Start Problem.\nData Sparsity.\nReal-Time Updates.\nScalability.\n\nRecommendation engines are among the most valuable components in modern digital platforms.",
+      "code_example": "User Activity -> Recommendation Engine -> Suggestions",
+      "key_takeaways": [
+        "Recommendations improve engagement.",
+        "Machine learning plays a major role.",
+        "Uses behavioral data.",
+        "Cold start is a common challenge.",
+        "Widely used in modern platforms."
+      ]
+    },
+    {
+      "id": 73,
+      "subject": "System Design",
+      "topic": "Distributed Systems",
+      "difficulty": "Hard",
+      "title": "Designing a Web Crawler",
+      "question": "How would you design a large-scale Web Crawler capable of crawling billions of web pages?",
+      "answer": "A Web Crawler is a system that automatically discovers and downloads web pages for indexing and analysis. Large-scale crawlers must operate efficiently across billions of pages while respecting website policies, avoiding duplicate content, and maintaining freshness. The architecture must support distributed processing, scheduling, URL management, storage, and fault tolerance.",
+      "explanation": "Components:\n\nURL Frontier.\nScheduler.\nCrawler Workers.\nParser.\nStorage Layer.\nDeduplication System.\n\nChallenges:\n\nMassive scale.\nDuplicate pages.\nRate limiting.\nPoliteness policies.\nFreshness updates.\n\nWeb crawlers form the foundation of search engines and many internet-scale data platforms.",
+      "code_example": "URL Queue -> Crawler -> Parser -> Storage",
+      "key_takeaways": [
+        "Crawlers discover web content.",
+        "Must avoid duplicate crawling.",
+        "Require distributed architecture.",
+        "Support search engine indexing.",
+        "Need scalable URL management."
+      ]
+    },
+    {
+      "id": 74,
+      "subject": "System Design",
+      "topic": "Analytics Systems",
+      "difficulty": "Hard",
+      "title": "Designing a Real-Time Analytics Platform",
+      "question": "How would you design a real-time analytics platform capable of processing millions of events per second?",
+      "answer": "A Real-Time Analytics Platform collects, processes, aggregates, and visualizes events as they occur. Such systems are used for monitoring, business intelligence, fraud detection, operational dashboards, and user behavior analysis. The architecture must support high-throughput ingestion, low-latency processing, fault tolerance, and scalable storage.",
+      "explanation": "Workflow:\n\nEvents Generated.\nEvents Ingested.\nStream Processing.\nAggregation.\nVisualization.\n\nComponents:\n\nKafka.\nStream Processors.\nData Warehouse.\nDashboards.\nAlerting Systems.\n\nChallenges:\n\nHigh throughput.\nData consistency.\nLatency requirements.\nStorage optimization.\n\nReal-time analytics powers many modern business intelligence systems.",
+      "code_example": "Events -> Kafka -> Processing -> Dashboard",
+      "key_takeaways": [
+        "Processes data in real time.",
+        "Supports monitoring and analytics.",
+        "Requires high throughput systems.",
+        "Uses stream processing technologies.",
+        "Critical for data-driven businesses."
+      ]
+    },
+    {
+      "id": 75,
+      "subject": "System Design",
+      "topic": "System Design Fundamentals",
+      "difficulty": "Hard",
+      "title": "How to Approach Any System Design Interview",
+      "question": "What is the proper framework for solving System Design Interview questions? Explain a structured step-by-step approach used by experienced engineers.",
+      "answer": "A System Design Interview evaluates a candidate's ability to design scalable, reliable, maintainable, and efficient software systems. Rather than focusing solely on the final architecture, interviewers assess how candidates analyze requirements, make trade-offs, identify bottlenecks, and communicate design decisions. A structured framework helps candidates approach complex design problems systematically and demonstrates strong engineering thinking.",
+      "explanation": "Recommended Framework:\n\n1. Clarify Requirements\nUnderstand functional and non-functional requirements.\n\n2. Estimate Scale\nUsers, requests, storage, bandwidth.\n\n3. Design High-Level Architecture\nMajor components and interactions.\n\n4. Design Data Model\nDatabases, schemas, storage choices.\n\n5. Address Scalability\nLoad balancing, caching, partitioning.\n\n6. Discuss Reliability\nReplication, failover, backups.\n\n7. Identify Bottlenecks\nPotential performance issues.\n\n8. Propose Optimizations\nCaching, CDNs, queues, indexing.\n\n9. Discuss Trade-Offs\nConsistency vs availability.\nCost vs performance.\nComplexity vs simplicity.\n\n10. Summarize Final Design\nReview architecture and decisions.\n\nFollowing this framework allows engineers to solve most system design problems in a structured and professional manner.",
+      "code_example": "Requirements -> Scale -> HLD -> Database -> Scalability -> Reliability -> Tradeoffs",
+      "key_takeaways": [
+        "Always start with requirements.",
+        "Estimate scale before designing.",
+        "Focus on trade-offs.",
+        "Consider scalability and reliability.",
+        "Use a structured approach consistently."
+      ]
+    }
+  ]
+}

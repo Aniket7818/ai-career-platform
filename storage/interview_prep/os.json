@@ -1,0 +1,977 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: Processes, Threads, Memory Management, File Systems, Concurrency\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "Operating System",
+      "topic": "Introduction",
+      "difficulty": "Easy",
+      "title": "What is an Operating System?",
+      "question": "What is an Operating System? Explain its purpose, functions, importance, and role in a computer system.",
+      "answer": "An Operating System (OS) is system software that acts as an interface between computer hardware and users. It manages all hardware resources, software resources, and provides services required for application programs to execute efficiently.\n\nWithout an Operating System, users would need to interact directly with hardware components, which would be extremely difficult and inefficient.\n\nThe Operating System performs several important functions:\n\n1. Process Management.\n2. Memory Management.\n3. File Management.\n4. Device Management.\n5. Security and Protection.\n6. Resource Allocation.\n7. User Interface Management.\n\nAn Operating System ensures that multiple programs can run efficiently while sharing system resources safely and fairly.\n\nPopular examples of Operating Systems include Windows, Linux, macOS, Android, and iOS.",
+      "explanation": "Consider a computer as a large company.\n\nHardware components such as CPU, RAM, Storage, and Input/Output devices are employees.\n\nThe Operating System acts as the manager who coordinates all employees and ensures work is completed properly.\n\nFor example, when you open Google Chrome, the OS loads the program into memory, allocates CPU time, handles keyboard and mouse input, and displays results on the screen.\n\nWithout the OS, applications would not know how to communicate with hardware.",
+      "code_example": "",
+      "key_takeaways": [
+        "Operating System acts as an interface between users and hardware.",
+        "It manages hardware and software resources.",
+        "Provides services to application programs.",
+        "Responsible for process, memory, and file management.",
+        "Essential for proper functioning of a computer system."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "Operating System",
+      "topic": "Introduction",
+      "difficulty": "Easy",
+      "title": "Functions of an Operating System",
+      "question": "What are the major functions performed by an Operating System?",
+      "answer": "An Operating System performs numerous functions that help a computer system operate efficiently.\n\nMajor functions include:\n\n1. Process Management:\nCreates, schedules, and terminates processes.\n\n2. Memory Management:\nAllocates and deallocates memory for processes.\n\n3. File System Management:\nCreates, deletes, organizes, and manages files.\n\n4. Device Management:\nControls communication with hardware devices through drivers.\n\n5. Security and Protection:\nPrevents unauthorized access and protects resources.\n\n6. Resource Allocation:\nDistributes CPU, memory, and devices among processes.\n\n7. User Interface:\nProvides GUI or CLI for user interaction.\n\n8. Error Detection:\nDetects and handles hardware and software errors.\n\n9. Networking:\nManages communication between systems over networks.\n\nThese functions make the operating system the central coordinator of all system activities.",
+      "explanation": "When a user saves a file:\n\nThe OS allocates disk space.\nCreates file metadata.\nUpdates directory information.\nHandles permissions.\nEnsures data is safely stored.\n\nAll these operations happen automatically through OS services.",
+      "code_example": "",
+      "key_takeaways": [
+        "OS manages processes, memory, files, and devices.",
+        "Provides security and protection.",
+        "Allocates resources efficiently.",
+        "Offers user interfaces.",
+        "Acts as system coordinator."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "Operating System",
+      "topic": "Introduction",
+      "difficulty": "Easy",
+      "title": "Types of Operating Systems",
+      "question": "Explain different types of Operating Systems with examples.",
+      "answer": "Operating Systems can be categorized based on how they manage resources and execute tasks.\n\nTypes of Operating Systems:\n\n1. Batch Operating System:\nProcesses jobs in batches without user interaction.\n\n2. Multiprogramming Operating System:\nAllows multiple programs to reside in memory simultaneously.\n\n3. Time-Sharing Operating System:\nProvides CPU time slices to multiple users.\n\n4. Multiprocessing Operating System:\nUses multiple CPUs for execution.\n\n5. Real-Time Operating System (RTOS):\nProvides guaranteed response times.\n\n6. Distributed Operating System:\nManages multiple computers as a single system.\n\n7. Network Operating System:\nSupports communication across networks.\n\nExamples:\n\nWindows.\nLinux.\nmacOS.\nAndroid.\niOS.\nVxWorks.\nQNX.",
+      "explanation": "An ATM machine typically uses a Real-Time Operating System because transactions must be processed within strict time limits.\n\nA personal laptop commonly uses Windows or Linux, which are time-sharing operating systems.",
+      "code_example": "",
+      "key_takeaways": [
+        "Different OS types serve different purposes.",
+        "RTOS provides guaranteed response times.",
+        "Multiprocessing uses multiple CPUs.",
+        "Distributed OS manages multiple machines.",
+        "Time-sharing supports multiple users."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "Operating System",
+      "topic": "Kernel",
+      "difficulty": "Medium",
+      "title": "What is a Kernel?",
+      "question": "What is a Kernel in an Operating System? Explain its functions, types, and importance.",
+      "answer": "The Kernel is the core component of an Operating System that directly interacts with hardware and manages system resources.\n\nIt acts as a bridge between applications and hardware.\n\nMajor Functions:\n\n1. Process Management.\n2. Memory Management.\n3. Device Management.\n4. Interrupt Handling.\n5. Resource Allocation.\n6. System Call Handling.\n\nTypes of Kernels:\n\nMonolithic Kernel.\nMicrokernel.\nHybrid Kernel.\nExokernel.\nNanokernel.\n\nThe Kernel operates in privileged mode, allowing direct access to hardware resources.\n\nWithout a kernel, applications would be unable to communicate safely with hardware devices.",
+      "explanation": "When a program requests a file to be opened, the request goes through the kernel.\n\nThe kernel checks permissions, communicates with storage devices, retrieves data, and returns it to the application.",
+      "code_example": "",
+      "key_takeaways": [
+        "Kernel is the core of the OS.",
+        "Manages hardware resources.",
+        "Handles system calls.",
+        "Provides abstraction over hardware.",
+        "Runs in privileged mode."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "Operating System",
+      "topic": "System Calls",
+      "difficulty": "Medium",
+      "title": "System Calls",
+      "question": "What are System Calls? Explain their purpose, types, and working mechanism.",
+      "answer": "System Calls are interfaces through which user programs request services from the Operating System kernel.\n\nApplications cannot directly access hardware resources.\n\nInstead, they invoke system calls to perform operations such as:\n\nFile handling.\nProcess creation.\nMemory allocation.\nDevice communication.\nNetwork operations.\n\nTypes of System Calls:\n\n1. Process Control.\n2. File Management.\n3. Device Management.\n4. Information Maintenance.\n5. Communication.\n6. Protection.\n\nSystem calls provide a secure mechanism for applications to access operating system services.",
+      "explanation": "When a user opens a file:\n\nApplication → System Call → Kernel → Disk → File Data\n\nThe application requests the OS to perform the operation through a system call.",
+      "code_example": "open('file.txt');\nread(fd, buffer, size);\nclose(fd);",
+      "key_takeaways": [
+        "System calls provide OS services to applications.",
+        "Applications cannot directly access hardware.",
+        "Used for file, process, and memory operations.",
+        "Act as an interface between user space and kernel space.",
+        "Provide secure hardware access."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "Operating System",
+      "topic": "Process Management",
+      "difficulty": "Easy",
+      "title": "What is a Process?",
+      "question": "What is a Process in an Operating System? Explain its components, characteristics, and importance.",
+      "answer": "A Process is a program that is currently being executed.\n\nWhile a program is a passive entity stored on disk, a process is an active entity executing in memory.\n\nComponents of a Process:\n\nProgram Code.\nProgram Counter.\nCPU Registers.\nStack.\nHeap.\nData Section.\n\nCharacteristics:\n\nDynamic.\nHas its own memory space.\nConsumes CPU resources.\nCan interact with other processes.\n\nThe operating system manages processes to ensure efficient utilization of system resources.",
+      "explanation": "Google Chrome stored on disk is a program.\n\nWhen you launch Chrome, it becomes a process.\n\nThe OS allocates memory, CPU time, and resources for execution.",
+      "code_example": "",
+      "key_takeaways": [
+        "Process is a running program.",
+        "Program is passive, process is active.",
+        "Has memory and CPU context.",
+        "Managed by the OS.",
+        "Fundamental execution unit."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "Operating System",
+      "topic": "Process Management",
+      "difficulty": "Medium",
+      "title": "Process States",
+      "question": "Explain the various states of a process in an Operating System.",
+      "answer": "During execution, a process transitions through several states.\n\nCommon Process States:\n\n1. New:\nProcess is being created.\n\n2. Ready:\nProcess is waiting for CPU allocation.\n\n3. Running:\nProcess is currently executing.\n\n4. Waiting (Blocked):\nProcess is waiting for an event such as I/O completion.\n\n5. Terminated:\nProcess execution has finished.\n\nThe OS scheduler moves processes between these states based on resource availability and events.",
+      "explanation": "Example:\n\nUser opens Chrome.\n\nNew → Ready → Running.\n\nIf Chrome requests data from disk:\n\nRunning → Waiting.\n\nAfter data arrives:\n\nWaiting → Ready → Running.\n\nFinally:\n\nRunning → Terminated.",
+      "code_example": "",
+      "key_takeaways": [
+        "Processes move through multiple states.",
+        "Ready state waits for CPU.",
+        "Running state executes instructions.",
+        "Waiting state waits for events.",
+        "Terminated state indicates completion."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "Operating System",
+      "topic": "Process Management",
+      "difficulty": "Medium",
+      "title": "Process Control Block (PCB)",
+      "question": "What is a Process Control Block (PCB)? Explain its contents and importance.",
+      "answer": "A Process Control Block (PCB) is a data structure maintained by the Operating System that stores information about a process.\n\nWhenever a process is created, the OS creates a PCB.\n\nInformation Stored:\n\nProcess ID (PID).\nProcess State.\nProgram Counter.\nCPU Registers.\nMemory Information.\nScheduling Information.\nI/O Status Information.\nAccounting Information.\n\nThe PCB enables the OS to manage, schedule, suspend, resume, and terminate processes efficiently.",
+      "explanation": "Think of a PCB as a student's record file.\n\nIt contains everything needed to identify and manage the student.\n\nSimilarly, PCB contains all information needed to manage a process.",
+      "code_example": "",
+      "key_takeaways": [
+        "PCB stores process information.",
+        "Created when a process is created.",
+        "Used during scheduling.",
+        "Essential for context switching.",
+        "Managed by the OS kernel."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "Operating System",
+      "topic": "Process Management",
+      "difficulty": "Hard",
+      "title": "Context Switching",
+      "question": "What is Context Switching? Explain its process, overhead, importance, and effects on system performance.",
+      "answer": "Context Switching is the process of saving the state of one process and loading the state of another process so that CPU execution can switch between them.\n\nDuring context switching:\n\nCurrent process state is saved into its PCB.\nNew process state is loaded from its PCB.\nCPU resumes execution of the new process.\n\nContext Information Includes:\n\nCPU Registers.\nProgram Counter.\nMemory Management Information.\nScheduling Information.\n\nAlthough context switching enables multitasking, it introduces overhead because CPU spends time switching rather than executing useful work.",
+      "explanation": "Suppose Chrome is running and the user opens Spotify.\n\nThe OS saves Chrome's execution state.\n\nLoads Spotify's state.\n\nExecutes Spotify.\n\nLater Chrome resumes exactly where it stopped.",
+      "code_example": "",
+      "key_takeaways": [
+        "Switches CPU between processes.",
+        "Requires saving and restoring process state.",
+        "Uses PCB information.",
+        "Enables multitasking.",
+        "Introduces performance overhead."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "Operating System",
+      "topic": "Process Management",
+      "difficulty": "Medium",
+      "title": "Difference Between Program and Process",
+      "question": "Differentiate between a Program and a Process with examples.",
+      "answer": "A Program is a passive collection of instructions stored on disk, whereas a Process is an active instance of a program being executed.\n\nProgram:\n\nStatic.\nStored on storage devices.\nDoes not consume CPU resources.\n\nProcess:\n\nDynamic.\nResides in memory.\nConsumes CPU and memory resources.\nHas execution state.\n\nMultiple processes can be created from the same program.\n\nFor example, opening multiple Chrome windows creates multiple Chrome processes from the same program.",
+      "explanation": "Think of a recipe book and cooking.\n\nThe recipe book is the program.\n\nActually cooking the recipe is the process.\n\nThe recipe itself does nothing until someone executes it.",
+      "code_example": "",
+      "key_takeaways": [
+        "Program is passive, process is active.",
+        "Program resides on disk.",
+        "Process resides in memory.",
+        "Process consumes system resources.",
+        "Multiple processes can originate from one program."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "Operating System",
+      "topic": "Threads",
+      "difficulty": "Easy",
+      "title": "What is a Thread?",
+      "question": "What is a Thread in an Operating System? Explain its structure, characteristics, advantages, and importance.",
+      "answer": "A Thread is the smallest unit of CPU execution within a process. It is often called a lightweight process because threads belonging to the same process share resources such as memory, files, and code while maintaining their own execution context.\n\nEach thread contains:\n\nThread ID.\nProgram Counter.\nRegister Set.\nStack.\n\nShared Resources:\n\nCode Section.\nData Section.\nHeap Memory.\nOpen Files.\n\nAdvantages:\n\nImproved responsiveness.\nEfficient resource utilization.\nFaster context switching.\nBetter parallelism.\n\nModern applications such as web browsers, games, IDEs, and servers heavily use multithreading to improve performance and user experience.",
+      "explanation": "Consider Google Chrome.\n\nOne thread handles user interface.\nAnother thread loads web pages.\nAnother thread plays videos.\n\nEven if one task is busy, other tasks continue working smoothly because multiple threads execute concurrently.",
+      "code_example": "Thread t = new Thread();\nt.start();",
+      "key_takeaways": [
+        "Thread is the smallest execution unit.",
+        "Multiple threads can exist inside a process.",
+        "Threads share process resources.",
+        "They improve responsiveness and performance.",
+        "Widely used in modern applications."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "Operating System",
+      "topic": "Threads",
+      "difficulty": "Medium",
+      "title": "Multithreading",
+      "question": "What is Multithreading? Explain its benefits, challenges, working mechanism, and real-world applications.",
+      "answer": "Multithreading is the ability of a process to execute multiple threads concurrently. It allows a program to perform multiple tasks simultaneously while sharing the same memory space.\n\nBenefits:\n\nImproved responsiveness.\nResource sharing.\nBetter CPU utilization.\nParallel execution.\nReduced overhead compared to processes.\n\nChallenges:\n\nRace conditions.\nDeadlocks.\nSynchronization complexity.\nDebugging difficulties.\n\nApplications:\n\nWeb browsers.\nGame engines.\nDatabase systems.\nOperating systems.\nVideo streaming applications.\n\nMultithreading is one of the most important techniques used to increase application performance on modern multi-core processors.",
+      "explanation": "When watching a YouTube video:\n\nOne thread downloads video data.\nOne thread decodes video frames.\nOne thread handles user input.\nOne thread manages audio playback.\n\nAll these activities happen simultaneously through multithreading.",
+      "code_example": "Runnable task = () -> System.out.println('Running');",
+      "key_takeaways": [
+        "Multithreading allows concurrent execution.",
+        "Threads share memory resources.",
+        "Improves responsiveness.",
+        "Can utilize multiple CPU cores.",
+        "Requires synchronization mechanisms."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "Operating System",
+      "topic": "Threads",
+      "difficulty": "Hard",
+      "title": "User-Level Threads vs Kernel-Level Threads",
+      "question": "Differentiate between User-Level Threads and Kernel-Level Threads in detail.",
+      "answer": "Threads can be implemented either at the user level or kernel level.\n\nUser-Level Threads (ULT):\n\nManaged by user-space libraries.\nKernel is unaware of thread existence.\nFast creation and switching.\nNo kernel involvement required.\n\nAdvantages:\n\nVery fast.\nPortable.\nLow overhead.\n\nDisadvantages:\n\nBlocking system calls may block all threads.\nCannot fully utilize multiple CPUs.\n\nKernel-Level Threads (KLT):\n\nManaged directly by the operating system kernel.\nKernel schedules each thread independently.\n\nAdvantages:\n\nTrue parallel execution.\nBetter multiprocessing support.\nBlocking one thread does not block others.\n\nDisadvantages:\n\nHigher context-switch overhead.\nMore expensive thread operations.\n\nModern operating systems primarily use kernel-level threading models.",
+      "explanation": "Suppose one thread performs disk I/O.\n\nIn user-level threading, all threads may become blocked.\n\nIn kernel-level threading, only that specific thread blocks while others continue executing.",
+      "code_example": "",
+      "key_takeaways": [
+        "ULT managed in user space.",
+        "KLT managed by kernel.",
+        "KLT supports true parallelism.",
+        "ULT has lower overhead.",
+        "Modern OS mostly use KLT."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "Operating System",
+      "topic": "Threads",
+      "difficulty": "Medium",
+      "title": "Benefits of Multithreading",
+      "question": "What are the major benefits of Multithreading in Operating Systems?",
+      "answer": "Multithreading offers numerous advantages that improve application performance and system efficiency.\n\nMajor Benefits:\n\n1. Responsiveness:\nApplications remain interactive while performing background tasks.\n\n2. Resource Sharing:\nThreads share memory and resources efficiently.\n\n3. Economy:\nCreating threads is cheaper than creating processes.\n\n4. Scalability:\nApplications can utilize multiple processors.\n\n5. Better Throughput:\nMore work can be completed in less time.\n\n6. Improved CPU Utilization:\nCPU remains busy while other threads wait for I/O operations.\n\nThese benefits make multithreading essential for modern software development.",
+      "explanation": "Consider a file download application.\n\nOne thread downloads data.\nOne thread updates progress bars.\nOne thread processes user actions.\n\nThe application remains responsive while performing intensive tasks.",
+      "code_example": "",
+      "key_takeaways": [
+        "Improves responsiveness.",
+        "Reduces resource usage.",
+        "Supports parallel execution.",
+        "Improves throughput.",
+        "Enhances user experience."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "Operating System",
+      "topic": "Threads",
+      "difficulty": "Hard",
+      "title": "Multicore Processing",
+      "question": "What is Multicore Processing? Explain its relationship with threads, advantages, challenges, and applications.",
+      "answer": "Multicore Processing refers to the use of multiple CPU cores within a single processor. Each core can execute instructions independently, allowing multiple tasks to run simultaneously.\n\nRelationship with Threads:\n\nSingle-threaded programs use only one core.\nMultithreaded programs can utilize multiple cores.\n\nAdvantages:\n\nHigher performance.\nBetter multitasking.\nReduced execution time.\nLower power consumption compared to multiple CPUs.\n\nChallenges:\n\nSynchronization.\nLoad balancing.\nRace conditions.\nParallel programming complexity.\n\nApplications:\n\nGaming.\nArtificial Intelligence.\nScientific Computing.\nVideo Rendering.\nOperating Systems.\nDatabase Systems.",
+      "explanation": "A quad-core processor can execute four threads simultaneously.\n\nThis significantly improves performance for applications designed to take advantage of parallel processing.",
+      "code_example": "",
+      "key_takeaways": [
+        "Multiple cores execute tasks simultaneously.",
+        "Improves parallelism.",
+        "Works best with multithreaded applications.",
+        "Enhances system performance.",
+        "Foundation of modern computing."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "Operating System",
+      "topic": "CPU Scheduling",
+      "difficulty": "Medium",
+      "title": "First Come First Serve (FCFS) Scheduling",
+      "question": "What is FCFS Scheduling? Explain its working, advantages, disadvantages, and complexity.",
+      "answer": "First Come First Serve (FCFS) is the simplest CPU scheduling algorithm. Processes are executed in the order they arrive in the ready queue.\n\nCharacteristics:\n\nNon-preemptive.\nFIFO based.\nSimple implementation.\n\nAdvantages:\n\nEasy to implement.\nFair arrival order.\nLow overhead.\n\nDisadvantages:\n\nConvoy Effect.\nPoor average waiting time.\nNot suitable for interactive systems.\n\nFCFS is rarely used in modern operating systems but remains important for understanding scheduling fundamentals.",
+      "explanation": "Suppose processes arrive as:\n\nP1 → P2 → P3\n\nExecution Order:\n\nP1 → P2 → P3\n\nRegardless of burst time, processes execute strictly according to arrival sequence.",
+      "code_example": "",
+      "key_takeaways": [
+        "Simplest scheduling algorithm.",
+        "Uses FIFO order.",
+        "Non-preemptive scheduling.",
+        "May cause convoy effect.",
+        "Easy to implement."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "Operating System",
+      "topic": "CPU Scheduling",
+      "difficulty": "Medium",
+      "title": "Shortest Job First (SJF) Scheduling",
+      "question": "What is Shortest Job First Scheduling? Explain its working, advantages, disadvantages, and performance characteristics.",
+      "answer": "Shortest Job First (SJF) Scheduling selects the process with the smallest CPU burst time for execution.\n\nTypes:\n\nNon-Preemptive SJF.\nPreemptive SJF (SRTF).\n\nAdvantages:\n\nMinimum average waiting time.\nEfficient CPU utilization.\nImproved throughput.\n\nDisadvantages:\n\nDifficult to predict burst times.\nMay cause starvation of long processes.\n\nSJF is theoretically optimal for minimizing average waiting time.",
+      "explanation": "Processes:\n\nP1 = 10 ms\nP2 = 3 ms\nP3 = 2 ms\n\nExecution Order:\n\nP3 → P2 → P1\n\nShortest jobs execute first.",
+      "code_example": "",
+      "key_takeaways": [
+        "Executes shortest jobs first.",
+        "Minimizes average waiting time.",
+        "Can cause starvation.",
+        "Requires burst time estimation.",
+        "Efficient scheduling algorithm."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "Operating System",
+      "topic": "CPU Scheduling",
+      "difficulty": "Hard",
+      "title": "Shortest Remaining Time First (SRTF)",
+      "question": "What is Shortest Remaining Time First Scheduling? Explain its working, advantages, disadvantages, and differences from SJF.",
+      "answer": "Shortest Remaining Time First (SRTF) is the preemptive version of Shortest Job First Scheduling.\n\nThe CPU always executes the process with the smallest remaining execution time.\n\nIf a newly arrived process has a shorter remaining time than the currently executing process, preemption occurs.\n\nAdvantages:\n\nExcellent average waiting time.\nBetter responsiveness.\nEfficient CPU utilization.\n\nDisadvantages:\n\nFrequent context switching.\nStarvation possibility.\nHigher scheduling overhead.\n\nSRTF is considered one of the most efficient scheduling algorithms in terms of waiting time.",
+      "explanation": "Suppose:\n\nP1 starts with 10 ms.\n\nAfter 2 ms, P2 arrives with 3 ms.\n\nSince P2 has a shorter remaining time, P1 is interrupted and P2 executes first.",
+      "code_example": "",
+      "key_takeaways": [
+        "Preemptive version of SJF.",
+        "Chooses shortest remaining time.",
+        "Supports process interruption.",
+        "Improves response time.",
+        "May increase context switching."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "Operating System",
+      "topic": "CPU Scheduling",
+      "difficulty": "Medium",
+      "title": "Priority Scheduling",
+      "question": "What is Priority Scheduling? Explain its working, advantages, disadvantages, and starvation issues.",
+      "answer": "Priority Scheduling allocates CPU to the process with the highest priority.\n\nEach process is assigned a priority value.\n\nHigher priority processes execute before lower priority processes.\n\nTypes:\n\nPreemptive Priority Scheduling.\nNon-Preemptive Priority Scheduling.\n\nAdvantages:\n\nSupports important tasks.\nFlexible scheduling.\nSuitable for real-time systems.\n\nDisadvantages:\n\nStarvation of low-priority processes.\nPriority inversion issues.\n\nAging is commonly used to prevent starvation by gradually increasing process priorities.",
+      "explanation": "Suppose:\n\nP1 Priority = 1\nP2 Priority = 5\nP3 Priority = 10\n\nIf higher number means higher priority:\n\nExecution Order:\n\nP3 → P2 → P1",
+      "code_example": "",
+      "key_takeaways": [
+        "CPU assigned based on priority.",
+        "Can be preemptive or non-preemptive.",
+        "Supports critical processes.",
+        "May cause starvation.",
+        "Aging helps prevent starvation."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "Operating System",
+      "topic": "CPU Scheduling",
+      "difficulty": "Hard",
+      "title": "Round Robin Scheduling",
+      "question": "What is Round Robin Scheduling? Explain its working, advantages, disadvantages, time quantum concept, and applications.",
+      "answer": "Round Robin (RR) Scheduling is a preemptive CPU scheduling algorithm designed for time-sharing systems.\n\nEach process receives a fixed time slice called a Time Quantum.\n\nIf the process does not finish within the quantum, it is moved to the end of the ready queue.\n\nAdvantages:\n\nFair scheduling.\nGood responsiveness.\nSuitable for interactive systems.\nPrevents starvation.\n\nDisadvantages:\n\nHigh context-switch overhead.\nPerformance depends heavily on time quantum selection.\n\nIf quantum is too large:\nBehaves like FCFS.\n\nIf quantum is too small:\nExcessive context switching occurs.\n\nRound Robin is widely used in modern time-sharing operating systems.",
+      "explanation": "Processes:\n\nP1, P2, P3\n\nTime Quantum = 2 ms\n\nExecution:\n\nP1 → P2 → P3 → P1 → P2 → P3\n\nThe CPU rotates among processes until all complete.",
+      "code_example": "",
+      "key_takeaways": [
+        "Preemptive scheduling algorithm.",
+        "Uses fixed time quantum.",
+        "Provides fairness.",
+        "Suitable for time-sharing systems.",
+        "Widely used in modern OS."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "Operating System",
+      "topic": "Process Synchronization",
+      "difficulty": "Medium",
+      "title": "What is Process Synchronization?",
+      "question": "What is Process Synchronization? Explain its importance, objectives, challenges, and real-world applications.",
+      "answer": "Process Synchronization is a mechanism used to coordinate the execution of multiple processes or threads that share common resources. Its primary goal is to ensure data consistency and prevent race conditions when concurrent execution occurs.\n\nWhen multiple processes access shared resources simultaneously, unexpected results may occur if proper synchronization is not implemented.\n\nObjectives:\n\nPrevent race conditions.\nMaintain data consistency.\nEnsure mutual exclusion.\nCoordinate process execution.\nAvoid data corruption.\n\nChallenges:\n\nDeadlocks.\nStarvation.\nPriority inversion.\nSynchronization overhead.\n\nApplications:\n\nBanking Systems.\nDatabase Management Systems.\nOperating Systems.\nMulti-threaded Applications.\nReservation Systems.\n\nSynchronization is a fundamental requirement in modern concurrent systems.",
+      "explanation": "Suppose two ATM machines try to withdraw money from the same account simultaneously.\n\nWithout synchronization, both may read the same balance and allow invalid withdrawals.\n\nSynchronization ensures only one operation updates the account at a time.",
+      "code_example": "",
+      "key_takeaways": [
+        "Coordinates concurrent processes.",
+        "Prevents race conditions.",
+        "Maintains data consistency.",
+        "Essential in shared-resource environments.",
+        "Used extensively in operating systems."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "Operating System",
+      "topic": "Process Synchronization",
+      "difficulty": "Hard",
+      "title": "Critical Section Problem",
+      "question": "What is the Critical Section Problem? Explain its requirements, solutions, and significance in operating systems.",
+      "answer": "The Critical Section Problem occurs when multiple processes access shared resources concurrently and at least one process modifies the resource.\n\nThe section of code that accesses shared data is called the Critical Section.\n\nRequirements for a Correct Solution:\n\n1. Mutual Exclusion:\nOnly one process can enter the critical section at a time.\n\n2. Progress:\nProcesses not in the critical section should not block others.\n\n3. Bounded Waiting:\nA process should not wait indefinitely.\n\nCommon Solutions:\n\nMutex Locks.\nSemaphores.\nMonitors.\nPeterson's Algorithm.\nHardware Instructions.\n\nCritical Section management is one of the most important synchronization challenges in operating systems.",
+      "explanation": "Suppose two threads update a shared bank balance.\n\nThread A reads ₹1000.\nThread B reads ₹1000.\n\nBoth deduct ₹500.\n\nFinal balance becomes incorrect.\n\nCritical section protection prevents such inconsistencies.",
+      "code_example": "lock();\n// critical section\nunlock();",
+      "key_takeaways": [
+        "Critical section accesses shared resources.",
+        "Requires mutual exclusion.",
+        "Must guarantee progress.",
+        "Must prevent indefinite waiting.",
+        "Foundation of synchronization."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "Operating System",
+      "topic": "Process Synchronization",
+      "difficulty": "Medium",
+      "title": "Mutex Lock",
+      "question": "What is a Mutex Lock? Explain its working, advantages, disadvantages, and applications.",
+      "answer": "A Mutex (Mutual Exclusion) Lock is a synchronization mechanism used to ensure that only one thread or process accesses a critical section at a time.\n\nWorking:\n\nProcess requests lock.\nIf lock is available, process enters critical section.\nAfter completion, process releases lock.\n\nAdvantages:\n\nSimple implementation.\nPrevents race conditions.\nProvides mutual exclusion.\n\nDisadvantages:\n\nCan cause deadlocks.\nMay lead to waiting overhead.\nImproper usage can reduce performance.\n\nApplications:\n\nDatabase Systems.\nOperating Systems.\nMulti-threaded Applications.\nShared Resource Management.",
+      "explanation": "Think of a bathroom key.\n\nIf one person holds the key, others must wait.\n\nOnly after returning the key can another person enter.\n\nA mutex works similarly for critical sections.",
+      "code_example": "mutex.lock();\n// critical section\nmutex.unlock();",
+      "key_takeaways": [
+        "Provides mutual exclusion.",
+        "Only one thread enters critical section.",
+        "Simple synchronization tool.",
+        "Can cause deadlocks if misused.",
+        "Commonly used in concurrent programming."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "Operating System",
+      "topic": "Process Synchronization",
+      "difficulty": "Hard",
+      "title": "Semaphore",
+      "question": "What is a Semaphore? Explain its types, operations, working mechanism, and applications.",
+      "answer": "A Semaphore is a synchronization primitive used to control access to shared resources.\n\nIt maintains an integer value that can be modified only through atomic operations.\n\nOperations:\n\nwait() or P()\nsignal() or V()\n\nTypes:\n\n1. Binary Semaphore:\nValues 0 or 1.\nFunctions similarly to a mutex.\n\n2. Counting Semaphore:\nCan take multiple values.\nControls access to multiple resource instances.\n\nAdvantages:\n\nFlexible synchronization.\nSupports multiple resources.\nWidely used in operating systems.\n\nDisadvantages:\n\nComplex implementation.\nProgramming errors can cause deadlocks.\n\nSemaphores are one of the most important synchronization mechanisms in OS design.",
+      "explanation": "Suppose a parking lot has 5 parking spaces.\n\nSemaphore value = 5.\n\nEvery arriving car decreases the count.\nEvery departing car increases the count.\n\nWhen count reaches 0, new cars must wait.",
+      "code_example": "wait(semaphore);\n// critical section\nsignal(semaphore);",
+      "key_takeaways": [
+        "Synchronization primitive.",
+        "Uses wait and signal operations.",
+        "Supports resource counting.",
+        "Binary and counting types exist.",
+        "Important OS synchronization mechanism."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "Operating System",
+      "topic": "Process Synchronization",
+      "difficulty": "Hard",
+      "title": "Monitor",
+      "question": "What is a Monitor in Operating Systems? Explain its structure, working, advantages, and applications.",
+      "answer": "A Monitor is a high-level synchronization construct that combines shared data, procedures, and synchronization mechanisms into a single module.\n\nOnly one process can execute inside a monitor at any given time.\n\nComponents:\n\nShared Variables.\nProcedures.\nCondition Variables.\n\nAdvantages:\n\nSimplifies synchronization.\nReduces programming errors.\nProvides automatic mutual exclusion.\nImproves code organization.\n\nApplications:\n\nConcurrent Programming.\nOperating Systems.\nDatabase Systems.\nThread Libraries.\n\nMonitors are considered safer and easier to use than semaphores in many situations.",
+      "explanation": "Instead of manually managing locks and semaphores, a monitor automatically ensures that only one thread accesses protected data at a time.",
+      "code_example": "monitor SharedResource {\n // synchronized methods\n}",
+      "key_takeaways": [
+        "High-level synchronization construct.",
+        "Provides automatic mutual exclusion.",
+        "Uses condition variables.",
+        "Safer than semaphores.",
+        "Widely used in modern languages."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "Operating System",
+      "topic": "Deadlocks",
+      "difficulty": "Medium",
+      "title": "What is a Deadlock?",
+      "question": "What is a Deadlock in Operating Systems? Explain its causes, characteristics, and effects.",
+      "answer": "A Deadlock is a situation where two or more processes are unable to proceed because each process is waiting for a resource held by another process.\n\nAs a result, all involved processes remain blocked indefinitely.\n\nCharacteristics:\n\nProcesses wait forever.\nResources remain locked.\nSystem throughput decreases.\nCPU utilization may drop.\n\nDeadlocks can significantly affect system performance and reliability.\n\nOperating systems use various techniques to prevent, avoid, or recover from deadlocks.",
+      "explanation": "Imagine two people crossing a narrow bridge.\n\nPerson A waits for Person B.\nPerson B waits for Person A.\n\nNeither moves.\n\nThis situation resembles a deadlock in operating systems.",
+      "code_example": "",
+      "key_takeaways": [
+        "Processes wait indefinitely.",
+        "Resources become unavailable.",
+        "System performance suffers.",
+        "Requires detection or prevention.",
+        "Major synchronization challenge."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "Operating System",
+      "topic": "Deadlocks",
+      "difficulty": "Hard",
+      "title": "Necessary Conditions for Deadlock",
+      "question": "Explain the four necessary conditions required for a deadlock to occur.",
+      "answer": "According to Coffman's Conditions, four conditions must hold simultaneously for a deadlock to occur.\n\n1. Mutual Exclusion:\nAt least one resource must be non-shareable.\n\n2. Hold and Wait:\nA process holds one resource while waiting for another.\n\n3. No Preemption:\nResources cannot be forcibly taken away.\n\n4. Circular Wait:\nProcesses form a circular chain where each waits for a resource held by another.\n\nIf any one of these conditions is eliminated, deadlock cannot occur.\n\nThese conditions form the theoretical foundation of deadlock prevention techniques.",
+      "explanation": "Example:\n\nP1 holds Resource A and waits for B.\nP2 holds Resource B and waits for A.\n\nAll four conditions are satisfied.\n\nDeadlock occurs.",
+      "code_example": "",
+      "key_takeaways": [
+        "Four conditions are required.",
+        "Mutual exclusion is necessary.",
+        "Circular waiting creates dependency cycles.",
+        "Breaking any condition prevents deadlock.",
+        "Foundation of deadlock theory."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "Operating System",
+      "topic": "Deadlocks",
+      "difficulty": "Hard",
+      "title": "Deadlock Prevention",
+      "question": "What is Deadlock Prevention? Explain different prevention techniques and their advantages and disadvantages.",
+      "answer": "Deadlock Prevention ensures that at least one of the four necessary deadlock conditions never occurs.\n\nTechniques:\n\n1. Eliminate Mutual Exclusion.\n\n2. Eliminate Hold and Wait.\nRequire processes to request all resources at once.\n\n3. Allow Resource Preemption.\nResources can be taken away when necessary.\n\n4. Prevent Circular Wait.\nImpose resource ordering.\n\nAdvantages:\n\nDeadlocks never occur.\nPredictable behavior.\n\nDisadvantages:\n\nLow resource utilization.\nReduced concurrency.\nPotential resource wastage.\n\nPrevention is safe but may negatively affect performance.",
+      "explanation": "If processes must request all required resources before execution begins, they never hold one resource while waiting for another.\n\nThus, deadlocks cannot occur.",
+      "code_example": "",
+      "key_takeaways": [
+        "Prevents deadlock before occurrence.",
+        "Breaks Coffman conditions.",
+        "Guarantees deadlock-free execution.",
+        "May reduce efficiency.",
+        "Simple theoretical approach."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "Operating System",
+      "topic": "Deadlocks",
+      "difficulty": "Hard",
+      "title": "Deadlock Avoidance",
+      "question": "What is Deadlock Avoidance? Explain its concept, working mechanism, and advantages.",
+      "answer": "Deadlock Avoidance dynamically examines resource allocation requests and grants resources only if the system remains in a safe state.\n\nUnlike prevention, avoidance does not permanently restrict resource allocation.\n\nConcepts:\n\nSafe State.\nUnsafe State.\nResource Allocation Graph.\nBanker's Algorithm.\n\nAdvantages:\n\nBetter resource utilization.\nGreater system flexibility.\nDeadlocks avoided dynamically.\n\nDisadvantages:\n\nRequires advance information.\nComputational overhead.\nComplex implementation.\n\nDeadlock avoidance attempts to balance safety and efficiency.",
+      "explanation": "Before granting a resource request, the OS checks whether doing so could lead to deadlock later.\n\nIf the system remains safe, the request is approved.",
+      "code_example": "",
+      "key_takeaways": [
+        "Avoids unsafe resource allocation.",
+        "Uses safe-state analysis.",
+        "More flexible than prevention.",
+        "Requires resource information.",
+        "Commonly implemented using Banker's Algorithm."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "Operating System",
+      "topic": "Deadlocks",
+      "difficulty": "Hard",
+      "title": "Banker's Algorithm",
+      "question": "What is Banker's Algorithm? Explain its working, safe state concept, advantages, disadvantages, and applications.",
+      "answer": "Banker's Algorithm is a deadlock avoidance algorithm proposed by Edsger Dijkstra. It determines whether granting a resource request will keep the system in a safe state.\n\nConcept:\n\nA system is safe if there exists at least one sequence in which all processes can complete successfully.\n\nData Structures Used:\n\nAvailable Matrix.\nAllocation Matrix.\nMaximum Matrix.\nNeed Matrix.\n\nAlgorithm Steps:\n\nCheck resource request.\nTemporarily allocate resources.\nVerify safe state.\nGrant request if safe.\nOtherwise reject.\n\nAdvantages:\n\nAvoids deadlocks.\nEfficient resource management.\n\nDisadvantages:\n\nRequires maximum resource information.\nNot suitable for highly dynamic systems.\nComplex calculations.\n\nBanker's Algorithm remains one of the most famous deadlock avoidance algorithms.",
+      "explanation": "A banker gives loans only if there is enough money remaining to satisfy all customers eventually.\n\nSimilarly, the OS allocates resources only if every process can still complete safely.",
+      "code_example": "Need = Maximum - Allocation;",
+      "key_takeaways": [
+        "Deadlock avoidance algorithm.",
+        "Uses safe-state checking.",
+        "Requires maximum resource requirements.",
+        "Based on banking analogy.",
+        "Classic operating system algorithm."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "Operating System",
+      "topic": "Memory Management",
+      "difficulty": "Easy",
+      "title": "What is Memory Management?",
+      "question": "What is Memory Management in an Operating System? Explain its objectives, functions, importance, and challenges.",
+      "answer": "Memory Management is one of the most important functions of an Operating System. It is responsible for managing the computer's main memory (RAM) and ensuring that processes receive the memory they need for execution.\n\nObjectives of Memory Management:\n\n1. Efficient Memory Utilization.\n2. Allocation and Deallocation of Memory.\n3. Protection of Process Memory.\n4. Sharing Memory When Required.\n5. Minimizing Memory Waste.\n\nFunctions:\n\nTracking memory usage.\nAllocating memory to processes.\nDeallocating memory after process completion.\nManaging virtual memory.\nHandling memory protection.\n\nChallenges:\n\nFragmentation.\nMemory leaks.\nLimited physical memory.\nConcurrent process execution.\n\nEfficient memory management improves overall system performance and stability.",
+      "explanation": "Suppose multiple applications like Chrome, Spotify, VS Code, and Zoom are running simultaneously.\n\nThe Operating System decides how much memory each application receives and ensures they do not overwrite each other's data.",
+      "code_example": "",
+      "key_takeaways": [
+        "Manages RAM allocation and deallocation.",
+        "Provides memory protection.",
+        "Supports process execution.",
+        "Improves resource utilization.",
+        "Core responsibility of the OS."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "Operating System",
+      "topic": "Memory Management",
+      "difficulty": "Medium",
+      "title": "Contiguous Memory Allocation",
+      "question": "What is Contiguous Memory Allocation? Explain its types, advantages, disadvantages, and applications.",
+      "answer": "Contiguous Memory Allocation is a memory management technique where each process occupies a single continuous block of memory.\n\nTypes:\n\n1. Fixed Partition Allocation.\n2. Dynamic Partition Allocation.\n\nAdvantages:\n\nSimple implementation.\nFast memory access.\nEasy address translation.\n\nDisadvantages:\n\nInternal Fragmentation.\nExternal Fragmentation.\nLimited flexibility.\n\nAllocation Strategies:\n\nFirst Fit.\nBest Fit.\nWorst Fit.\n\nAlthough simple, contiguous allocation suffers from fragmentation problems, leading to inefficient memory utilization.",
+      "explanation": "Imagine a bookshelf where each book must occupy consecutive shelves.\n\nIf free spaces are scattered throughout the shelf, finding a large continuous block becomes difficult despite having enough total space.",
+      "code_example": "",
+      "key_takeaways": [
+        "Processes occupy continuous memory blocks.",
+        "Simple memory management method.",
+        "Can cause fragmentation.",
+        "Uses allocation strategies.",
+        "Early operating systems used this approach."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "Operating System",
+      "topic": "Memory Management",
+      "difficulty": "Medium",
+      "title": "Paging",
+      "question": "What is Paging? Explain its structure, working mechanism, advantages, disadvantages, and importance.",
+      "answer": "Paging is a memory management technique that divides logical memory into fixed-size pages and physical memory into fixed-size frames.\n\nPages and frames have equal sizes.\n\nWhen a process executes:\n\nPages are loaded into available frames.\nPage tables maintain mappings between pages and frames.\n\nAdvantages:\n\nEliminates external fragmentation.\nEfficient memory utilization.\nSupports virtual memory.\nEasy memory allocation.\n\nDisadvantages:\n\nPage table overhead.\nInternal fragmentation.\nAdditional memory required for mappings.\n\nPaging is widely used in modern operating systems because it provides flexibility and efficient memory management.",
+      "explanation": "Suppose memory is divided into 4 KB frames.\n\nA process is divided into 4 KB pages.\n\nThe OS can place pages anywhere in memory and use a page table to keep track of locations.",
+      "code_example": "Physical Address = Frame Number + Offset;",
+      "key_takeaways": [
+        "Divides memory into pages and frames.",
+        "Eliminates external fragmentation.",
+        "Uses page tables.",
+        "Supports virtual memory.",
+        "Widely used in modern OS."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "Operating System",
+      "topic": "Memory Management",
+      "difficulty": "Medium",
+      "title": "Segmentation",
+      "question": "What is Segmentation? Explain its working, advantages, disadvantages, and comparison with paging.",
+      "answer": "Segmentation is a memory management technique that divides a program into logical units called segments.\n\nExamples of Segments:\n\nCode Segment.\nData Segment.\nStack Segment.\nHeap Segment.\n\nUnlike paging, segment sizes can vary.\n\nAdvantages:\n\nLogical program organization.\nEasy sharing and protection.\nMatches programmer's view of memory.\n\nDisadvantages:\n\nExternal fragmentation.\nComplex memory allocation.\n\nSegmentation provides a more natural view of memory but is less efficient than paging in some situations.",
+      "explanation": "Think of a book divided into chapters.\n\nEach chapter represents a segment.\n\nDifferent chapters may have different lengths, just like segments have variable sizes.",
+      "code_example": "Logical Address = Segment Number + Offset;",
+      "key_takeaways": [
+        "Divides programs into logical segments.",
+        "Supports variable-sized memory blocks.",
+        "Easy sharing and protection.",
+        "May suffer external fragmentation.",
+        "Reflects program structure naturally."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "Operating System",
+      "topic": "Memory Management",
+      "difficulty": "Hard",
+      "title": "Fragmentation",
+      "question": "What is Fragmentation? Explain Internal Fragmentation, External Fragmentation, causes, effects, and solutions.",
+      "answer": "Fragmentation refers to memory wastage caused by inefficient allocation and deallocation of memory.\n\nTypes:\n\n1. Internal Fragmentation:\nUnused space exists inside allocated memory blocks.\n\n2. External Fragmentation:\nFree memory exists but is scattered into small pieces.\n\nEffects:\n\nMemory wastage.\nReduced performance.\nAllocation failures.\nPoor utilization.\n\nSolutions:\n\nPaging.\nCompaction.\nSegmentation with Paging.\nMemory Defragmentation.\n\nFragmentation is a major challenge in memory management systems.",
+      "explanation": "Internal Fragmentation:\n\nA process needs 18 KB.\nA 20 KB block is allocated.\n2 KB remains unused.\n\nExternal Fragmentation:\n\nSeveral small free spaces exist but cannot satisfy a large memory request.",
+      "code_example": "",
+      "key_takeaways": [
+        "Causes memory wastage.",
+        "Internal and external types exist.",
+        "Can reduce system performance.",
+        "Paging helps reduce fragmentation.",
+        "Important memory management issue."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "Operating System",
+      "topic": "Virtual Memory",
+      "difficulty": "Medium",
+      "title": "Virtual Memory",
+      "question": "What is Virtual Memory? Explain its concept, working mechanism, advantages, disadvantages, and importance.",
+      "answer": "Virtual Memory is a memory management technique that allows processes to execute even when they are not completely loaded into physical memory.\n\nIt creates the illusion of a larger memory space than actually exists.\n\nWorking:\n\nFrequently used pages remain in RAM.\nLess frequently used pages are stored on disk.\nPages are loaded into memory when needed.\n\nAdvantages:\n\nSupports large applications.\nImproves multiprogramming.\nEfficient memory utilization.\nAllows execution beyond physical RAM limits.\n\nDisadvantages:\n\nPage faults.\nDisk access overhead.\nPossible thrashing.\n\nVirtual Memory is one of the most important concepts in modern operating systems.",
+      "explanation": "Suppose a system has 8 GB RAM.\n\nAn application requiring 12 GB can still run because some pages remain on disk and are loaded only when needed.",
+      "code_example": "",
+      "key_takeaways": [
+        "Provides illusion of large memory.",
+        "Uses disk as secondary memory.",
+        "Supports large applications.",
+        "Improves memory utilization.",
+        "Foundation of modern OS memory management."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "Operating System",
+      "topic": "Virtual Memory",
+      "difficulty": "Medium",
+      "title": "Demand Paging",
+      "question": "What is Demand Paging? Explain its working, advantages, disadvantages, and significance.",
+      "answer": "Demand Paging is a virtual memory technique where pages are loaded into memory only when they are actually required.\n\nInstead of loading an entire process into memory, the OS loads pages on demand.\n\nSteps:\n\nProcess requests a page.\nPage is not found in memory.\nPage fault occurs.\nOS loads page from disk.\nExecution resumes.\n\nAdvantages:\n\nReduced memory usage.\nFaster process startup.\nImproved memory efficiency.\n\nDisadvantages:\n\nPage fault overhead.\nDisk access delays.\n\nDemand Paging is widely used because many program pages are never accessed during execution.",
+      "explanation": "Imagine reading a textbook.\n\nInstead of carrying the entire library, you bring only the chapters needed at the moment.\n\nDemand paging follows the same principle.",
+      "code_example": "",
+      "key_takeaways": [
+        "Loads pages only when needed.",
+        "Improves memory efficiency.",
+        "Uses page faults.",
+        "Reduces initial loading time.",
+        "Common virtual memory technique."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "Operating System",
+      "topic": "Virtual Memory",
+      "difficulty": "Medium",
+      "title": "Page Fault",
+      "question": "What is a Page Fault? Explain its types, causes, handling process, and impact on system performance.",
+      "answer": "A Page Fault occurs when a process attempts to access a page that is not currently present in physical memory.\n\nThe operating system must load the page from secondary storage before execution can continue.\n\nTypes:\n\nMinor Page Fault.\nMajor Page Fault.\nInvalid Page Fault.\n\nPage Fault Handling Steps:\n\nDetect fault.\nPause process.\nLocate required page on disk.\nLoad page into memory.\nUpdate page table.\nResume execution.\n\nFrequent page faults can significantly degrade system performance.",
+      "explanation": "Suppose a page needed by a process is currently stored on disk.\n\nThe CPU requests the page.\n\nThe OS loads the page into RAM before execution continues.",
+      "code_example": "",
+      "key_takeaways": [
+        "Occurs when page is absent from memory.",
+        "Triggers OS intervention.",
+        "May require disk access.",
+        "Affects performance.",
+        "Fundamental virtual memory concept."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "Operating System",
+      "topic": "Virtual Memory",
+      "difficulty": "Hard",
+      "title": "Page Replacement Algorithms",
+      "question": "What are Page Replacement Algorithms? Explain FIFO, LRU, Optimal, and their significance.",
+      "answer": "When memory becomes full and a new page must be loaded, the operating system uses a Page Replacement Algorithm to determine which page should be removed.\n\nPopular Algorithms:\n\n1. FIFO (First In First Out):\nRemoves oldest page.\n\n2. LRU (Least Recently Used):\nRemoves least recently accessed page.\n\n3. Optimal Page Replacement:\nRemoves page that will not be used for the longest future period.\n\nComparison:\n\nFIFO:\nSimple but may perform poorly.\n\nLRU:\nPractical and widely used.\n\nOptimal:\nBest theoretical performance but impossible to implement perfectly.\n\nPage replacement significantly affects virtual memory performance.",
+      "explanation": "Suppose memory has only three frames.\n\nWhen a fourth page arrives, one existing page must be removed.\n\nThe replacement algorithm decides which page should leave memory.",
+      "code_example": "",
+      "key_takeaways": [
+        "Used when memory is full.",
+        "Determines page eviction strategy.",
+        "FIFO is simplest.",
+        "LRU is widely used.",
+        "Optimal provides theoretical best performance."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "Operating System",
+      "topic": "Virtual Memory",
+      "difficulty": "Hard",
+      "title": "Thrashing",
+      "question": "What is Thrashing? Explain its causes, effects, detection methods, and prevention techniques.",
+      "answer": "Thrashing is a condition where the operating system spends more time handling page faults and swapping pages than executing actual processes.\n\nCauses:\n\nInsufficient physical memory.\nExcessive multiprogramming.\nHigh page fault rate.\nPoor memory allocation.\n\nEffects:\n\nSevere performance degradation.\nLow CPU utilization.\nExcessive disk activity.\nSlow application response.\n\nPrevention:\n\nReduce degree of multiprogramming.\nAllocate more memory.\nUse working-set models.\nImprove page replacement policies.\n\nThrashing is one of the most serious virtual memory performance problems.",
+      "explanation": "Imagine constantly searching for books in storage instead of actually reading them.\n\nSimilarly, during thrashing, the system spends most of its time moving pages between RAM and disk.",
+      "code_example": "",
+      "key_takeaways": [
+        "Excessive paging activity.",
+        "Reduces system performance drastically.",
+        "Caused by insufficient memory.",
+        "Increases page fault rate.",
+        "Must be controlled for efficient execution."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "Operating System",
+      "topic": "File Systems",
+      "difficulty": "Easy",
+      "title": "What is a File System?",
+      "question": "What is a File System? Explain its purpose, structure, functions, and importance in an Operating System.",
+      "answer": "A File System is the method used by an Operating System to organize, store, manage, and retrieve data on storage devices such as hard disks, SSDs, USB drives, and memory cards.\n\nWithout a file system, data would exist as raw bits on storage devices, making retrieval extremely difficult.\n\nFunctions of a File System:\n\nFile Creation.\nFile Deletion.\nFile Naming.\nFile Access.\nFile Protection.\nStorage Management.\nDirectory Management.\n\nPopular File Systems:\n\nNTFS (Windows).\nFAT32.\nexFAT.\nEXT4 (Linux).\nAPFS (macOS).\n\nA file system provides a structured and efficient way to manage data storage.",
+      "explanation": "Imagine a library without shelves, labels, or categories.\n\nFinding a book would be almost impossible.\n\nA file system acts like the library organization system that helps locate and manage files efficiently.",
+      "code_example": "",
+      "key_takeaways": [
+        "Organizes and manages data storage.",
+        "Supports file operations.",
+        "Provides structured data access.",
+        "Essential for storage devices.",
+        "Different operating systems use different file systems."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "Operating System",
+      "topic": "File Systems",
+      "difficulty": "Medium",
+      "title": "File Allocation Methods",
+      "question": "Explain different File Allocation Methods used in Operating Systems along with their advantages and disadvantages.",
+      "answer": "File Allocation Methods determine how files are stored on secondary storage devices.\n\nMain Methods:\n\n1. Contiguous Allocation.\n2. Linked Allocation.\n3. Indexed Allocation.\n\nContiguous Allocation:\n\nFile stored in consecutive blocks.\n\nAdvantages:\nFast access.\nSimple implementation.\n\nDisadvantages:\nExternal fragmentation.\nDifficult file growth.\n\nLinked Allocation:\n\nBlocks linked together.\n\nAdvantages:\nNo external fragmentation.\nEasy file expansion.\n\nDisadvantages:\nSlow random access.\nPointer overhead.\n\nIndexed Allocation:\n\nUses index blocks containing pointers.\n\nAdvantages:\nEfficient random access.\nFlexible storage.\n\nDisadvantages:\nAdditional index storage required.\n\nModern file systems commonly use variations of indexed allocation.",
+      "explanation": "Think of storing pages of a book.\n\nContiguous Allocation keeps all pages together.\n\nLinked Allocation chains pages using references.\n\nIndexed Allocation uses a table that points to every page location.",
+      "code_example": "",
+      "key_takeaways": [
+        "Determines file storage layout.",
+        "Three main allocation methods exist.",
+        "Each method has trade-offs.",
+        "Indexed allocation is widely used.",
+        "Impacts file access performance."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "Operating System",
+      "topic": "File Systems",
+      "difficulty": "Medium",
+      "title": "Directory Structures",
+      "question": "What are Directory Structures? Explain different directory organization methods in Operating Systems.",
+      "answer": "A Directory Structure is the method used by an Operating System to organize files and directories.\n\nTypes:\n\n1. Single-Level Directory.\n2. Two-Level Directory.\n3. Tree-Structured Directory.\n4. Acyclic Graph Directory.\n5. General Graph Directory.\n\nSingle-Level:\n\nAll files stored in one directory.\n\nTwo-Level:\n\nSeparate directory for each user.\n\nTree Structure:\n\nHierarchical organization.\nMost common approach.\n\nGraph Structures:\n\nAllow shared files and directories.\n\nModern operating systems mainly use tree-structured directories due to their flexibility and ease of management.",
+      "explanation": "Windows and Linux organize files using folder hierarchies.\n\nFor example:\n\nDocuments\n ├── College\n ├── Projects\n └── Notes\n\nThis is a tree-structured directory.",
+      "code_example": "",
+      "key_takeaways": [
+        "Organizes files and folders.",
+        "Tree structure is most common.",
+        "Supports hierarchical storage.",
+        "Improves file management.",
+        "Used by modern operating systems."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "Operating System",
+      "topic": "File Systems",
+      "difficulty": "Hard",
+      "title": "Inode in Linux",
+      "question": "What is an Inode? Explain its structure, contents, importance, and role in Linux file systems.",
+      "answer": "An Inode (Index Node) is a data structure used in Linux file systems to store metadata about files.\n\nEvery file has an inode.\n\nInformation Stored:\n\nFile Size.\nOwner ID.\nGroup ID.\nPermissions.\nCreation Time.\nModification Time.\nAccess Time.\nBlock Locations.\n\nInformation Not Stored:\n\nFile Name.\n\nThe file name is stored separately in directory entries.\n\nInodes play a critical role in locating and managing files efficiently.",
+      "explanation": "Suppose a file named report.pdf exists.\n\nThe filename points to an inode.\n\nThe inode contains all metadata and disk block locations required to access the file.",
+      "code_example": "ls -i",
+      "key_takeaways": [
+        "Stores file metadata.",
+        "Every file has an inode.",
+        "Filename is not stored in inode.",
+        "Important in Linux file systems.",
+        "Used for file management."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "Operating System",
+      "topic": "File Systems",
+      "difficulty": "Medium",
+      "title": "File Protection Mechanisms",
+      "question": "What is File Protection? Explain various file protection methods used in Operating Systems.",
+      "answer": "File Protection refers to mechanisms used to prevent unauthorized access, modification, deletion, or misuse of files.\n\nProtection Methods:\n\nAccess Control Lists (ACLs).\nFile Permissions.\nPasswords.\nEncryption.\nUser Authentication.\nRole-Based Access Control.\n\nCommon Permission Types:\n\nRead.\nWrite.\nExecute.\n\nAdvantages:\n\nImproved security.\nData integrity.\nControlled access.\nProtection against unauthorized users.\n\nFile protection is essential in multi-user systems where multiple users share storage resources.",
+      "explanation": "Linux permissions:\n\nrwxr-xr--\n\nOwner:\nRead, Write, Execute.\n\nGroup:\nRead, Execute.\n\nOthers:\nRead Only.",
+      "code_example": "chmod 755 file.txt",
+      "key_takeaways": [
+        "Protects files from unauthorized access.",
+        "Uses permissions and access controls.",
+        "Improves security.",
+        "Supports multi-user systems.",
+        "Important for data protection."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "Operating System",
+      "topic": "Disk Scheduling",
+      "difficulty": "Easy",
+      "title": "What is Disk Scheduling?",
+      "question": "What is Disk Scheduling? Explain its objectives, importance, and role in operating systems.",
+      "answer": "Disk Scheduling is the process of determining the order in which disk I/O requests are serviced.\n\nSince disk access is relatively slow compared to CPU and memory operations, efficient scheduling is important.\n\nObjectives:\n\nReduce Seek Time.\nImprove Throughput.\nMinimize Response Time.\nIncrease Disk Utilization.\nProvide Fairness.\n\nCommon Algorithms:\n\nFCFS.\nSSTF.\nSCAN.\nC-SCAN.\nLOOK.\nC-LOOK.\n\nDisk scheduling significantly affects overall system performance.",
+      "explanation": "Imagine an elevator receiving requests from different floors.\n\nThe order in which requests are served affects total travel time.\n\nDisk scheduling works similarly for disk head movement.",
+      "code_example": "",
+      "key_takeaways": [
+        "Manages disk I/O requests.",
+        "Improves performance.",
+        "Reduces seek time.",
+        "Enhances throughput.",
+        "Important storage optimization technique."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "Operating System",
+      "topic": "Disk Scheduling",
+      "difficulty": "Medium",
+      "title": "FCFS Disk Scheduling",
+      "question": "Explain FCFS Disk Scheduling Algorithm along with its advantages, disadvantages, and working process.",
+      "answer": "First Come First Serve (FCFS) Disk Scheduling services disk requests in the order they arrive.\n\nCharacteristics:\n\nSimple implementation.\nFair scheduling.\nNo request starvation.\n\nAdvantages:\n\nEasy to understand.\nFair request handling.\nLow overhead.\n\nDisadvantages:\n\nHigh seek time.\nPoor throughput.\nInefficient disk head movement.\n\nAlthough simple, FCFS often performs poorly compared to more advanced disk scheduling algorithms.",
+      "explanation": "Requests:\n\n98, 183, 37, 122\n\nDisk head services them exactly in arrival order regardless of physical location.",
+      "code_example": "",
+      "key_takeaways": [
+        "Services requests in arrival order.",
+        "Simple implementation.",
+        "No starvation.",
+        "Can cause high seek time.",
+        "Baseline disk scheduling algorithm."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "Operating System",
+      "topic": "Disk Scheduling",
+      "difficulty": "Medium",
+      "title": "Shortest Seek Time First (SSTF)",
+      "question": "What is SSTF Disk Scheduling? Explain its working, advantages, disadvantages, and performance characteristics.",
+      "answer": "Shortest Seek Time First (SSTF) selects the disk request closest to the current head position.\n\nThe objective is to minimize head movement and seek time.\n\nAdvantages:\n\nImproved throughput.\nReduced seek time.\nBetter performance than FCFS.\n\nDisadvantages:\n\nPossible starvation of distant requests.\nComplex implementation.\n\nSSTF generally performs better than FCFS but may be unfair to some requests.",
+      "explanation": "Suppose current head position is 50.\n\nRequests:\n\n45, 90, 120, 47\n\nSSTF selects 47 first because it requires minimum movement.",
+      "code_example": "",
+      "key_takeaways": [
+        "Chooses nearest request.",
+        "Reduces seek time.",
+        "Better than FCFS.",
+        "May cause starvation.",
+        "Improves disk efficiency."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "Operating System",
+      "topic": "Disk Scheduling",
+      "difficulty": "Hard",
+      "title": "SCAN Disk Scheduling",
+      "question": "What is SCAN Disk Scheduling? Explain its working, advantages, disadvantages, and comparison with SSTF.",
+      "answer": "SCAN Disk Scheduling, also known as the Elevator Algorithm, moves the disk head in one direction servicing requests until it reaches the end, then reverses direction.\n\nWorking:\n\nMove in one direction.\nService all requests encountered.\nReach end.\nReverse direction.\nRepeat.\n\nAdvantages:\n\nFair scheduling.\nReduced starvation.\nGood throughput.\n\nDisadvantages:\n\nSome requests may wait longer.\nAdditional movement to disk ends.\n\nSCAN provides a balance between fairness and performance.",
+      "explanation": "Like an elevator moving upward servicing all floors before moving downward, the disk head services requests while traveling in a single direction.",
+      "code_example": "",
+      "key_takeaways": [
+        "Also called Elevator Algorithm.",
+        "Services requests while moving in one direction.",
+        "Reduces starvation.",
+        "Provides balanced performance.",
+        "Widely used disk scheduling method."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "Operating System",
+      "topic": "Disk Scheduling",
+      "difficulty": "Hard",
+      "title": "C-SCAN Disk Scheduling",
+      "question": "What is C-SCAN Disk Scheduling? Explain its working, advantages, disadvantages, and practical significance.",
+      "answer": "Circular SCAN (C-SCAN) is a variation of SCAN where the disk head moves in only one direction.\n\nAfter reaching the last cylinder, the head immediately returns to the beginning without servicing requests during the return trip.\n\nAdvantages:\n\nUniform waiting time.\nBetter fairness.\nPredictable performance.\n\nDisadvantages:\n\nAdditional return movement.\nSlightly higher overhead.\n\nC-SCAN is often preferred in systems where fairness among requests is important.",
+      "explanation": "Imagine a circular bus route.\n\nThe bus moves in one direction only.\n\nAfter completing the route, it starts again from the beginning.\n\nC-SCAN follows a similar approach for disk requests.",
+      "code_example": "",
+      "key_takeaways": [
+        "Circular version of SCAN.",
+        "Provides more uniform waiting time.",
+        "Improves fairness.",
+        "Moves in one direction only.",
+        "Popular disk scheduling algorithm."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "Operating System",
+      "topic": "Inter Process Communication (IPC)",
+      "difficulty": "Hard",
+      "title": "Inter Process Communication (IPC)",
+      "question": "What is Inter Process Communication (IPC)? Explain its purpose, mechanisms, advantages, disadvantages, and real-world applications.",
+      "answer": "Inter Process Communication (IPC) refers to the mechanisms provided by an Operating System that allow processes to communicate and exchange data with each other. Since processes have separate memory spaces, they cannot directly access each other's data. IPC provides safe and controlled communication between them.\n\nWhy IPC is Needed:\n\nData Sharing.\nProcess Coordination.\nSynchronization.\nInformation Exchange.\nResource Sharing.\n\nCommon IPC Mechanisms:\n\n1. Shared Memory.\n2. Pipes.\n3. Named Pipes (FIFOs).\n4. Message Queues.\n5. Sockets.\n6. Signals.\n7. Semaphores.\n\nAdvantages:\n\nEfficient communication.\nSupports distributed systems.\nEnables process cooperation.\nImproves application modularity.\n\nDisadvantages:\n\nSynchronization complexity.\nSecurity concerns.\nAdditional overhead.\n\nIPC is widely used in operating systems, client-server applications, databases, browsers, and distributed computing systems.",
+      "explanation": "Suppose a web browser consists of multiple processes.\n\nOne process renders web pages.\nAnother handles networking.\nAnother manages browser extensions.\n\nThese processes communicate using IPC mechanisms to work together as a single application.",
+      "code_example": "pipe(fd);\nwrite(fd[1], message, size);\nread(fd[0], buffer, size);",
+      "key_takeaways": [
+        "IPC enables communication between processes.",
+        "Processes cannot directly access each other's memory.",
+        "Shared Memory and Pipes are common IPC methods.",
+        "Important for multitasking systems.",
+        "Widely used in modern software architecture."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "Operating System",
+      "topic": "Kernel Architecture",
+      "difficulty": "Hard",
+      "title": "Monolithic Kernel",
+      "question": "What is a Monolithic Kernel? Explain its architecture, working mechanism, advantages, disadvantages, and examples.",
+      "answer": "A Monolithic Kernel is a kernel architecture where all operating system services run in kernel space as a single large program. Components such as process management, memory management, file systems, device drivers, and networking are all part of the kernel.\n\nCharacteristics:\n\nSingle large kernel.\nDirect communication between components.\nAll services execute in kernel mode.\n\nAdvantages:\n\nHigh performance.\nFast communication.\nEfficient execution.\nLess overhead.\n\nDisadvantages:\n\nLarge codebase.\nDifficult maintenance.\nA bug in one module can crash the entire system.\nSecurity risks.\n\nExamples:\n\nLinux.\nTraditional UNIX systems.\n\nMonolithic kernels prioritize performance and efficiency but can be harder to maintain compared to microkernels.",
+      "explanation": "Imagine a company where every department works in the same building and can directly communicate with each other.\n\nCommunication is fast, but if a major issue occurs inside the building, the entire company may be affected.\n\nThis is similar to a monolithic kernel.",
+      "code_example": "",
+      "key_takeaways": [
+        "All OS services run in kernel space.",
+        "Provides high performance.",
+        "Fast communication between components.",
+        "Large and complex architecture.",
+        "Linux is a popular monolithic kernel."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "Operating System",
+      "topic": "Kernel Architecture",
+      "difficulty": "Hard",
+      "title": "Microkernel",
+      "question": "What is a Microkernel? Explain its architecture, advantages, disadvantages, and differences from a Monolithic Kernel.",
+      "answer": "A Microkernel is an operating system architecture that keeps only essential services inside the kernel while moving other services to user space.\n\nCore Kernel Responsibilities:\n\nProcess Management.\nMemory Management.\nInter Process Communication.\nBasic Scheduling.\n\nServices Moved to User Space:\n\nDevice Drivers.\nFile Systems.\nNetworking Services.\nSystem Services.\n\nAdvantages:\n\nBetter security.\nImproved reliability.\nModular design.\nEasier maintenance.\nFault isolation.\n\nDisadvantages:\n\nHigher communication overhead.\nReduced performance compared to monolithic kernels.\n\nExamples:\n\nMINIX.\nQNX.\nMach.\n\nMicrokernels prioritize modularity, security, and maintainability over raw performance.",
+      "explanation": "Imagine a company where only essential management stays in headquarters while all departments work in separate offices.\n\nIf one department crashes, the entire company continues functioning.\n\nThis resembles the microkernel architecture.",
+      "code_example": "",
+      "key_takeaways": [
+        "Keeps kernel small.",
+        "Moves services to user space.",
+        "Improves security and reliability.",
+        "Provides modular architecture.",
+        "Used in embedded and real-time systems."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "Operating System",
+      "topic": "Processes and Threads",
+      "difficulty": "Hard",
+      "title": "Difference Between Process and Thread",
+      "question": "Differentiate between a Process and a Thread in detail. Explain their characteristics, memory usage, execution model, advantages, disadvantages, and practical applications.",
+      "answer": "A Process is an independent program in execution, whereas a Thread is the smallest unit of execution within a process.\n\nProcess Characteristics:\n\nIndependent execution.\nSeparate memory space.\nSeparate resources.\nHigher creation overhead.\nSlower context switching.\n\nThread Characteristics:\n\nLightweight execution unit.\nShares memory with other threads.\nLower creation overhead.\nFaster context switching.\nBetter communication.\n\nComparison:\n\nMemory:\nProcess → Separate Memory.\nThread → Shared Memory.\n\nCommunication:\nProcess → IPC Required.\nThread → Direct Memory Sharing.\n\nCreation Cost:\nProcess → High.\nThread → Low.\n\nSwitching Cost:\nProcess → Expensive.\nThread → Faster.\n\nApplications:\n\nProcesses:\nChrome Browser Processes.\nOperating System Services.\nIndependent Applications.\n\nThreads:\nWeb Servers.\nGames.\nDatabase Systems.\nVideo Streaming Applications.\n\nUnderstanding the difference between processes and threads is one of the most important operating system interview topics.",
+      "explanation": "Suppose Google Chrome is running.\n\nChrome itself is a process.\n\nInside Chrome:\n\nOne thread renders the webpage.\nOne thread handles network requests.\nOne thread manages JavaScript execution.\n\nAll threads work together inside the same process while sharing resources.",
+      "code_example": "",
+      "key_takeaways": [
+        "Process is an independent execution unit.",
+        "Thread is a lightweight execution unit inside a process.",
+        "Processes have separate memory spaces.",
+        "Threads share memory and resources.",
+        "Threads are faster and more efficient than processes."
+      ]
+    }
+  ]
+}

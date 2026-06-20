@@ -17,6 +17,8 @@ config/credentials/*.key
 !/tmp/storage/.keep
 /storage/*
 !/storage/.keep
+!/storage/interview_prep/
+!/storage/interview_prep/*.json
 /public/assets
 .byebug_history
 /vendor/bundle

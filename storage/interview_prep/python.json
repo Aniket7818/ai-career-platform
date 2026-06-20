@@ -1,0 +1,1085 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: Core Python, Data Structures, OOP, Generators, Decorators\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "Python",
+      "topic": "Introduction to Python",
+      "difficulty": "Easy",
+      "title": "What is Python?",
+      "question": "What is Python? Explain its features, advantages, applications, and why it is one of the most popular programming languages.",
+      "answer": "Python is a high-level, interpreted, general-purpose programming language created by Guido van Rossum and first released in 1991. It is designed with a strong emphasis on readability, simplicity, and developer productivity. Python allows programmers to write clear and concise code while solving complex problems efficiently. Because of its easy syntax, extensive standard library, large community support, and cross-platform compatibility, Python has become one of the most widely used programming languages in the world. It is used in web development, data science, machine learning, artificial intelligence, automation, cybersecurity, cloud computing, scripting, game development, and scientific computing.",
+      "explanation": "Imagine learning to communicate with a computer.\n\nSome programming languages require many complex rules and syntax.\n\nPython was designed to be simple and human-readable.\n\nFor example, printing a message in Python requires only:\n\nprint('Hello World')\n\nThis simplicity allows beginners to learn programming quickly while also enabling professionals to build large-scale systems.\n\nMajor companies such as Google, Netflix, Spotify, Instagram, Dropbox, OpenAI, and NASA use Python in various applications.\n\nIts popularity comes from its balance between simplicity and power, making it suitable for both beginners and experienced developers.",
+      "code_example": "print('Hello, World!')",
+      "key_takeaways": [
+        "Python is a high-level interpreted language.",
+        "It is easy to learn and read.",
+        "Used in AI, web development, automation, and data science.",
+        "Has a large community and ecosystem.",
+        "One of the most popular programming languages globally."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "Python",
+      "topic": "Python Fundamentals",
+      "difficulty": "Easy",
+      "title": "Features of Python",
+      "question": "What are the major features of Python? Explain each feature in detail with examples.",
+      "answer": "Python provides numerous features that make it a preferred programming language for developers worldwide. It is simple, readable, interpreted, dynamically typed, object-oriented, portable, extensible, and supported by a massive ecosystem of libraries and frameworks. These features reduce development time and increase productivity while making software easier to maintain and scale.",
+      "explanation": "Important Features:\n\nSimple Syntax:\nEasy to learn and understand.\n\nInterpreted Language:\nNo separate compilation step required.\n\nObject-Oriented:\nSupports classes and objects.\n\nCross-Platform:\nRuns on Windows, Linux, and macOS.\n\nLarge Standard Library:\nProvides built-in modules for many tasks.\n\nDynamic Typing:\nNo need to declare variable types.\n\nOpen Source:\nFree to use and modify.\n\nBecause of these features, Python is commonly chosen for rapid development and prototyping.",
+      "code_example": "name = 'Aniket'\nage = 22\nprint(name, age)",
+      "key_takeaways": [
+        "Python has simple syntax.",
+        "It is dynamically typed.",
+        "Supports object-oriented programming.",
+        "Runs on multiple platforms.",
+        "Provides a rich standard library."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "Python",
+      "topic": "Python Fundamentals",
+      "difficulty": "Easy",
+      "title": "Python Variables",
+      "question": "What are Variables in Python? Explain how variables work and discuss naming conventions and best practices.",
+      "answer": "A variable is a named memory location used to store data in a program. In Python, variables are created automatically when a value is assigned to them. Unlike many programming languages, Python does not require explicit type declarations. Variables can store different types of data such as integers, strings, floating-point numbers, lists, dictionaries, and objects.",
+      "explanation": "Think of a variable as a labeled box.\n\nThe label identifies the box.\nThe value inside the box represents the stored data.\n\nExample:\n\nname = 'Aniket'\nage = 22\n\nHere:\n'name' stores a string.\n'age' stores an integer.\n\nNaming Rules:\n\nMust start with a letter or underscore.\nCannot start with a number.\nCannot use reserved keywords.\nCase-sensitive.\n\nGood variable names improve code readability and maintainability.",
+      "code_example": "name = 'Aniket'\nage = 22\nsalary = 50000",
+      "key_takeaways": [
+        "Variables store data.",
+        "Python creates variables automatically.",
+        "No type declaration is required.",
+        "Meaningful names improve readability.",
+        "Variables can store any data type."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "Python",
+      "topic": "Data Types",
+      "difficulty": "Easy",
+      "title": "Python Data Types",
+      "question": "What are Data Types in Python? Explain the major built-in data types with examples.",
+      "answer": "Data types define the kind of value stored in a variable and determine the operations that can be performed on it. Python provides several built-in data types including integers, floating-point numbers, strings, booleans, lists, tuples, sets, dictionaries, and NoneType. Understanding data types is essential because they influence memory usage, behavior, and program logic.",
+      "explanation": "Common Data Types:\n\nint:\nWhole numbers.\n\nfloat:\nDecimal numbers.\n\nstr:\nText values.\n\nbool:\nTrue or False.\n\nlist:\nOrdered collection.\n\ntuple:\nImmutable ordered collection.\n\nset:\nUnordered unique values.\n\ndict:\nKey-value pairs.\n\nEach data type serves different programming requirements and has its own methods and behaviors.",
+      "code_example": "age = 22\nprice = 99.99\nname = 'Aniket'\nis_active = True",
+      "key_takeaways": [
+        "Data types define stored values.",
+        "Python has multiple built-in data types.",
+        "Lists and dictionaries are commonly used.",
+        "Strings store text data.",
+        "Booleans represent logical values."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "Python",
+      "topic": "Operators",
+      "difficulty": "Easy",
+      "title": "Python Operators",
+      "question": "What are Operators in Python? Explain the different types of operators with examples.",
+      "answer": "Operators are symbols used to perform operations on variables and values. Python supports arithmetic, comparison, logical, assignment, bitwise, identity, and membership operators. These operators allow programmers to perform calculations, comparisons, logical evaluations, and data manipulation efficiently.",
+      "explanation": "Arithmetic Operators:\n+, -, *, /, %, **\n\nComparison Operators:\n==, !=, >, <\n\nLogical Operators:\nand, or, not\n\nAssignment Operators:\n=, +=, -=\n\nMembership Operators:\nin, not in\n\nIdentity Operators:\nis, is not\n\nOperators are fundamental building blocks used in nearly every Python program.",
+      "code_example": "a = 10\nb = 5\nprint(a + b)\nprint(a > b)",
+      "key_takeaways": [
+        "Operators perform actions on values.",
+        "Python supports multiple operator categories.",
+        "Arithmetic operators perform calculations.",
+        "Logical operators evaluate conditions.",
+        "Comparison operators compare values."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "Python",
+      "topic": "Control Flow",
+      "difficulty": "Easy",
+      "title": "Conditional Statements",
+      "question": "What are Conditional Statements in Python? Explain if, elif, and else statements with examples.",
+      "answer": "Conditional statements allow programs to make decisions based on specific conditions. Python uses if, elif, and else statements to execute different blocks of code depending on whether conditions evaluate to True or False. Conditional logic is one of the most important concepts in programming because it enables dynamic program behavior.",
+      "explanation": "Imagine a student result system.\n\nIf marks are greater than 90:\nGrade A\n\nIf marks are greater than 75:\nGrade B\n\nOtherwise:\nGrade C\n\nConditional statements help programs react differently based on user input, calculations, or system conditions.",
+      "code_example": "marks = 85\n\nif marks >= 90:\n    print('Grade A')\nelif marks >= 75:\n    print('Grade B')\nelse:\n    print('Grade C')",
+      "key_takeaways": [
+        "Conditions control program flow.",
+        "if executes when condition is true.",
+        "elif checks additional conditions.",
+        "else handles remaining cases.",
+        "Used extensively in decision-making."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "Python",
+      "topic": "Loops",
+      "difficulty": "Easy",
+      "title": "Python Loops",
+      "question": "What are Loops in Python? Explain for loops, while loops, and their practical applications.",
+      "answer": "Loops are programming constructs used to execute a block of code repeatedly until a condition is satisfied. Python provides for loops and while loops for iteration. Loops reduce code duplication and make programs more efficient when performing repetitive tasks such as processing records, traversing collections, and automating workflows.",
+      "explanation": "Suppose you need to print numbers from 1 to 100.\n\nWithout loops:\nYou would need 100 print statements.\n\nWith loops:\nA few lines of code accomplish the same task.\n\nFor Loop:\nUsed when the number of iterations is known.\n\nWhile Loop:\nUsed when iterations depend on a condition.",
+      "code_example": "for i in range(1, 6):\n    print(i)",
+      "key_takeaways": [
+        "Loops execute code repeatedly.",
+        "for loops iterate over sequences.",
+        "while loops run based on conditions.",
+        "Reduce code duplication.",
+        "Essential for automation."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "Python",
+      "topic": "Functions",
+      "difficulty": "Medium",
+      "title": "Python Functions",
+      "question": "What are Functions in Python? Explain their purpose, advantages, parameters, return values, and best practices.",
+      "answer": "Functions are reusable blocks of code designed to perform specific tasks. They help organize programs into smaller, manageable units, improve code readability, reduce duplication, and simplify maintenance. Functions can accept inputs called parameters and return outputs using the return statement. Python functions are a core concept used in almost every application, from small scripts to enterprise software systems.",
+      "explanation": "Imagine calculating tax in multiple places within an application.\n\nInstead of writing the same logic repeatedly, create a function.\n\nBenefits:\n\nCode Reusability.\nBetter Organization.\nSimplified Testing.\nEasier Maintenance.\n\nFunctions promote modular programming and make large applications easier to manage.",
+      "code_example": "def add(a, b):\n    return a + b\n\nprint(add(10, 20))",
+      "key_takeaways": [
+        "Functions improve code reusability.",
+        "Accept parameters as inputs.",
+        "Can return results.",
+        "Promote modular programming.",
+        "Reduce duplication."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "Python",
+      "topic": "Collections",
+      "difficulty": "Medium",
+      "title": "Python Lists",
+      "question": "What are Lists in Python? Explain their characteristics, methods, advantages, and common operations.",
+      "answer": "A List is an ordered, mutable collection of elements in Python. Lists can store multiple values of different data types within a single variable. Because lists are mutable, elements can be added, removed, modified, and reordered after creation. Lists are one of the most frequently used data structures in Python because of their flexibility and ease of use.",
+      "explanation": "Suppose you want to store multiple student names.\n\nUsing separate variables becomes difficult.\n\nLists solve this problem by storing all values together.\n\nCommon Operations:\n\nAdd Elements.\nRemove Elements.\nSort Data.\nSearch Values.\nIterate Through Items.\n\nLists are widely used in data processing, web applications, and automation scripts.",
+      "code_example": "students = ['Aniket', 'Rahul', 'Mohit']\nstudents.append('Aman')\nprint(students)",
+      "key_takeaways": [
+        "Lists store multiple values.",
+        "Lists are ordered and mutable.",
+        "Support insertion and deletion.",
+        "Commonly used in Python programs.",
+        "Provide many built-in methods."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "Python",
+      "topic": "Object-Oriented Programming",
+      "difficulty": "Medium",
+      "title": "Classes and Objects",
+      "question": "What are Classes and Objects in Python? Explain Object-Oriented Programming concepts with examples.",
+      "answer": "Classes and Objects are the foundation of Object-Oriented Programming (OOP) in Python. A class is a blueprint that defines properties and behaviors, while an object is an instance of that class. OOP helps developers model real-world entities, improve code organization, increase reusability, and build scalable applications. Python fully supports object-oriented programming and provides features such as inheritance, encapsulation, polymorphism, and abstraction.",
+      "explanation": "Consider a Student.\n\nEvery student has:\nName\nRoll Number\nMarks\n\nInstead of creating separate variables for every student, we define a Student class.\n\nObjects created from the class represent individual students.\n\nBenefits:\n\nBetter code organization.\nReusability.\nMaintainability.\nScalability.\n\nMost large Python applications rely heavily on object-oriented programming principles.",
+      "code_example": "class Student:\n    def __init__(self, name):\n        self.name = name\n\ns1 = Student('Aniket')\nprint(s1.name)",
+      "key_takeaways": [
+        "Classes are blueprints.",
+        "Objects are class instances.",
+        "OOP improves maintainability.",
+        "Supports real-world modeling.",
+        "Foundation of large Python applications."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "Python",
+      "topic": "Object-Oriented Programming",
+      "difficulty": "Medium",
+      "title": "Inheritance in Python",
+      "question": "What is Inheritance in Python? Explain its types, advantages, implementation, and real-world applications.",
+      "answer": "Inheritance is one of the fundamental concepts of Object-Oriented Programming (OOP) that allows a class to acquire properties and methods from another class. The existing class is called the Parent Class, Base Class, or Superclass, while the new class is called the Child Class, Derived Class, or Subclass. Inheritance promotes code reusability, reduces duplication, improves maintainability, and supports hierarchical relationships. Python supports multiple types of inheritance including Single Inheritance, Multiple Inheritance, Multilevel Inheritance, Hierarchical Inheritance, and Hybrid Inheritance. By using inheritance, developers can extend existing functionality without modifying the original code, making software systems easier to scale and maintain.",
+      "explanation": "Consider a company management system.\n\nAll employees have common attributes:\nName\nEmployee ID\nSalary\n\nManagers additionally have:\nTeam Size\nBonus\n\nInstead of rewriting common employee information in every class, a Manager class can inherit from the Employee class.\n\nThis allows Manager objects to automatically access Employee properties and methods.\n\nInheritance mirrors real-world relationships and is widely used in frameworks, enterprise applications, game development, and large-scale software systems.",
+      "code_example": "class Employee:\n    def work(self):\n        print('Employee Working')\n\nclass Manager(Employee):\n    pass\n\nm = Manager()\nm.work()",
+      "key_takeaways": [
+        "Inheritance promotes code reuse.",
+        "Child classes inherit parent properties.",
+        "Supports hierarchical relationships.",
+        "Improves maintainability.",
+        "Core concept of OOP."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "Python",
+      "topic": "Object-Oriented Programming",
+      "difficulty": "Medium",
+      "title": "Polymorphism",
+      "question": "What is Polymorphism in Python? Explain its types, benefits, and practical examples.",
+      "answer": "Polymorphism is an Object-Oriented Programming principle that allows the same interface, method, or operation to behave differently depending on the object using it. The word 'Polymorphism' means 'many forms'. It enables developers to write flexible and reusable code while reducing complexity. Python supports polymorphism through method overriding, operator overloading, duck typing, and inheritance. Polymorphism is widely used in software design because it allows systems to be extended without changing existing code.",
+      "explanation": "Imagine a 'speak()' method.\n\nA Dog object may bark.\n\nA Cat object may meow.\n\nBoth use the same method name but produce different behavior.\n\nThis flexibility allows developers to write generic code that works with multiple object types.\n\nPolymorphism improves extensibility, maintainability, and code readability.",
+      "code_example": "class Dog:\n    def speak(self):\n        print('Bark')\n\nclass Cat:\n    def speak(self):\n        print('Meow')",
+      "key_takeaways": [
+        "Polymorphism means many forms.",
+        "Same interface, different behavior.",
+        "Improves flexibility.",
+        "Supports reusable code.",
+        "Important OOP principle."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "Python",
+      "topic": "Object-Oriented Programming",
+      "difficulty": "Medium",
+      "title": "Encapsulation",
+      "question": "What is Encapsulation in Python? Explain its purpose, benefits, and implementation.",
+      "answer": "Encapsulation is the process of bundling data and methods together within a class while restricting direct access to certain internal details. It helps protect data from unintended modifications and provides controlled access through methods. Encapsulation improves security, maintainability, modularity, and abstraction. Python supports encapsulation using public, protected, and private members.",
+      "explanation": "Consider a bank account.\n\nUsers should not directly modify the account balance.\n\nInstead, they should use methods such as deposit() and withdraw().\n\nThis prevents invalid operations and protects data integrity.\n\nEncapsulation ensures that internal implementation details remain hidden while exposing only necessary functionality.",
+      "code_example": "class BankAccount:\n    def __init__(self):\n        self.__balance = 0",
+      "key_takeaways": [
+        "Encapsulation protects data.",
+        "Combines data and methods.",
+        "Supports data hiding.",
+        "Improves maintainability.",
+        "Uses private attributes."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "Python",
+      "topic": "Object-Oriented Programming",
+      "difficulty": "Hard",
+      "title": "Abstraction",
+      "question": "What is Abstraction in Python? Explain its importance and implementation using abstract classes.",
+      "answer": "Abstraction is an Object-Oriented Programming concept that hides implementation details and exposes only essential functionality to users. It allows developers to focus on what an object does rather than how it does it. Abstraction reduces complexity, improves code organization, and enhances maintainability. Python provides abstraction support through the abc (Abstract Base Class) module.",
+      "explanation": "When driving a car, users interact with the steering wheel, accelerator, and brakes.\n\nThey do not need to understand the internal engine mechanisms.\n\nSimilarly, abstraction hides internal complexity while providing a simple interface.\n\nThis concept is heavily used in frameworks, APIs, operating systems, and software libraries.",
+      "code_example": "from abc import ABC, abstractmethod\n\nclass Vehicle(ABC):\n    @abstractmethod\n    def start(self):\n        pass",
+      "key_takeaways": [
+        "Abstraction hides complexity.",
+        "Exposes essential functionality.",
+        "Improves maintainability.",
+        "Implemented using ABC module.",
+        "Core OOP principle."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "Python",
+      "topic": "Functions",
+      "difficulty": "Medium",
+      "title": "Lambda Functions",
+      "question": "What are Lambda Functions in Python? Explain their syntax, advantages, limitations, and use cases.",
+      "answer": "Lambda Functions are small anonymous functions defined using the lambda keyword. They can accept multiple arguments but contain only a single expression. Lambda functions are commonly used when a simple function is required temporarily, especially with higher-order functions such as map(), filter(), and sorted(). They reduce code length and improve readability in specific scenarios.",
+      "explanation": "Suppose you need a simple function that squares a number.\n\nInstead of defining a full function, you can use a lambda expression.\n\nLambda functions are particularly useful for sorting, filtering, and transformations.\n\nHowever, complex logic should use normal functions for better readability.",
+      "code_example": "square = lambda x: x * x\nprint(square(5))",
+      "key_takeaways": [
+        "Lambda functions are anonymous.",
+        "Contain a single expression.",
+        "Useful with map and filter.",
+        "Reduce code length.",
+        "Best for simple operations."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "Python",
+      "topic": "Functions",
+      "difficulty": "Medium",
+      "title": "Recursion",
+      "question": "What is Recursion in Python? Explain how recursive functions work and discuss advantages and disadvantages.",
+      "answer": "Recursion is a programming technique in which a function calls itself to solve smaller instances of the same problem. Recursive solutions typically consist of a base case and a recursive case. The base case stops the recursion, while the recursive case continues reducing the problem size. Recursion is commonly used in tree traversal, graph algorithms, divide-and-conquer techniques, and mathematical computations.",
+      "explanation": "Consider calculating the factorial of a number.\n\n5! = 5 × 4 × 3 × 2 × 1\n\nA recursive function can solve this by calling itself repeatedly until reaching the base case.\n\nRecursion often produces elegant solutions but may consume more memory due to function call stacks.",
+      "code_example": "def factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n-1)",
+      "key_takeaways": [
+        "Recursion involves self-calling functions.",
+        "Requires a base case.",
+        "Useful for hierarchical problems.",
+        "Can simplify complex algorithms.",
+        "May increase memory usage."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "Python",
+      "topic": "Collections",
+      "difficulty": "Medium",
+      "title": "Tuples in Python",
+      "question": "What are Tuples in Python? Explain their characteristics, advantages, and differences from lists.",
+      "answer": "A Tuple is an ordered collection of elements that is immutable after creation. Unlike lists, tuple contents cannot be modified, added, or removed. Tuples are commonly used when data should remain constant throughout program execution. Because of immutability, tuples are generally faster and more memory-efficient than lists.",
+      "explanation": "Suppose you want to store fixed information such as geographic coordinates.\n\nLatitude and longitude values should not change accidentally.\n\nUsing a tuple ensures data remains protected.\n\nTuples are also commonly used for returning multiple values from functions.",
+      "code_example": "coordinates = (28.6139, 77.2090)\nprint(coordinates)",
+      "key_takeaways": [
+        "Tuples are immutable.",
+        "Store ordered data.",
+        "More memory efficient than lists.",
+        "Useful for fixed data.",
+        "Support indexing and iteration."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "Python",
+      "topic": "Collections",
+      "difficulty": "Medium",
+      "title": "Sets in Python",
+      "question": "What are Sets in Python? Explain their properties, operations, and practical applications.",
+      "answer": "A Set is an unordered collection of unique elements. Sets automatically remove duplicate values and provide efficient operations for membership testing, unions, intersections, and differences. Sets are useful when uniqueness is required and when working with mathematical set operations.",
+      "explanation": "Suppose a list contains duplicate student IDs.\n\nConverting the list into a set automatically removes duplicates.\n\nSets are widely used in data analysis, filtering, duplicate removal, and membership checks due to their fast lookup performance.",
+      "code_example": "numbers = {1, 2, 3, 3, 4}\nprint(numbers)",
+      "key_takeaways": [
+        "Sets store unique values.",
+        "Automatically remove duplicates.",
+        "Support mathematical operations.",
+        "Provide fast lookups.",
+        "Useful for data cleaning."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "Python",
+      "topic": "Collections",
+      "difficulty": "Medium",
+      "title": "Dictionaries in Python",
+      "question": "What are Dictionaries in Python? Explain their structure, operations, advantages, and common use cases.",
+      "answer": "A Dictionary is a mutable collection that stores data as key-value pairs. Each key must be unique and is used to access its associated value efficiently. Dictionaries are among the most powerful and frequently used data structures in Python because they provide fast lookups, flexible data representation, and easy data organization.",
+      "explanation": "Think of a dictionary as a real-world contact book.\n\nName acts as the key.\nPhone number acts as the value.\n\nInstead of searching sequentially through a list, dictionaries provide direct access through keys, making them highly efficient.",
+      "code_example": "student = {\n    'name': 'Aniket',\n    'age': 22\n}\nprint(student['name'])",
+      "key_takeaways": [
+        "Dictionaries store key-value pairs.",
+        "Keys must be unique.",
+        "Provide fast lookups.",
+        "Highly flexible data structure.",
+        "Commonly used in APIs and applications."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "Python",
+      "topic": "Exception Handling",
+      "difficulty": "Medium",
+      "title": "Exception Handling in Python",
+      "question": "What is Exception Handling in Python? Explain try, except, else, finally, and custom exceptions.",
+      "answer": "Exception Handling is a mechanism used to detect and manage runtime errors without abruptly terminating a program. Python provides try, except, else, and finally blocks to handle exceptions gracefully. Proper exception handling improves application reliability, user experience, and maintainability by allowing programs to recover from unexpected situations.",
+      "explanation": "Suppose a user enters zero as a divisor.\n\nWithout exception handling:\nThe program crashes.\n\nWith exception handling:\nThe error is detected and handled gracefully.\n\nException handling is essential for file operations, database interactions, network requests, user input processing, and enterprise applications.",
+      "code_example": "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')",
+      "key_takeaways": [
+        "Exceptions are runtime errors.",
+        "try block contains risky code.",
+        "except handles errors.",
+        "finally executes regardless of outcome.",
+        "Improves application robustness."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "Python",
+      "topic": "File Handling",
+      "difficulty": "Medium",
+      "title": "File Handling in Python",
+      "question": "What is File Handling in Python? Explain how files are created, opened, read, written, and closed along with different file modes.",
+      "answer": "File Handling is the process of creating, reading, writing, updating, and managing files stored on a computer system. Python provides built-in functions and methods that make file operations simple and efficient. File handling is essential because data stored in variables is temporary and lost when a program terminates. By storing information in files, applications can preserve data permanently. Python supports text files, binary files, CSV files, JSON files, log files, and many other formats. Proper file handling is crucial in software development, data analysis, automation, machine learning, and enterprise applications.",
+      "explanation": "Imagine a student management system.\n\nIf student information is stored only in variables, the data disappears when the program closes.\n\nUsing files allows the information to be saved permanently.\n\nCommon File Modes:\n\nr -> Read\nw -> Write\na -> Append\nx -> Create\nrb -> Read Binary\nwb -> Write Binary\n\nPython automatically provides tools to open, read, write, and close files safely.",
+      "code_example": "file = open('data.txt', 'r')\ncontent = file.read()\nfile.close()",
+      "key_takeaways": [
+        "File handling allows permanent data storage.",
+        "Python supports multiple file modes.",
+        "Files should be properly closed.",
+        "Used in most real-world applications.",
+        "Supports both text and binary files."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "Python",
+      "topic": "File Handling",
+      "difficulty": "Medium",
+      "title": "Context Manager and with Statement",
+      "question": "What is the with statement in Python? Explain Context Managers and their advantages.",
+      "answer": "The with statement is used to simplify resource management in Python. It automatically handles setup and cleanup operations, ensuring resources such as files, database connections, and network sockets are properly released even if exceptions occur. Objects that support the with statement implement the Context Manager protocol using __enter__() and __exit__() methods. Using with is considered a best practice because it makes code cleaner, safer, and easier to maintain.",
+      "explanation": "Without the with statement:\n\nA developer must manually close files.\n\nIf an exception occurs, the file may remain open.\n\nWith the with statement:\n\nPython automatically closes the file.\n\nThis prevents resource leaks and simplifies code.\n\nContext managers are commonly used with files, database connections, locks, and external resources.",
+      "code_example": "with open('data.txt', 'r') as file:\n    content = file.read()",
+      "key_takeaways": [
+        "with automatically manages resources.",
+        "Prevents resource leaks.",
+        "Improves code readability.",
+        "Uses Context Manager protocol.",
+        "Recommended for file operations."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "Python",
+      "topic": "Modules and Packages",
+      "difficulty": "Medium",
+      "title": "Modules in Python",
+      "question": "What are Modules in Python? Explain their purpose, advantages, and usage.",
+      "answer": "A Module is a Python file containing variables, functions, classes, and executable code that can be reused in other programs. Modules help organize code into separate files, improve maintainability, reduce duplication, and support modular programming. Python includes many built-in modules such as math, random, datetime, os, and sys, while developers can also create custom modules for reusable functionality.",
+      "explanation": "Imagine building a large application.\n\nKeeping all code in one file becomes difficult to manage.\n\nModules allow developers to separate related functionality into individual files.\n\nFor example:\n\nmath_operations.py\nuser_management.py\npayment_processing.py\n\nThis improves organization and maintainability.",
+      "code_example": "import math\nprint(math.sqrt(25))",
+      "key_takeaways": [
+        "Modules organize reusable code.",
+        "Improve maintainability.",
+        "Reduce code duplication.",
+        "Support modular programming.",
+        "Can be built-in or custom."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "Python",
+      "topic": "Modules and Packages",
+      "difficulty": "Medium",
+      "title": "Packages in Python",
+      "question": "What are Packages in Python? Explain their structure, advantages, and how they differ from modules.",
+      "answer": "A Package is a collection of related Python modules organized within a directory hierarchy. Packages help structure large applications by grouping related functionality together. While a module is a single Python file, a package contains multiple modules and sub-packages. Packages improve scalability, code organization, maintainability, and team collaboration in large software projects.",
+      "explanation": "Example Structure:\n\nproject/\n├── users/\n│   ├── login.py\n│   ├── register.py\n├── payments/\n│   ├── billing.py\n│   ├── refunds.py\n\nThis organization makes applications easier to understand and maintain.\n\nMost modern Python frameworks and libraries use package structures extensively.",
+      "code_example": "from users.login import authenticate",
+      "key_takeaways": [
+        "Packages contain multiple modules.",
+        "Improve project organization.",
+        "Support large applications.",
+        "Enable code grouping.",
+        "Different from single-file modules."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "Python",
+      "topic": "Built-in Functions",
+      "difficulty": "Easy",
+      "title": "Built-in Functions",
+      "question": "What are Built-in Functions in Python? Explain commonly used built-in functions with examples.",
+      "answer": "Built-in Functions are pre-defined functions provided by Python that perform common operations without requiring additional imports. These functions simplify programming by offering ready-to-use functionality for calculations, data manipulation, type conversion, iteration, input/output operations, and more. Python includes dozens of built-in functions that help developers write concise and efficient code.",
+      "explanation": "Common Built-in Functions:\n\nprint()\nDisplays output.\n\nlen()\nReturns length.\n\ntype()\nReturns data type.\n\ninput()\nAccepts user input.\n\nmax()\nReturns largest value.\n\nmin()\nReturns smallest value.\n\nsum()\nCalculates total.\n\nBuilt-in functions reduce development effort and improve productivity.",
+      "code_example": "numbers = [10, 20, 30]\nprint(len(numbers))\nprint(sum(numbers))",
+      "key_takeaways": [
+        "Built-in functions are pre-defined.",
+        "No imports required.",
+        "Simplify common tasks.",
+        "Improve productivity.",
+        "Frequently used in applications."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "Python",
+      "topic": "Comprehensions",
+      "difficulty": "Medium",
+      "title": "List Comprehensions",
+      "question": "What are List Comprehensions in Python? Explain their syntax, benefits, and practical use cases.",
+      "answer": "List Comprehensions provide a concise and readable way to create lists in Python. They combine iteration and optional filtering into a single expression, often replacing traditional loops with shorter and more expressive code. List comprehensions improve readability, reduce code length, and are frequently used in data processing and transformation tasks.",
+      "explanation": "Traditional Loop:\n\nCreate empty list.\nIterate.\nAppend values.\n\nList Comprehension:\n\nCombines everything into one line.\n\nBenefits:\nCleaner code.\nImproved readability.\nOften faster execution.\n\nUsed extensively in data science, automation, and application development.",
+      "code_example": "squares = [x*x for x in range(5)]\nprint(squares)",
+      "key_takeaways": [
+        "List comprehensions create lists efficiently.",
+        "Reduce code length.",
+        "Improve readability.",
+        "Support filtering.",
+        "Widely used in Python development."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "Python",
+      "topic": "Generators",
+      "difficulty": "Hard",
+      "title": "Generators in Python",
+      "question": "What are Generators in Python? Explain their working, advantages, and differences from normal functions.",
+      "answer": "Generators are special functions that produce values one at a time using the yield keyword instead of returning all values at once. Unlike normal functions, generators pause execution after each yield and resume from the same point when requested again. This lazy evaluation approach makes generators highly memory efficient and suitable for processing large datasets, streams, and infinite sequences.",
+      "explanation": "Suppose you need numbers from 1 to 1 billion.\n\nCreating a list would consume enormous memory.\n\nA generator produces numbers one at a time only when needed.\n\nAdvantages:\nMemory efficiency.\nLazy evaluation.\nBetter performance for large datasets.\n\nGenerators are commonly used in data pipelines and stream processing.",
+      "code_example": "def numbers():\n    yield 1\n    yield 2\n    yield 3",
+      "key_takeaways": [
+        "Generators use yield.",
+        "Produce values lazily.",
+        "Save memory.",
+        "Useful for large datasets.",
+        "Different from normal functions."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "Python",
+      "topic": "Decorators",
+      "difficulty": "Hard",
+      "title": "Decorators in Python",
+      "question": "What are Decorators in Python? Explain how they work, their advantages, and common use cases.",
+      "answer": "Decorators are functions that modify or extend the behavior of other functions or methods without changing their source code. They are based on the concept that functions are first-class objects in Python. Decorators are widely used for logging, authentication, authorization, performance monitoring, caching, validation, and aspect-oriented programming. They improve code reusability and separation of concerns.",
+      "explanation": "Imagine you want to log every function call.\n\nInstead of modifying every function individually, a decorator can add logging functionality automatically.\n\nThis allows developers to add cross-cutting concerns while keeping business logic clean and maintainable.",
+      "code_example": "def decorator(func):\n    def wrapper():\n        print('Before')\n        func()\n    return wrapper",
+      "key_takeaways": [
+        "Decorators modify function behavior.",
+        "Promote code reuse.",
+        "Useful for logging and authentication.",
+        "Based on higher-order functions.",
+        "Powerful Python feature."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "Python",
+      "topic": "Iterators",
+      "difficulty": "Hard",
+      "title": "Iterators in Python",
+      "question": "What are Iterators in Python? Explain their working, protocol, and differences from iterable objects.",
+      "answer": "An Iterator is an object that allows sequential traversal through a collection of elements. Iterators implement the iterator protocol, which consists of the __iter__() and __next__() methods. Every iterator is iterable, but not every iterable object is an iterator. Iterators provide controlled access to data and are fundamental to loops, generators, and many Python libraries.",
+      "explanation": "Examples of Iterables:\n\nLists.\nTuples.\nStrings.\nSets.\n\nAn iterator retrieves elements one at a time.\n\nThe for loop internally uses iterators to process collections.\n\nIterators enable efficient memory usage because they process data incrementally.",
+      "code_example": "numbers = [1, 2, 3]\nit = iter(numbers)\nprint(next(it))",
+      "key_takeaways": [
+        "Iterators support sequential access.",
+        "Use __iter__ and __next__ methods.",
+        "Power Python loops internally.",
+        "Support memory-efficient processing.",
+        "Different from iterables."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "Python",
+      "topic": "Memory Management",
+      "difficulty": "Hard",
+      "title": "Memory Management and Garbage Collection",
+      "question": "How does Memory Management work in Python? Explain reference counting, garbage collection, and optimization techniques.",
+      "answer": "Python automatically manages memory through a combination of reference counting and garbage collection. Every object maintains a reference count that tracks how many variables refer to it. When the reference count reaches zero, memory is typically released. Python also includes a cyclic garbage collector that detects and removes circular references that reference counting alone cannot handle. This automatic memory management simplifies development and reduces memory-related bugs.",
+      "explanation": "Suppose an object is referenced by three variables.\n\nReference Count = 3.\n\nIf two variables are removed:\nReference Count = 1.\n\nWhen the final reference disappears:\nReference Count = 0.\n\nPython can free the memory.\n\nGarbage collection additionally handles situations where objects reference each other, preventing memory leaks.",
+      "code_example": "import gc\ngc.collect()",
+      "key_takeaways": [
+        "Python manages memory automatically.",
+        "Uses reference counting.",
+        "Includes garbage collection.",
+        "Reduces memory leaks.",
+        "Important for performance optimization."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "Python",
+      "topic": "Advanced Functions",
+      "difficulty": "Hard",
+      "title": "map(), filter(), and reduce() Functions",
+      "question": "What are map(), filter(), and reduce() functions in Python? Explain their purpose, working, advantages, and practical use cases.",
+      "answer": "map(), filter(), and reduce() are higher-order functions in Python that support functional programming techniques. These functions allow developers to process collections efficiently without writing explicit loops. The map() function applies a transformation to every element in an iterable, filter() selects elements that satisfy a condition, and reduce() combines multiple elements into a single result. These functions improve code readability, encourage declarative programming, and are commonly used in data processing, analytics, automation, and functional-style applications.",
+      "explanation": "Suppose we have a list of numbers.\n\nmap():\nUsed to square every number.\n\nfilter():\nUsed to select even numbers.\n\nreduce():\nUsed to calculate the sum of all numbers.\n\nThese functions often replace repetitive loops and make data transformations more concise.\n\nThey are frequently combined with lambda functions for cleaner implementations.",
+      "code_example": "from functools import reduce\n\nnumbers = [1, 2, 3, 4]\nresult = reduce(lambda x, y: x + y, numbers)\nprint(result)",
+      "key_takeaways": [
+        "map transforms data.",
+        "filter selects data.",
+        "reduce combines data.",
+        "Support functional programming.",
+        "Useful for collection processing."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "Python",
+      "topic": "Advanced Functions",
+      "difficulty": "Hard",
+      "title": "Closures in Python",
+      "question": "What are Closures in Python? Explain how they work, their advantages, and practical applications.",
+      "answer": "A Closure is a function object that remembers and retains access to variables from its enclosing scope even after the outer function has finished executing. Closures are created when an inner function references variables from an outer function. They allow data to be preserved between function calls without using global variables or classes. Closures are widely used in decorators, callbacks, state management, event handling, and functional programming patterns.",
+      "explanation": "Imagine a function that creates personalized greeting functions.\n\nThe outer function receives a name.\n\nThe inner function remembers that name even after the outer function finishes execution.\n\nThis ability to 'remember' variables makes closures powerful tools for maintaining state and creating configurable functions.",
+      "code_example": "def outer(name):\n    def inner():\n        print(name)\n    return inner",
+      "key_takeaways": [
+        "Closures remember outer variables.",
+        "Preserve state between calls.",
+        "Used in decorators.",
+        "Support functional programming.",
+        "Reduce dependence on global variables."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "Python",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Method Overriding",
+      "question": "What is Method Overriding in Python? Explain its role in inheritance and polymorphism.",
+      "answer": "Method Overriding occurs when a child class provides its own implementation of a method that already exists in its parent class. This allows subclasses to customize or extend inherited behavior while maintaining the same method interface. Method overriding is a key component of runtime polymorphism and enables flexible, extensible object-oriented designs.",
+      "explanation": "Suppose an Animal class contains a sound() method.\n\nDifferent animals produce different sounds.\n\nA Dog class may override sound() to bark.\n\nA Cat class may override sound() to meow.\n\nAlthough the method name remains the same, the behavior changes according to the object type.",
+      "code_example": "class Animal:\n    def sound(self):\n        print('Animal Sound')\n\nclass Dog(Animal):\n    def sound(self):\n        print('Bark')",
+      "key_takeaways": [
+        "Method overriding customizes inherited behavior.",
+        "Supports polymorphism.",
+        "Used with inheritance.",
+        "Improves flexibility.",
+        "Common in OOP designs."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "Python",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Method Resolution Order (MRO)",
+      "question": "What is Method Resolution Order (MRO) in Python? Explain how Python resolves methods in multiple inheritance.",
+      "answer": "Method Resolution Order (MRO) defines the sequence in which Python searches for methods and attributes in a class hierarchy. It is particularly important in multiple inheritance scenarios where a class inherits from more than one parent. Python uses the C3 Linearization algorithm to determine a consistent and predictable order for method lookup. Understanding MRO helps developers avoid ambiguity and design reliable class hierarchies.",
+      "explanation": "Consider a class inheriting from two parent classes.\n\nIf both parents contain a method with the same name, Python must decide which method to execute.\n\nMRO provides a deterministic path for searching methods.\n\nDevelopers can inspect MRO using the mro() method or __mro__ attribute.",
+      "code_example": "print(MyClass.mro())",
+      "key_takeaways": [
+        "MRO controls method lookup order.",
+        "Important in multiple inheritance.",
+        "Uses C3 Linearization.",
+        "Prevents ambiguity.",
+        "Can be inspected programmatically."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "Python",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Magic Methods (Dunder Methods)",
+      "question": "What are Magic Methods in Python? Explain their purpose and commonly used examples.",
+      "answer": "Magic Methods, also known as Dunder (Double Underscore) Methods, are special methods that allow developers to customize the behavior of objects. These methods are automatically invoked by Python during specific operations such as object creation, comparison, string conversion, arithmetic operations, and iteration. Magic methods enable operator overloading and deep integration with Python's object model.",
+      "explanation": "Examples:\n\n__init__():\nObject initialization.\n\n__str__():\nHuman-readable string representation.\n\n__len__():\nReturns object length.\n\n__add__():\nDefines addition behavior.\n\nMagic methods make custom classes behave like built-in Python objects.",
+      "code_example": "class Student:\n    def __str__(self):\n        return 'Student Object'",
+      "key_takeaways": [
+        "Magic methods customize object behavior.",
+        "Called automatically by Python.",
+        "Support operator overloading.",
+        "Use double underscores.",
+        "Important in advanced OOP."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "Python",
+      "topic": "Python Internals",
+      "difficulty": "Hard",
+      "title": "Python Interpreter",
+      "question": "How does the Python Interpreter work? Explain the execution process from source code to execution.",
+      "answer": "The Python Interpreter is the software responsible for reading, analyzing, compiling, and executing Python code. Unlike traditional compiled languages, Python follows an intermediate execution model. Source code is first converted into bytecode, which is then executed by the Python Virtual Machine (PVM). This architecture improves portability and simplifies development while maintaining flexibility across operating systems.",
+      "explanation": "Execution Steps:\n\nWrite Python source code.\n\nInterpreter parses code.\n\nBytecode is generated.\n\nPython Virtual Machine executes bytecode.\n\nResult is produced.\n\nThis process allows Python programs to run on multiple platforms without modification.",
+      "code_example": "print('Python Execution Process')",
+      "key_takeaways": [
+        "Python uses an interpreter.",
+        "Generates bytecode.",
+        "Executed by Python Virtual Machine.",
+        "Cross-platform architecture.",
+        "Simplifies development."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "Python",
+      "topic": "Concurrency",
+      "difficulty": "Hard",
+      "title": "Multithreading in Python",
+      "question": "What is Multithreading in Python? Explain its advantages, limitations, and practical applications.",
+      "answer": "Multithreading is a technique that allows multiple threads to execute within the same process concurrently. Threads share memory and resources, enabling applications to perform multiple tasks simultaneously. Multithreading is useful for I/O-bound operations such as file handling, network communication, API requests, and user interface responsiveness. However, Python's Global Interpreter Lock (GIL) limits true parallel execution of CPU-bound tasks.",
+      "explanation": "Examples of multithreading:\n\nDownloading multiple files.\nHandling multiple network requests.\nManaging background tasks.\n\nAdvantages:\nImproved responsiveness.\nBetter resource utilization.\nConcurrent execution.\n\nLimitations:\nGIL restrictions.\nSynchronization complexity.\nPotential race conditions.",
+      "code_example": "import threading\n\ndef task():\n    print('Running')\n\nthread = threading.Thread(target=task)\nthread.start()",
+      "key_takeaways": [
+        "Threads run concurrently.",
+        "Useful for I/O operations.",
+        "Share process resources.",
+        "Affected by GIL.",
+        "Improve responsiveness."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "Python",
+      "topic": "Concurrency",
+      "difficulty": "Hard",
+      "title": "Multiprocessing in Python",
+      "question": "What is Multiprocessing in Python? Explain its working, benefits, and differences from multithreading.",
+      "answer": "Multiprocessing is a concurrency technique that uses multiple independent processes to execute tasks in parallel. Unlike threads, processes have separate memory spaces, allowing true parallel execution across multiple CPU cores. Multiprocessing is particularly useful for CPU-intensive tasks such as data processing, scientific computation, image processing, machine learning, and simulations.",
+      "explanation": "Suppose a machine has 8 CPU cores.\n\nUsing multiprocessing allows workloads to be distributed across all cores.\n\nBenefits:\nTrue parallelism.\nBypasses GIL limitations.\nImproved CPU utilization.\n\nTrade-offs:\nHigher memory usage.\nInter-process communication complexity.\n\nMultiprocessing is preferred for CPU-bound workloads.",
+      "code_example": "from multiprocessing import Process",
+      "key_takeaways": [
+        "Multiprocessing uses separate processes.",
+        "Supports true parallelism.",
+        "Bypasses GIL restrictions.",
+        "Ideal for CPU-intensive tasks.",
+        "Uses more memory than threading."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "Python",
+      "topic": "Concurrency",
+      "difficulty": "Hard",
+      "title": "Global Interpreter Lock (GIL)",
+      "question": "What is the Global Interpreter Lock (GIL) in Python? Explain its purpose, impact, and limitations.",
+      "answer": "The Global Interpreter Lock (GIL) is a synchronization mechanism used in CPython that allows only one thread to execute Python bytecode at a time. The GIL simplifies memory management and improves interpreter stability but limits the effectiveness of multithreading for CPU-bound tasks. Understanding the GIL is important for designing high-performance Python applications.",
+      "explanation": "Without GIL:\n\nMultiple threads could modify shared memory simultaneously.\n\nThis increases complexity and risk of corruption.\n\nWith GIL:\n\nOnly one thread executes Python bytecode at a time.\n\nAdvantages:\nSimpler implementation.\nImproved safety.\n\nDisadvantages:\nReduced parallelism for CPU-bound workloads.",
+      "code_example": "import threading",
+      "key_takeaways": [
+        "GIL exists in CPython.",
+        "Only one thread executes bytecode at a time.",
+        "Simplifies memory management.",
+        "Limits CPU-bound threading.",
+        "Important performance consideration."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "Python",
+      "topic": "Asynchronous Programming",
+      "difficulty": "Hard",
+      "title": "Asyncio and Asynchronous Programming",
+      "question": "What is Asynchronous Programming in Python? Explain asyncio, async, await, and practical applications.",
+      "answer": "Asynchronous Programming is a programming model that allows tasks to run without blocking program execution. Instead of waiting for slow operations such as network requests or database queries to complete, the program can continue performing other tasks. Python provides the asyncio framework, along with async and await keywords, to support efficient asynchronous execution. This approach improves scalability and resource utilization, especially in network-intensive applications.",
+      "explanation": "Traditional synchronous execution:\n\nTask A waits.\nTask B waits.\nTask C waits.\n\nAsynchronous execution:\n\nTasks can progress concurrently.\n\nApplications:\n\nWeb servers.\nReal-time systems.\nChat applications.\nAPI integrations.\n\nAsync programming enables handling thousands of concurrent connections efficiently.",
+      "code_example": "import asyncio\n\nasync def hello():\n    print('Hello')",
+      "key_takeaways": [
+        "Async programming avoids blocking.",
+        "Uses async and await keywords.",
+        "Powered by asyncio.",
+        "Excellent for I/O-bound workloads.",
+        "Improves scalability."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "Python",
+      "topic": "Database Programming",
+      "difficulty": "Hard",
+      "title": "Database Connectivity in Python",
+      "question": "How does Python connect to databases? Explain database connectivity, common libraries, CRUD operations, connection management, and best practices.",
+      "answer": "Database Connectivity in Python refers to the process of establishing communication between Python applications and database management systems such as MySQL, PostgreSQL, SQLite, Oracle, and MongoDB. Python provides various libraries and drivers that allow applications to execute queries, retrieve data, update records, and manage transactions. Database connectivity is a critical component of modern software development because most applications depend on persistent data storage. Proper database integration requires connection management, query optimization, transaction handling, error management, and security practices such as parameterized queries to prevent SQL injection attacks.",
+      "explanation": "Consider an e-commerce application.\n\nUser information, products, orders, and payments must be stored permanently.\n\nPython applications communicate with databases using connectors.\n\nPopular Libraries:\n\nsqlite3\nmysql-connector-python\npsycopg2\nSQLAlchemy\nPyMongo\n\nTypical Workflow:\n\nConnect to database.\nExecute query.\nFetch results.\nCommit changes.\nClose connection.\n\nDatabase connectivity is used in almost every production-grade application.",
+      "code_example": "import sqlite3\nconn = sqlite3.connect('database.db')",
+      "key_takeaways": [
+        "Python supports multiple databases.",
+        "Database connectors enable communication.",
+        "CRUD operations are fundamental.",
+        "Connection management is important.",
+        "Security should always be considered."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "Python",
+      "topic": "Database Programming",
+      "difficulty": "Hard",
+      "title": "ORM in Python",
+      "question": "What is ORM (Object Relational Mapping)? Explain its advantages, disadvantages, and popular Python ORM frameworks.",
+      "answer": "Object Relational Mapping (ORM) is a programming technique that allows developers to interact with databases using Python objects instead of writing raw SQL queries. ORM frameworks map database tables to Python classes and rows to objects, enabling developers to perform database operations using familiar object-oriented concepts. ORMs increase productivity, improve maintainability, reduce boilerplate code, and simplify database interactions. Popular Python ORMs include SQLAlchemy, Django ORM, Peewee, and Tortoise ORM.",
+      "explanation": "Without ORM:\n\nDevelopers write SQL queries manually.\n\nWith ORM:\n\nDevelopers interact with Python objects.\n\nBenefits:\n\nLess SQL code.\nDatabase abstraction.\nImproved maintainability.\nProductivity gains.\n\nDrawbacks:\n\nPerformance overhead.\nComplex query limitations.\nLearning curve.\n\nORMs are widely used in enterprise applications and web development.",
+      "code_example": "user = User(name='Aniket')\nsession.add(user)",
+      "key_takeaways": [
+        "ORM maps objects to database tables.",
+        "Reduces SQL writing.",
+        "Improves maintainability.",
+        "Supports object-oriented development.",
+        "SQLAlchemy is a popular ORM."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "Python",
+      "topic": "Testing",
+      "difficulty": "Medium",
+      "title": "Unit Testing in Python",
+      "question": "What is Unit Testing in Python? Explain its importance, benefits, frameworks, and best practices.",
+      "answer": "Unit Testing is a software testing technique in which individual components, functions, or methods are tested independently to verify that they work correctly. The primary objective of unit testing is to detect bugs early, improve code quality, simplify maintenance, and increase confidence during refactoring. Python provides built-in support through the unittest framework, while third-party frameworks such as pytest offer additional flexibility and features.",
+      "explanation": "Suppose a function calculates tax.\n\nInstead of manually checking outputs every time, automated tests verify correctness.\n\nBenefits:\n\nEarly bug detection.\nSafer refactoring.\nImproved reliability.\nDocumentation of behavior.\n\nTesting is an essential part of professional software development and continuous integration pipelines.",
+      "code_example": "import unittest\n\nclass TestMath(unittest.TestCase):\n    def test_add(self):\n        self.assertEqual(2 + 2, 4)",
+      "key_takeaways": [
+        "Unit tests verify individual components.",
+        "Improve software quality.",
+        "Support automated testing.",
+        "Reduce regression bugs.",
+        "Essential in professional development."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "Python",
+      "topic": "Testing",
+      "difficulty": "Medium",
+      "title": "Pytest Framework",
+      "question": "What is Pytest? Explain its features, advantages, and why it is widely used in Python projects.",
+      "answer": "Pytest is a powerful third-party testing framework for Python that simplifies test creation and execution. It provides concise syntax, detailed failure reports, fixtures, parameterized testing, plugin support, and extensive customization options. Pytest is widely adopted because it reduces boilerplate code and makes testing more efficient and developer-friendly compared to traditional frameworks.",
+      "explanation": "Advantages:\n\nSimple syntax.\nAutomatic test discovery.\nDetailed error reporting.\nPowerful fixtures.\nPlugin ecosystem.\n\nPytest can be used for:\n\nUnit testing.\nIntegration testing.\nAPI testing.\nDatabase testing.\nAutomation testing.\n\nIt has become the preferred testing framework for many Python developers.",
+      "code_example": "def test_add():\n    assert 2 + 2 == 4",
+      "key_takeaways": [
+        "Pytest simplifies testing.",
+        "Requires less boilerplate code.",
+        "Provides detailed reports.",
+        "Supports fixtures and plugins.",
+        "Popular in modern Python projects."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "Python",
+      "topic": "Web Development",
+      "difficulty": "Medium",
+      "title": "Flask Framework",
+      "question": "What is Flask? Explain its architecture, features, advantages, and use cases.",
+      "answer": "Flask is a lightweight Python web framework used for building web applications, APIs, microservices, and backend systems. It follows a minimalist approach, providing only essential functionality while allowing developers to choose additional components as needed. Flask is known for its simplicity, flexibility, and ease of learning, making it a popular choice for startups, prototypes, APIs, and small-to-medium applications.",
+      "explanation": "Flask provides:\n\nRouting.\nRequest handling.\nTemplate rendering.\nSession management.\nExtension support.\n\nAdvantages:\n\nSimple architecture.\nFast development.\nFlexibility.\nLightweight design.\n\nPopular Use Cases:\n\nREST APIs.\nMicroservices.\nPrototypes.\nBackend systems.",
+      "code_example": "from flask import Flask\napp = Flask(__name__)",
+      "key_takeaways": [
+        "Flask is lightweight.",
+        "Ideal for APIs and microservices.",
+        "Easy to learn.",
+        "Highly flexible.",
+        "Popular among startups."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "Python",
+      "topic": "Web Development",
+      "difficulty": "Medium",
+      "title": "Django Framework",
+      "question": "What is Django? Explain its architecture, features, advantages, and enterprise-level capabilities.",
+      "answer": "Django is a high-level Python web framework designed for rapid development of secure, scalable, and maintainable web applications. It follows the Model-View-Template (MVT) architectural pattern and includes numerous built-in features such as authentication, ORM, administration panels, security mechanisms, form handling, and URL routing. Django enables developers to build complex applications quickly while following best practices.",
+      "explanation": "Major Features:\n\nBuilt-in ORM.\nAuthentication System.\nAdmin Dashboard.\nSecurity Features.\nURL Routing.\nTemplate Engine.\n\nAdvantages:\n\nRapid development.\nStrong security.\nScalability.\nEnterprise readiness.\n\nCompanies such as Instagram and Pinterest have used Django successfully.",
+      "code_example": "python manage.py runserver",
+      "key_takeaways": [
+        "Django is a full-stack framework.",
+        "Includes built-in ORM.",
+        "Supports rapid development.",
+        "Highly secure.",
+        "Suitable for large applications."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "Python",
+      "topic": "API Development",
+      "difficulty": "Hard",
+      "title": "REST API Development in Python",
+      "question": "How are REST APIs developed in Python? Explain architecture, principles, and implementation approaches.",
+      "answer": "REST API Development in Python involves creating web services that allow clients and servers to communicate using HTTP protocols. REST APIs expose resources through endpoints and use standard HTTP methods such as GET, POST, PUT, PATCH, and DELETE. Python frameworks such as Flask, Django REST Framework, and FastAPI provide powerful tools for building scalable APIs. REST APIs form the backbone of modern web applications, mobile apps, cloud services, and microservices architectures.",
+      "explanation": "Example API:\n\nGET /users\nPOST /users\nPUT /users/1\nDELETE /users/1\n\nBenefits:\n\nPlatform independence.\nScalability.\nInteroperability.\nEasy integration.\n\nREST APIs are used in almost every modern software ecosystem.",
+      "code_example": "@app.route('/users')\ndef users():\n    return 'Users API'",
+      "key_takeaways": [
+        "REST APIs use HTTP protocols.",
+        "Expose resources through endpoints.",
+        "Enable system integration.",
+        "Widely used in modern applications.",
+        "Python provides excellent API frameworks."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "Python",
+      "topic": "API Development",
+      "difficulty": "Hard",
+      "title": "FastAPI Framework",
+      "question": "What is FastAPI? Explain its architecture, advantages, and why it has become popular for API development.",
+      "answer": "FastAPI is a modern Python web framework designed specifically for building high-performance APIs. It leverages Python type hints, asynchronous programming, automatic validation, and automatic documentation generation. FastAPI is one of the fastest Python frameworks available and is widely used for microservices, machine learning APIs, backend systems, and cloud-native applications.",
+      "explanation": "Features:\n\nHigh performance.\nAutomatic validation.\nType hints.\nAsync support.\nSwagger documentation.\n\nAdvantages:\n\nDeveloper productivity.\nExcellent performance.\nStrong typing.\nModern architecture.\n\nFastAPI is often chosen for applications requiring speed and scalability.",
+      "code_example": "from fastapi import FastAPI\napp = FastAPI()",
+      "key_takeaways": [
+        "FastAPI is optimized for APIs.",
+        "Supports async programming.",
+        "Automatically generates documentation.",
+        "Provides excellent performance.",
+        "Uses Python type hints."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "Python",
+      "topic": "Data Processing",
+      "difficulty": "Hard",
+      "title": "NumPy Library",
+      "question": "What is NumPy? Explain its features, advantages, and importance in scientific computing.",
+      "answer": "NumPy is a fundamental Python library for numerical computing. It provides powerful multidimensional arrays, mathematical functions, linear algebra operations, statistical calculations, and optimized computational routines. NumPy is significantly faster than traditional Python lists because it uses highly optimized C-based implementations. It serves as the foundation for many scientific, machine learning, and data analysis libraries.",
+      "explanation": "Applications:\n\nData Science.\nMachine Learning.\nArtificial Intelligence.\nScientific Computing.\nImage Processing.\n\nAdvantages:\n\nHigh performance.\nMemory efficiency.\nVectorized operations.\nMathematical functionality.\n\nMany popular libraries such as Pandas, TensorFlow, and SciPy rely on NumPy.",
+      "code_example": "import numpy as np\narr = np.array([1, 2, 3])",
+      "key_takeaways": [
+        "NumPy provides efficient arrays.",
+        "Improves numerical computation speed.",
+        "Supports mathematical operations.",
+        "Foundation for many libraries.",
+        "Essential for data science."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "Python",
+      "topic": "Data Analysis",
+      "difficulty": "Hard",
+      "title": "Pandas Library",
+      "question": "What is Pandas? Explain its features, data structures, advantages, and common use cases.",
+      "answer": "Pandas is a powerful Python library used for data manipulation, analysis, cleaning, transformation, and exploration. It provides two primary data structures: Series and DataFrame. Pandas simplifies handling structured data and is widely used in data science, machine learning, business intelligence, finance, analytics, and research. Its extensive functionality enables developers and analysts to process large datasets efficiently.",
+      "explanation": "Pandas Capabilities:\n\nData Cleaning.\nFiltering.\nSorting.\nGrouping.\nAggregation.\nData Import/Export.\n\nCommon Formats:\n\nCSV.\nExcel.\nJSON.\nSQL Databases.\n\nPandas has become one of the most important tools in the Python ecosystem for working with structured data.",
+      "code_example": "import pandas as pd\ndf = pd.read_csv('data.csv')",
+      "key_takeaways": [
+        "Pandas simplifies data analysis.",
+        "Uses DataFrames and Series.",
+        "Supports multiple file formats.",
+        "Widely used in data science.",
+        "Excellent for data cleaning."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "Python",
+      "topic": "Machine Learning",
+      "difficulty": "Hard",
+      "title": "Scikit-Learn Library",
+      "question": "What is Scikit-Learn? Explain its architecture, major features, algorithms supported, workflow, advantages, and practical applications in machine learning.",
+      "answer": "Scikit-Learn is one of the most popular open-source machine learning libraries in Python. Built on top of NumPy, SciPy, and Matplotlib, it provides simple and efficient tools for data mining, predictive analytics, and machine learning. Scikit-Learn supports supervised learning, unsupervised learning, model evaluation, preprocessing, feature engineering, dimensionality reduction, and hyperparameter tuning. It is widely used in industry and academia because of its consistent API, extensive documentation, and ease of use. Developers can quickly build, train, evaluate, and deploy machine learning models using Scikit-Learn.",
+      "explanation": "Typical Machine Learning Workflow:\n\nCollect Data.\nClean Data.\nSplit Dataset.\nTrain Model.\nEvaluate Model.\nTune Parameters.\nDeploy Model.\n\nSupported Algorithms:\n\nLinear Regression.\nLogistic Regression.\nDecision Trees.\nRandom Forests.\nSupport Vector Machines.\nK-Means Clustering.\n\nScikit-Learn is often the first machine learning library beginners learn because of its simplicity and excellent documentation.",
+      "code_example": "from sklearn.linear_model import LinearRegression",
+      "key_takeaways": [
+        "Scikit-Learn is a machine learning library.",
+        "Supports supervised and unsupervised learning.",
+        "Provides a simple API.",
+        "Widely used in industry.",
+        "Excellent for beginners and professionals."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "Python",
+      "topic": "Machine Learning",
+      "difficulty": "Hard",
+      "title": "TensorFlow",
+      "question": "What is TensorFlow? Explain its architecture, components, advantages, and role in deep learning and artificial intelligence.",
+      "answer": "TensorFlow is an open-source machine learning and deep learning framework developed by Google. It provides tools for building, training, and deploying neural networks and large-scale AI models. TensorFlow supports numerical computation using tensors, automatic differentiation, GPU acceleration, distributed training, and production deployment. It is widely used for computer vision, natural language processing, recommendation systems, speech recognition, and artificial intelligence research.",
+      "explanation": "Core Components:\n\nTensors.\nComputational Graphs.\nNeural Networks.\nOptimizers.\nLoss Functions.\nDatasets.\n\nApplications:\n\nImage Recognition.\nObject Detection.\nChatbots.\nRecommendation Systems.\nLanguage Translation.\n\nTensorFlow allows developers to train complex models using CPUs, GPUs, and TPUs.",
+      "code_example": "import tensorflow as tf",
+      "key_takeaways": [
+        "TensorFlow is a deep learning framework.",
+        "Developed by Google.",
+        "Supports GPU acceleration.",
+        "Used for AI applications.",
+        "Scales from research to production."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "Python",
+      "topic": "Machine Learning",
+      "difficulty": "Hard",
+      "title": "PyTorch",
+      "question": "What is PyTorch? Explain its features, architecture, advantages, and comparison with TensorFlow.",
+      "answer": "PyTorch is an open-source machine learning and deep learning framework developed by Meta (Facebook). It is widely used in research and production environments due to its dynamic computational graph, flexibility, intuitive design, and strong support for neural network development. PyTorch provides powerful tools for building, training, and deploying deep learning models. It is particularly popular among researchers because of its Pythonic syntax and ease of experimentation.",
+      "explanation": "Key Features:\n\nDynamic Computation Graphs.\nGPU Support.\nAutomatic Differentiation.\nDeep Learning APIs.\nResearch Flexibility.\n\nApplications:\n\nComputer Vision.\nNatural Language Processing.\nSpeech Recognition.\nGenerative AI.\n\nMany cutting-edge AI models are developed using PyTorch due to its developer-friendly ecosystem.",
+      "code_example": "import torch",
+      "key_takeaways": [
+        "PyTorch is a deep learning framework.",
+        "Developed by Meta.",
+        "Popular in research.",
+        "Supports dynamic graphs.",
+        "Used extensively in AI development."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "Python",
+      "topic": "Performance Optimization",
+      "difficulty": "Hard",
+      "title": "Profiling and Performance Optimization",
+      "question": "What is Profiling in Python? Explain performance optimization techniques, profiling tools, and best practices.",
+      "answer": "Profiling is the process of analyzing a program to identify performance bottlenecks, excessive memory consumption, inefficient algorithms, and slow execution paths. Performance optimization involves improving execution speed, reducing resource usage, and enhancing scalability. Python provides several profiling tools such as cProfile, profile, timeit, memory_profiler, and line_profiler to help developers analyze application performance.",
+      "explanation": "Optimization Workflow:\n\nMeasure Performance.\nIdentify Bottlenecks.\nOptimize Critical Sections.\nRetest Performance.\n\nCommon Optimization Techniques:\n\nEfficient Algorithms.\nBetter Data Structures.\nCaching.\nDatabase Optimization.\nParallel Processing.\n\nOptimization should always be based on measurements rather than assumptions.",
+      "code_example": "import cProfile\ncProfile.run('main()')",
+      "key_takeaways": [
+        "Profiling identifies bottlenecks.",
+        "Optimization improves performance.",
+        "Measure before optimizing.",
+        "Use profiling tools.",
+        "Focus on critical code paths."
+      ]
+    },
+    {
+      "id": 55,
+      "subject": "Python",
+      "topic": "Packaging and Deployment",
+      "difficulty": "Hard",
+      "title": "Virtual Environments",
+      "question": "What are Virtual Environments in Python? Explain their purpose, advantages, and role in dependency management.",
+      "answer": "A Virtual Environment is an isolated Python environment that allows developers to install project-specific packages without affecting the global Python installation. Virtual environments solve dependency conflicts, improve reproducibility, simplify collaboration, and ensure consistent deployments. They are considered an essential part of modern Python development workflows.",
+      "explanation": "Suppose Project A requires Django 4.0.\n\nProject B requires Django 5.0.\n\nInstalling both globally may cause conflicts.\n\nVirtual environments isolate dependencies so each project can use its own versions.\n\nPopular Tools:\n\nvenv.\nvirtualenv.\nPoetry.\nPipenv.\n\nMost professional Python projects use virtual environments.",
+      "code_example": "python -m venv myenv",
+      "key_takeaways": [
+        "Virtual environments isolate dependencies.",
+        "Prevent package conflicts.",
+        "Improve reproducibility.",
+        "Support multiple projects.",
+        "Essential for professional development."
+      ]
+    },
+    {
+      "id": 56,
+      "subject": "Python",
+      "topic": "Deployment",
+      "difficulty": "Hard",
+      "title": "Python Packaging and pip",
+      "question": "What is pip in Python? Explain package management, installation, dependency resolution, and package publishing.",
+      "answer": "pip is the standard package manager for Python. It allows developers to install, upgrade, remove, and manage third-party libraries from the Python Package Index (PyPI). Package management is essential because modern applications rely heavily on external libraries and frameworks. pip simplifies dependency installation and enables developers to reuse community-built software efficiently.",
+      "explanation": "Examples:\n\npip install flask\npip install django\npip install numpy\n\nFeatures:\n\nDependency Resolution.\nPackage Upgrades.\nVersion Control.\nPackage Removal.\n\nPyPI contains hundreds of thousands of packages that developers can easily integrate into projects using pip.",
+      "code_example": "pip install requests",
+      "key_takeaways": [
+        "pip manages Python packages.",
+        "Downloads libraries from PyPI.",
+        "Supports dependency management.",
+        "Widely used by developers.",
+        "Essential for modern Python projects."
+      ]
+    },
+    {
+      "id": 57,
+      "subject": "Python",
+      "topic": "Security",
+      "difficulty": "Hard",
+      "title": "Python Security Best Practices",
+      "question": "What are the major security risks in Python applications? Explain security best practices and mitigation techniques.",
+      "answer": "Security is a critical aspect of Python application development. Poor security practices can expose applications to attacks such as SQL injection, command injection, cross-site scripting, insecure deserialization, credential leaks, and data breaches. Developers must follow secure coding practices, validate inputs, manage secrets securely, apply authentication and authorization controls, and keep dependencies updated.",
+      "explanation": "Common Risks:\n\nSQL Injection.\nHardcoded Credentials.\nInsecure APIs.\nDependency Vulnerabilities.\nWeak Authentication.\n\nBest Practices:\n\nUse parameterized queries.\nStore secrets in environment variables.\nValidate user input.\nUse HTTPS.\nUpdate dependencies regularly.\n\nSecurity should be considered throughout the software development lifecycle.",
+      "code_example": "import os\napi_key = os.getenv('API_KEY')",
+      "key_takeaways": [
+        "Security is essential.",
+        "Avoid hardcoded credentials.",
+        "Validate all user inputs.",
+        "Use secure authentication.",
+        "Keep dependencies updated."
+      ]
+    },
+    {
+      "id": 58,
+      "subject": "Python",
+      "topic": "Design Patterns",
+      "difficulty": "Hard",
+      "title": "Singleton Design Pattern",
+      "question": "What is the Singleton Design Pattern? Explain its implementation, advantages, disadvantages, and use cases in Python.",
+      "answer": "The Singleton Design Pattern ensures that a class has only one instance throughout the application's lifecycle while providing a global access point to that instance. Singleton patterns are useful when exactly one shared resource should exist, such as configuration managers, logging systems, cache managers, and database connection managers. Although powerful, Singleton usage should be carefully considered because excessive use can increase coupling and reduce testability.",
+      "explanation": "Example Use Cases:\n\nApplication Configuration.\nLogging Service.\nDatabase Manager.\nCache Manager.\n\nBenefits:\n\nControlled resource access.\nMemory efficiency.\nGlobal availability.\n\nDrawbacks:\n\nGlobal state.\nTesting complexity.\nPotential coupling issues.",
+      "code_example": "class Singleton:\n    _instance = None",
+      "key_takeaways": [
+        "Singleton allows only one instance.",
+        "Provides global access.",
+        "Useful for shared resources.",
+        "Can increase coupling.",
+        "Common design pattern."
+      ]
+    },
+    {
+      "id": 59,
+      "subject": "Python",
+      "topic": "Design Patterns",
+      "difficulty": "Hard",
+      "title": "Factory Design Pattern",
+      "question": "What is the Factory Design Pattern? Explain its implementation, advantages, and practical applications.",
+      "answer": "The Factory Design Pattern is a creational design pattern that provides an interface for creating objects without exposing the object creation logic to the client. Instead of directly instantiating classes, object creation is delegated to a factory method or factory class. This improves flexibility, maintainability, scalability, and adherence to object-oriented design principles.",
+      "explanation": "Imagine an application that creates different notification types.\n\nEmail Notification.\nSMS Notification.\nPush Notification.\n\nA factory can create the appropriate object based on user requirements.\n\nBenefits:\n\nLoose coupling.\nSimplified object creation.\nBetter maintainability.\n\nWidely used in frameworks and enterprise software.",
+      "code_example": "class NotificationFactory:\n    pass",
+      "key_takeaways": [
+        "Factory centralizes object creation.",
+        "Reduces coupling.",
+        "Improves flexibility.",
+        "Supports scalability.",
+        "Popular design pattern."
+      ]
+    },
+    {
+      "id": 60,
+      "subject": "Python",
+      "topic": "Interview Concepts",
+      "difficulty": "Hard",
+      "title": "Python vs Java",
+      "question": "Compare Python and Java in terms of syntax, performance, memory management, development speed, scalability, and use cases.",
+      "answer": "Python and Java are two of the most popular programming languages in the world. Python emphasizes simplicity, readability, and rapid development, while Java focuses on performance, portability, scalability, and enterprise-grade systems. Both languages support object-oriented programming and have large ecosystems, but they are optimized for different types of projects and development requirements.",
+      "explanation": "Python:\n\nSimple syntax.\nFast development.\nExcellent for AI and automation.\n\nJava:\n\nHigher performance.\nStrong type checking.\nEnterprise applications.\n\nPython is often preferred for data science, scripting, machine learning, and rapid prototyping.\n\nJava is commonly used for enterprise software, banking systems, Android development, and large-scale backend applications.",
+      "code_example": "Python: print('Hello')\nJava: System.out.println('Hello');",
+      "key_takeaways": [
+        "Python is simpler to learn.",
+        "Java generally offers better performance.",
+        "Python excels in AI and automation.",
+        "Java dominates many enterprise systems.",
+        "Both are highly valuable languages."
+      ]
+    }
+  ]
+}

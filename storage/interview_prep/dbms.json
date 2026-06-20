@@ -1,0 +1,1467 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: SQL, Normalization, Transactions, Indexing, NoSQL\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "DBMS",
+      "topic": "Introduction to DBMS",
+      "difficulty": "Easy",
+      "title": "What is DBMS?",
+      "question": "What is DBMS (Database Management System)? Explain its purpose, features, advantages, and real-world applications.",
+      "answer": "DBMS (Database Management System) is software that allows users to create, store, organize, retrieve, update, and manage data efficiently. It acts as an interface between users/applications and the database. A DBMS ensures that data is stored in a structured manner and can be accessed, modified, and managed securely. Instead of maintaining separate files for different types of information, organizations use a DBMS to centralize data management, reduce duplication, improve consistency, and provide controlled access to data. Popular DBMS software includes MySQL, Oracle, PostgreSQL, SQL Server, and SQLite.",
+      "explanation": "To understand DBMS, imagine a college that stores information about students, teachers, attendance, fees, and examination results. Without a DBMS, all this information would be stored in separate files, making it difficult to search, update, and maintain data. If a student's phone number changes, it may need to be updated in multiple files, leading to inconsistencies.\n\nA DBMS solves these problems by storing all data in a centralized database. It allows users to quickly search for information, update records, maintain security, and ensure that multiple users can access data simultaneously without conflicts.\n\nFor example, when a student checks their result online, the application sends a request to the DBMS. The DBMS retrieves the required data from the database and returns it to the application, which then displays it to the student. This process happens within seconds, even when thousands of students access the system at the same time.\n\nDBMS is widely used in banking systems, railway reservation systems, e-commerce platforms, hospitals, schools, universities, and social media applications because it provides efficient data management, security, reliability, and scalability.",
+      "code_example": "-- Create a simple Student table\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    Name VARCHAR(50),\n    Course VARCHAR(50)\n);\n\n-- Insert data into the table\nINSERT INTO Students VALUES (101, 'Aniket', 'Computer Science');\n\n-- Retrieve student information\nSELECT * FROM Students;",
+      "key_takeaways": [
+        "DBMS stands for Database Management System.",
+        "It acts as an interface between users/applications and databases.",
+        "It helps store, retrieve, update, and manage data efficiently.",
+        "It reduces data redundancy and improves data consistency.",
+        "It provides security, backup, recovery, and multi-user access.",
+        "Common DBMS software includes MySQL, Oracle, PostgreSQL, SQL Server, and SQLite.",
+        "DBMS is widely used in banking, healthcare, education, e-commerce, and reservation systems."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "DBMS",
+      "topic": "Database Basics",
+      "difficulty": "Easy",
+      "title": "What is a Database?",
+      "question": "What is a Database? Explain its purpose, characteristics, and real-world applications.",
+      "answer": "A Database is an organized collection of related data that is stored electronically and can be accessed, managed, and updated efficiently. The primary purpose of a database is to store information in a structured manner so that it can be easily retrieved, modified, and maintained. Databases help organizations manage large amounts of data while ensuring accuracy, consistency, security, and availability. Examples include customer records in banks, student records in colleges, patient records in hospitals, and product information in e-commerce platforms.",
+      "explanation": "Think of a database as a digital filing cabinet. In a traditional office, documents are stored in folders inside cabinets. Similarly, a database stores information in an organized way so that users can quickly find what they need. For example, a college database may contain student details, course information, attendance records, and examination results. Instead of searching through hundreds of paper files, users can retrieve information instantly using database queries. Modern applications such as banking apps, social media platforms, online shopping websites, and airline reservation systems rely heavily on databases to store and manage data.",
+      "code_example": "-- Create a database\nCREATE DATABASE CollegeDB;\n\n-- Use the database\nUSE CollegeDB;",
+      "key_takeaways": [
+        "A database is an organized collection of related data.",
+        "It helps store, retrieve, update, and manage information efficiently.",
+        "Databases improve data organization and accessibility.",
+        "They are widely used in modern software applications.",
+        "Examples include banking, healthcare, education, and e-commerce systems."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "DBMS",
+      "topic": "Database Basics",
+      "difficulty": "Easy",
+      "title": "What is Data?",
+      "question": "What is Data? Differentiate between Data and Information with examples.",
+      "answer": "Data refers to raw facts, figures, observations, or values that have not yet been processed or interpreted. Information is processed and meaningful data that can be used for decision-making. Data alone may not provide useful insights, but when organized and analyzed, it becomes information. For example, individual marks of students are data, while the average marks of a class represent information.",
+      "explanation": "Consider a classroom where students scored 70, 80, 85, and 90 marks. These individual marks are data because they are raw values. If we calculate the class average and determine that the average score is 81.25, the result becomes information because it provides meaningful insight. In DBMS, data is stored in databases and later processed to generate useful information for users and organizations.",
+      "code_example": "-- Student marks data\nSELECT Marks FROM Students;\n\n-- Information generated from data\nSELECT AVG(Marks) AS AverageMarks FROM Students;",
+      "key_takeaways": [
+        "Data consists of raw facts and figures.",
+        "Information is processed and meaningful data.",
+        "Data becomes information after analysis and interpretation.",
+        "DBMS stores data and helps generate useful information.",
+        "Decision-making relies on information rather than raw data."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "DBMS",
+      "topic": "Database Users",
+      "difficulty": "Easy",
+      "title": "Who are Database Users?",
+      "question": "Who are Database Users? Explain different types of users in a DBMS.",
+      "answer": "Database users are individuals or applications that interact with a database system. Different users have different responsibilities depending on their role. Common types of database users include Database Administrators (DBA), Application Programmers, End Users, and Database Designers. Together, these users ensure that databases are designed, maintained, secured, and utilized effectively.",
+      "explanation": "A database system is not managed by a single person. For example, in a university database system, a DBA manages security and backups, programmers develop applications for students and faculty, database designers create the database structure, and end users such as students and teachers use the application to access information. Each type of user contributes to the successful operation of the database system.",
+      "code_example": "-- Create a new database user\nCREATE USER 'student' IDENTIFIED BY 'password';\n\n-- Grant read permission\nGRANT SELECT ON CollegeDB.* TO 'student';",
+      "key_takeaways": [
+        "Database users interact with the database system.",
+        "DBA manages security, backup, and maintenance.",
+        "Programmers develop applications using databases.",
+        "Database designers create the database structure.",
+        "End users access and utilize stored information."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "DBMS",
+      "topic": "Advantages of DBMS",
+      "difficulty": "Easy",
+      "title": "Advantages of DBMS",
+      "question": "What are the major advantages of using a DBMS?",
+      "answer": "A DBMS provides several advantages, including reduced data redundancy, improved data consistency, enhanced security, better data sharing, backup and recovery facilities, data integrity, and support for multiple users. These features make data management more efficient and reliable compared to traditional file systems.",
+      "explanation": "Suppose a company stores employee information in multiple files. If an employee changes their address, the update may need to be performed in several places, increasing the risk of inconsistencies. A DBMS stores data centrally, reducing duplication and ensuring consistency. It also provides user authentication, permissions, backups, and recovery mechanisms, making data more secure and reliable.",
+      "code_example": "-- Example of centralized data storage\nSELECT * FROM Employees WHERE EmployeeID = 101;",
+      "key_takeaways": [
+        "Reduces data redundancy and duplication.",
+        "Improves data consistency and accuracy.",
+        "Provides better security and access control.",
+        "Supports backup and recovery mechanisms.",
+        "Allows multiple users to access data simultaneously.",
+        "Improves overall data management efficiency."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "DBMS",
+      "topic": "Disadvantages of DBMS",
+      "difficulty": "Easy",
+      "title": "Disadvantages of DBMS",
+      "question": "What are the disadvantages of a DBMS?",
+      "answer": "Although DBMS provides many benefits, it also has certain disadvantages. These include high implementation costs, complexity in setup and maintenance, large hardware requirements, the need for skilled personnel, and potential performance overhead for small applications. Organizations must carefully evaluate these factors before adopting a DBMS.",
+      "explanation": "For a small business with limited data, implementing a full-scale DBMS may be expensive and unnecessary. The organization may need dedicated servers, licensed software, and trained database administrators. Additionally, maintaining security, backups, and updates requires continuous effort. However, for large organizations managing vast amounts of data, the benefits usually outweigh these disadvantages.",
+      "code_example": "-- Example of checking database size\nSELECT DATABASE();",
+      "key_takeaways": [
+        "DBMS can be expensive to implement and maintain.",
+        "Requires skilled administrators and developers.",
+        "Needs significant hardware and storage resources.",
+        "Can be complex for small organizations.",
+        "Maintenance and upgrades require ongoing effort."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "DBMS",
+      "topic": "Data Models",
+      "difficulty": "Easy",
+      "title": "What is a Data Model?",
+      "question": "What is a Data Model in DBMS? Explain its purpose, types, advantages, and real-world significance.",
+      "answer": "A Data Model is a collection of concepts, rules, and structures used to describe how data is organized, stored, related, and manipulated within a database system. It serves as a blueprint for designing databases by defining entities, attributes, relationships, and constraints. Data models help database designers understand business requirements and convert them into an efficient database structure. Without a data model, database development would become unorganized, leading to redundancy, inconsistency, and maintenance difficulties. Common types of data models include Hierarchical, Network, Relational, Entity-Relationship (ER), and Object-Oriented Data Models.",
+      "explanation": "Imagine you are constructing a house. Before construction begins, an architect prepares a blueprint showing the rooms, doors, windows, and connections between different areas. Similarly, before creating a database, a data model acts as a blueprint that defines what data will be stored and how different pieces of data will relate to each other.\n\nFor example, in a college database, we may have Students, Courses, and Teachers. A data model defines that a student can enroll in multiple courses, a course can have multiple students, and a teacher can teach several courses. Without such planning, the database may become disorganized and difficult to manage.\n\nData models also help developers and stakeholders communicate effectively because everyone can visualize the structure before actual implementation begins.",
+      "code_example": "-- Example table based on a data model\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    Name VARCHAR(100),\n    CourseID INT\n);",
+      "key_takeaways": [
+        "A Data Model acts as a blueprint for database design.",
+        "It defines data structure, relationships, and constraints.",
+        "It helps reduce redundancy and improve consistency.",
+        "Common models include Relational, Hierarchical, and ER Models.",
+        "Data models are created before actual database implementation."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "DBMS",
+      "topic": "Database Architecture",
+      "difficulty": "Medium",
+      "title": "Three-Level Architecture of DBMS",
+      "question": "Explain the Three-Level Architecture of DBMS and discuss its advantages in database management.",
+      "answer": "The Three-Level Architecture of DBMS was proposed by ANSI/SPARC to separate user applications from physical database storage. It consists of three levels: External Level, Conceptual Level, and Internal Level. The External Level describes how individual users view data. The Conceptual Level describes the overall logical structure of the database. The Internal Level describes how data is physically stored on storage devices. This architecture provides data abstraction, security, flexibility, and data independence.",
+      "explanation": "Consider a university database.\n\nAt the External Level, a student sees only personal information and grades, while a teacher sees attendance and marks records.\n\nAt the Conceptual Level, the complete database structure exists, including students, teachers, courses, and relationships.\n\nAt the Internal Level, the DBMS stores actual records on disks using files, indexes, and storage mechanisms.\n\nThis separation is important because users do not need to know how data is physically stored. Similarly, database administrators can modify storage mechanisms without affecting application programs. This makes systems easier to maintain and upgrade.",
+      "code_example": "-- Example query at external level\nSELECT Name, Marks\nFROM Students\nWHERE StudentID = 101;",
+      "key_takeaways": [
+        "Three-Level Architecture provides data abstraction.",
+        "External Level represents user-specific views.",
+        "Conceptual Level represents the logical database structure.",
+        "Internal Level represents physical storage details.",
+        "It supports logical and physical data independence."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "DBMS",
+      "topic": "Keys",
+      "difficulty": "Medium",
+      "title": "Primary Key and Candidate Key",
+      "question": "What are Primary Keys and Candidate Keys? Explain their differences with suitable examples.",
+      "answer": "A Candidate Key is an attribute or a combination of attributes that can uniquely identify each record in a table. A Primary Key is the candidate key selected by the database designer to uniquely identify records. Every table can have multiple candidate keys but only one primary key. Primary keys cannot contain NULL values and must be unique for every row.",
+      "explanation": "Consider a Student table containing StudentID, Email, and AadhaarNumber.\n\nStudentID uniquely identifies every student.\nEmail also uniquely identifies every student.\nAadhaarNumber also uniquely identifies every student.\n\nTherefore, all three are Candidate Keys.\n\nHowever, only one of them is selected as the Primary Key, usually StudentID.\n\nThink of candidate keys as multiple eligible candidates for a job interview. Only one candidate is finally selected for the position. Similarly, one candidate key becomes the primary key.\n\nPrimary keys play a crucial role in maintaining data integrity and establishing relationships between tables.",
+      "code_example": "CREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    Email VARCHAR(100) UNIQUE,\n    AadhaarNumber VARCHAR(12) UNIQUE,\n    Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Candidate Keys uniquely identify records.",
+        "A table may contain multiple Candidate Keys.",
+        "Only one Candidate Key is selected as the Primary Key.",
+        "Primary Keys cannot contain NULL values.",
+        "Primary Keys help maintain entity integrity."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "DBMS",
+      "topic": "Normalization",
+      "difficulty": "Hard",
+      "title": "What is Normalization?",
+      "question": "What is Normalization in DBMS? Explain its objectives, advantages, and commonly used normal forms.",
+      "answer": "Normalization is the process of organizing data in a database to reduce redundancy, eliminate undesirable characteristics such as insertion, update, and deletion anomalies, and improve data integrity. It involves dividing large tables into smaller related tables while maintaining relationships among them. Common normal forms include First Normal Form (1NF), Second Normal Form (2NF), Third Normal Form (3NF), and Boyce-Codd Normal Form (BCNF).",
+      "explanation": "Suppose a Student table stores StudentID, StudentName, CourseName, FacultyName, and FacultyPhone for every enrollment. If multiple students enroll in the same course, faculty information is repeated many times.\n\nThis repetition causes redundancy.\n\nIf the faculty phone number changes, multiple rows must be updated. Missing one row causes inconsistency.\n\nNormalization solves this problem by dividing the data into separate tables:\n\nStudents Table\nCourses Table\nFaculty Table\nEnrollments Table\n\nNow information is stored only once, making updates easier and reducing storage requirements.\n\nNormalization is one of the most important concepts in database design because it improves efficiency, consistency, and maintainability.",
+      "code_example": "-- Normalized Students table\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    StudentName VARCHAR(100)\n);\n\nCREATE TABLE Courses (\n    CourseID INT PRIMARY KEY,\n    CourseName VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Normalization reduces data redundancy.",
+        "It eliminates insertion, update, and deletion anomalies.",
+        "Improves data consistency and integrity.",
+        "1NF, 2NF, 3NF, and BCNF are common normal forms.",
+        "Proper normalization leads to efficient database design."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "DBMS",
+      "topic": "Transactions",
+      "difficulty": "Medium",
+      "title": "What is a Transaction?",
+      "question": "What is a Transaction in DBMS? Explain its characteristics, importance, and real-world examples.",
+      "answer": "A Transaction is a sequence of one or more database operations performed as a single logical unit of work. A transaction may consist of reading data, inserting records, updating values, or deleting information. The primary goal of a transaction is to ensure data consistency and reliability. Transactions follow the ACID properties (Atomicity, Consistency, Isolation, and Durability) to guarantee that database operations are completed correctly even in the presence of system failures or concurrent access.",
+      "explanation": "Consider an online banking system where ₹10,000 is transferred from Account A to Account B.\n\nThe transfer consists of two operations:\n\n1. Deduct ₹10,000 from Account A.\n2. Add ₹10,000 to Account B.\n\nBoth operations must be completed successfully. If the first operation succeeds but the second fails due to a system crash, the database becomes inconsistent.\n\nA transaction ensures that either both operations succeed or neither operation is applied.\n\nTransactions are extremely important in banking systems, airline reservation systems, e-commerce applications, and payment gateways where accuracy and consistency are critical.\n\nWithout transactions, data corruption and financial losses could occur during system failures.",
+      "code_example": "START TRANSACTION;\n\nUPDATE Accounts\nSET Balance = Balance - 10000\nWHERE AccountID = 1;\n\nUPDATE Accounts\nSET Balance = Balance + 10000\nWHERE AccountID = 2;\n\nCOMMIT;",
+      "key_takeaways": [
+        "A Transaction is a logical unit of database work.",
+        "Transactions ensure data consistency and reliability.",
+        "They follow ACID properties.",
+        "Transactions are critical in banking and financial systems.",
+        "COMMIT saves changes while ROLLBACK undoes them."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "DBMS",
+      "topic": "Foreign Key",
+      "difficulty": "Medium",
+      "title": "What is a Foreign Key?",
+      "question": "What is a Foreign Key in DBMS? Explain its purpose, working mechanism, advantages, and practical applications.",
+      "answer": "A Foreign Key is a field or a collection of fields in one table that refers to the Primary Key of another table. It is used to establish and maintain relationships between tables in a relational database. The primary purpose of a Foreign Key is to enforce referential integrity, ensuring that relationships between records remain valid. A Foreign Key helps prevent invalid data insertion by ensuring that a value entered in the child table already exists in the parent table. This mechanism maintains consistency and accuracy across related tables.",
+      "explanation": "Consider a college database containing two tables: Departments and Students.\n\nThe Departments table stores department information:\nDepartmentID | DepartmentName\n101 | Computer Science\n102 | Mechanical Engineering\n\nThe Students table stores student information:\nStudentID | StudentName | DepartmentID\n1 | Aniket | 101\n2 | Rahul | 102\n\nIn this example, DepartmentID in the Students table is a Foreign Key because it references DepartmentID in the Departments table.\n\nThis relationship ensures that a student can only belong to an existing department. If someone tries to insert DepartmentID 999, the database will reject the operation because such a department does not exist.\n\nForeign Keys are extremely important in large applications such as banking systems, hospital management systems, e-commerce websites, social media platforms, and university management systems because they help maintain relationships and prevent data inconsistencies.",
+      "code_example": "CREATE TABLE Departments (\n    DepartmentID INT PRIMARY KEY,\n    DepartmentName VARCHAR(100)\n);\n\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    StudentName VARCHAR(100),\n    DepartmentID INT,\n    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)\n);",
+      "key_takeaways": [
+        "Foreign Keys establish relationships between tables.",
+        "They reference the Primary Key of another table.",
+        "They enforce referential integrity.",
+        "They prevent invalid and orphan records.",
+        "They improve consistency in relational databases."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "DBMS",
+      "topic": "ER Model",
+      "difficulty": "Easy",
+      "title": "Entity, Attribute and Relationship",
+      "question": "What are Entities, Attributes, and Relationships in the ER Model? Explain with suitable examples.",
+      "answer": "The Entity-Relationship (ER) Model is a conceptual database design model used to represent data and relationships among data. An Entity is a real-world object about which information is stored. An Attribute is a property that describes an entity. A Relationship defines how two or more entities are associated with each other. Together, entities, attributes, and relationships form the foundation of database design.",
+      "explanation": "Consider a university database.\n\nStudent is an Entity because information about students is stored.\n\nAttributes of Student may include:\nStudentID\nName\nEmail\nPhoneNumber\n\nCourse is another Entity.\n\nA student can enroll in multiple courses, and a course can have multiple students. This connection is called a Relationship.\n\nThink of an Entity as a noun, an Attribute as a description of that noun, and a Relationship as a connection between two nouns.\n\nBefore creating database tables, database designers usually create ER diagrams to understand how different entities interact with one another.",
+      "code_example": "-- Student Entity Example\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    Name VARCHAR(100),\n    Email VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Entities represent real-world objects.",
+        "Attributes describe entities.",
+        "Relationships connect entities.",
+        "ER Models help design databases before implementation.",
+        "ER diagrams improve understanding of business requirements."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "DBMS",
+      "topic": "SQL Commands",
+      "difficulty": "Easy",
+      "title": "DDL Commands",
+      "question": "What are DDL Commands in SQL? Explain all major DDL commands with examples.",
+      "answer": "DDL (Data Definition Language) consists of SQL commands used to define, modify, and remove database structures. These commands manage database objects such as tables, views, indexes, and schemas. DDL commands affect the structure of the database rather than the data itself. Major DDL commands include CREATE, ALTER, DROP, TRUNCATE, and RENAME.",
+      "explanation": "Imagine constructing a building. Before people can live inside it, the building structure must be created. Similarly, before storing data in a database, database structures such as tables and schemas must be created.\n\nCREATE creates new objects.\nALTER modifies existing structures.\nDROP permanently removes objects.\nTRUNCATE removes all records while keeping the structure.\nRENAME changes object names.\n\nDatabase administrators and developers frequently use DDL commands during application development and maintenance.",
+      "code_example": "CREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    Name VARCHAR(100)\n);\n\nALTER TABLE Students\nADD Email VARCHAR(100);",
+      "key_takeaways": [
+        "DDL stands for Data Definition Language.",
+        "DDL commands manage database structures.",
+        "CREATE creates database objects.",
+        "ALTER modifies structures.",
+        "DROP removes database objects permanently."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "DBMS",
+      "topic": "SQL Commands",
+      "difficulty": "Easy",
+      "title": "DML Commands",
+      "question": "What are DML Commands in SQL? Explain their purpose and commonly used commands.",
+      "answer": "DML (Data Manipulation Language) consists of SQL commands used to manipulate data stored inside database tables. These commands allow users to insert, retrieve, update, and delete records. DML focuses on working with actual data rather than table structures. The most commonly used DML commands are INSERT, UPDATE, DELETE, and SELECT.",
+      "explanation": "After creating a table, the next step is storing and managing information inside it.\n\nINSERT adds new records.\nSELECT retrieves records.\nUPDATE modifies existing records.\nDELETE removes records.\n\nFor example, when a new student joins a college, an INSERT command stores their details. If the student changes their phone number, an UPDATE command modifies the record. When administrators need student information, a SELECT query retrieves it.",
+      "code_example": "INSERT INTO Students VALUES (1, 'Aniket');\n\nSELECT * FROM Students;\n\nUPDATE Students\nSET Name = 'Aniket Yadav'\nWHERE StudentID = 1;",
+      "key_takeaways": [
+        "DML stands for Data Manipulation Language.",
+        "DML commands work with table data.",
+        "INSERT adds records.",
+        "UPDATE modifies records.",
+        "DELETE removes records.",
+        "SELECT retrieves data."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "DBMS",
+      "topic": "ACID Properties",
+      "difficulty": "Medium",
+      "title": "ACID Properties",
+      "question": "What are ACID Properties in DBMS? Explain each property with examples and importance.",
+      "answer": "ACID Properties are a set of rules that ensure database transactions are processed reliably and maintain data integrity. ACID stands for Atomicity, Consistency, Isolation, and Durability. These properties guarantee that transactions execute correctly even when system failures, concurrent access, or unexpected errors occur. ACID properties are fundamental to modern database systems and are especially important in banking, healthcare, airline reservations, and financial applications.",
+      "explanation": "Consider transferring ₹10,000 from Account A to Account B.\n\nAtomicity ensures that both debit and credit operations complete together. If one fails, both are rolled back.\n\nConsistency ensures that the database remains valid before and after the transaction.\n\nIsolation ensures that multiple users performing transactions simultaneously do not interfere with each other.\n\nDurability ensures that once a transaction is committed, it remains permanently stored even if the system crashes immediately afterward.\n\nWithout ACID properties, databases could become inconsistent and unreliable, leading to financial losses and corrupted data.",
+      "code_example": "START TRANSACTION;\n\nUPDATE Accounts\nSET Balance = Balance - 10000\nWHERE AccountID = 1;\n\nUPDATE Accounts\nSET Balance = Balance + 10000\nWHERE AccountID = 2;\n\nCOMMIT;",
+      "key_takeaways": [
+        "ACID ensures reliable transaction processing.",
+        "Atomicity means all-or-nothing execution.",
+        "Consistency preserves valid database states.",
+        "Isolation prevents transaction interference.",
+        "Durability guarantees permanent storage of committed data."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "DBMS",
+      "topic": "Normalization",
+      "difficulty": "Hard",
+      "title": "First Normal Form (1NF)",
+      "question": "What is First Normal Form (1NF) in DBMS? Explain its rules, advantages, and practical examples.",
+      "answer": "First Normal Form (1NF) is the first stage of database normalization. A table is said to be in 1NF if every column contains only atomic (indivisible) values, each column contains values of a single type, and there are no repeating groups or multiple values stored in a single column. The main objective of 1NF is to organize data into a tabular structure where each field contains only one value. This improves data consistency, simplifies querying, and forms the foundation for higher normal forms such as 2NF and 3NF.",
+      "explanation": "Consider a Student table:\n\nStudentID | Name | Subjects\n1 | Aniket | DBMS, OS, CN\n2 | Rahul | Java, Python\n\nThis table violates 1NF because the Subjects column contains multiple values in a single field.\n\nTo convert it into 1NF:\n\nStudentID | Name | Subject\n1 | Aniket | DBMS\n1 | Aniket | OS\n1 | Aniket | CN\n2 | Rahul | Java\n2 | Rahul | Python\n\nNow every field contains only a single value.\n\nThink of 1NF as a rule that says 'one box should contain one item only.' If a box contains multiple items, searching, updating, and deleting data becomes difficult. By ensuring atomic values, databases become easier to manage and query.",
+      "code_example": "-- Table in 1NF\nCREATE TABLE StudentSubjects (\n    StudentID INT,\n    StudentName VARCHAR(100),\n    Subject VARCHAR(50)\n);",
+      "key_takeaways": [
+        "1NF is the first step of normalization.",
+        "Each column must contain atomic values.",
+        "No repeating groups are allowed.",
+        "Every cell should contain a single value.",
+        "1NF improves data organization and querying."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "DBMS",
+      "topic": "Normalization",
+      "difficulty": "Hard",
+      "title": "Second Normal Form (2NF)",
+      "question": "What is Second Normal Form (2NF)? Explain its rules, purpose, and examples.",
+      "answer": "Second Normal Form (2NF) is achieved when a table is already in First Normal Form (1NF) and every non-key attribute is fully dependent on the entire primary key. 2NF eliminates partial dependency, which occurs when a non-key attribute depends only on a part of a composite primary key rather than the whole key. The goal of 2NF is to reduce redundancy and improve data integrity.",
+      "explanation": "Consider a Course Enrollment table:\n\nStudentID | CourseID | StudentName | CourseName\n\nPrimary Key = (StudentID, CourseID)\n\nStudentName depends only on StudentID.\nCourseName depends only on CourseID.\n\nThese are partial dependencies because they do not depend on the entire composite key.\n\nTo achieve 2NF:\n\nStudents Table\nStudentID | StudentName\n\nCourses Table\nCourseID | CourseName\n\nEnrollments Table\nStudentID | CourseID\n\nNow each non-key attribute depends on the complete key structure. This reduces duplication and makes updates easier.",
+      "code_example": "-- Students Table\nCREATE TABLE Students (\n    StudentID INT PRIMARY KEY,\n    StudentName VARCHAR(100)\n);\n\n-- Courses Table\nCREATE TABLE Courses (\n    CourseID INT PRIMARY KEY,\n    CourseName VARCHAR(100)\n);",
+      "key_takeaways": [
+        "A table must first satisfy 1NF before achieving 2NF.",
+        "2NF removes partial dependency.",
+        "Non-key attributes must depend on the entire primary key.",
+        "Reduces redundancy significantly.",
+        "Improves database consistency."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "DBMS",
+      "topic": "Normalization",
+      "difficulty": "Hard",
+      "title": "Third Normal Form (3NF)",
+      "question": "What is Third Normal Form (3NF)? Explain transitive dependency and how 3NF removes it.",
+      "answer": "Third Normal Form (3NF) is achieved when a table is already in Second Normal Form (2NF) and contains no transitive dependencies. A transitive dependency occurs when a non-key attribute depends on another non-key attribute rather than directly on the primary key. 3NF eliminates such dependencies to improve data integrity and reduce redundancy.",
+      "explanation": "Consider an Employee table:\n\nEmployeeID | EmployeeName | DepartmentID | DepartmentName\n\nEmployeeID is the primary key.\n\nDepartmentName depends on DepartmentID.\nDepartmentID depends on EmployeeID.\n\nTherefore DepartmentName indirectly depends on EmployeeID through DepartmentID. This is called a transitive dependency.\n\nTo achieve 3NF:\n\nEmployees Table\nEmployeeID | EmployeeName | DepartmentID\n\nDepartments Table\nDepartmentID | DepartmentName\n\nNow each non-key attribute depends directly on the primary key. This structure prevents unnecessary duplication and simplifies maintenance.",
+      "code_example": "CREATE TABLE Departments (\n    DepartmentID INT PRIMARY KEY,\n    DepartmentName VARCHAR(100)\n);\n\nCREATE TABLE Employees (\n    EmployeeID INT PRIMARY KEY,\n    EmployeeName VARCHAR(100),\n    DepartmentID INT\n);",
+      "key_takeaways": [
+        "3NF removes transitive dependencies.",
+        "A table must first satisfy 2NF.",
+        "Non-key attributes should depend only on the primary key.",
+        "Reduces update anomalies.",
+        "Improves maintainability and consistency."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "DBMS",
+      "topic": "Joins",
+      "difficulty": "Medium",
+      "title": "Joins in DBMS",
+      "question": "What are Joins in DBMS? Explain different types of Joins with examples.",
+      "answer": "A Join is an SQL operation used to combine rows from two or more tables based on a related column between them. Joins allow users to retrieve data stored across multiple tables in a relational database. Common types of joins include INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, and SELF JOIN. Joins are one of the most powerful features of relational databases because they enable efficient retrieval of related information.",
+      "explanation": "Consider two tables:\n\nStudents Table\nStudentID | StudentName | DepartmentID\n\nDepartments Table\nDepartmentID | DepartmentName\n\nIf we want to display student names along with department names, we need data from both tables.\n\nINNER JOIN returns only matching records.\nLEFT JOIN returns all records from the left table and matching records from the right table.\nRIGHT JOIN returns all records from the right table.\nFULL JOIN returns all records from both tables.\nSELF JOIN joins a table with itself.\n\nWithout joins, databases would require redundant data storage. Joins allow normalized databases to retrieve complete information efficiently.",
+      "code_example": "SELECT s.StudentName, d.DepartmentName\nFROM Students s\nINNER JOIN Departments d\nON s.DepartmentID = d.DepartmentID;",
+      "key_takeaways": [
+        "Joins combine data from multiple tables.",
+        "INNER JOIN returns matching records only.",
+        "LEFT JOIN returns all left table records.",
+        "RIGHT JOIN returns all right table records.",
+        "Joins are essential in relational databases."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "DBMS",
+      "topic": "Concurrency Control",
+      "difficulty": "Hard",
+      "title": "Concurrency Control",
+      "question": "What is Concurrency Control in DBMS? Explain its importance, problems, and techniques.",
+      "answer": "Concurrency Control is a mechanism used by DBMS to manage simultaneous execution of multiple transactions without violating database consistency. In multi-user database systems, many users may attempt to read or modify the same data at the same time. Concurrency control ensures that these operations occur safely and produce correct results. It prevents conflicts, maintains isolation, and guarantees data integrity.",
+      "explanation": "Imagine two users accessing the same bank account.\n\nInitial Balance = ₹10,000\n\nUser A withdraws ₹2,000.\nUser B withdraws ₹3,000 simultaneously.\n\nWithout concurrency control, both users might read the same balance and perform incorrect calculations, resulting in inconsistent data.\n\nCommon concurrency problems include:\n\nLost Update Problem\nDirty Read Problem\nNon-Repeatable Read\nPhantom Read\n\nTo solve these issues, DBMS uses techniques such as:\n\nLock-Based Protocols\nTimestamp-Based Protocols\nOptimistic Concurrency Control\nTwo-Phase Locking (2PL)\n\nConcurrency control is essential in banking systems, airline reservation systems, stock trading platforms, and large-scale enterprise applications where thousands of transactions occur every second.",
+      "code_example": "-- Example transaction using locking\nSTART TRANSACTION;\nSELECT * FROM Accounts\nWHERE AccountID = 1\nFOR UPDATE;\n\nUPDATE Accounts\nSET Balance = Balance - 2000\nWHERE AccountID = 1;\n\nCOMMIT;",
+      "key_takeaways": [
+        "Concurrency Control manages simultaneous transactions.",
+        "It prevents data inconsistency and transaction conflicts.",
+        "It solves problems such as lost updates and dirty reads.",
+        "Locking and timestamp protocols are common techniques.",
+        "It is critical in multi-user database environments."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "DBMS",
+      "topic": "Functional Dependency",
+      "difficulty": "Hard",
+      "title": "Functional Dependency",
+      "question": "What is Functional Dependency in DBMS? Explain its types, significance, and role in normalization.",
+      "answer": "Functional Dependency (FD) is a relationship between attributes in a database table where one attribute uniquely determines another attribute. It is represented using the symbol (→). If attribute A determines attribute B, it is written as A → B. Functional dependencies are fundamental concepts in database design because they help identify relationships among attributes and play a critical role in normalization. By analyzing functional dependencies, database designers can eliminate redundancy, improve consistency, and achieve higher normal forms.",
+      "explanation": "Consider a Student table:\n\nStudentID | StudentName | Email\n\nEach StudentID uniquely identifies a StudentName and Email.\n\nTherefore:\nStudentID → StudentName\nStudentID → Email\n\nThis means that knowing StudentID allows us to determine StudentName and Email.\n\nTypes of Functional Dependencies include:\n\n1. Trivial Functional Dependency\nA → A\n\n2. Non-Trivial Functional Dependency\nStudentID → StudentName\n\n3. Fully Functional Dependency\nAn attribute depends on the entire primary key.\n\n4. Partial Dependency\nAn attribute depends on only part of a composite key.\n\n5. Transitive Dependency\nA depends on B and B depends on C.\n\nFunctional dependencies help identify normalization issues and are used extensively while converting tables into 2NF, 3NF, and BCNF.",
+      "code_example": "-- Example relation\nStudentID -> StudentName\nStudentID -> Email",
+      "key_takeaways": [
+        "Functional Dependency defines relationships among attributes.",
+        "It is represented using the arrow symbol (→).",
+        "It plays a crucial role in normalization.",
+        "It helps identify redundancy and anomalies.",
+        "It is used in 2NF, 3NF, and BCNF design."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "DBMS",
+      "topic": "BCNF",
+      "difficulty": "Hard",
+      "title": "Boyce-Codd Normal Form (BCNF)",
+      "question": "What is BCNF in DBMS? How does it differ from Third Normal Form (3NF)?",
+      "answer": "Boyce-Codd Normal Form (BCNF) is an advanced version of Third Normal Form (3NF). A table is said to be in BCNF if for every functional dependency A → B, A must be a super key. BCNF eliminates certain anomalies that may still exist in 3NF. It is considered a stricter form of normalization and provides a more robust database structure.",
+      "explanation": "Although a table may satisfy 3NF, it can still contain certain dependency-related anomalies.\n\nConsider a table:\n\nTeacher | Subject | Room\n\nA teacher teaches only one subject.\nA subject is assigned to one room.\n\nFunctional Dependencies:\nTeacher → Subject\nSubject → Room\n\nThis table may satisfy 3NF but can still cause anomalies.\n\nBy decomposing the table into:\n\nTeacherSubject\nTeacher | Subject\n\nSubjectRoom\nSubject | Room\n\nThe database becomes more consistent and satisfies BCNF.\n\nBCNF is often used in enterprise systems where data consistency is extremely important.",
+      "code_example": "-- BCNF decomposition example\nTeacherSubject(Teacher, Subject)\nSubjectRoom(Subject, Room)",
+      "key_takeaways": [
+        "BCNF is stricter than 3NF.",
+        "Every determinant must be a super key.",
+        "BCNF removes additional anomalies.",
+        "It improves database consistency.",
+        "BCNF is widely used in advanced database design."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "DBMS",
+      "topic": "SQL Clauses",
+      "difficulty": "Medium",
+      "title": "WHERE Clause",
+      "question": "What is the WHERE Clause in SQL? Explain its purpose and practical usage.",
+      "answer": "The WHERE clause is used in SQL to filter records based on specified conditions. Instead of retrieving all rows from a table, the WHERE clause allows users to retrieve only those records that satisfy a particular condition. It is one of the most commonly used clauses in SQL because it enables precise data retrieval and improves query efficiency.",
+      "explanation": "Suppose a Students table contains 10,000 records. If a user wants information about only one student, retrieving all records would be inefficient.\n\nUsing a WHERE clause:\n\nSELECT * FROM Students WHERE StudentID = 101;\n\nThe database returns only the required record.\n\nWHERE clauses can be combined with operators such as:\n\n= Equal To\n> Greater Than\n< Less Than\n>= Greater Than or Equal To\n<= Less Than or Equal To\n!= Not Equal To\n\nThey can also be used with AND, OR, NOT, LIKE, IN, and BETWEEN operators.",
+      "code_example": "SELECT *\nFROM Students\nWHERE Marks > 80;",
+      "key_takeaways": [
+        "WHERE filters records based on conditions.",
+        "It improves query precision.",
+        "It works with comparison operators.",
+        "It can be combined with AND and OR.",
+        "It reduces unnecessary data retrieval."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "DBMS",
+      "topic": "SQL Clauses",
+      "difficulty": "Medium",
+      "title": "GROUP BY Clause",
+      "question": "What is the GROUP BY Clause in SQL? Explain its purpose with examples.",
+      "answer": "The GROUP BY clause is used to group rows that have similar values in specified columns. It is commonly used with aggregate functions such as COUNT(), SUM(), AVG(), MAX(), and MIN(). GROUP BY helps users generate summarized reports and perform data analysis efficiently.",
+      "explanation": "Suppose a company wants to know how many employees work in each department.\n\nWithout GROUP BY, every employee record is displayed individually.\n\nUsing GROUP BY:\n\nDepartment | Employee Count\nIT | 50\nHR | 20\nFinance | 15\n\nThis allows managers to quickly understand department sizes.\n\nGROUP BY is heavily used in business intelligence, reporting systems, dashboards, and analytics applications.",
+      "code_example": "SELECT Department, COUNT(*)\nFROM Employees\nGROUP BY Department;",
+      "key_takeaways": [
+        "GROUP BY groups similar records together.",
+        "It works with aggregate functions.",
+        "It helps generate reports.",
+        "It is useful for analytics.",
+        "It summarizes large datasets efficiently."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "DBMS",
+      "topic": "Views",
+      "difficulty": "Medium",
+      "title": "Database Views",
+      "question": "What is a View in DBMS? Explain its advantages, limitations, and practical applications.",
+      "answer": "A View is a virtual table created from one or more underlying database tables. Unlike regular tables, a view does not physically store data. Instead, it stores a query definition and displays data dynamically whenever accessed. Views simplify complex queries, improve security, and provide customized data access.",
+      "explanation": "Suppose an Employees table contains sensitive information such as salary, address, and personal details.\n\nManagers may only need EmployeeID and Name.\n\nInstead of giving direct access to the table, a view can be created:\n\nEmployeeView\nEmployeeID\nEmployeeName\n\nUsers can access only the information exposed through the view.\n\nViews also simplify frequently used queries by hiding complex joins and calculations.",
+      "code_example": "CREATE VIEW EmployeeView AS\nSELECT EmployeeID, EmployeeName\nFROM Employees;",
+      "key_takeaways": [
+        "A View is a virtual table.",
+        "Views do not store data physically.",
+        "They improve security.",
+        "They simplify complex queries.",
+        "Views provide customized data access."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "DBMS",
+      "topic": "Stored Procedures",
+      "difficulty": "Hard",
+      "title": "Stored Procedures",
+      "question": "What are Stored Procedures in DBMS? Explain their advantages and real-world applications.",
+      "answer": "A Stored Procedure is a precompiled collection of SQL statements stored inside the database. It can be executed repeatedly whenever required. Stored procedures help improve performance, reduce network traffic, enhance security, and centralize business logic within the database server.",
+      "explanation": "Imagine an ATM system.\n\nWhenever a customer withdraws money, several operations occur:\n\nValidate account.\nCheck balance.\nDeduct amount.\nUpdate transaction history.\n\nInstead of sending multiple SQL statements from the application every time, all operations can be stored inside a procedure.\n\nThe application simply calls the procedure.\n\nThis reduces communication overhead and improves performance.",
+      "code_example": "CREATE PROCEDURE GetStudents()\nBEGIN\n    SELECT * FROM Students;\nEND;",
+      "key_takeaways": [
+        "Stored Procedures are precompiled SQL programs.",
+        "They improve performance.",
+        "They reduce network traffic.",
+        "They centralize business logic.",
+        "They enhance security."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "DBMS",
+      "topic": "Triggers",
+      "difficulty": "Hard",
+      "title": "Database Triggers",
+      "question": "What are Triggers in DBMS? Explain their working, advantages, and use cases.",
+      "answer": "A Trigger is a special stored program that automatically executes when a specified database event occurs. Triggers can be activated during INSERT, UPDATE, or DELETE operations. They are commonly used for auditing, logging, validation, and maintaining data consistency.",
+      "explanation": "Suppose an employee's salary is updated.\n\nA company may want to record the old and new salary values automatically.\n\nInstead of relying on application code, a trigger can automatically save the change in an audit table whenever an UPDATE occurs.\n\nTriggers help enforce business rules and ensure important events are recorded consistently.",
+      "code_example": "CREATE TRIGGER LogSalaryChange\nAFTER UPDATE ON Employees\nFOR EACH ROW\nBEGIN\n    INSERT INTO SalaryLog VALUES (OLD.Salary, NEW.Salary);\nEND;",
+      "key_takeaways": [
+        "Triggers execute automatically.",
+        "They respond to database events.",
+        "They support auditing and logging.",
+        "They help enforce business rules.",
+        "They improve consistency."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "DBMS",
+      "topic": "Database Security",
+      "difficulty": "Medium",
+      "title": "Database Security",
+      "question": "What is Database Security? Explain major threats and protection mechanisms.",
+      "answer": "Database Security refers to the processes, tools, and techniques used to protect databases from unauthorized access, misuse, corruption, and data loss. The objective is to ensure confidentiality, integrity, and availability of data. Database security is critical because databases often store sensitive information such as financial records, personal information, medical records, and business data.",
+      "explanation": "Common threats include:\n\nUnauthorized Access\nSQL Injection\nData Theft\nMalware Attacks\nInsider Threats\n\nProtection mechanisms include:\n\nAuthentication\nAuthorization\nEncryption\nFirewalls\nRole-Based Access Control\nBackup and Recovery\n\nStrong database security prevents attackers from accessing confidential information and protects organizations from financial and reputational damage.",
+      "code_example": "GRANT SELECT\nON Students\nTO StudentUser;",
+      "key_takeaways": [
+        "Database security protects sensitive information.",
+        "Authentication verifies identity.",
+        "Authorization controls permissions.",
+        "Encryption protects stored data.",
+        "Security prevents unauthorized access."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "DBMS",
+      "topic": "Deadlock",
+      "difficulty": "Hard",
+      "title": "Deadlock in DBMS",
+      "question": "What is Deadlock in DBMS? Explain its causes, conditions, prevention, and recovery techniques.",
+      "answer": "A Deadlock is a situation in which two or more transactions are waiting indefinitely for resources held by each other. Since none of the transactions can proceed, the system becomes stuck. Deadlocks are common in multi-user database systems where transactions compete for shared resources.",
+      "explanation": "Consider two transactions:\n\nTransaction T1 locks Resource A and requests Resource B.\n\nTransaction T2 locks Resource B and requests Resource A.\n\nNow both transactions wait forever.\n\nNecessary conditions for deadlock:\n\nMutual Exclusion\nHold and Wait\nNo Preemption\nCircular Wait\n\nDeadlocks can be prevented using resource ordering, timeout mechanisms, deadlock detection algorithms, and transaction rollback techniques.",
+      "code_example": "-- Transaction T1\nLOCK A;\nLOCK B;\n\n-- Transaction T2\nLOCK B;\nLOCK A;",
+      "key_takeaways": [
+        "Deadlock causes transactions to wait indefinitely.",
+        "It occurs due to resource conflicts.",
+        "Four conditions are required for deadlock.",
+        "Detection and prevention techniques exist.",
+        "Deadlock handling is important in concurrent systems."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "DBMS",
+      "topic": "Data Abstraction",
+      "difficulty": "Medium",
+      "title": "Data Abstraction",
+      "question": "What is Data Abstraction in DBMS? Explain its levels and advantages.",
+      "answer": "Data Abstraction is the process of hiding unnecessary implementation details from users while exposing only essential information. It helps simplify database interactions and allows users to work with data without understanding the complexities of storage mechanisms. Data abstraction improves security, usability, and maintainability.",
+      "explanation": "Consider an ATM user.\n\nThe user can check balance, withdraw money, and deposit funds.\n\nThe user does not need to know:\n\nHow data is stored on disks.\nHow indexes work.\nHow transactions are processed.\n\nDBMS provides three abstraction levels:\n\nPhysical Level\nLogical Level\nView Level\n\nThese levels separate users from storage details and make databases easier to use and manage.",
+      "code_example": "-- Example query seen by end user\nSELECT Balance\nFROM Accounts\nWHERE AccountID = 101;",
+      "key_takeaways": [
+        "Data abstraction hides implementation details.",
+        "It simplifies database usage.",
+        "It improves security.",
+        "It consists of Physical, Logical, and View levels.",
+        "It enhances maintainability."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "DBMS",
+      "topic": "Relational Model",
+      "difficulty": "Medium",
+      "title": "Relational Model",
+      "question": "What is the Relational Model in DBMS? Explain its components, advantages, and importance.",
+      "answer": "The Relational Model is the most widely used data model in modern database systems. Proposed by E.F. Codd in 1970, it organizes data into tables called relations. Each table consists of rows (tuples) and columns (attributes). Relationships between tables are established using keys such as Primary Keys and Foreign Keys. The relational model provides a simple, flexible, and mathematically sound way of organizing and managing data. Most modern DBMSs such as MySQL, PostgreSQL, Oracle, SQL Server, and MariaDB are based on the relational model.",
+      "explanation": "Imagine a college database.\n\nStudents Table:\nStudentID | Name | DepartmentID\n\nDepartments Table:\nDepartmentID | DepartmentName\n\nInstead of storing department information repeatedly for every student, separate tables are created and linked using keys.\n\nThe relational model makes databases easier to design, maintain, and query. Users can retrieve related information from multiple tables using SQL joins.\n\nThe model became popular because it reduces redundancy, improves consistency, and supports powerful query operations.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "The Relational Model stores data in tables.",
+        "Tables contain rows and columns.",
+        "Relationships are maintained using keys.",
+        "Most modern DBMSs use the Relational Model.",
+        "It improves organization and consistency."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "DBMS",
+      "topic": "Tuple and Attribute",
+      "difficulty": "Easy",
+      "title": "Tuple and Attribute",
+      "question": "What are Tuples and Attributes in DBMS? Explain with examples.",
+      "answer": "In the Relational Model, a Tuple represents a single row or record in a table, while an Attribute represents a column or field. Attributes define the properties of an entity, and tuples contain the actual values for those properties. Together, tuples and attributes form the basic structure of relational databases.",
+      "explanation": "Consider a Students table:\n\nStudentID | Name | Age\n1 | Aniket | 22\n2 | Rahul | 21\n\nAttributes are:\nStudentID\nName\nAge\n\nTuples are:\n(1, Aniket, 22)\n(2, Rahul, 21)\n\nThink of attributes as the headings of a spreadsheet and tuples as the individual rows containing data.\n\nUnderstanding tuples and attributes is important because they are the building blocks of relational databases.",
+      "code_example": "SELECT * FROM Students;",
+      "key_takeaways": [
+        "A Tuple represents a row.",
+        "An Attribute represents a column.",
+        "Tables are made up of tuples and attributes.",
+        "Attributes define properties.",
+        "Tuples store actual data values."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "DBMS",
+      "topic": "Super Key",
+      "difficulty": "Medium",
+      "title": "Super Key",
+      "question": "What is a Super Key in DBMS? Explain with examples and comparisons.",
+      "answer": "A Super Key is a set of one or more attributes that can uniquely identify a record in a table. A Super Key may contain extra attributes that are not necessary for unique identification. Every Candidate Key is a Super Key, but not every Super Key is a Candidate Key.",
+      "explanation": "Consider a Students table:\n\nStudentID | Email | Name\n\nPossible Super Keys:\nStudentID\nEmail\nStudentID + Name\nEmail + Name\nStudentID + Email\n\nAll of these combinations uniquely identify records.\n\nHowever, the minimal unique identifiers such as StudentID and Email are Candidate Keys.\n\nA Super Key may contain unnecessary attributes, whereas a Candidate Key contains only the minimum attributes required for uniqueness.",
+      "code_example": "-- Example unique columns\nStudentID\nEmail",
+      "key_takeaways": [
+        "A Super Key uniquely identifies records.",
+        "It may contain extra attributes.",
+        "Every Candidate Key is a Super Key.",
+        "Not every Super Key is a Candidate Key.",
+        "Super Keys help identify uniqueness."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "DBMS",
+      "topic": "Candidate Key",
+      "difficulty": "Medium",
+      "title": "Candidate Key",
+      "question": "What is a Candidate Key? Explain its characteristics and significance.",
+      "answer": "A Candidate Key is a minimal set of attributes that can uniquely identify each record in a table. Candidate Keys do not contain redundant attributes. A table may have multiple Candidate Keys, but only one is selected as the Primary Key.",
+      "explanation": "Consider a Student table:\n\nStudentID\nEmail\nAadhaarNumber\n\nAll three uniquely identify students.\n\nTherefore, all three are Candidate Keys.\n\nIf StudentID is chosen as the Primary Key, Email and AadhaarNumber remain Alternate Keys.\n\nCandidate Keys are important because they provide multiple options for uniquely identifying records.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT UNIQUE,\n Email VARCHAR(100) UNIQUE\n);",
+      "key_takeaways": [
+        "Candidate Keys uniquely identify records.",
+        "They are minimal Super Keys.",
+        "A table can have multiple Candidate Keys.",
+        "One Candidate Key becomes the Primary Key.",
+        "They prevent duplicate records."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "DBMS",
+      "topic": "Alternate Key",
+      "difficulty": "Medium",
+      "title": "Alternate Key",
+      "question": "What is an Alternate Key in DBMS? Explain its role with examples.",
+      "answer": "An Alternate Key is a Candidate Key that was not selected as the Primary Key. Since a table may have multiple Candidate Keys, only one becomes the Primary Key and the remaining Candidate Keys are called Alternate Keys. Alternate Keys still maintain uniqueness and can be used for searching and identification.",
+      "explanation": "Consider a Student table:\n\nStudentID\nEmail\nAadhaarNumber\n\nAll are Candidate Keys.\n\nIf StudentID is chosen as the Primary Key:\n\nEmail becomes an Alternate Key.\nAadhaarNumber becomes an Alternate Key.\n\nAlternate Keys provide additional ways to uniquely identify records without serving as the main identifier.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Email VARCHAR(100) UNIQUE\n);",
+      "key_takeaways": [
+        "Alternate Keys are Candidate Keys not chosen as Primary Keys.",
+        "They remain unique.",
+        "They provide alternative identification methods.",
+        "A table can have multiple Alternate Keys.",
+        "They improve flexibility."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "DBMS",
+      "topic": "Composite Key",
+      "difficulty": "Medium",
+      "title": "Composite Key",
+      "question": "What is a Composite Key? Explain its advantages and practical applications.",
+      "answer": "A Composite Key is a Primary Key that consists of two or more attributes. It is used when a single attribute cannot uniquely identify records. Composite Keys are commonly used in many-to-many relationship tables and bridge tables.",
+      "explanation": "Consider a Course Enrollment table:\n\nStudentID | CourseID\n\nA student can enroll in multiple courses.\nA course can have multiple students.\n\nNeither StudentID nor CourseID alone can uniquely identify a record.\n\nTherefore, the combination (StudentID, CourseID) forms a Composite Key.\n\nComposite Keys are frequently used in educational systems, inventory systems, and reservation platforms.",
+      "code_example": "CREATE TABLE Enrollments (\n StudentID INT,\n CourseID INT,\n PRIMARY KEY(StudentID, CourseID)\n);",
+      "key_takeaways": [
+        "Composite Keys contain multiple attributes.",
+        "They uniquely identify records.",
+        "They are common in many-to-many relationships.",
+        "They prevent duplicate combinations.",
+        "They improve relational integrity."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "DBMS",
+      "topic": "Integrity Constraints",
+      "difficulty": "Hard",
+      "title": "Integrity Constraints",
+      "question": "What are Integrity Constraints in DBMS? Explain their types and significance.",
+      "answer": "Integrity Constraints are rules enforced by a DBMS to ensure the accuracy, consistency, and reliability of data. They prevent invalid data from entering the database and maintain data quality. Integrity constraints are essential for ensuring that databases remain trustworthy and error-free.",
+      "explanation": "Major types include:\n\nEntity Integrity\nEnsures Primary Keys are unique and not NULL.\n\nReferential Integrity\nEnsures Foreign Key values match existing Primary Key values.\n\nDomain Integrity\nEnsures values fall within a valid range.\n\nKey Constraints\nEnsure uniqueness.\n\nWithout integrity constraints, databases could contain duplicate, inconsistent, or invalid information.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Age INT CHECK(Age > 0)\n);",
+      "key_takeaways": [
+        "Integrity Constraints ensure data quality.",
+        "They prevent invalid data.",
+        "Entity Integrity uses Primary Keys.",
+        "Referential Integrity uses Foreign Keys.",
+        "They improve consistency and reliability."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "DBMS",
+      "topic": "Entity Integrity",
+      "difficulty": "Medium",
+      "title": "Entity Integrity Constraint",
+      "question": "What is Entity Integrity in DBMS? Why is it important?",
+      "answer": "Entity Integrity is a rule that states every table must have a Primary Key and that Primary Key values cannot be NULL. This ensures that every record in the table can be uniquely identified. Entity Integrity is one of the most fundamental rules in relational databases.",
+      "explanation": "Consider a Students table.\n\nIf StudentID is the Primary Key, every student must have a unique StudentID.\n\nIf NULL values were allowed, some records would not have unique identities, making retrieval and updates difficult.\n\nEntity Integrity ensures that each row represents a distinct entity and can always be identified accurately.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Primary Keys cannot be NULL.",
+        "Every row must be uniquely identifiable.",
+        "Entity Integrity prevents ambiguity.",
+        "It is enforced using Primary Keys.",
+        "It improves database reliability."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "DBMS",
+      "topic": "Referential Integrity",
+      "difficulty": "Medium",
+      "title": "Referential Integrity",
+      "question": "What is Referential Integrity? Explain its importance with examples.",
+      "answer": "Referential Integrity is a rule that ensures Foreign Key values in a child table always correspond to valid Primary Key values in the parent table. It prevents orphan records and maintains consistency between related tables.",
+      "explanation": "Consider Departments and Students tables.\n\nIf DepartmentID 101 exists in Departments, students may reference it.\n\nHowever, if a student references DepartmentID 999 which does not exist, the database becomes inconsistent.\n\nReferential Integrity prevents such situations by enforcing valid references.",
+      "code_example": "FOREIGN KEY (DepartmentID)\nREFERENCES Departments(DepartmentID)",
+      "key_takeaways": [
+        "Referential Integrity maintains relationships.",
+        "It prevents orphan records.",
+        "It is enforced through Foreign Keys.",
+        "It ensures consistency across tables.",
+        "It improves database accuracy."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "DBMS",
+      "topic": "Domain Integrity",
+      "difficulty": "Medium",
+      "title": "Domain Integrity",
+      "question": "What is Domain Integrity in DBMS? Explain its purpose and implementation.",
+      "answer": "Domain Integrity ensures that values entered into a column fall within a defined set of valid values. It defines the permissible range, format, type, and constraints for a column. Domain Integrity helps prevent invalid or meaningless data from being stored in the database.",
+      "explanation": "Consider an Age column.\n\nValid values may be between 1 and 120.\n\nIf someone attempts to enter -5 or 500, the database should reject the value.\n\nSimilarly, an Email column should contain properly formatted email addresses.\n\nDomain Integrity ensures that only meaningful and valid data enters the system.",
+      "code_example": "CREATE TABLE Students (\n Age INT CHECK(Age BETWEEN 1 AND 120)\n);",
+      "key_takeaways": [
+        "Domain Integrity controls valid values.",
+        "It prevents invalid data entry.",
+        "It uses data types and constraints.",
+        "CHECK constraints help enforce it.",
+        "It improves data quality."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "DBMS",
+      "topic": "Database Schema",
+      "difficulty": "Easy",
+      "title": "Database Schema",
+      "question": "What is a Database Schema? Explain its purpose, types, and importance in DBMS.",
+      "answer": "A Database Schema is the logical blueprint or structure of a database that defines how data is organized and how relationships are established among different database objects. It includes tables, columns, data types, constraints, keys, views, indexes, triggers, stored procedures, and relationships. The schema acts as a framework that determines how data will be stored, accessed, and managed. A well-designed schema improves consistency, scalability, maintainability, and overall database performance.",
+      "explanation": "Imagine constructing a building. Before construction begins, architects create a blueprint showing rooms, doors, electrical systems, and plumbing layouts.\n\nSimilarly, before implementing a database, designers create a schema that defines:\n\nWhat tables will exist.\nWhat columns each table will contain.\nWhat data types will be used.\nHow tables will be related.\nWhat constraints will enforce data integrity.\n\nWithout a schema, database development becomes unorganized and difficult to maintain.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Schema is the blueprint of a database.",
+        "It defines tables, relationships, and constraints.",
+        "It improves organization and maintainability.",
+        "A good schema reduces redundancy.",
+        "Schema design is a critical database design step."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "DBMS",
+      "topic": "Database Instance",
+      "difficulty": "Easy",
+      "title": "Database Instance",
+      "question": "What is a Database Instance? Differentiate between Schema and Instance.",
+      "answer": "A Database Instance refers to the actual data stored in the database at a particular moment in time. While the schema defines the structure of the database, the instance represents the current contents of that structure. Database instances change frequently as records are inserted, updated, or deleted, whereas schemas remain relatively stable.",
+      "explanation": "Consider a Students table.\n\nThe schema defines:\nStudentID\nName\nEmail\n\nThe actual records stored in the table at a given moment represent the database instance.\n\nSchema = Structure\nInstance = Data\n\nThink of a classroom attendance register.\n\nThe register format remains fixed.\nHowever, student attendance entries change daily.\n\nThe register format is analogous to the schema, while the attendance entries represent the instance.",
+      "code_example": "INSERT INTO Students VALUES (1, 'Aniket', 'aniket@gmail.com');",
+      "key_takeaways": [
+        "Schema defines structure.",
+        "Instance represents actual data.",
+        "Schema changes rarely.",
+        "Instances change frequently.",
+        "Both are essential database concepts."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "DBMS",
+      "topic": "Weak Entity",
+      "difficulty": "Medium",
+      "title": "Weak Entity Set",
+      "question": "What is a Weak Entity Set in DBMS? Explain its characteristics and examples.",
+      "answer": "A Weak Entity Set is an entity that cannot be uniquely identified using its own attributes alone. It depends on another entity, known as the Strong Entity, for identification. Weak entities have partial keys and rely on identifying relationships to establish uniqueness.",
+      "explanation": "Consider an Employee and Dependent database.\n\nEmployee:\nEmployeeID\nEmployeeName\n\nDependent:\nDependentName\nRelationship\n\nA dependent may not have a unique identifier.\n\nTherefore, a dependent is identified using:\nEmployeeID + DependentName\n\nSince the dependent cannot exist without an employee, it is considered a Weak Entity.\n\nWeak entities are represented using double rectangles in ER diagrams.",
+      "code_example": "-- Weak Entity Example\nEmployeeID + DependentName",
+      "key_takeaways": [
+        "Weak entities depend on strong entities.",
+        "They lack complete primary keys.",
+        "They require identifying relationships.",
+        "They cannot exist independently.",
+        "They are shown using double rectangles in ER diagrams."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "DBMS",
+      "topic": "Strong Entity",
+      "difficulty": "Easy",
+      "title": "Strong Entity Set",
+      "question": "What is a Strong Entity Set? Explain with examples.",
+      "answer": "A Strong Entity Set is an entity that possesses its own primary key and can be uniquely identified without depending on any other entity. Strong entities exist independently and form the foundation of database relationships.",
+      "explanation": "Consider a Student entity.\n\nStudentID uniquely identifies every student.\n\nSince StudentID alone is sufficient for identification, Student is a Strong Entity.\n\nExamples of Strong Entities include:\nStudents\nEmployees\nDepartments\nProducts\nCustomers\n\nStrong entities are represented using single rectangles in ER diagrams.",
+      "code_example": "CREATE TABLE Students (\n StudentID INT PRIMARY KEY,\n Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Strong entities have primary keys.",
+        "They are independently identifiable.",
+        "They do not depend on other entities.",
+        "They form the foundation of relationships.",
+        "They are represented using single rectangles."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "DBMS",
+      "topic": "Cardinality",
+      "difficulty": "Medium",
+      "title": "Cardinality in ER Model",
+      "question": "What is Cardinality in DBMS? Explain different types with examples.",
+      "answer": "Cardinality defines the numerical relationship between entities in an ER model. It specifies how many instances of one entity can be associated with instances of another entity. Cardinality helps database designers understand and model relationships accurately.",
+      "explanation": "Types of Cardinality:\n\nOne-to-One (1:1)\nOne person has one passport.\n\nOne-to-Many (1:M)\nOne department has many employees.\n\nMany-to-One (M:1)\nMany students belong to one department.\n\nMany-to-Many (M:N)\nMany students enroll in many courses.\n\nCardinality is important because it determines how tables are designed and linked together.",
+      "code_example": "-- Example\nDepartment 1 ---- Many Employees",
+      "key_takeaways": [
+        "Cardinality defines relationship quantity.",
+        "It determines database structure.",
+        "Common types are 1:1, 1:M, M:1, and M:N.",
+        "It helps model real-world relationships.",
+        "It influences table design."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "DBMS",
+      "topic": "Aggregation Functions",
+      "difficulty": "Easy",
+      "title": "Aggregate Functions",
+      "question": "What are Aggregate Functions in SQL? Explain commonly used aggregate functions.",
+      "answer": "Aggregate Functions are SQL functions that perform calculations on a set of rows and return a single result. They are commonly used for reporting, analytics, and summarizing data. Popular aggregate functions include COUNT(), SUM(), AVG(), MAX(), and MIN().",
+      "explanation": "Suppose a company wants to calculate total salary expenses.\n\nSUM() can add all salary values.\n\nAVG() calculates average salary.\n\nCOUNT() counts employees.\n\nMAX() identifies the highest salary.\n\nMIN() identifies the lowest salary.\n\nAggregate functions help organizations make decisions using summarized information.",
+      "code_example": "SELECT AVG(Salary)\nFROM Employees;",
+      "key_takeaways": [
+        "Aggregate functions summarize data.",
+        "COUNT counts records.",
+        "SUM calculates totals.",
+        "AVG calculates averages.",
+        "MAX and MIN find extreme values."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "DBMS",
+      "topic": "HAVING Clause",
+      "difficulty": "Medium",
+      "title": "HAVING Clause",
+      "question": "What is the HAVING Clause in SQL? How is it different from WHERE?",
+      "answer": "The HAVING clause is used to filter groups created by the GROUP BY clause. While WHERE filters rows before grouping occurs, HAVING filters groups after aggregation has been performed. HAVING is typically used with aggregate functions.",
+      "explanation": "Suppose a company wants to display departments having more than 10 employees.\n\nWHERE cannot directly filter aggregate results.\n\nHAVING allows filtering based on COUNT(), SUM(), AVG(), and other aggregate values.\n\nExecution Order:\nWHERE → GROUP BY → HAVING\n\nThis distinction makes HAVING essential for reporting and analytics queries.",
+      "code_example": "SELECT Department, COUNT(*)\nFROM Employees\nGROUP BY Department\nHAVING COUNT(*) > 10;",
+      "key_takeaways": [
+        "HAVING filters grouped data.",
+        "WHERE filters individual rows.",
+        "HAVING works after GROUP BY.",
+        "It supports aggregate functions.",
+        "Useful in reporting queries."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "DBMS",
+      "topic": "NULL Values",
+      "difficulty": "Easy",
+      "title": "NULL Values in DBMS",
+      "question": "What is NULL in DBMS? Explain its significance and handling.",
+      "answer": "NULL represents the absence of a value in a database. It does not mean zero, empty string, or false. NULL indicates that data is unknown, unavailable, or not applicable. Proper handling of NULL values is important because they can affect query results and calculations.",
+      "explanation": "Consider an Employees table.\n\nSome employees may not have provided their phone numbers.\n\nInstead of storing incorrect values such as 0, the database stores NULL.\n\nNULL helps distinguish between:\nUnknown value\nNo value\nNot applicable value\n\nSQL provides IS NULL and IS NOT NULL operators to work with NULL values.",
+      "code_example": "SELECT *\nFROM Employees\nWHERE PhoneNumber IS NULL;",
+      "key_takeaways": [
+        "NULL means missing or unknown value.",
+        "NULL is not zero.",
+        "NULL is not an empty string.",
+        "Use IS NULL to check NULL values.",
+        "Proper NULL handling is important."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "DBMS",
+      "topic": "Subqueries",
+      "difficulty": "Hard",
+      "title": "Subqueries",
+      "question": "What is a Subquery in SQL? Explain its types and practical applications.",
+      "answer": "A Subquery is a query nested inside another SQL query. The inner query executes first and its result is used by the outer query. Subqueries are used to perform complex filtering, comparisons, and calculations. They improve query flexibility and reduce the need for multiple separate queries.",
+      "explanation": "Suppose a company wants to find employees earning more than the average salary.\n\nFirst, calculate average salary.\n\nThen compare employee salaries with that value.\n\nA subquery allows both operations in a single statement.\n\nTypes include:\nSingle-row subqueries\nMultiple-row subqueries\nCorrelated subqueries\nNested subqueries\n\nSubqueries are commonly used in enterprise reporting systems.",
+      "code_example": "SELECT Name\nFROM Employees\nWHERE Salary > (\n SELECT AVG(Salary)\n FROM Employees\n);",
+      "key_takeaways": [
+        "Subqueries are queries inside queries.",
+        "The inner query executes first.",
+        "Useful for complex conditions.",
+        "Reduce multiple query execution.",
+        "Support advanced SQL operations."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "DBMS",
+      "topic": "SQL Injection",
+      "difficulty": "Hard",
+      "title": "SQL Injection",
+      "question": "What is SQL Injection? Explain how it occurs and methods to prevent it.",
+      "answer": "SQL Injection is a security vulnerability in which attackers inject malicious SQL code into application inputs to manipulate database operations. If user input is not properly validated or sanitized, attackers can bypass authentication, access sensitive information, modify records, or even delete entire databases.",
+      "explanation": "Suppose a login query is built by directly concatenating user input.\n\nAn attacker may enter malicious SQL statements instead of a username.\n\nThe database may interpret the input as part of the SQL query, leading to unauthorized access.\n\nPrevention techniques include:\nParameterized Queries\nPrepared Statements\nInput Validation\nStored Procedures\nLeast Privilege Access\n\nSQL Injection remains one of the most common database security threats.",
+      "code_example": "PreparedStatement stmt = connection.prepareStatement(\n 'SELECT * FROM Users WHERE username = ?'\n);",
+      "key_takeaways": [
+        "SQL Injection is a database security attack.",
+        "It exploits unsanitized input.",
+        "Can lead to data theft.",
+        "Prepared statements prevent injection.",
+        "Input validation improves security."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "DBMS",
+      "topic": "Locks",
+      "difficulty": "Hard",
+      "title": "Locking in DBMS",
+      "question": "What is Locking in DBMS? Explain its types, importance, and role in concurrency control.",
+      "answer": "Locking is a concurrency control mechanism used in DBMS to prevent multiple transactions from accessing the same data simultaneously in a way that could cause inconsistency. A lock temporarily restricts access to a data item while a transaction is using it. Locking ensures that transactions execute safely and maintain database integrity. It is one of the most widely used techniques for implementing isolation in database systems.",
+      "explanation": "Consider a bank account with a balance of ₹10,000.\n\nTransaction T1 wants to withdraw ₹2,000.\nTransaction T2 wants to withdraw ₹3,000 at the same time.\n\nWithout locking, both transactions might read the same balance and perform incorrect updates.\n\nLocking prevents such conflicts.\n\nTypes of Locks:\n\nShared Lock (Read Lock)\nAllows multiple transactions to read data simultaneously.\n\nExclusive Lock (Write Lock)\nAllows only one transaction to modify data.\n\nLocking is essential for preventing lost updates, dirty reads, and inconsistent database states.",
+      "code_example": "SELECT *\nFROM Accounts\nWHERE AccountID = 1\nFOR UPDATE;",
+      "key_takeaways": [
+        "Locking controls concurrent access.",
+        "Shared Locks allow reading.",
+        "Exclusive Locks allow writing.",
+        "Locks prevent data inconsistency.",
+        "Locking is a core concurrency control technique."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "DBMS",
+      "topic": "Two Phase Locking",
+      "difficulty": "Hard",
+      "title": "Two-Phase Locking Protocol (2PL)",
+      "question": "What is the Two-Phase Locking Protocol (2PL)? Explain its phases and significance.",
+      "answer": "Two-Phase Locking (2PL) is a concurrency control protocol that ensures serializability by dividing transaction execution into two phases: the Growing Phase and the Shrinking Phase. During the Growing Phase, transactions acquire locks but cannot release them. During the Shrinking Phase, transactions release locks but cannot acquire new ones. This protocol helps maintain consistency and prevents many concurrency-related problems.",
+      "explanation": "Suppose a transaction needs access to two database records.\n\nIn the Growing Phase:\nAcquire Lock A\nAcquire Lock B\n\nIn the Shrinking Phase:\nRelease Lock A\nRelease Lock B\n\nNo new locks can be acquired after lock release begins.\n\nThis structured approach ensures transactions behave as if executed sequentially, improving correctness in multi-user environments.",
+      "code_example": "-- Growing Phase\nLOCK A;\nLOCK B;\n\n-- Shrinking Phase\nUNLOCK A;\nUNLOCK B;",
+      "key_takeaways": [
+        "2PL ensures serializability.",
+        "It consists of Growing and Shrinking phases.",
+        "Locks are acquired first and released later.",
+        "It reduces concurrency anomalies.",
+        "Widely used in DBMS implementations."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "DBMS",
+      "topic": "Serializability",
+      "difficulty": "Hard",
+      "title": "Serializability",
+      "question": "What is Serializability in DBMS? Why is it important in transaction processing?",
+      "answer": "Serializability is the property of a schedule that ensures concurrent transaction execution produces the same result as some serial execution of those transactions. It is considered the highest level of correctness in concurrency control. Serializability guarantees consistency even when multiple transactions run simultaneously.",
+      "explanation": "Consider two transactions:\n\nT1 transfers money.\nT2 updates account information.\n\nIf both run concurrently, unexpected results may occur.\n\nA serial schedule executes T1 completely before T2 or vice versa.\n\nA serializable schedule allows concurrency while ensuring the final outcome remains equivalent to a serial execution.\n\nThis property is crucial in banking, healthcare, and financial systems where accuracy is mandatory.",
+      "code_example": "-- Transaction Schedule Example\nT1 -> T2\nEquivalent Result Guaranteed",
+      "key_takeaways": [
+        "Serializability ensures correctness.",
+        "Concurrent execution behaves like serial execution.",
+        "Maintains database consistency.",
+        "Essential for transaction processing.",
+        "Used in concurrency control mechanisms."
+      ]
+    },
+    {
+      "id": 55,
+      "subject": "DBMS",
+      "topic": "Schedule",
+      "difficulty": "Medium",
+      "title": "Transaction Schedules",
+      "question": "What is a Schedule in DBMS? Explain different types of schedules.",
+      "answer": "A Schedule is the sequence in which operations from one or more transactions are executed by the DBMS. Schedules determine how concurrent transactions interact and affect database consistency. They are used to analyze transaction correctness and concurrency behavior.",
+      "explanation": "Types of Schedules:\n\nSerial Schedule\nTransactions execute one after another.\n\nNon-Serial Schedule\nTransactions execute concurrently.\n\nSerializable Schedule\nConcurrent schedule equivalent to a serial schedule.\n\nNon-Serializable Schedule\nProduces inconsistent results.\n\nSchedules help database systems balance performance and consistency.",
+      "code_example": "T1: Read(A) Write(A)\nT2: Read(B) Write(B)",
+      "key_takeaways": [
+        "Schedules define transaction execution order.",
+        "Serial schedules execute sequentially.",
+        "Non-serial schedules allow concurrency.",
+        "Serializable schedules maintain correctness.",
+        "Schedules are fundamental to concurrency control."
+      ]
+    },
+    {
+      "id": 56,
+      "subject": "DBMS",
+      "topic": "Checkpointing",
+      "difficulty": "Hard",
+      "title": "Checkpointing",
+      "question": "What is Checkpointing in DBMS? Explain its role in recovery management.",
+      "answer": "Checkpointing is a recovery technique used in DBMS to reduce recovery time after system failures. During checkpointing, the DBMS saves the current database state and records a checkpoint marker in the transaction log. This allows recovery processes to start from the most recent checkpoint instead of scanning the entire log from the beginning.",
+      "explanation": "Imagine a database with millions of transactions.\n\nIf a crash occurs, scanning the entire transaction log would be time-consuming.\n\nA checkpoint acts like a save point.\n\nThe DBMS periodically writes modified data to disk and records checkpoint information.\n\nAfter a crash, recovery begins from the latest checkpoint, making restoration faster and more efficient.",
+      "code_example": "-- Conceptual Checkpoint\nCHECKPOINT;",
+      "key_takeaways": [
+        "Checkpointing speeds up recovery.",
+        "It reduces log scanning time.",
+        "Acts as a recovery save point.",
+        "Improves database availability.",
+        "Commonly used in transaction systems."
+      ]
+    },
+    {
+      "id": 57,
+      "subject": "DBMS",
+      "topic": "Shadow Paging",
+      "difficulty": "Hard",
+      "title": "Shadow Paging",
+      "question": "What is Shadow Paging in DBMS? Explain its advantages and disadvantages.",
+      "answer": "Shadow Paging is a recovery technique in which the database maintains two page tables: a current page table and a shadow page table. The shadow page table remains unchanged during transaction execution, while updates are made to new pages. If a transaction commits successfully, the current page table replaces the shadow page table. If a failure occurs, the shadow page table is used for recovery.",
+      "explanation": "Think of shadow paging as creating a backup copy before editing a document.\n\nIf editing succeeds, the new version becomes official.\n\nIf something goes wrong, the original copy remains available.\n\nAdvantages:\nFast recovery.\nNo transaction log required.\n\nDisadvantages:\nPage table overhead.\nFragmentation issues.\n\nShadow paging is commonly discussed in database recovery theory.",
+      "code_example": "-- Shadow Paging Concept\nShadow Page Table\nCurrent Page Table",
+      "key_takeaways": [
+        "Shadow Paging supports recovery.",
+        "Uses shadow and current page tables.",
+        "Provides fast rollback capability.",
+        "Reduces logging dependency.",
+        "Can cause fragmentation."
+      ]
+    },
+    {
+      "id": 58,
+      "subject": "DBMS",
+      "topic": "B+ Tree Index",
+      "difficulty": "Hard",
+      "title": "B+ Tree Indexing",
+      "question": "What is B+ Tree Indexing? Explain its structure and advantages.",
+      "answer": "B+ Tree is a balanced tree data structure widely used for indexing in databases and file systems. Unlike B-Trees, all actual data pointers are stored in leaf nodes, while internal nodes store only keys used for navigation. B+ Trees provide efficient search, insertion, deletion, and range query operations.",
+      "explanation": "When searching for a record in a table containing millions of rows, scanning every row would be inefficient.\n\nA B+ Tree organizes data hierarchically.\n\nSearch operations follow a path from root to leaf.\n\nAdvantages:\nLogarithmic search complexity.\nEfficient range queries.\nBalanced structure.\nFast insertions and deletions.\n\nBecause of these benefits, B+ Trees are used extensively in MySQL, Oracle, SQL Server, and PostgreSQL indexing mechanisms.",
+      "code_example": "-- Conceptual Index\nCREATE INDEX idx_name\nON Students(Name);",
+      "key_takeaways": [
+        "B+ Trees support indexing.",
+        "Leaf nodes contain actual data pointers.",
+        "Efficient for large databases.",
+        "Supports range searches.",
+        "Used by modern DBMSs."
+      ]
+    },
+    {
+      "id": 59,
+      "subject": "DBMS",
+      "topic": "Dense and Sparse Index",
+      "difficulty": "Hard",
+      "title": "Dense vs Sparse Index",
+      "question": "Differentiate between Dense Index and Sparse Index in DBMS.",
+      "answer": "Dense Index contains an index entry for every search key value in the data file, whereas Sparse Index contains entries for only some search key values. Dense indexes provide faster searching but require more storage. Sparse indexes use less storage but may require additional searching within data blocks.",
+      "explanation": "Dense Index:\nEvery record has an index entry.\nFaster lookup.\nHigher storage requirement.\n\nSparse Index:\nOnly selected records have index entries.\nLower storage requirement.\nSlightly slower lookup.\n\nDatabase designers choose between these approaches based on performance and storage requirements.",
+      "code_example": "-- Index Concept\nDense Index -> Every Record Indexed\nSparse Index -> Selected Records Indexed",
+      "key_takeaways": [
+        "Dense Index indexes every record.",
+        "Sparse Index indexes selected records.",
+        "Dense Index is faster.",
+        "Sparse Index saves storage.",
+        "Both improve retrieval performance."
+      ]
+    },
+    {
+      "id": 60,
+      "subject": "DBMS",
+      "topic": "File Organization",
+      "difficulty": "Medium",
+      "title": "File Organization Methods",
+      "question": "What are File Organization Methods in DBMS? Explain different types.",
+      "answer": "File Organization refers to the way records are physically stored on storage devices. Proper file organization improves retrieval efficiency, update performance, and storage utilization. Common methods include Heap File Organization, Sequential File Organization, Hash File Organization, and Indexed File Organization.",
+      "explanation": "Heap File:\nRecords stored wherever space is available.\n\nSequential File:\nRecords stored in sorted order.\n\nHash File:\nHash functions determine storage locations.\n\nIndexed File:\nIndexes support faster retrieval.\n\nDifferent applications require different file organization strategies depending on access patterns and performance requirements.",
+      "code_example": "-- Conceptual Organization Types\nHeap\nSequential\nHash\nIndexed",
+      "key_takeaways": [
+        "File Organization affects performance.",
+        "Heap organization is simple.",
+        "Sequential organization supports ordered access.",
+        "Hash organization supports direct access.",
+        "Indexed organization improves search speed."
+      ]
+    },
+    {
+      "id": 61,
+      "subject": "DBMS",
+      "topic": "Hashing",
+      "difficulty": "Hard",
+      "title": "Hashing in DBMS",
+      "question": "What is Hashing in DBMS? Explain its working, advantages, and limitations.",
+      "answer": "Hashing is a technique used to map search keys directly to storage locations using a hash function. It enables very fast data retrieval because records can be accessed directly without scanning or traversing indexes. Hashing is particularly useful for exact-match searches.",
+      "explanation": "Suppose a student record is identified by StudentID.\n\nA hash function computes a storage location.\n\nHash(101) → Bucket 5\n\nThe DBMS directly accesses Bucket 5 instead of searching the entire table.\n\nAdvantages:\nFast retrieval.\nConstant average search time.\n\nLimitations:\nCollision handling required.\nNot suitable for range queries.\n\nHashing is commonly used in memory-based lookup systems.",
+      "code_example": "-- Hash Concept\nHash(StudentID) -> Bucket",
+      "key_takeaways": [
+        "Hashing provides direct access.",
+        "Uses hash functions.",
+        "Fast for exact-match searches.",
+        "Requires collision handling.",
+        "Not ideal for range searches."
+      ]
+    },
+    {
+      "id": 62,
+      "subject": "DBMS",
+      "topic": "Data Redundancy",
+      "difficulty": "Easy",
+      "title": "Data Redundancy",
+      "question": "What is Data Redundancy in DBMS? Explain its causes, disadvantages, and methods to reduce it.",
+      "answer": "Data Redundancy refers to the unnecessary duplication of data within a database. It occurs when the same piece of information is stored multiple times in different locations. Redundancy increases storage requirements, leads to inconsistencies, and makes database maintenance difficult. One of the primary goals of database design and normalization is to minimize redundancy while maintaining efficient access to data.",
+      "explanation": "Consider a college database where department information is stored repeatedly for every student.\n\nStudentID | Name | DepartmentName\n1 | Aniket | CSE\n2 | Rahul | CSE\n3 | Mohit | CSE\n\nThe value 'CSE' is repeated multiple times.\n\nIf the department name changes, every record must be updated.\n\nMissing even one update causes inconsistency.\n\nNormalization solves this problem by creating separate Department and Student tables linked through keys.",
+      "code_example": "-- Redundant Design\nStudentID | Name | DepartmentName",
+      "key_takeaways": [
+        "Data Redundancy means duplicate data storage.",
+        "It increases storage requirements.",
+        "It can cause inconsistencies.",
+        "Normalization helps reduce redundancy.",
+        "Reducing redundancy improves maintainability."
+      ]
+    },
+    {
+      "id": 63,
+      "subject": "DBMS",
+      "topic": "Data Independence",
+      "difficulty": "Medium",
+      "title": "Data Independence",
+      "question": "What is Data Independence in DBMS? Explain its types and significance.",
+      "answer": "Data Independence is the ability to modify the schema at one level of a database system without affecting the schema at the next higher level. It allows database administrators to make structural changes without requiring modifications to application programs. Data Independence improves flexibility, scalability, and maintainability.",
+      "explanation": "Suppose a company upgrades its storage system.\n\nUsers should still be able to access data without changing application code.\n\nTypes:\n\nPhysical Data Independence\nChanges in physical storage do not affect logical structure.\n\nLogical Data Independence\nChanges in logical structure do not affect user views.\n\nData Independence is one of the most important advantages of DBMS compared to traditional file systems.",
+      "code_example": "-- Physical storage changes\n-- No application changes required",
+      "key_takeaways": [
+        "Data Independence improves flexibility.",
+        "Physical changes should not affect applications.",
+        "Logical changes should not affect users.",
+        "Reduces maintenance effort.",
+        "A major advantage of DBMS."
+      ]
+    },
+    {
+      "id": 64,
+      "subject": "DBMS",
+      "topic": "Anomalies",
+      "difficulty": "Hard",
+      "title": "Insertion Anomaly",
+      "question": "What is Insertion Anomaly in DBMS? Explain with examples.",
+      "answer": "Insertion Anomaly occurs when certain data cannot be inserted into a database without the presence of other unrelated data. It usually arises due to poor database design and redundancy. Insertion anomalies indicate that a table should be normalized.",
+      "explanation": "Consider a table storing both student and course information.\n\nStudentID | StudentName | CourseName\n\nSuppose a new course is introduced but no student has enrolled yet.\n\nThe course information cannot be inserted because StudentID is required.\n\nThis is called an Insertion Anomaly.\n\nNormalization separates student and course information into different tables, solving the problem.",
+      "code_example": "-- Problematic Table\nStudentID | StudentName | CourseName",
+      "key_takeaways": [
+        "Insertion Anomaly prevents proper data insertion.",
+        "Occurs due to poor design.",
+        "Indicates normalization issues.",
+        "Common in unnormalized tables.",
+        "Normalization eliminates insertion anomalies."
+      ]
+    },
+    {
+      "id": 65,
+      "subject": "DBMS",
+      "topic": "Anomalies",
+      "difficulty": "Hard",
+      "title": "Update Anomaly",
+      "question": "What is Update Anomaly in DBMS? Explain its causes and effects.",
+      "answer": "Update Anomaly occurs when the same information is stored in multiple locations and must be updated repeatedly. If some occurrences are updated while others are not, data inconsistency arises. This problem is common in databases with redundant information.",
+      "explanation": "Consider a Student table where DepartmentName is repeated multiple times.\n\nIf the department name changes from 'CSE' to 'Computer Science Engineering', every record must be updated.\n\nMissing even one record creates inconsistent data.\n\nUpdate anomalies waste time and increase the risk of errors.\n\nNormalization reduces such problems by storing information only once.",
+      "code_example": "-- Repeated Department Values\nCSE\nCSE\nCSE",
+      "key_takeaways": [
+        "Update Anomaly causes inconsistency.",
+        "Occurs due to redundancy.",
+        "Requires multiple updates.",
+        "Increases maintenance effort.",
+        "Normalization helps eliminate it."
+      ]
+    },
+    {
+      "id": 66,
+      "subject": "DBMS",
+      "topic": "Anomalies",
+      "difficulty": "Hard",
+      "title": "Deletion Anomaly",
+      "question": "What is Deletion Anomaly in DBMS? Explain with examples.",
+      "answer": "Deletion Anomaly occurs when deleting a record unintentionally removes additional important information. This usually happens when unrelated data is stored together in the same table. Proper normalization prevents such issues.",
+      "explanation": "Suppose a Course table stores both course and instructor information.\n\nIf the last student enrolled in a course leaves and the record is deleted, information about the instructor may also be lost.\n\nThis unintended loss of information is called a Deletion Anomaly.\n\nSeparating course and instructor information into different tables prevents such data loss.",
+      "code_example": "-- Deleting one row may remove critical information",
+      "key_takeaways": [
+        "Deletion Anomaly causes accidental data loss.",
+        "Occurs due to poor design.",
+        "Can remove unrelated information.",
+        "Normalization prevents deletion anomalies.",
+        "Improves database reliability."
+      ]
+    },
+    {
+      "id": 67,
+      "subject": "DBMS",
+      "topic": "ER Diagram",
+      "difficulty": "Medium",
+      "title": "ER Diagram",
+      "question": "What is an ER Diagram? Explain its components and significance in database design.",
+      "answer": "An Entity Relationship (ER) Diagram is a graphical representation of entities, attributes, and relationships within a database system. ER diagrams are used during database design to model real-world scenarios and visualize how different pieces of data are connected. They serve as blueprints for creating relational databases.",
+      "explanation": "Major Components:\n\nEntities\nRepresent objects such as Students, Employees, and Products.\n\nAttributes\nRepresent properties such as Name, Age, and Salary.\n\nRelationships\nRepresent associations between entities.\n\nER diagrams help developers and stakeholders understand database requirements before implementation begins.\n\nThey reduce design errors and improve communication among team members.",
+      "code_example": "Student ---- Enrolls ---- Course",
+      "key_takeaways": [
+        "ER Diagrams visualize database design.",
+        "Entities represent objects.",
+        "Attributes describe entities.",
+        "Relationships connect entities.",
+        "Used before database implementation."
+      ]
+    },
+    {
+      "id": 68,
+      "subject": "DBMS",
+      "topic": "Specialization",
+      "difficulty": "Hard",
+      "title": "Specialization in DBMS",
+      "question": "What is Specialization in DBMS? Explain its purpose and advantages.",
+      "answer": "Specialization is a top-down database design approach in which a higher-level entity is divided into lower-level specialized entities based on distinguishing characteristics. It allows database designers to model inheritance-like relationships and represent real-world complexity more accurately.",
+      "explanation": "Consider an Employee entity.\n\nEmployees may be:\nManager\nEngineer\nAccountant\n\nAll employees share common attributes such as EmployeeID and Name.\n\nHowever, Managers may have Bonus attributes, while Engineers may have TechnicalSkill attributes.\n\nSpecialization separates these categories into specialized entities while preserving common information.",
+      "code_example": "Employee\n|\n|-- Manager\n|\n|-- Engineer",
+      "key_takeaways": [
+        "Specialization is a top-down approach.",
+        "Creates specialized entities.",
+        "Models inheritance relationships.",
+        "Improves database flexibility.",
+        "Represents real-world scenarios effectively."
+      ]
+    },
+    {
+      "id": 69,
+      "subject": "DBMS",
+      "topic": "Generalization",
+      "difficulty": "Hard",
+      "title": "Generalization in DBMS",
+      "question": "What is Generalization in DBMS? Explain with examples.",
+      "answer": "Generalization is a bottom-up database design approach in which multiple lower-level entities are combined into a higher-level generalized entity based on common characteristics. It reduces redundancy and simplifies database structures.",
+      "explanation": "Consider separate entities:\n\nCar\nBike\nTruck\n\nAll share common attributes such as:\nVehicleID\nManufacturer\nModel\n\nThese entities can be generalized into a single Vehicle entity.\n\nGeneralization helps identify common features and reduces duplication of information.",
+      "code_example": "Vehicle\n|\n|-- Car\n|\n|-- Bike\n|\n|-- Truck",
+      "key_takeaways": [
+        "Generalization is a bottom-up approach.",
+        "Combines similar entities.",
+        "Reduces redundancy.",
+        "Improves maintainability.",
+        "Supports inheritance concepts."
+      ]
+    },
+    {
+      "id": 70,
+      "subject": "DBMS",
+      "topic": "Distributed Database",
+      "difficulty": "Hard",
+      "title": "Distributed Database",
+      "question": "What is a Distributed Database? Explain its advantages, challenges, and applications.",
+      "answer": "A Distributed Database is a database whose data is stored across multiple physical locations connected through a network. The locations may be in different cities, countries, or continents. Distributed databases provide improved availability, scalability, and fault tolerance while allowing users to access data as if it were stored in a single location.",
+      "explanation": "Consider a multinational company operating offices in India, USA, and Germany.\n\nEach office stores local data while remaining connected to a centralized database system.\n\nAdvantages:\nImproved availability.\nFaster local access.\nFault tolerance.\nScalability.\n\nChallenges:\nComplex management.\nSecurity concerns.\nData synchronization.\nNetwork dependency.",
+      "code_example": "-- Conceptual Distributed Database\nIndia Server\nUSA Server\nGermany Server",
+      "key_takeaways": [
+        "Data is stored across multiple locations.",
+        "Provides scalability and availability.",
+        "Supports global operations.",
+        "Requires synchronization mechanisms.",
+        "Used in large organizations."
+      ]
+    },
+    {
+      "id": 71,
+      "subject": "DBMS",
+      "topic": "Centralized Database",
+      "difficulty": "Easy",
+      "title": "Centralized Database",
+      "question": "What is a Centralized Database? Explain its advantages and disadvantages.",
+      "answer": "A Centralized Database is a database system in which all data is stored and managed at a single location. Users access the database through a network, but the actual data resides on one central server. Centralized databases are easier to manage and secure but may suffer from single points of failure.",
+      "explanation": "Imagine a university storing all student information on one central server.\n\nAdvantages:\nEasy administration.\nStrong security control.\nSimplified backup and recovery.\n\nDisadvantages:\nSingle point of failure.\nPerformance bottlenecks.\nDependence on network connectivity.\n\nCentralized databases are commonly used in small and medium-sized organizations.",
+      "code_example": "-- Central Server\nAll Data Stored in One Location",
+      "key_takeaways": [
+        "Data resides in one central location.",
+        "Easy to manage and secure.",
+        "Supports centralized control.",
+        "Has a single point of failure.",
+        "Common in smaller organizations."
+      ]
+    },
+    {
+      "id": 72,
+      "subject": "DBMS",
+      "topic": "Database Administrator",
+      "difficulty": "Easy",
+      "title": "Database Administrator (DBA)",
+      "question": "Who is a Database Administrator (DBA)? Explain the roles, responsibilities, and importance of a DBA in DBMS.",
+      "answer": "A Database Administrator (DBA) is a person responsible for managing, maintaining, securing, monitoring, and optimizing databases within an organization. The DBA ensures that databases are available, reliable, secure, and perform efficiently. A DBA acts as the central authority responsible for database operations and plays a critical role in ensuring business continuity.",
+      "explanation": "Consider a bank that stores millions of customer records.\n\nIf the database crashes, becomes slow, or gets hacked, business operations may stop.\n\nThe DBA is responsible for:\n\nInstalling database software.\nCreating and managing databases.\nManaging users and permissions.\nPerforming backups and recovery.\nMonitoring performance.\nImplementing security measures.\nOptimizing queries.\nManaging storage.\n\nWithout a DBA, databases can become vulnerable to failures, security breaches, and performance issues.",
+      "code_example": "CREATE USER 'admin' IDENTIFIED BY 'password';",
+      "key_takeaways": [
+        "DBA manages database systems.",
+        "Responsible for security and performance.",
+        "Handles backup and recovery.",
+        "Manages users and permissions.",
+        "Critical for database reliability."
+      ]
+    },
+    {
+      "id": 73,
+      "subject": "DBMS",
+      "topic": "Database Languages",
+      "difficulty": "Medium",
+      "title": "Data Control Language (DCL)",
+      "question": "What is Data Control Language (DCL)? Explain its commands and significance.",
+      "answer": "Data Control Language (DCL) consists of SQL commands used to control access to database objects. DCL helps administrators manage user permissions, roles, and security policies. The primary DCL commands are GRANT and REVOKE. These commands ensure that users can access only the data and operations they are authorized to perform.",
+      "explanation": "Suppose a university database contains student marks.\n\nTeachers should be able to update marks.\nStudents should only view marks.\n\nUsing DCL, administrators can grant different permissions to different users.\n\nThis prevents unauthorized access and improves database security.\n\nDCL is a critical component of access control systems in enterprise databases.",
+      "code_example": "GRANT SELECT\nON Students\nTO StudentUser;",
+      "key_takeaways": [
+        "DCL manages permissions.",
+        "GRANT provides access rights.",
+        "REVOKE removes access rights.",
+        "Improves database security.",
+        "Controls user privileges."
+      ]
+    },
+    {
+      "id": 74,
+      "subject": "DBMS",
+      "topic": "Database Languages",
+      "difficulty": "Medium",
+      "title": "Transaction Control Language (TCL)",
+      "question": "What is Transaction Control Language (TCL)? Explain its commands and importance.",
+      "answer": "Transaction Control Language (TCL) consists of SQL commands used to manage transactions in a database. TCL ensures data consistency by allowing users to save, undo, or partially undo changes made during transaction execution. Common TCL commands include COMMIT, ROLLBACK, and SAVEPOINT.",
+      "explanation": "Consider a banking transaction.\n\nMoney is deducted from Account A and added to Account B.\n\nIf an error occurs before completion, changes should be reversed.\n\nCOMMIT permanently saves changes.\n\nROLLBACK undoes changes.\n\nSAVEPOINT creates checkpoints within transactions.\n\nTCL commands help maintain reliability and consistency during transaction processing.",
+      "code_example": "START TRANSACTION;\nUPDATE Accounts SET Balance = Balance - 5000;\nCOMMIT;",
+      "key_takeaways": [
+        "TCL manages transactions.",
+        "COMMIT saves changes.",
+        "ROLLBACK reverses changes.",
+        "SAVEPOINT creates checkpoints.",
+        "Essential for transaction reliability."
+      ]
+    },
+    {
+      "id": 75,
+      "subject": "DBMS",
+      "topic": "Keys",
+      "difficulty": "Medium",
+      "title": "Surrogate Key",
+      "question": "What is a Surrogate Key in DBMS? Explain its advantages and practical applications.",
+      "answer": "A Surrogate Key is an artificial key generated by the database system to uniquely identify records. It has no business meaning and is usually implemented as an auto-incrementing integer. Surrogate Keys simplify database design and remain stable even if business-related data changes.",
+      "explanation": "Consider an Employee table.\n\nEmployee Email may change.\nEmployee Phone Number may change.\n\nUsing such values as primary keys can cause problems.\n\nInstead, a Surrogate Key such as EmployeeID is generated.\n\nEmployeeID remains constant regardless of changes to business information.\n\nThis improves consistency and simplifies relationships between tables.",
+      "code_example": "CREATE TABLE Employees (\n EmployeeID INT AUTO_INCREMENT PRIMARY KEY,\n Name VARCHAR(100)\n);",
+      "key_takeaways": [
+        "Surrogate Keys are system-generated.",
+        "Have no business meaning.",
+        "Usually auto-increment values.",
+        "Remain stable over time.",
+        "Commonly used as Primary Keys."
+      ]
+    },
+    {
+      "id": 76,
+      "subject": "DBMS",
+      "topic": "Database Design",
+      "difficulty": "Hard",
+      "title": "Database Design Process",
+      "question": "Explain the Database Design Process in DBMS. What are the major phases involved?",
+      "answer": "Database Design is the process of creating a structured database that efficiently stores, manages, and retrieves data. The design process involves multiple stages including requirements analysis, conceptual design, logical design, normalization, physical design, implementation, and maintenance. A well-designed database improves performance, scalability, and data integrity.",
+      "explanation": "Major Phases:\n\n1. Requirement Analysis\nUnderstand business requirements.\n\n2. Conceptual Design\nCreate ER diagrams.\n\n3. Logical Design\nConvert ER models into relational schemas.\n\n4. Normalization\nReduce redundancy.\n\n5. Physical Design\nDefine storage structures and indexes.\n\n6. Implementation\nCreate tables and constraints.\n\n7. Maintenance\nMonitor and optimize performance.\n\nEach phase contributes to creating a reliable and efficient database system.",
+      "code_example": "-- Design Workflow\nRequirements -> ER Diagram -> Tables -> Implementation",
+      "key_takeaways": [
+        "Database design follows multiple phases.",
+        "Requirement analysis is the first step.",
+        "Normalization improves quality.",
+        "Physical design affects performance.",
+        "Proper design reduces future issues."
+      ]
+    },
+    {
+      "id": 77,
+      "subject": "DBMS",
+      "topic": "Relational Algebra",
+      "difficulty": "Hard",
+      "title": "Relational Algebra",
+      "question": "What is Relational Algebra? Explain its operations and importance in DBMS.",
+      "answer": "Relational Algebra is a procedural query language used in relational databases. It provides a set of operations that take one or more relations as input and produce another relation as output. Relational Algebra forms the theoretical foundation of SQL and helps describe how queries should be executed.",
+      "explanation": "Common Operations:\n\nSelection (σ)\nChooses rows.\n\nProjection (π)\nChooses columns.\n\nUnion (∪)\nCombines relations.\n\nIntersection (∩)\nFinds common tuples.\n\nDifference (-)\nFinds unique tuples.\n\nCartesian Product (×)\nCombines all tuples.\n\nJoin (⨝)\nCombines related relations.\n\nThese operations help DBMS internally process SQL queries efficiently.",
+      "code_example": "σ Marks > 80 (Students)",
+      "key_takeaways": [
+        "Relational Algebra is procedural.",
+        "Forms the basis of SQL.",
+        "Uses mathematical operations.",
+        "Processes relations as input and output.",
+        "Important for query processing."
+      ]
+    },
+    {
+      "id": 78,
+      "subject": "DBMS",
+      "topic": "Relational Calculus",
+      "difficulty": "Hard",
+      "title": "Relational Calculus",
+      "question": "What is Relational Calculus? How does it differ from Relational Algebra?",
+      "answer": "Relational Calculus is a non-procedural query language used in relational databases. Unlike Relational Algebra, which specifies how to retrieve data, Relational Calculus specifies what data is required. It forms the theoretical foundation for declarative query languages such as SQL.",
+      "explanation": "Difference:\n\nRelational Algebra:\nSpecifies the procedure.\n\nRelational Calculus:\nSpecifies the desired result.\n\nExample:\n\nRelational Algebra says:\nPerform Selection then Projection.\n\nRelational Calculus says:\nRetrieve all students with marks greater than 80.\n\nSQL is closer to Relational Calculus because users specify desired results rather than execution steps.",
+      "code_example": "{s | s.Marks > 80}",
+      "key_takeaways": [
+        "Relational Calculus is non-procedural.",
+        "Specifies what data is needed.",
+        "Does not specify execution steps.",
+        "Forms the basis of SQL.",
+        "Different from Relational Algebra."
+      ]
+    },
+    {
+      "id": 79,
+      "subject": "DBMS",
+      "topic": "Joins",
+      "difficulty": "Medium",
+      "title": "Self Join",
+      "question": "What is a Self Join in SQL? Explain its purpose and use cases.",
+      "answer": "A Self Join is a join operation in which a table is joined with itself. It is useful when relationships exist between rows within the same table. Self Joins require table aliases to distinguish between the two logical copies of the table involved in the query.",
+      "explanation": "Consider an Employees table.\n\nEmployeeID | Name | ManagerID\n\nBoth employees and managers are stored in the same table.\n\nTo display employee names along with their manager names, the table must be joined with itself.\n\nSelf Joins are commonly used in hierarchical structures such as organizational charts, reporting systems, and category hierarchies.",
+      "code_example": "SELECT E.Name, M.Name AS Manager\nFROM Employees E\nJOIN Employees M\nON E.ManagerID = M.EmployeeID;",
+      "key_takeaways": [
+        "Self Join joins a table with itself.",
+        "Uses table aliases.",
+        "Useful for hierarchical data.",
+        "Common in employee-management systems.",
+        "Helps represent recursive relationships."
+      ]
+    },
+    {
+      "id": 80,
+      "subject": "DBMS",
+      "topic": "Join Types",
+      "difficulty": "Medium",
+      "title": "Inner Join vs Outer Join",
+      "question": "Differentiate between Inner Join and Outer Join in SQL.",
+      "answer": "Inner Join returns only matching records from related tables, whereas Outer Join returns matching records along with non-matching records from one or both tables depending on the type of outer join. Outer Joins include Left Join, Right Join, and Full Outer Join.",
+      "explanation": "Suppose we have Students and Departments tables.\n\nInner Join:\nReturns only students assigned to valid departments.\n\nLeft Join:\nReturns all students, even if a department does not exist.\n\nRight Join:\nReturns all departments, even if no students belong to them.\n\nFull Join:\nReturns all records from both tables.\n\nThe choice depends on business requirements and desired results.",
+      "code_example": "SELECT *\nFROM Students S\nINNER JOIN Departments D\nON S.DepartmentID = D.DepartmentID;",
+      "key_takeaways": [
+        "Inner Join returns matching records only.",
+        "Outer Join includes unmatched records.",
+        "Left Join keeps all left records.",
+        "Right Join keeps all right records.",
+        "Full Join keeps all records from both tables."
+      ]
+    },
+    {
+      "id": 81,
+      "subject": "DBMS",
+      "topic": "Query Optimization",
+      "difficulty": "Hard",
+      "title": "Query Optimization",
+      "question": "What is Query Optimization in DBMS? Explain its objectives and techniques.",
+      "answer": "Query Optimization is the process by which a DBMS determines the most efficient way to execute a query. The query optimizer evaluates multiple execution plans and selects the one with the lowest estimated cost. Effective query optimization improves performance, reduces resource consumption, and speeds up data retrieval.",
+      "explanation": "Consider a table containing 100 million records.\n\nA poorly optimized query may take several minutes.\n\nAn optimized query using indexes and efficient execution plans may complete in milliseconds.\n\nOptimization techniques include:\n\nIndex Usage\nQuery Rewriting\nJoin Optimization\nPartitioning\nStatistics Analysis\nExecution Plan Selection\n\nModern DBMS systems automatically perform query optimization to improve performance.",
+      "code_example": "EXPLAIN SELECT *\nFROM Students\nWHERE StudentID = 101;",
+      "key_takeaways": [
+        "Query Optimization improves performance.",
+        "The optimizer selects efficient execution plans.",
+        "Indexes play an important role.",
+        "Reduces execution time.",
+        "Essential for large databases."
+      ]
+    }
+  ]
+}

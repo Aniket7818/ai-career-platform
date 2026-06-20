@@ -1,0 +1,1535 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: Fundamentals, Design Patterns, SOLID, Principles\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "Object Oriented Programming",
+      "topic": "Introduction",
+      "difficulty": "Easy",
+      "title": "What is Object-Oriented Programming (OOP)?",
+      "question": "What is Object-Oriented Programming (OOP)? Explain its concept, features, advantages, disadvantages, and importance in software development.",
+      "answer": "Object-Oriented Programming (OOP) is a programming paradigm that organizes software design around objects rather than functions and logic. An object represents a real-world entity that contains both data (attributes) and behavior (methods).\n\nThe primary goal of OOP is to make software more modular, reusable, maintainable, and scalable.\n\nCore Features of OOP:\n\n1. Class.\n2. Object.\n3. Encapsulation.\n4. Abstraction.\n5. Inheritance.\n6. Polymorphism.\n\nAdvantages:\n\nCode Reusability.\nModularity.\nEasy Maintenance.\nScalability.\nSecurity through Encapsulation.\nImproved Productivity.\n\nDisadvantages:\n\nLearning Complexity.\nHigher Memory Usage.\nCan be Overkill for Small Programs.\n\nPopular OOP Languages:\n\nJava.\nC++.\nPython.\nC#.\nRuby.\n\nOOP is widely used in enterprise applications, game development, mobile applications, desktop software, web applications, and large-scale systems.",
+      "explanation": "Imagine a Car.\n\nA car has properties:\n\nColor.\nModel.\nSpeed.\n\nAnd behaviors:\n\nStart().\nStop().\nAccelerate().\n\nIn OOP, a Car can be represented as an object containing both properties and behaviors.\n\nThis closely matches real-world modeling, making software easier to understand and maintain.",
+      "code_example": "class Car {\n    String color;\n\n    void start() {\n        System.out.println(\"Car Started\");\n    }\n}",
+      "key_takeaways": [
+        "OOP organizes software around objects.",
+        "Objects contain data and behavior.",
+        "Supports code reusability and scalability.",
+        "Uses concepts like inheritance and polymorphism.",
+        "Widely used in modern software development."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "Object Oriented Programming",
+      "topic": "Basics",
+      "difficulty": "Easy",
+      "title": "What is a Class?",
+      "question": "What is a Class in OOP? Explain its purpose, structure, characteristics, and importance.",
+      "answer": "A Class is a blueprint or template used to create objects. It defines the attributes (data members) and behaviors (methods) that objects of that class will possess.\n\nA class itself does not occupy memory for object data until objects are created.\n\nCharacteristics:\n\nDefines object structure.\nContains attributes and methods.\nSupports code reusability.\nActs as a user-defined data type.\n\nComponents of a Class:\n\nFields (Variables).\nMethods.\nConstructors.\nNested Classes.\n\nClasses are fundamental building blocks of Object-Oriented Programming.",
+      "explanation": "Think of a class as a building blueprint.\n\nThe blueprint describes how a building should look.\n\nActual buildings constructed using that blueprint are objects.\n\nSimilarly, a class defines what an object will contain.",
+      "code_example": "class Student {\n    int id;\n    String name;\n\n    void study() {\n        System.out.println(\"Studying\");\n    }\n}",
+      "key_takeaways": [
+        "Class is a blueprint for objects.",
+        "Contains data and methods.",
+        "Objects are created from classes.",
+        "Supports code organization.",
+        "Fundamental OOP concept."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "Object Oriented Programming",
+      "topic": "Basics",
+      "difficulty": "Easy",
+      "title": "What is an Object?",
+      "question": "What is an Object in OOP? Explain its characteristics, lifecycle, and relationship with classes.",
+      "answer": "An Object is an instance of a class. It represents a real-world entity and contains actual values for the attributes defined in a class.\n\nCharacteristics of an Object:\n\nState (Attributes).\nBehavior (Methods).\nIdentity (Unique Existence).\n\nObject Lifecycle:\n\nCreation.\nUsage.\nDestruction (Garbage Collection in Java).\n\nObjects allow programs to model real-world entities and interactions effectively.",
+      "explanation": "If Student is a class,\n\nStudent s1 = new Student();\n\ncreates an object.\n\nEach student object can have different values such as ID, Name, and Marks while sharing the same structure defined by the class.",
+      "code_example": "Student s1 = new Student();\ns1.name = \"Aniket\";",
+      "key_takeaways": [
+        "Object is an instance of a class.",
+        "Contains actual data.",
+        "Has state and behavior.",
+        "Occupies memory during execution.",
+        "Represents real-world entities."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "Object Oriented Programming",
+      "topic": "OOP Pillars",
+      "difficulty": "Easy",
+      "title": "What is Encapsulation?",
+      "question": "What is Encapsulation? Explain its purpose, implementation, advantages, and real-world significance.",
+      "answer": "Encapsulation is the process of wrapping data and methods into a single unit and restricting direct access to internal data.\n\nIt is achieved using access modifiers such as private, protected, and public.\n\nBenefits:\n\nData Hiding.\nSecurity.\nControlled Access.\nMaintainability.\nImproved Code Quality.\n\nEncapsulation prevents unauthorized modification of sensitive data and ensures controlled interaction through methods such as getters and setters.",
+      "explanation": "Consider a Bank Account.\n\nThe account balance should not be modified directly.\n\nInstead, users should deposit or withdraw money through controlled methods.\n\nThis protects the integrity of the account balance.",
+      "code_example": "class BankAccount {\n    private double balance;\n\n    public void deposit(double amount) {\n        balance += amount;\n    }\n}",
+      "key_takeaways": [
+        "Encapsulation hides internal data.",
+        "Uses private variables.",
+        "Provides controlled access.",
+        "Improves security.",
+        "One of the four OOP pillars."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "Object Oriented Programming",
+      "topic": "OOP Pillars",
+      "difficulty": "Medium",
+      "title": "What is Abstraction?",
+      "question": "What is Abstraction? Explain its purpose, implementation techniques, advantages, and real-world examples.",
+      "answer": "Abstraction is the process of hiding implementation details and showing only essential features to the user.\n\nIt helps reduce complexity by allowing users to focus on what an object does rather than how it does it.\n\nImplementation:\n\nAbstract Classes.\nInterfaces.\n\nAdvantages:\n\nReduced Complexity.\nBetter Maintainability.\nEnhanced Security.\nFlexible Design.\n\nAbstraction allows developers to work with high-level concepts while hiding internal implementation details.",
+      "explanation": "When driving a car, you use the steering wheel, accelerator, and brakes.\n\nYou do not need to understand the engine's internal mechanics.\n\nThe car hides implementation details while exposing necessary controls.\n\nThis is abstraction.",
+      "code_example": "abstract class Vehicle {\n    abstract void start();\n}",
+      "key_takeaways": [
+        "Hides implementation details.",
+        "Shows essential functionality.",
+        "Implemented using abstract classes and interfaces.",
+        "Reduces complexity.",
+        "Improves software design."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "Object Oriented Programming",
+      "topic": "OOP Pillars",
+      "difficulty": "Medium",
+      "title": "What is Inheritance?",
+      "question": "What is Inheritance? Explain its purpose, types, advantages, disadvantages, and practical applications.",
+      "answer": "Inheritance is an OOP mechanism that allows one class to acquire properties and behaviors of another class.\n\nThe existing class is called the Parent Class or Superclass.\n\nThe derived class is called the Child Class or Subclass.\n\nAdvantages:\n\nCode Reusability.\nReduced Redundancy.\nBetter Maintainability.\nHierarchical Classification.\n\nTypes:\n\nSingle Inheritance.\nMultilevel Inheritance.\nHierarchical Inheritance.\nMultiple Inheritance (through interfaces in Java).\nHybrid Inheritance.\n\nInheritance enables developers to build new functionality on top of existing code.",
+      "explanation": "Suppose Vehicle is a parent class.\n\nCar inherits Vehicle.\n\nThe Car automatically gains features such as start() and stop() while adding car-specific functionality.",
+      "code_example": "class Vehicle {\n    void start() {}\n}\n\nclass Car extends Vehicle {\n}",
+      "key_takeaways": [
+        "Supports code reuse.",
+        "Creates parent-child relationships.",
+        "Reduces duplication.",
+        "Improves maintainability.",
+        "Core OOP concept."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "Object Oriented Programming",
+      "topic": "OOP Pillars",
+      "difficulty": "Medium",
+      "title": "What is Polymorphism?",
+      "question": "What is Polymorphism? Explain its types, advantages, and practical significance.",
+      "answer": "Polymorphism means 'many forms'. It allows the same interface or method name to behave differently depending on the object or context.\n\nTypes:\n\nCompile-Time Polymorphism (Method Overloading).\nRun-Time Polymorphism (Method Overriding).\n\nAdvantages:\n\nFlexibility.\nCode Reusability.\nScalability.\nReduced Complexity.\n\nPolymorphism enables developers to write generic and extensible code.",
+      "explanation": "A person can behave differently depending on context.\n\nThe same individual may act as a student, employee, or customer.\n\nSimilarly, a method can behave differently depending on the object invoking it.",
+      "code_example": "Vehicle v = new Car();\nv.start();",
+      "key_takeaways": [
+        "Means many forms.",
+        "Supports flexibility.",
+        "Implemented through overloading and overriding.",
+        "Improves extensibility.",
+        "Important OOP feature."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "Object Oriented Programming",
+      "topic": "Constructors",
+      "difficulty": "Easy",
+      "title": "What is a Constructor?",
+      "question": "What is a Constructor? Explain its purpose, characteristics, types, and usage in OOP.",
+      "answer": "A Constructor is a special method that is automatically called when an object is created.\n\nIts primary purpose is to initialize object data.\n\nCharacteristics:\n\nSame name as class.\nNo return type.\nAutomatically invoked.\n\nTypes:\n\nDefault Constructor.\nParameterized Constructor.\nCopy Constructor (C++).\n\nConstructors simplify object initialization and improve code readability.",
+      "explanation": "When purchasing a new phone, certain settings are initialized automatically.\n\nSimilarly, constructors initialize objects immediately after creation.",
+      "code_example": "class Student {\n    Student() {\n        System.out.println(\"Object Created\");\n    }\n}",
+      "key_takeaways": [
+        "Automatically called during object creation.",
+        "Initializes object data.",
+        "Has no return type.",
+        "Can be parameterized.",
+        "Essential OOP feature."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "Object Oriented Programming",
+      "topic": "Constructors",
+      "difficulty": "Medium",
+      "title": "Default Constructor vs Parameterized Constructor",
+      "question": "Differentiate between Default Constructors and Parameterized Constructors with examples.",
+      "answer": "Constructors can be categorized based on whether they accept arguments.\n\nDefault Constructor:\n\nNo parameters.\nInitializes objects with default values.\n\nParameterized Constructor:\n\nAccepts parameters.\nAllows custom initialization.\n\nAdvantages of Parameterized Constructors:\n\nFlexible object creation.\nReduces initialization code.\nImproves readability.\n\nBoth constructors play an important role in object initialization.",
+      "explanation": "Default Constructor:\n\nStudent s1 = new Student();\n\nParameterized Constructor:\n\nStudent s2 = new Student(101, \"Aniket\");\n\nThe second constructor allows direct initialization of data.",
+      "code_example": "Student(int id, String name) {\n    this.id = id;\n    this.name = name;\n}",
+      "key_takeaways": [
+        "Default constructor takes no arguments.",
+        "Parameterized constructor accepts values.",
+        "Supports flexible initialization.",
+        "Improves object creation.",
+        "Widely used in OOP."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "this Keyword",
+      "question": "What is the 'this' keyword in OOP? Explain its purpose, uses, advantages, and examples.",
+      "answer": "The 'this' keyword refers to the current object of a class. It is used to differentiate instance variables from local variables and to access current object members.\n\nUses:\n\nRefer Current Object.\nAccess Instance Variables.\nInvoke Current Methods.\nCall Constructors.\nPass Current Object.\n\nAdvantages:\n\nImproves readability.\nAvoids naming conflicts.\nSupports constructor chaining.\n\nThe 'this' keyword is one of the most frequently used keywords in OOP programming.",
+      "explanation": "Suppose a constructor receives a parameter named 'name'.\n\nBoth the instance variable and parameter have the same name.\n\nThe 'this' keyword helps distinguish between them.",
+      "code_example": "class Student {\n    String name;\n\n    Student(String name) {\n        this.name = name;\n    }\n}",
+      "key_takeaways": [
+        "Refers to the current object.",
+        "Used to access instance variables.",
+        "Helps avoid naming conflicts.",
+        "Supports constructor chaining.",
+        "Important OOP keyword."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "Object Oriented Programming",
+      "topic": "Methods",
+      "difficulty": "Medium",
+      "title": "Method Overloading",
+      "question": "What is Method Overloading? Explain its concept, rules, advantages, limitations, and practical applications.",
+      "answer": "Method Overloading is a feature of Object-Oriented Programming that allows multiple methods in the same class to have the same name but different parameter lists. It is an example of Compile-Time Polymorphism because the method to execute is determined during compilation.\n\nRules for Method Overloading:\n\nMethod names must be the same.\nParameter lists must differ.\nReturn type alone cannot differentiate overloaded methods.\n\nAdvantages:\n\nImproves readability.\nProvides flexibility.\nReduces method name complexity.\nSupports code reuse.\n\nMethod overloading is commonly used when similar operations need to be performed on different types or numbers of inputs.",
+      "explanation": "Consider a Calculator class.\n\nYou may need an add() method for:\n\nTwo integers.\nThree integers.\nTwo decimal numbers.\n\nInstead of creating addInt(), addThreeInt(), and addDouble(), you can overload add() multiple times.",
+      "code_example": "class Calculator {\n    int add(int a, int b) {\n        return a + b;\n    }\n\n    int add(int a, int b, int c) {\n        return a + b + c;\n    }\n}",
+      "key_takeaways": [
+        "Same method name with different parameters.",
+        "Example of compile-time polymorphism.",
+        "Improves code readability.",
+        "Supports flexibility.",
+        "Cannot differ only by return type."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "Object Oriented Programming",
+      "topic": "Methods",
+      "difficulty": "Medium",
+      "title": "Method Overriding",
+      "question": "What is Method Overriding? Explain its concept, rules, advantages, and significance in OOP.",
+      "answer": "Method Overriding occurs when a child class provides its own implementation of a method already defined in its parent class. It is an example of Run-Time Polymorphism because the method call is resolved during execution.\n\nRules:\n\nInheritance must exist.\nMethod name must be identical.\nParameters must remain the same.\nReturn type must be compatible.\n\nAdvantages:\n\nSupports dynamic behavior.\nImproves extensibility.\nEnables runtime polymorphism.\nPromotes flexible software design.\n\nMethod overriding allows child classes to customize inherited behavior while preserving a common interface.",
+      "explanation": "A Vehicle class may define start().\n\nA Car and Bike can override start() differently.\n\nAlthough the method name remains the same, the behavior changes depending on the object type.",
+      "code_example": "class Vehicle {\n    void start() {\n        System.out.println(\"Vehicle Starting\");\n    }\n}\n\nclass Car extends Vehicle {\n    @Override\n    void start() {\n        System.out.println(\"Car Starting\");\n    }\n}",
+      "key_takeaways": [
+        "Child class redefines parent method.",
+        "Example of runtime polymorphism.",
+        "Requires inheritance.",
+        "Supports dynamic behavior.",
+        "Improves flexibility."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "Object Oriented Programming",
+      "topic": "Polymorphism",
+      "difficulty": "Medium",
+      "title": "Compile-Time vs Run-Time Polymorphism",
+      "question": "Differentiate between Compile-Time Polymorphism and Run-Time Polymorphism with examples.",
+      "answer": "Polymorphism allows one interface to represent multiple behaviors.\n\nCompile-Time Polymorphism:\n\nResolved during compilation.\nAchieved using method overloading.\nFaster execution.\n\nRun-Time Polymorphism:\n\nResolved during execution.\nAchieved using method overriding.\nUses dynamic method dispatch.\nMore flexible.\n\nCompile-time polymorphism focuses on flexibility during coding, while runtime polymorphism focuses on flexibility during execution.",
+      "explanation": "Overloading:\n\nadd(5, 10)\nadd(5, 10, 15)\n\nCompiler decides which method to call.\n\nOverriding:\n\nVehicle v = new Car();\nv.start();\n\nJVM decides which method to execute during runtime.",
+      "code_example": "Vehicle v = new Car();\nv.start();",
+      "key_takeaways": [
+        "Compile-time uses overloading.",
+        "Run-time uses overriding.",
+        "Compile-time resolved by compiler.",
+        "Run-time resolved during execution.",
+        "Both implement polymorphism differently."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "Object Oriented Programming",
+      "topic": "Abstraction",
+      "difficulty": "Medium",
+      "title": "Abstract Class",
+      "question": "What is an Abstract Class? Explain its characteristics, advantages, limitations, and practical usage.",
+      "answer": "An Abstract Class is a class that cannot be instantiated directly and is designed to be inherited by other classes. It may contain both abstract methods (without implementation) and concrete methods (with implementation).\n\nCharacteristics:\n\nCannot create objects directly.\nCan contain constructors.\nCan contain abstract and non-abstract methods.\nSupports partial abstraction.\n\nAdvantages:\n\nProvides common functionality.\nEncourages code reuse.\nDefines standard behavior.\n\nLimitations:\n\nSingle inheritance restrictions in some languages.\nCannot be instantiated.\n\nAbstract classes are commonly used when multiple related classes share common functionality.",
+      "explanation": "A Vehicle class can define common properties like speed and fuel.\n\nHowever, specific vehicles such as Car and Bike implement their own start() methods.\n\nVehicle acts as an abstract class.",
+      "code_example": "abstract class Vehicle {\n    abstract void start();\n}",
+      "key_takeaways": [
+        "Cannot be instantiated.",
+        "Supports abstraction.",
+        "Can contain implemented methods.",
+        "Used as base class.",
+        "Provides common behavior."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "Object Oriented Programming",
+      "topic": "Abstraction",
+      "difficulty": "Hard",
+      "title": "Interface",
+      "question": "What is an Interface? Explain its purpose, features, advantages, limitations, and differences from Abstract Classes.",
+      "answer": "An Interface is a contract that defines what a class must do without specifying how it should do it. Classes implementing an interface must provide implementations for its methods.\n\nFeatures:\n\nSupports complete abstraction.\nAllows multiple inheritance.\nContains method declarations.\nCan contain default and static methods in modern Java.\n\nAdvantages:\n\nLoose coupling.\nFlexibility.\nScalability.\nMultiple inheritance support.\n\nInterfaces are widely used in large-scale software systems because they encourage modular and maintainable design.",
+      "explanation": "Imagine a RemoteControl interface.\n\nTV, AC, and Projector may all implement the same interface.\n\nEach device behaves differently but follows the same contract.",
+      "code_example": "interface Vehicle {\n    void start();\n}",
+      "key_takeaways": [
+        "Defines a contract.",
+        "Supports complete abstraction.",
+        "Enables multiple inheritance.",
+        "Promotes loose coupling.",
+        "Important design tool."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "Object Oriented Programming",
+      "topic": "Abstraction",
+      "difficulty": "Hard",
+      "title": "Abstract Class vs Interface",
+      "question": "Differentiate between Abstract Classes and Interfaces in detail.",
+      "answer": "Abstract Classes and Interfaces both support abstraction but serve different purposes.\n\nAbstract Class:\n\nCan contain implemented methods.\nCan have constructors.\nSupports partial abstraction.\nSingle inheritance.\nCan maintain state.\n\nInterface:\n\nPrimarily defines behavior.\nNo traditional constructors.\nSupports complete abstraction.\nMultiple inheritance.\nTypically stateless.\n\nUse Abstract Classes when related classes share common implementation.\n\nUse Interfaces when unrelated classes need to follow the same contract.",
+      "explanation": "Vehicle may be an abstract class because all vehicles share speed and fuel.\n\nDrivable may be an interface because different objects can implement driving behavior.",
+      "code_example": "abstract class Vehicle {}\ninterface Drivable {}",
+      "key_takeaways": [
+        "Abstract classes provide implementation.",
+        "Interfaces define contracts.",
+        "Interfaces support multiple inheritance.",
+        "Abstract classes support shared state.",
+        "Both help achieve abstraction."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "Object Oriented Programming",
+      "topic": "Inheritance",
+      "difficulty": "Medium",
+      "title": "Types of Inheritance",
+      "question": "Explain different types of Inheritance in Object-Oriented Programming with examples.",
+      "answer": "Inheritance allows classes to acquire properties and behaviors from existing classes.\n\nTypes:\n\n1. Single Inheritance.\nOne child inherits one parent.\n\n2. Multilevel Inheritance.\nInheritance chain exists.\n\n3. Hierarchical Inheritance.\nMultiple children inherit one parent.\n\n4. Multiple Inheritance.\nOne child inherits multiple parents.\n(Java supports this through interfaces.)\n\n5. Hybrid Inheritance.\nCombination of multiple inheritance types.\n\nInheritance helps organize classes into logical hierarchies and promotes code reuse.",
+      "explanation": "Vehicle → Car represents Single Inheritance.\n\nVehicle → Car → ElectricCar represents Multilevel Inheritance.\n\nVehicle → Car and Bike represents Hierarchical Inheritance.",
+      "code_example": "class Vehicle {}\nclass Car extends Vehicle {}",
+      "key_takeaways": [
+        "Supports code reuse.",
+        "Creates class hierarchies.",
+        "Multiple inheritance exists in some languages.",
+        "Improves maintainability.",
+        "Core OOP concept."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "super Keyword",
+      "question": "What is the super keyword? Explain its uses, benefits, and examples.",
+      "answer": "The super keyword refers to the immediate parent class object. It is used to access parent class variables, methods, and constructors.\n\nUses:\n\nAccess parent variables.\nCall parent methods.\nInvoke parent constructors.\n\nBenefits:\n\nAvoids ambiguity.\nSupports inheritance.\nProvides access to overridden members.\n\nThe super keyword is commonly used in inheritance-based designs.",
+      "explanation": "If both parent and child classes contain a variable named speed, the child can use super.speed to access the parent's version.",
+      "code_example": "class Car extends Vehicle {\n    void show() {\n        super.start();\n    }\n}",
+      "key_takeaways": [
+        "Refers to parent class.",
+        "Accesses parent methods.",
+        "Calls parent constructors.",
+        "Supports inheritance.",
+        "Reduces ambiguity."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "Object Oriented Programming",
+      "topic": "Constructors",
+      "difficulty": "Medium",
+      "title": "Constructor Overloading",
+      "question": "What is Constructor Overloading? Explain its purpose, implementation, and advantages.",
+      "answer": "Constructor Overloading allows a class to have multiple constructors with different parameter lists.\n\nThis provides multiple ways to create and initialize objects.\n\nAdvantages:\n\nFlexible object creation.\nCleaner initialization.\nImproved readability.\nSupports different initialization scenarios.\n\nConstructor overloading is widely used in real-world applications where objects can be created using different sets of information.",
+      "explanation": "A Student object may be created using only a name or using both name and ID.\n\nMultiple constructors allow both possibilities.",
+      "code_example": "Student() {}\nStudent(String name) {}\nStudent(int id, String name) {}",
+      "key_takeaways": [
+        "Multiple constructors in same class.",
+        "Different parameter lists.",
+        "Flexible object creation.",
+        "Improves usability.",
+        "Common OOP practice."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "Object Oriented Programming",
+      "topic": "Memory Management",
+      "difficulty": "Medium",
+      "title": "Garbage Collection",
+      "question": "What is Garbage Collection? Explain its purpose, working mechanism, advantages, and importance in OOP languages.",
+      "answer": "Garbage Collection is an automatic memory management process that identifies and removes objects that are no longer being used by a program.\n\nLanguages such as Java, C#, and Python provide automatic garbage collection.\n\nWorking:\n\nIdentify unreachable objects.\nMark unused memory.\nReclaim memory.\nMake memory available for future allocations.\n\nAdvantages:\n\nPrevents memory leaks.\nReduces programmer burden.\nImproves memory management.\nEnhances application stability.\n\nGarbage Collection is a major advantage of modern managed programming languages.",
+      "explanation": "Suppose an object is created inside a method.\n\nAfter the method finishes, the object is no longer referenced.\n\nThe Garbage Collector automatically removes it and frees memory.",
+      "code_example": "Student s = new Student();\ns = null;",
+      "key_takeaways": [
+        "Automatically frees unused memory.",
+        "Prevents memory leaks.",
+        "Managed by runtime environment.",
+        "Improves application stability.",
+        "Common in Java and Python."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "Object Oriented Programming",
+      "topic": "Access Modifiers",
+      "difficulty": "Easy",
+      "title": "Access Modifiers in OOP",
+      "question": "What are Access Modifiers? Explain their purpose, types, scope, and importance in Object-Oriented Programming.",
+      "answer": "Access Modifiers are keywords used to control the visibility and accessibility of classes, methods, variables, and constructors. They help enforce encapsulation and protect data from unauthorized access.\n\nCommon Access Modifiers:\n\n1. Public.\nAccessible from anywhere.\n\n2. Private.\nAccessible only within the same class.\n\n3. Protected.\nAccessible within the same package and subclasses.\n\n4. Default (Package-Private).\nAccessible only within the same package.\n\nAdvantages:\n\nData Security.\nEncapsulation.\nControlled Access.\nBetter Code Organization.\n\nAccess modifiers are essential for building secure and maintainable software systems.",
+      "explanation": "Suppose a bank account has a balance variable.\n\nMaking it private prevents users from directly changing the balance.\n\nInstead, they must use deposit() or withdraw() methods.",
+      "code_example": "class Account {\n    private double balance;\n}",
+      "key_takeaways": [
+        "Control visibility of members.",
+        "Support encapsulation.",
+        "Improve security.",
+        "Public and private are most commonly used.",
+        "Important for object-oriented design."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "Object Oriented Programming",
+      "topic": "Encapsulation",
+      "difficulty": "Medium",
+      "title": "Getters and Setters",
+      "question": "What are Getters and Setters? Explain their purpose, advantages, implementation, and significance in encapsulation.",
+      "answer": "Getters and Setters are public methods used to access and modify private variables in a controlled manner.\n\nGetter:\nReturns the value of a private variable.\n\nSetter:\nUpdates the value of a private variable.\n\nAdvantages:\n\nEncapsulation.\nValidation.\nControlled Access.\nFlexibility.\nMaintainability.\n\nUsing getters and setters allows developers to add validation logic without exposing internal data directly.",
+      "explanation": "Instead of allowing direct modification of age, a setter can ensure that age cannot be negative.\n\nThis protects object integrity.",
+      "code_example": "private int age;\n\npublic int getAge() {\n    return age;\n}\n\npublic void setAge(int age) {\n    if(age > 0)\n        this.age = age;\n}",
+      "key_takeaways": [
+        "Access private variables safely.",
+        "Support encapsulation.",
+        "Allow validation logic.",
+        "Improve maintainability.",
+        "Common OOP practice."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "static Keyword",
+      "question": "What is the static keyword? Explain its purpose, characteristics, advantages, and usage in OOP.",
+      "answer": "The static keyword belongs to the class rather than individual objects. Static members are shared among all objects of the class.\n\nStatic can be applied to:\n\nVariables.\nMethods.\nBlocks.\nNested Classes.\n\nAdvantages:\n\nMemory Efficiency.\nShared Data.\nUtility Methods.\nClass-Level Functionality.\n\nStatic members are loaded when the class is loaded and remain available throughout program execution.",
+      "explanation": "Suppose every student belongs to the same college.\n\nInstead of storing collegeName for every object, a static variable can store it once and share it among all students.",
+      "code_example": "class Student {\n    static String college = \"CGC\";\n}",
+      "key_takeaways": [
+        "Belongs to class, not object.",
+        "Shared among all instances.",
+        "Improves memory usage.",
+        "Useful for utility methods.",
+        "Loaded once per class."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "final Keyword",
+      "question": "What is the final keyword? Explain its uses with variables, methods, classes, and advantages.",
+      "answer": "The final keyword is used to restrict modification.\n\nUsage:\n\nFinal Variable:\nCannot be reassigned.\n\nFinal Method:\nCannot be overridden.\n\nFinal Class:\nCannot be inherited.\n\nAdvantages:\n\nSecurity.\nImmutability.\nCode Stability.\nOptimization Opportunities.\n\nFinal is widely used when certain behavior or values should remain unchanged.",
+      "explanation": "A constant value like PI should never change.\n\nUsing final ensures it remains fixed throughout program execution.",
+      "code_example": "final double PI = 3.14159;",
+      "key_takeaways": [
+        "Prevents modification.",
+        "Supports constants.",
+        "Restricts inheritance.",
+        "Improves reliability.",
+        "Important Java keyword."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Hard",
+      "title": "static vs final",
+      "question": "Differentiate between static and final keywords with examples and use cases.",
+      "answer": "Although static and final are frequently used together, they serve different purposes.\n\nStatic:\n\nBelongs to class.\nShared among objects.\nMemory allocated once.\n\nFinal:\n\nPrevents modification.\nCreates constants.\nRestricts overriding and inheritance.\n\nCombined Usage:\n\nstatic final creates class-level constants.\n\nExamples:\n\nstatic int count;\nfinal int age;\nstatic final double PI;\n\nUnderstanding both keywords is essential for writing efficient and secure OOP code.",
+      "explanation": "A college name shared by all students is static.\n\nThe value of PI that should never change is final.\n\nA static final variable represents a shared constant.",
+      "code_example": "static final double PI = 3.14159;",
+      "key_takeaways": [
+        "Static provides sharing.",
+        "Final provides immutability.",
+        "Can be used together.",
+        "Serve different purposes.",
+        "Common interview topic."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "Object Oriented Programming",
+      "topic": "Object Lifecycle",
+      "difficulty": "Medium",
+      "title": "Object Creation Process",
+      "question": "Explain the complete process of object creation in Object-Oriented Programming.",
+      "answer": "Object creation involves multiple steps performed by the runtime environment.\n\nSteps:\n\n1. Class Loading.\n2. Memory Allocation.\n3. Default Initialization.\n4. Constructor Execution.\n5. Object Reference Assignment.\n\nWhen an object is created, memory is allocated in the heap, constructors initialize data, and a reference variable points to the object.\n\nUnderstanding object creation helps developers optimize memory usage and understand runtime behavior.",
+      "explanation": "When executing:\n\nStudent s = new Student();\n\nThe JVM loads the class, allocates heap memory, runs the constructor, and assigns the reference to s.",
+      "code_example": "Student s = new Student();",
+      "key_takeaways": [
+        "Objects are stored in heap memory.",
+        "Constructors initialize objects.",
+        "References point to objects.",
+        "Class loading occurs first.",
+        "Important runtime concept."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Hard",
+      "title": "Association in OOP",
+      "question": "What is Association? Explain its concept, types, advantages, and examples.",
+      "answer": "Association represents a relationship between two independent classes where objects can interact with each other.\n\nCharacteristics:\n\nIndependent existence.\nRepresents 'uses-a' relationship.\nCan be one-to-one, one-to-many, or many-to-many.\n\nExamples:\n\nTeacher and Student.\nCustomer and Bank.\nDoctor and Patient.\n\nAdvantages:\n\nReal-world modeling.\nLoose coupling.\nFlexible relationships.\n\nAssociation is one of the most fundamental object relationships in OOP design.",
+      "explanation": "A Teacher teaches Students.\n\nBoth Teacher and Student can exist independently.\n\nThis relationship is called Association.",
+      "code_example": "class Teacher {}\nclass Student {}",
+      "key_takeaways": [
+        "Represents relationship between classes.",
+        "Objects remain independent.",
+        "Models real-world interactions.",
+        "Supports flexible design.",
+        "Basic OOP relationship."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Hard",
+      "title": "Aggregation",
+      "question": "What is Aggregation? Explain its characteristics, advantages, relationship type, and examples.",
+      "answer": "Aggregation is a special type of Association that represents a 'has-a' relationship where one object contains another object, but both can exist independently.\n\nCharacteristics:\n\nWeak ownership.\nIndependent lifecycle.\nRepresents whole-part relationship.\n\nExamples:\n\nDepartment has Teachers.\nLibrary has Books.\nTeam has Players.\n\nAdvantages:\n\nReusability.\nLoose coupling.\nBetter object modeling.\n\nAggregation helps build modular and maintainable software systems.",
+      "explanation": "A Department may contain Teachers.\n\nEven if the Department is removed, Teachers can continue to exist.\n\nThis represents Aggregation.",
+      "code_example": "class Teacher {}\nclass Department {\n    Teacher teacher;\n}",
+      "key_takeaways": [
+        "Represents has-a relationship.",
+        "Weak ownership.",
+        "Objects can exist independently.",
+        "Improves modularity.",
+        "Common OOP relationship."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Hard",
+      "title": "Composition",
+      "question": "What is Composition? Explain its characteristics, advantages, lifecycle dependency, and examples.",
+      "answer": "Composition is a strong form of Aggregation where the contained object cannot exist independently of the container object.\n\nCharacteristics:\n\nStrong ownership.\nLifecycle dependency.\nRepresents part-of relationship.\n\nExamples:\n\nHouse and Rooms.\nHuman and Heart.\nCar and Engine.\n\nAdvantages:\n\nStrong encapsulation.\nBetter object management.\nSimplified ownership.\n\nComposition is widely used when one object is fundamentally part of another.",
+      "explanation": "A Room belongs to a House.\n\nIf the House is destroyed, the Room also ceases to exist.\n\nThis strong relationship is Composition.",
+      "code_example": "class Engine {}\nclass Car {\n    private Engine engine = new Engine();\n}",
+      "key_takeaways": [
+        "Strong has-a relationship.",
+        "Objects depend on owner.",
+        "Lifecycle is tied together.",
+        "Supports encapsulation.",
+        "Common system design concept."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Hard",
+      "title": "Association vs Aggregation vs Composition",
+      "question": "Differentiate between Association, Aggregation, and Composition with examples and practical applications.",
+      "answer": "Association, Aggregation, and Composition represent different levels of relationships between objects.\n\nAssociation:\n\nUses-a relationship.\nIndependent objects.\nWeakest relationship.\n\nAggregation:\n\nHas-a relationship.\nWeak ownership.\nIndependent lifecycle.\n\nComposition:\n\nStrong has-a relationship.\nStrong ownership.\nDependent lifecycle.\n\nExamples:\n\nAssociation:\nTeacher ↔ Student.\n\nAggregation:\nDepartment → Teacher.\n\nComposition:\nCar → Engine.\n\nUnderstanding these relationships is essential for designing scalable and maintainable object-oriented systems.",
+      "explanation": "Think of a university.\n\nStudents and Teachers interact independently (Association).\n\nDepartments contain Teachers (Aggregation).\n\nA Car contains an Engine that cannot function separately within that design (Composition).",
+      "code_example": "// Association\n// Aggregation\n// Composition",
+      "key_takeaways": [
+        "Association is weakest relationship.",
+        "Aggregation has weak ownership.",
+        "Composition has strong ownership.",
+        "Important design concepts.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "Object Oriented Programming",
+      "topic": "Object Class",
+      "difficulty": "Medium",
+      "title": "Object Class in Java",
+      "question": "What is the Object Class? Explain its significance, commonly used methods, and role in OOP.",
+      "answer": "The Object class is the root class of the Java class hierarchy. Every class in Java directly or indirectly inherits from Object. This means every object automatically gets access to methods defined in the Object class.\n\nCommon Methods:\n\n1. toString()\n2. equals()\n3. hashCode()\n4. getClass()\n5. clone()\n6. finalize()\n7. wait()\n8. notify()\n9. notifyAll()\n\nImportance:\n\nProvides common behavior to all objects.\nSupports runtime type information.\nEnables object comparison.\nSupports synchronization.\n\nBecause every class inherits from Object, it serves as the foundation of Java's object-oriented architecture.",
+      "explanation": "When you create a Student object, even if you do not explicitly extend any class, Java automatically makes Student inherit from Object.\n\nTherefore methods like toString() and equals() are available.",
+      "code_example": "class Student {}\n\nStudent s = new Student();\nSystem.out.println(s.toString());",
+      "key_takeaways": [
+        "Root class of Java hierarchy.",
+        "Every class inherits from Object.",
+        "Provides common methods.",
+        "Supports polymorphism.",
+        "Foundation of Java OOP."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "Object Oriented Programming",
+      "topic": "Object Class",
+      "difficulty": "Medium",
+      "title": "equals() Method",
+      "question": "What is the equals() method? Explain its purpose, working mechanism, advantages, and best practices.",
+      "answer": "The equals() method is used to compare two objects for logical equality. By default, Object class compares memory addresses. However, classes can override equals() to compare actual object data.\n\nAdvantages:\n\nLogical comparison.\nMeaningful equality checks.\nUseful in collections.\n\nBest Practices:\n\nOverride hashCode() whenever equals() is overridden.\nEnsure symmetry and consistency.\nCompare meaningful fields.\n\nThe equals() method is heavily used in enterprise applications and collection frameworks.",
+      "explanation": "Two Student objects may have the same ID and Name.\n\nAlthough they occupy different memory locations, logically they represent the same student.\n\nOverriding equals() allows such comparisons.",
+      "code_example": "public boolean equals(Object obj) {\n    return this.id == ((Student)obj).id;\n}",
+      "key_takeaways": [
+        "Used for logical equality.",
+        "Can be overridden.",
+        "Different from == operator.",
+        "Important in collections.",
+        "Should be paired with hashCode()."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "Object Oriented Programming",
+      "topic": "Object Class",
+      "difficulty": "Medium",
+      "title": "hashCode() Method",
+      "question": "What is the hashCode() method? Explain its purpose, importance, relationship with equals(), and applications.",
+      "answer": "The hashCode() method returns an integer value representing an object's hash code. It is primarily used in hashing-based collections such as HashMap, HashSet, and Hashtable.\n\nPurpose:\n\nFast lookup.\nEfficient storage.\nHash table indexing.\n\nRules:\n\nEqual objects must have the same hash code.\nUnequal objects may have different hash codes.\n\nApplications:\n\nHashMap.\nHashSet.\nCaching Systems.\nDistributed Systems.\n\nProper implementation of hashCode() significantly improves collection performance.",
+      "explanation": "When storing an object in HashMap, Java uses hashCode() to determine where the object should be stored.\n\nThis enables near O(1) lookup performance.",
+      "code_example": "@Override\npublic int hashCode() {\n    return id;\n}",
+      "key_takeaways": [
+        "Used in hashing collections.",
+        "Supports fast lookup.",
+        "Works with equals().",
+        "Returns integer hash value.",
+        "Important for performance."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "Object Oriented Programming",
+      "topic": "Object Class",
+      "difficulty": "Easy",
+      "title": "toString() Method",
+      "question": "What is the toString() method? Explain its purpose, default behavior, advantages, and practical usage.",
+      "answer": "The toString() method returns a string representation of an object. By default, it returns the class name followed by the object's hash code.\n\nAdvantages:\n\nReadable output.\nEasy debugging.\nLogging support.\nImproved object representation.\n\nDevelopers often override toString() to provide meaningful information about objects.",
+      "explanation": "Instead of displaying:\n\nStudent@5f184fc6\n\nYou can display:\n\nStudent{id=101, name='Aniket'}\n\nThis makes debugging much easier.",
+      "code_example": "@Override\npublic String toString() {\n    return \"Student{\" + id + \",\" + name + \"}\";\n}",
+      "key_takeaways": [
+        "Returns object representation.",
+        "Useful for debugging.",
+        "Can be overridden.",
+        "Improves readability.",
+        "Frequently used in logging."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "Object Oriented Programming",
+      "topic": "Inheritance",
+      "difficulty": "Hard",
+      "title": "Dynamic Method Dispatch",
+      "question": "What is Dynamic Method Dispatch? Explain its working, significance, advantages, and relation to runtime polymorphism.",
+      "answer": "Dynamic Method Dispatch is the mechanism through which Java determines at runtime which overridden method should be executed.\n\nIt enables Runtime Polymorphism.\n\nProcess:\n\nParent reference points to child object.\nMethod call occurs.\nJVM determines actual object type.\nCorrect overridden method executes.\n\nAdvantages:\n\nFlexibility.\nExtensibility.\nLoose coupling.\nScalable design.\n\nDynamic Method Dispatch is one of the most important concepts behind runtime polymorphism.",
+      "explanation": "Suppose:\n\nVehicle v = new Car();\n\nWhen start() is called, JVM executes Car's implementation rather than Vehicle's implementation.",
+      "code_example": "Vehicle v = new Car();\nv.start();",
+      "key_takeaways": [
+        "Occurs at runtime.",
+        "Supports polymorphism.",
+        "Uses parent references.",
+        "Provides flexibility.",
+        "Important JVM mechanism."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "Instance Variables vs Local Variables",
+      "question": "Differentiate between Instance Variables and Local Variables in Object-Oriented Programming.",
+      "answer": "Variables can be categorized based on scope and lifetime.\n\nInstance Variables:\n\nDeclared inside class.\nBelong to object.\nStored in heap memory.\nAccessible by class methods.\n\nLocal Variables:\n\nDeclared inside methods.\nExist only during method execution.\nStored in stack memory.\nLimited scope.\n\nInstance variables maintain object state while local variables support temporary calculations.",
+      "explanation": "A student's name is an instance variable because it belongs to the object.\n\nA temporary calculation variable inside a method is a local variable.",
+      "code_example": "class Student {\n    String name;\n\n    void show() {\n        int temp = 10;\n    }\n}",
+      "key_takeaways": [
+        "Instance variables belong to objects.",
+        "Local variables belong to methods.",
+        "Different lifetimes.",
+        "Different memory locations.",
+        "Important OOP concept."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "Object Oriented Programming",
+      "topic": "Memory Management",
+      "difficulty": "Hard",
+      "title": "Stack Memory vs Heap Memory",
+      "question": "Differentiate between Stack Memory and Heap Memory in Object-Oriented Programming.",
+      "answer": "Stack and Heap are two important memory areas used during program execution.\n\nStack Memory:\n\nStores local variables.\nStores method calls.\nFast access.\nAutomatically managed.\n\nHeap Memory:\n\nStores objects.\nShared among threads.\nManaged by Garbage Collector.\nLarger memory area.\n\nStack is used for execution flow, while Heap stores dynamically created objects.",
+      "explanation": "When creating:\n\nStudent s = new Student();\n\nReference variable s is stored in Stack.\n\nActual Student object is stored in Heap.",
+      "code_example": "Student s = new Student();",
+      "key_takeaways": [
+        "Stack stores method data.",
+        "Heap stores objects.",
+        "Stack is faster.",
+        "Heap is larger.",
+        "Important memory concept."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "Wrapper Classes",
+      "question": "What are Wrapper Classes? Explain their purpose, advantages, and applications in Object-Oriented Programming.",
+      "answer": "Wrapper Classes convert primitive data types into objects.\n\nExamples:\n\nint → Integer\nchar → Character\ndouble → Double\nboolean → Boolean\n\nAdvantages:\n\nObject manipulation.\nCollection compatibility.\nUtility methods.\nAutoboxing support.\n\nWrapper classes enable primitive values to participate in object-oriented features.",
+      "explanation": "Collections such as ArrayList store objects, not primitives.\n\nWrapper classes allow integers and other primitive values to be stored in collections.",
+      "code_example": "Integer num = 100;",
+      "key_takeaways": [
+        "Wrap primitive types into objects.",
+        "Support collections.",
+        "Enable utility operations.",
+        "Provide autoboxing.",
+        "Important Java feature."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "Object Oriented Programming",
+      "topic": "Keywords",
+      "difficulty": "Medium",
+      "title": "Autoboxing and Unboxing",
+      "question": "What are Autoboxing and Unboxing? Explain their purpose, working mechanism, and advantages.",
+      "answer": "Autoboxing is the automatic conversion of primitive data types into wrapper objects.\n\nUnboxing is the automatic conversion of wrapper objects back into primitive types.\n\nAdvantages:\n\nCleaner code.\nReduced manual conversions.\nCollection compatibility.\nImproved readability.\n\nAutoboxing and Unboxing simplify interaction between primitive types and object-oriented APIs.",
+      "explanation": "Instead of manually writing:\n\nInteger num = Integer.valueOf(10);\n\nJava automatically performs the conversion using autoboxing.",
+      "code_example": "Integer num = 10;\nint value = num;",
+      "key_takeaways": [
+        "Autoboxing converts primitives to objects.",
+        "Unboxing converts objects to primitives.",
+        "Reduces code complexity.",
+        "Supports collections.",
+        "Improves readability."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "Object Oriented Programming",
+      "topic": "Design Principles",
+      "difficulty": "Hard",
+      "title": "Object-Oriented Design Principles",
+      "question": "What are Object-Oriented Design Principles? Explain their importance and benefits in software development.",
+      "answer": "Object-Oriented Design Principles are guidelines that help developers create maintainable, scalable, and reusable software systems.\n\nCommon Principles:\n\nSingle Responsibility Principle (SRP).\nOpen/Closed Principle (OCP).\nLiskov Substitution Principle (LSP).\nInterface Segregation Principle (ISP).\nDependency Inversion Principle (DIP).\n\nCollectively these principles are known as SOLID Principles.\n\nBenefits:\n\nImproved Maintainability.\nBetter Scalability.\nReduced Coupling.\nIncreased Reusability.\nCleaner Architecture.\n\nThese principles are widely used in enterprise software development and system design.",
+      "explanation": "Instead of creating one large class that handles everything, responsibilities are divided into focused classes.\n\nThis makes applications easier to modify and maintain over time.",
+      "code_example": "// Example of SOLID design\nclass UserService {}",
+      "key_takeaways": [
+        "SOLID principles guide good design.",
+        "Improve maintainability.",
+        "Reduce coupling.",
+        "Increase scalability.",
+        "Important for enterprise development."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "Object Oriented Programming",
+      "topic": "SOLID Principles",
+      "difficulty": "Hard",
+      "title": "Single Responsibility Principle (SRP)",
+      "question": "What is the Single Responsibility Principle (SRP)? Explain its concept, advantages, implementation approach, and real-world applications.",
+      "answer": "The Single Responsibility Principle (SRP) states that a class should have only one reason to change. In other words, a class should be responsible for only one specific functionality.\n\nAccording to SRP, each class should focus on a single task or responsibility.\n\nAdvantages:\n\nImproved Maintainability.\nEasier Testing.\nReduced Complexity.\nBetter Code Organization.\nHigher Reusability.\n\nViolating SRP often results in large classes that become difficult to understand, modify, and test.\n\nSRP is the first principle of SOLID and serves as the foundation of clean software design.",
+      "explanation": "Suppose a Student class handles:\n\nStudent Data.\nDatabase Storage.\nReport Generation.\nEmail Notifications.\n\nThis class has multiple responsibilities.\n\nA better design would separate these responsibilities into dedicated classes.",
+      "code_example": "class Student {}\nclass StudentRepository {}\nclass StudentReportService {}",
+      "key_takeaways": [
+        "One class should have one responsibility.",
+        "Improves maintainability.",
+        "Reduces complexity.",
+        "Supports clean architecture.",
+        "First SOLID principle."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "Object Oriented Programming",
+      "topic": "SOLID Principles",
+      "difficulty": "Hard",
+      "title": "Open Closed Principle (OCP)",
+      "question": "What is the Open Closed Principle (OCP)? Explain its significance, implementation, benefits, and examples.",
+      "answer": "The Open Closed Principle states that software entities should be open for extension but closed for modification.\n\nThis means new functionality should be added without changing existing tested code.\n\nBenefits:\n\nReduced Bugs.\nBetter Maintainability.\nEasy Feature Expansion.\nImproved Stability.\n\nImplementation Techniques:\n\nInheritance.\nInterfaces.\nPolymorphism.\nDesign Patterns.\n\nOCP encourages developers to build systems that can grow without constantly modifying existing components.",
+      "explanation": "Suppose an application supports Credit Card payments.\n\nInstead of modifying existing code every time a new payment method is added, developers can create new payment classes implementing a common interface.",
+      "code_example": "interface Payment {\n    void pay();\n}",
+      "key_takeaways": [
+        "Open for extension.",
+        "Closed for modification.",
+        "Reduces risk of bugs.",
+        "Improves scalability.",
+        "Second SOLID principle."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "Object Oriented Programming",
+      "topic": "SOLID Principles",
+      "difficulty": "Hard",
+      "title": "Liskov Substitution Principle (LSP)",
+      "question": "What is the Liskov Substitution Principle? Explain its meaning, significance, benefits, and practical examples.",
+      "answer": "The Liskov Substitution Principle states that objects of a derived class should be replaceable with objects of their base class without affecting program correctness.\n\nIn simple terms, child classes should behave consistently with parent class expectations.\n\nBenefits:\n\nReliable Inheritance.\nPredictable Behavior.\nBetter Maintainability.\nImproved Extensibility.\n\nViolating LSP often indicates poor inheritance design and can lead to unexpected behavior in applications.",
+      "explanation": "Suppose Bird has a fly() method.\n\nIf Penguin extends Bird but cannot fly, the inheritance relationship becomes problematic.\n\nThis violates the Liskov Substitution Principle.",
+      "code_example": "class Bird {}\nclass Sparrow extends Bird {}",
+      "key_takeaways": [
+        "Child classes must be substitutable.",
+        "Ensures correct inheritance design.",
+        "Improves reliability.",
+        "Supports maintainability.",
+        "Third SOLID principle."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "Object Oriented Programming",
+      "topic": "SOLID Principles",
+      "difficulty": "Hard",
+      "title": "Interface Segregation Principle (ISP)",
+      "question": "What is the Interface Segregation Principle? Explain its purpose, advantages, implementation, and examples.",
+      "answer": "The Interface Segregation Principle states that clients should not be forced to depend on methods they do not use.\n\nInstead of creating large interfaces, developers should create smaller and more focused interfaces.\n\nAdvantages:\n\nReduced Coupling.\nBetter Flexibility.\nCleaner Design.\nImproved Maintainability.\n\nISP helps avoid bloated interfaces and makes software systems easier to extend and maintain.",
+      "explanation": "Suppose a Worker interface contains:\n\nwork().\neat().\nsleep().\n\nA Robot class may not need eat() or sleep().\n\nSeparating these behaviors into smaller interfaces follows ISP.",
+      "code_example": "interface Workable {\n    void work();\n}",
+      "key_takeaways": [
+        "Create small focused interfaces.",
+        "Avoid unnecessary dependencies.",
+        "Improves flexibility.",
+        "Reduces coupling.",
+        "Fourth SOLID principle."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "Object Oriented Programming",
+      "topic": "SOLID Principles",
+      "difficulty": "Hard",
+      "title": "Dependency Inversion Principle (DIP)",
+      "question": "What is the Dependency Inversion Principle? Explain its concept, benefits, implementation, and importance.",
+      "answer": "The Dependency Inversion Principle states that high-level modules should not depend on low-level modules. Both should depend on abstractions.\n\nIt also states that abstractions should not depend on details; details should depend on abstractions.\n\nBenefits:\n\nLoose Coupling.\nEasy Testing.\nFlexible Design.\nScalability.\nMaintainability.\n\nDIP is widely used in modern frameworks through Dependency Injection and Inversion of Control patterns.",
+      "explanation": "Instead of directly creating a MySQLDatabase object inside a service class, the service depends on a Database interface.\n\nThis allows switching databases without changing business logic.",
+      "code_example": "interface Database {\n    void connect();\n}",
+      "key_takeaways": [
+        "Depend on abstractions.",
+        "Reduces coupling.",
+        "Improves testability.",
+        "Supports dependency injection.",
+        "Fifth SOLID principle."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "Object Oriented Programming",
+      "topic": "Design Patterns",
+      "difficulty": "Medium",
+      "title": "What is a Design Pattern?",
+      "question": "What is a Design Pattern? Explain its purpose, types, advantages, and significance in OOP.",
+      "answer": "A Design Pattern is a proven reusable solution to a commonly occurring software design problem.\n\nDesign patterns are not complete code solutions but templates that guide developers in solving design challenges.\n\nCategories:\n\nCreational Patterns.\nStructural Patterns.\nBehavioral Patterns.\n\nAdvantages:\n\nReusability.\nMaintainability.\nScalability.\nImproved Communication.\nFaster Development.\n\nDesign patterns are widely used in enterprise applications and large-scale software systems.",
+      "explanation": "Instead of reinventing solutions for common problems, developers use established patterns such as Singleton, Factory, and Observer.",
+      "code_example": "// Design Pattern Example",
+      "key_takeaways": [
+        "Reusable design solutions.",
+        "Improve maintainability.",
+        "Not complete code implementations.",
+        "Widely used in software engineering.",
+        "Important for system design."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "Object Oriented Programming",
+      "topic": "Design Patterns",
+      "difficulty": "Hard",
+      "title": "Singleton Design Pattern",
+      "question": "What is the Singleton Design Pattern? Explain its purpose, implementation, advantages, disadvantages, and use cases.",
+      "answer": "The Singleton Pattern ensures that only one instance of a class exists throughout the application's lifetime while providing global access to that instance.\n\nCharacteristics:\n\nSingle Instance.\nGlobal Access Point.\nControlled Object Creation.\n\nAdvantages:\n\nMemory Efficiency.\nControlled Access.\nShared Resources.\n\nDisadvantages:\n\nDifficult Testing.\nGlobal State Issues.\nPotential Concurrency Problems.\n\nUse Cases:\n\nConfiguration Managers.\nLogging Systems.\nDatabase Connections.\nCaching Systems.\n\nSingleton is one of the most commonly asked design patterns in interviews.",
+      "explanation": "An application usually needs only one configuration manager.\n\nCreating multiple configuration objects could lead to inconsistencies.\n\nSingleton ensures only one instance exists.",
+      "code_example": "class Singleton {\n    private static Singleton instance;\n}",
+      "key_takeaways": [
+        "Only one object exists.",
+        "Provides global access.",
+        "Common interview topic.",
+        "Useful for shared resources.",
+        "Popular creational pattern."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "Object Oriented Programming",
+      "topic": "Design Patterns",
+      "difficulty": "Hard",
+      "title": "Factory Design Pattern",
+      "question": "What is the Factory Design Pattern? Explain its purpose, advantages, implementation, and practical applications.",
+      "answer": "The Factory Pattern provides a centralized mechanism for creating objects without exposing object creation logic to the client.\n\nInstead of using constructors directly, clients request objects from a factory.\n\nAdvantages:\n\nLoose Coupling.\nCentralized Object Creation.\nScalability.\nImproved Maintainability.\n\nApplications:\n\nDatabase Drivers.\nUI Components.\nFramework Development.\nEnterprise Applications.\n\nFactory Pattern simplifies object creation and supports extensible software architectures.",
+      "explanation": "Suppose an application supports Car, Bike, and Truck objects.\n\nA VehicleFactory can create the appropriate object based on user input.",
+      "code_example": "Vehicle vehicle = VehicleFactory.create(\"Car\");",
+      "key_takeaways": [
+        "Centralizes object creation.",
+        "Reduces coupling.",
+        "Improves maintainability.",
+        "Supports scalability.",
+        "Popular creational pattern."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "Object Oriented Programming",
+      "topic": "Design Patterns",
+      "difficulty": "Hard",
+      "title": "Observer Design Pattern",
+      "question": "What is the Observer Design Pattern? Explain its working, advantages, disadvantages, and real-world applications.",
+      "answer": "The Observer Pattern establishes a one-to-many relationship between objects so that when one object changes state, all dependent objects are automatically notified.\n\nComponents:\n\nSubject.\nObservers.\nNotification Mechanism.\n\nAdvantages:\n\nLoose Coupling.\nAutomatic Updates.\nScalable Event Handling.\n\nApplications:\n\nGUI Systems.\nStock Market Applications.\nNotification Systems.\nEvent Handling Frameworks.\n\nObserver Pattern is widely used in modern software development for event-driven architectures.",
+      "explanation": "Suppose users subscribe to a YouTube channel.\n\nWhen a new video is uploaded, all subscribers receive notifications automatically.\n\nThis is an example of the Observer Pattern.",
+      "code_example": "observer.update();",
+      "key_takeaways": [
+        "One-to-many relationship.",
+        "Automatic notifications.",
+        "Supports event-driven systems.",
+        "Reduces coupling.",
+        "Popular behavioral pattern."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object-Oriented Programming vs Procedural Programming",
+      "question": "Differentiate between Object-Oriented Programming and Procedural Programming in detail.",
+      "answer": "Object-Oriented Programming (OOP) organizes software around objects, while Procedural Programming organizes software around functions and procedures.\n\nOOP Characteristics:\n\nObjects and Classes.\nEncapsulation.\nInheritance.\nPolymorphism.\nAbstraction.\n\nProcedural Characteristics:\n\nFunctions.\nSequential Execution.\nGlobal Data.\nProcedure-Oriented Design.\n\nAdvantages of OOP:\n\nReusability.\nScalability.\nSecurity.\nMaintainability.\n\nAdvantages of Procedural Programming:\n\nSimple Design.\nFast Development for Small Programs.\nLower Overhead.\n\nOOP is preferred for large-scale applications, while procedural programming may be suitable for smaller and less complex systems.",
+      "explanation": "In Procedural Programming, data and functions are separate.\n\nIn OOP, data and behavior are combined into objects.\n\nThis makes OOP more suitable for modeling complex real-world systems.",
+      "code_example": "// Procedural vs OOP Example",
+      "key_takeaways": [
+        "OOP focuses on objects.",
+        "Procedural focuses on functions.",
+        "OOP supports reuse and scalability.",
+        "Procedural is simpler for small systems.",
+        "Common interview comparison topic."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Coupling in OOP",
+      "question": "What is Coupling in Object-Oriented Programming? Explain its types, advantages, disadvantages, and impact on software design.",
+      "answer": "Coupling refers to the degree of dependency between software modules, classes, or components. It measures how closely connected different parts of a system are.\n\nTypes of Coupling:\n\n1. Tight Coupling.\n2. Loose Coupling.\n\nTight Coupling:\n\nClasses heavily depend on each other.\nChanges in one class affect others.\nHarder to maintain.\n\nLoose Coupling:\n\nMinimal dependency.\nEasy maintenance.\nFlexible architecture.\nImproved scalability.\n\nAdvantages of Loose Coupling:\n\nBetter Reusability.\nEasy Testing.\nEasy Maintenance.\nScalability.\n\nModern software architecture strongly encourages loose coupling because it leads to more flexible and maintainable systems.",
+      "explanation": "Suppose a PaymentService directly creates a PayPal class.\n\nIf PayPal changes, PaymentService must also change.\n\nUsing an interface reduces dependency and creates loose coupling.",
+      "code_example": "interface Payment {\n    void pay();\n}",
+      "key_takeaways": [
+        "Measures dependency between classes.",
+        "Loose coupling is preferred.",
+        "Improves maintainability.",
+        "Supports scalability.",
+        "Important design principle."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Cohesion in OOP",
+      "question": "What is Cohesion? Explain its meaning, types, advantages, and relationship with software quality.",
+      "answer": "Cohesion refers to how strongly related and focused the responsibilities of a class or module are.\n\nA highly cohesive class performs one well-defined task.\n\nTypes:\n\nLow Cohesion.\nMedium Cohesion.\nHigh Cohesion.\n\nAdvantages of High Cohesion:\n\nEasy Maintenance.\nBetter Readability.\nHigher Reusability.\nReduced Complexity.\n\nGood software design aims for High Cohesion and Low Coupling.\n\nThese two concepts are considered fundamental principles of object-oriented software engineering.",
+      "explanation": "A StudentService class that only manages student operations has high cohesion.\n\nA class that handles students, payments, emails, and reports together has low cohesion.",
+      "code_example": "class StudentService {\n    void addStudent() {}\n    void updateStudent() {}\n}",
+      "key_takeaways": [
+        "Measures relatedness of responsibilities.",
+        "High cohesion is desirable.",
+        "Improves maintainability.",
+        "Reduces complexity.",
+        "Works with loose coupling."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Dependency Injection",
+      "question": "What is Dependency Injection? Explain its concept, benefits, implementation techniques, and significance in OOP.",
+      "answer": "Dependency Injection (DI) is a design technique where dependencies are provided to a class from external sources instead of being created internally.\n\nInstead of a class creating its own dependencies, they are injected through constructors, setters, or interfaces.\n\nBenefits:\n\nLoose Coupling.\nEasy Testing.\nImproved Maintainability.\nFlexible Architecture.\n\nTypes:\n\nConstructor Injection.\nSetter Injection.\nInterface Injection.\n\nDependency Injection is widely used in enterprise frameworks such as Spring because it improves modularity and testability.",
+      "explanation": "Instead of creating a MySQLDatabase object inside UserService, the database dependency is passed to UserService.\n\nThis allows switching databases without changing service code.",
+      "code_example": "UserService(Database db) {\n    this.db = db;\n}",
+      "key_takeaways": [
+        "Dependencies are injected externally.",
+        "Promotes loose coupling.",
+        "Improves testing.",
+        "Supports flexible design.",
+        "Common enterprise pattern."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Dependency Inversion vs Dependency Injection",
+      "question": "Differentiate between Dependency Inversion Principle and Dependency Injection.",
+      "answer": "Dependency Inversion Principle (DIP) is a design principle, while Dependency Injection (DI) is a technique used to implement that principle.\n\nDependency Inversion Principle:\n\nHigh-level modules depend on abstractions.\nDesign guideline.\nPart of SOLID.\n\nDependency Injection:\n\nProvides dependencies externally.\nImplementation technique.\nSupports DIP.\n\nRelationship:\n\nDIP defines what should happen.\nDI provides a way to achieve it.\n\nUnderstanding this distinction is important in enterprise software development.",
+      "explanation": "DIP says a service should depend on a Database interface.\n\nDI provides the actual MySQLDatabase object to the service.",
+      "code_example": "Database db = new MySQLDatabase();",
+      "key_takeaways": [
+        "DIP is a principle.",
+        "DI is an implementation technique.",
+        "DI helps achieve DIP.",
+        "Both reduce coupling.",
+        "Important design concepts."
+      ]
+    },
+    {
+      "id": 55,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Medium",
+      "title": "Immutable Objects",
+      "question": "What are Immutable Objects? Explain their characteristics, advantages, disadvantages, and applications.",
+      "answer": "Immutable Objects are objects whose state cannot be changed after creation.\n\nCharacteristics:\n\nFields are final.\nNo setter methods.\nObject state remains constant.\n\nAdvantages:\n\nThread Safety.\nPredictability.\nSecurity.\nEasy Debugging.\n\nDisadvantages:\n\nAdditional object creation.\nHigher memory consumption in some cases.\n\nExamples:\n\nString class in Java.\nWrapper Classes.\n\nImmutable objects are widely used in concurrent programming because they eliminate synchronization issues.",
+      "explanation": "When a String is modified, Java creates a new String object rather than modifying the existing one.\n\nThis makes String immutable.",
+      "code_example": "String name = \"Aniket\";",
+      "key_takeaways": [
+        "State cannot change after creation.",
+        "Thread-safe.",
+        "Improves reliability.",
+        "Used in concurrent systems.",
+        "String is immutable."
+      ]
+    },
+    {
+      "id": 56,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Medium",
+      "title": "Mutable vs Immutable Objects",
+      "question": "Differentiate between Mutable and Immutable Objects with examples and use cases.",
+      "answer": "Objects can be classified based on whether their state can change after creation.\n\nMutable Objects:\n\nState can be modified.\nExamples: ArrayList, HashMap.\n\nImmutable Objects:\n\nState cannot be modified.\nExamples: String, Integer.\n\nAdvantages of Mutable Objects:\n\nEfficient updates.\nLess object creation.\n\nAdvantages of Immutable Objects:\n\nThread Safety.\nSecurity.\nReliability.\n\nBoth types are useful depending on application requirements.",
+      "explanation": "ArrayList allows adding and removing elements.\n\nString objects cannot be modified once created.\n\nThese represent mutable and immutable behavior respectively.",
+      "code_example": "String str = \"Hello\";",
+      "key_takeaways": [
+        "Mutable objects can change.",
+        "Immutable objects cannot change.",
+        "Immutable objects are thread-safe.",
+        "Mutable objects are flexible.",
+        "Both have practical applications."
+      ]
+    },
+    {
+      "id": 57,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Shallow Copy vs Deep Copy",
+      "question": "Differentiate between Shallow Copy and Deep Copy. Explain their working, advantages, disadvantages, and applications.",
+      "answer": "Copying objects can be done using shallow copy or deep copy techniques.\n\nShallow Copy:\n\nCopies references.\nShared nested objects.\nFaster.\nLess memory usage.\n\nDeep Copy:\n\nCopies entire object graph.\nIndependent objects.\nMore memory usage.\nSlower than shallow copy.\n\nApplications:\n\nDeep Copy for independent object manipulation.\nShallow Copy for performance-sensitive situations.\n\nChoosing the correct copying strategy is important in object-oriented system design.",
+      "explanation": "If a Student object contains an Address object:\n\nShallow Copy shares the same Address.\n\nDeep Copy creates a new Address object as well.",
+      "code_example": "Student copy = original.clone();",
+      "key_takeaways": [
+        "Shallow copy shares references.",
+        "Deep copy duplicates objects.",
+        "Deep copy provides independence.",
+        "Shallow copy is faster.",
+        "Common interview topic."
+      ]
+    },
+    {
+      "id": 58,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object Cloning",
+      "question": "What is Object Cloning? Explain its purpose, implementation, advantages, disadvantages, and practical uses.",
+      "answer": "Object Cloning is the process of creating an exact copy of an existing object.\n\nJava provides cloning support through the Cloneable interface and clone() method.\n\nAdvantages:\n\nFast Object Creation.\nReduces Initialization Cost.\nSupports Prototype Pattern.\n\nDisadvantages:\n\nComplex Deep Copy Handling.\nPotential Security Concerns.\nImplementation Complexity.\n\nCloning is useful when object creation is expensive and existing objects can serve as templates.",
+      "explanation": "Instead of creating and initializing a large object repeatedly, an existing object can be cloned to create a copy quickly.",
+      "code_example": "Student copy = (Student) original.clone();",
+      "key_takeaways": [
+        "Creates object copies.",
+        "Uses clone() method.",
+        "Supports prototype pattern.",
+        "Improves performance in some scenarios.",
+        "Requires careful implementation."
+      ]
+    },
+    {
+      "id": 59,
+      "subject": "Object Oriented Programming",
+      "topic": "Exception Handling",
+      "difficulty": "Medium",
+      "title": "Exception Handling in OOP",
+      "question": "What is Exception Handling? Explain its purpose, advantages, components, and importance in software development.",
+      "answer": "Exception Handling is a mechanism used to detect, manage, and recover from runtime errors without abruptly terminating the program.\n\nComponents:\n\ntry.\ncatch.\nfinally.\nthrow.\nthrows.\n\nAdvantages:\n\nImproved Reliability.\nGraceful Error Recovery.\nBetter User Experience.\nSimplified Debugging.\n\nException handling is critical in real-world software because unexpected situations such as invalid input, network failures, or database issues frequently occur.",
+      "explanation": "Suppose a user enters text instead of a number.\n\nWithout exception handling, the application may crash.\n\nWith exception handling, the program can display an error message and continue execution.",
+      "code_example": "try {\n    int a = 10/0;\n} catch(Exception e) {\n    System.out.println(e);\n}",
+      "key_takeaways": [
+        "Handles runtime errors.",
+        "Prevents application crashes.",
+        "Improves reliability.",
+        "Uses try-catch blocks.",
+        "Essential programming concept."
+      ]
+    },
+    {
+      "id": 60,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Real-World Example of All Four OOP Pillars",
+      "question": "Explain Encapsulation, Abstraction, Inheritance, and Polymorphism using a single real-world example.",
+      "answer": "The four pillars of OOP work together to create robust and maintainable software systems.\n\nConsider a Banking Application.\n\nEncapsulation:\n\nAccount balance is private.\nAccess occurs through deposit() and withdraw() methods.\n\nAbstraction:\n\nUsers perform transactions without knowing internal database operations.\n\nInheritance:\n\nSavingsAccount and CurrentAccount inherit from Account.\n\nPolymorphism:\n\nDifferent account types implement interest calculation differently using the same method name.\n\nTogether these concepts provide security, flexibility, scalability, and maintainability.",
+      "explanation": "A customer uses an ATM.\n\nThe ATM hides implementation details (Abstraction).\n\nAccount data remains protected (Encapsulation).\n\nDifferent account types inherit common behavior (Inheritance).\n\nEach account type calculates interest differently (Polymorphism).",
+      "code_example": "Account acc = new SavingsAccount();\nacc.calculateInterest();",
+      "key_takeaways": [
+        "Encapsulation protects data.",
+        "Abstraction hides complexity.",
+        "Inheritance promotes reuse.",
+        "Polymorphism provides flexibility.",
+        "All four pillars work together."
+      ]
+    },
+    {
+      "id": 61,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Runtime Polymorphism in Detail",
+      "question": "Explain Runtime Polymorphism in detail. How does it work internally, what are its advantages, limitations, and real-world applications?",
+      "answer": "Runtime Polymorphism is a mechanism in Object-Oriented Programming where the method to be executed is determined at runtime rather than compile time. It is achieved through Method Overriding and Dynamic Method Dispatch.\n\nWorking Process:\n\n1. Parent class reference is created.\n2. Child class object is assigned.\n3. Method call is made using parent reference.\n4. JVM determines actual object type during execution.\n5. Appropriate overridden method executes.\n\nAdvantages:\n\nFlexibility.\nScalability.\nExtensibility.\nLoose Coupling.\nCleaner Architecture.\n\nLimitations:\n\nSlight runtime overhead.\nMore complex debugging.\nCannot access child-specific methods directly through parent reference.\n\nRuntime Polymorphism is widely used in enterprise applications, frameworks, APIs, and plugin architectures.",
+      "explanation": "Suppose a Payment interface is implemented by CreditCardPayment, UpiPayment, and NetBankingPayment.\n\nThe application only interacts with the Payment interface.\n\nAt runtime, the actual payment implementation is selected dynamically.",
+      "code_example": "Payment payment = new UpiPayment();\npayment.pay();",
+      "key_takeaways": [
+        "Resolved at runtime.",
+        "Uses method overriding.",
+        "Provides flexibility.",
+        "Supports extensible architectures.",
+        "Core OOP concept."
+      ]
+    },
+    {
+      "id": 62,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Compile-Time Polymorphism in Detail",
+      "question": "Explain Compile-Time Polymorphism in detail including implementation, advantages, disadvantages, and practical examples.",
+      "answer": "Compile-Time Polymorphism is a type of polymorphism where method calls are resolved during compilation. It is primarily achieved through Method Overloading.\n\nCharacteristics:\n\nResolved by compiler.\nNo runtime decision making.\nFast execution.\nImproved performance.\n\nAdvantages:\n\nHigh Performance.\nSimple Implementation.\nFlexible Method Usage.\nBetter Readability.\n\nDisadvantages:\n\nLimited Flexibility.\nCannot dynamically change behavior.\n\nCompile-Time Polymorphism is useful when multiple methods perform similar operations using different inputs.",
+      "explanation": "A Calculator may contain:\n\nadd(int, int)\nadd(double, double)\nadd(int, int, int)\n\nCompiler determines which version should execute before the program runs.",
+      "code_example": "int add(int a, int b) {}\ndouble add(double a, double b) {}",
+      "key_takeaways": [
+        "Resolved during compilation.",
+        "Implemented using overloading.",
+        "Fast execution.",
+        "No runtime overhead.",
+        "Commonly used in utility classes."
+      ]
+    },
+    {
+      "id": 63,
+      "subject": "Object Oriented Programming",
+      "topic": "Class Design",
+      "difficulty": "Medium",
+      "title": "Nested Classes",
+      "question": "What are Nested Classes? Explain their types, advantages, disadvantages, and practical applications.",
+      "answer": "A Nested Class is a class declared inside another class. Nested classes help logically group related functionality and improve encapsulation.\n\nTypes:\n\n1. Static Nested Class.\n2. Inner Class.\n3. Local Inner Class.\n4. Anonymous Inner Class.\n\nAdvantages:\n\nImproved Encapsulation.\nBetter Code Organization.\nReduced Namespace Pollution.\n\nDisadvantages:\n\nCan increase complexity.\nMay reduce readability if overused.\n\nNested classes are commonly used in GUI frameworks, event handling systems, and builder patterns.",
+      "explanation": "Suppose a Car class contains an Engine class.\n\nSince Engine is closely related to Car, placing it inside Car improves organization.",
+      "code_example": "class Car {\n    class Engine {}\n}",
+      "key_takeaways": [
+        "Class inside another class.",
+        "Improves organization.",
+        "Supports encapsulation.",
+        "Common in framework development.",
+        "Multiple types exist."
+      ]
+    },
+    {
+      "id": 64,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Hard",
+      "title": "Has-A Relationship",
+      "question": "What is a Has-A Relationship in OOP? Explain its importance, implementation, advantages, and examples.",
+      "answer": "A Has-A Relationship represents ownership or containment between objects. It is typically implemented using Aggregation or Composition.\n\nExamples:\n\nCar has an Engine.\nUniversity has Departments.\nLibrary has Books.\n\nAdvantages:\n\nCode Reusability.\nModularity.\nFlexible Design.\nImproved Maintainability.\n\nHas-A relationships are often preferred over inheritance because they provide greater flexibility and reduce dependency between classes.",
+      "explanation": "A Car does not become an Engine.\n\nInstead, it contains an Engine.\n\nTherefore the relationship is Has-A rather than Is-A.",
+      "code_example": "class Car {\n    Engine engine;\n}",
+      "key_takeaways": [
+        "Represents ownership.",
+        "Implemented through composition.",
+        "Promotes flexibility.",
+        "Supports modular design.",
+        "Common system design concept."
+      ]
+    },
+    {
+      "id": 65,
+      "subject": "Object Oriented Programming",
+      "topic": "Relationships",
+      "difficulty": "Medium",
+      "title": "Is-A Relationship",
+      "question": "What is an Is-A Relationship? Explain its significance, implementation, and role in inheritance.",
+      "answer": "An Is-A Relationship represents inheritance. It indicates that one class is a specialized version of another class.\n\nExamples:\n\nCar is a Vehicle.\nDog is an Animal.\nManager is an Employee.\n\nAdvantages:\n\nCode Reuse.\nPolymorphism.\nLogical Hierarchies.\nReduced Duplication.\n\nIs-A relationships form the basis of inheritance-based designs and object hierarchies.",
+      "explanation": "Every Car is a Vehicle.\n\nTherefore Car can inherit properties and methods from Vehicle.\n\nThis relationship is represented using inheritance.",
+      "code_example": "class Car extends Vehicle {}",
+      "key_takeaways": [
+        "Represents inheritance.",
+        "Creates class hierarchies.",
+        "Supports code reuse.",
+        "Enables polymorphism.",
+        "Core OOP relationship."
+      ]
+    },
+    {
+      "id": 66,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Method Hiding",
+      "question": "What is Method Hiding? Explain its concept, differences from Method Overriding, advantages, and examples.",
+      "answer": "Method Hiding occurs when a child class defines a static method with the same signature as a static method in the parent class.\n\nUnlike overriding, static methods belong to classes rather than objects.\n\nDifferences:\n\nOverriding uses instance methods.\nMethod hiding uses static methods.\nOverriding supports runtime polymorphism.\nMethod hiding is resolved at compile time.\n\nUnderstanding method hiding is important for correctly interpreting static behavior in inheritance hierarchies.",
+      "explanation": "If both parent and child classes define a static show() method, the version executed depends on the reference type rather than the object type.",
+      "code_example": "class Parent {\n    static void show() {}\n}",
+      "key_takeaways": [
+        "Applies to static methods.",
+        "Different from overriding.",
+        "Resolved at compile time.",
+        "Depends on reference type.",
+        "Advanced OOP topic."
+      ]
+    },
+    {
+      "id": 67,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Constructor Chaining",
+      "question": "What is Constructor Chaining? Explain its purpose, working mechanism, advantages, and implementation.",
+      "answer": "Constructor Chaining is the process of calling one constructor from another constructor within the same class or parent class.\n\nMethods Used:\n\nthis().\nsuper().\n\nAdvantages:\n\nCode Reusability.\nReduced Duplication.\nCleaner Initialization Logic.\nImproved Maintainability.\n\nConstructor chaining simplifies object initialization and ensures consistent setup of object state.",
+      "explanation": "Instead of writing initialization logic in multiple constructors, one constructor can call another and reuse existing code.",
+      "code_example": "Student() {\n    this(\"Unknown\");\n}",
+      "key_takeaways": [
+        "Connects constructors together.",
+        "Uses this() and super().",
+        "Reduces duplicate code.",
+        "Improves maintainability.",
+        "Common initialization technique."
+      ]
+    },
+    {
+      "id": 68,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object Slicing",
+      "question": "What is Object Slicing? Explain its causes, effects, disadvantages, and relevance in object-oriented languages.",
+      "answer": "Object Slicing occurs when a derived class object is assigned to a base class object by value, causing child-specific data to be lost.\n\nThis concept is most commonly discussed in C++.\n\nEffects:\n\nLoss of child attributes.\nLoss of child-specific behavior.\nReduced polymorphic functionality.\n\nPrevention:\n\nUse references.\nUse pointers.\nUse polymorphism correctly.\n\nUnderstanding object slicing helps developers avoid unexpected behavior in inheritance-based designs.",
+      "explanation": "If a Car object contains additional fields and is copied into a Vehicle object, only Vehicle-related information remains.\n\nThe extra Car-specific information is lost.",
+      "code_example": "// C++ Object Slicing Example",
+      "key_takeaways": [
+        "Commonly occurs in C++.",
+        "Causes loss of child data.",
+        "Related to inheritance.",
+        "Avoid using value copies.",
+        "Use references when possible."
+      ]
+    },
+    {
+      "id": 69,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Marker Interfaces",
+      "question": "What are Marker Interfaces? Explain their purpose, advantages, disadvantages, and practical examples.",
+      "answer": "A Marker Interface is an interface that contains no methods or fields. It is used to provide metadata information to the JVM or framework.\n\nExamples:\n\nSerializable.\nCloneable.\nRemote.\n\nAdvantages:\n\nSimple Implementation.\nMetadata Support.\nFramework Integration.\n\nDisadvantages:\n\nLimited Functionality.\nCan sometimes be replaced by annotations.\n\nMarker interfaces are frequently used to indicate that a class possesses a particular capability.",
+      "explanation": "A Serializable interface informs Java that objects of a class can be converted into a byte stream for storage or transmission.",
+      "code_example": "class Student implements Serializable {}",
+      "key_takeaways": [
+        "Contains no methods.",
+        "Provides metadata.",
+        "Used by frameworks and JVM.",
+        "Serializable is a common example.",
+        "Advanced OOP concept."
+      ]
+    },
+    {
+      "id": 70,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object-Oriented Analysis and Design (OOAD)",
+      "question": "What is Object-Oriented Analysis and Design (OOAD)? Explain its phases, advantages, importance, and role in software engineering.",
+      "answer": "Object-Oriented Analysis and Design (OOAD) is a software development methodology that uses object-oriented concepts to analyze requirements and design software systems.\n\nPhases:\n\n1. Requirement Analysis.\n2. Object Identification.\n3. Class Design.\n4. Relationship Modeling.\n5. Implementation.\n6. Testing.\n\nAdvantages:\n\nBetter Requirement Understanding.\nImproved Maintainability.\nReusable Components.\nScalable Architecture.\n\nOOAD helps bridge the gap between real-world requirements and software implementation by modeling systems using objects and relationships.",
+      "explanation": "In an Online Shopping System, OOAD identifies objects such as Customer, Product, Cart, Order, and Payment before implementation begins.",
+      "code_example": "// OOAD Design Example",
+      "key_takeaways": [
+        "Uses object-oriented concepts for software design.",
+        "Improves requirement analysis.",
+        "Supports scalable systems.",
+        "Promotes reusable architecture.",
+        "Widely used in enterprise development."
+      ]
+    },
+    {
+      "id": 71,
+      "subject": "Object Oriented Programming",
+      "topic": "UML",
+      "difficulty": "Medium",
+      "title": "What is UML?",
+      "question": "What is UML? Explain its purpose, advantages, types of diagrams, and significance in Object-Oriented Design.",
+      "answer": "UML (Unified Modeling Language) is a standardized visual modeling language used to analyze, design, and document software systems. It helps developers, architects, testers, and stakeholders understand the structure and behavior of a system before implementation.\n\nObjectives of UML:\n\nVisualize system architecture.\nDocument software design.\nImprove communication among team members.\nSimplify complex systems.\n\nMajor UML Diagram Categories:\n\nStructural Diagrams.\nBehavioral Diagrams.\n\nCommon UML Diagrams:\n\nClass Diagram.\nUse Case Diagram.\nSequence Diagram.\nActivity Diagram.\nState Diagram.\nComponent Diagram.\nDeployment Diagram.\n\nAdvantages:\n\nBetter planning.\nImproved communication.\nReduced development errors.\nEasier maintenance.\n\nUML is widely used in enterprise software development and system design projects.",
+      "explanation": "Before constructing a building, engineers create blueprints.\n\nSimilarly, before building software, developers use UML diagrams to visualize classes, relationships, workflows, and interactions.",
+      "code_example": "// UML diagrams are graphical representations",
+      "key_takeaways": [
+        "Standard software modeling language.",
+        "Used before implementation.",
+        "Improves communication.",
+        "Contains multiple diagram types.",
+        "Important for OOAD."
+      ]
+    },
+    {
+      "id": 72,
+      "subject": "Object Oriented Programming",
+      "topic": "UML",
+      "difficulty": "Hard",
+      "title": "Class Diagram",
+      "question": "What is a Class Diagram? Explain its components, purpose, advantages, and practical applications.",
+      "answer": "A Class Diagram is one of the most important UML diagrams. It represents the static structure of a system by showing classes, attributes, methods, and relationships between classes.\n\nComponents:\n\nClass Name.\nAttributes.\nMethods.\nRelationships.\n\nRelationships Represented:\n\nAssociation.\nAggregation.\nComposition.\nInheritance.\nDependency.\n\nAdvantages:\n\nEasy system visualization.\nBetter architecture planning.\nImproved communication.\nSupports object-oriented design.\n\nClass diagrams are widely used during software design and documentation phases.",
+      "explanation": "For an E-Commerce System, classes such as Customer, Product, Cart, and Order can be represented along with their relationships.",
+      "code_example": "Customer ---- Order",
+      "key_takeaways": [
+        "Represents static system structure.",
+        "Shows classes and relationships.",
+        "Core UML diagram.",
+        "Useful for software design.",
+        "Frequently used in OOAD."
+      ]
+    },
+    {
+      "id": 73,
+      "subject": "Object Oriented Programming",
+      "topic": "UML",
+      "difficulty": "Hard",
+      "title": "Use Case Diagram",
+      "question": "What is a Use Case Diagram? Explain its components, purpose, benefits, and real-world applications.",
+      "answer": "A Use Case Diagram represents interactions between users (actors) and a system. It focuses on functional requirements and describes what the system should do from the user's perspective.\n\nComponents:\n\nActors.\nUse Cases.\nSystem Boundary.\nRelationships.\n\nBenefits:\n\nRequirement gathering.\nBetter stakeholder communication.\nEarly system visualization.\nImproved planning.\n\nApplications:\n\nBanking Systems.\nHospital Management Systems.\nE-Commerce Platforms.\nOnline Learning Systems.\n\nUse Case Diagrams are often created during requirement analysis.",
+      "explanation": "In an ATM system:\n\nActor:\nCustomer.\n\nUse Cases:\nWithdraw Cash.\nDeposit Money.\nCheck Balance.\n\nThese interactions can be represented using a Use Case Diagram.",
+      "code_example": "// Actor --> Use Case",
+      "key_takeaways": [
+        "Focuses on system functionality.",
+        "Represents user interactions.",
+        "Used during requirement analysis.",
+        "Improves communication.",
+        "Popular UML diagram."
+      ]
+    },
+    {
+      "id": 74,
+      "subject": "Object Oriented Programming",
+      "topic": "UML",
+      "difficulty": "Hard",
+      "title": "Sequence Diagram",
+      "question": "What is a Sequence Diagram? Explain its purpose, components, advantages, and applications.",
+      "answer": "A Sequence Diagram is a behavioral UML diagram that illustrates how objects interact over time. It focuses on the order of message exchanges between objects.\n\nComponents:\n\nObjects.\nLifelines.\nMessages.\nActivation Bars.\n\nAdvantages:\n\nVisualizes interactions.\nImproves system understanding.\nHelps identify design issues.\nUseful for documentation.\n\nApplications:\n\nAuthentication Systems.\nPayment Workflows.\nBooking Systems.\nAPI Interactions.\n\nSequence diagrams help developers understand dynamic system behavior.",
+      "explanation": "For Login Functionality:\n\nUser → Login Page.\nLogin Page → Authentication Service.\nAuthentication Service → Database.\nDatabase → Authentication Service.\nAuthentication Service → User.\n\nThis sequence can be represented visually.",
+      "code_example": "User -> Service -> Database",
+      "key_takeaways": [
+        "Shows object interactions over time.",
+        "Behavioral UML diagram.",
+        "Uses messages and lifelines.",
+        "Helpful for workflows.",
+        "Common in system design."
+      ]
+    },
+    {
+      "id": 75,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object-Oriented Modeling",
+      "question": "What is Object-Oriented Modeling? Explain its purpose, process, advantages, and significance.",
+      "answer": "Object-Oriented Modeling is the process of representing real-world entities as objects and defining relationships among them.\n\nProcess:\n\nIdentify Objects.\nIdentify Attributes.\nIdentify Methods.\nIdentify Relationships.\nCreate Models.\n\nAdvantages:\n\nReal-world representation.\nImproved maintainability.\nBetter software design.\nEnhanced scalability.\n\nObject-Oriented Modeling forms the foundation of OOAD and UML-based software design.",
+      "explanation": "For a Library System:\n\nObjects:\nBook.\nStudent.\nLibrarian.\nIssueRecord.\n\nRelationships among these objects create the system model.",
+      "code_example": "// Object Modeling Example",
+      "key_takeaways": [
+        "Models real-world entities.",
+        "Foundation of OOAD.",
+        "Improves software design.",
+        "Uses objects and relationships.",
+        "Supports scalable systems."
+      ]
+    },
+    {
+      "id": 76,
+      "subject": "Object Oriented Programming",
+      "topic": "Best Practices",
+      "difficulty": "Hard",
+      "title": "Favor Composition Over Inheritance",
+      "question": "What does 'Favor Composition Over Inheritance' mean? Explain its importance, advantages, disadvantages, and practical examples.",
+      "answer": "Favor Composition Over Inheritance is a widely accepted object-oriented design principle. It recommends using object composition instead of inheritance whenever possible.\n\nInheritance:\n\nCreates tight coupling.\nRigid hierarchies.\nDifficult modifications.\n\nComposition:\n\nFlexible design.\nLoose coupling.\nReusable components.\nEasy maintenance.\n\nAdvantages:\n\nGreater flexibility.\nBetter scalability.\nImproved testability.\nReduced dependency.\n\nModern software architectures often prefer composition because it produces more maintainable and adaptable systems.",
+      "explanation": "Instead of making Car inherit Engine, the Car class contains an Engine object.\n\nThis allows changing engine implementations without modifying the Car class.",
+      "code_example": "class Car {\n    Engine engine;\n}",
+      "key_takeaways": [
+        "Composition is generally preferred.",
+        "Provides flexibility.",
+        "Reduces coupling.",
+        "Improves maintainability.",
+        "Important design principle."
+      ]
+    },
+    {
+      "id": 77,
+      "subject": "Object Oriented Programming",
+      "topic": "Best Practices",
+      "difficulty": "Hard",
+      "title": "DRY Principle",
+      "question": "What is the DRY Principle? Explain its purpose, benefits, implementation techniques, and importance in OOP.",
+      "answer": "DRY stands for 'Don't Repeat Yourself'. It is a software development principle that encourages eliminating duplicate code and logic.\n\nObjectives:\n\nReduce redundancy.\nImprove maintainability.\nIncrease reusability.\nSimplify updates.\n\nBenefits:\n\nCleaner code.\nFewer bugs.\nEasier maintenance.\nImproved consistency.\n\nTechniques:\n\nMethods.\nClasses.\nInheritance.\nUtility Functions.\nDesign Patterns.\n\nDRY is one of the most important principles for writing maintainable object-oriented software.",
+      "explanation": "If the same validation logic appears in multiple places, it should be moved into a reusable method rather than duplicated.",
+      "code_example": "validateUser();",
+      "key_takeaways": [
+        "Avoid duplicate code.",
+        "Improves maintainability.",
+        "Reduces bugs.",
+        "Encourages reuse.",
+        "Core software principle."
+      ]
+    },
+    {
+      "id": 78,
+      "subject": "Object Oriented Programming",
+      "topic": "Best Practices",
+      "difficulty": "Hard",
+      "title": "KISS Principle",
+      "question": "What is the KISS Principle? Explain its meaning, importance, advantages, and applications.",
+      "answer": "KISS stands for 'Keep It Simple, Stupid'. It is a design principle that encourages developers to choose the simplest solution that fulfills requirements.\n\nGoals:\n\nReduce complexity.\nImprove readability.\nSimplify maintenance.\nEnhance reliability.\n\nAdvantages:\n\nEasier debugging.\nBetter maintainability.\nFaster development.\nReduced errors.\n\nOverly complex designs often create unnecessary maintenance challenges and increase the likelihood of defects.",
+      "explanation": "If a simple loop solves a problem effectively, introducing multiple design patterns and complex abstractions may be unnecessary.",
+      "code_example": "for(int i=0;i<n;i++) {}",
+      "key_takeaways": [
+        "Keep solutions simple.",
+        "Avoid unnecessary complexity.",
+        "Improves readability.",
+        "Reduces bugs.",
+        "Important design guideline."
+      ]
+    },
+    {
+      "id": 79,
+      "subject": "Object Oriented Programming",
+      "topic": "Best Practices",
+      "difficulty": "Hard",
+      "title": "YAGNI Principle",
+      "question": "What is the YAGNI Principle? Explain its significance, benefits, drawbacks, and practical applications.",
+      "answer": "YAGNI stands for 'You Aren't Gonna Need It'. It advises developers not to implement functionality until it is actually required.\n\nObjectives:\n\nAvoid overengineering.\nReduce complexity.\nSave development time.\nFocus on current requirements.\n\nBenefits:\n\nSimpler codebase.\nFaster delivery.\nLower maintenance cost.\nReduced technical debt.\n\nMany software projects fail because developers spend time building features that are never used.",
+      "explanation": "Suppose an application currently supports only email login.\n\nBuilding support for ten authentication methods before they are required may violate YAGNI.",
+      "code_example": "// Build only required features",
+      "key_takeaways": [
+        "Avoid unnecessary features.",
+        "Focus on current requirements.",
+        "Reduces complexity.",
+        "Prevents overengineering.",
+        "Popular agile principle."
+      ]
+    },
+    {
+      "id": 80,
+      "subject": "Object Oriented Programming",
+      "topic": "Best Practices",
+      "difficulty": "Hard",
+      "title": "Most Important OOP Interview Summary",
+      "question": "Summarize the most important Object-Oriented Programming concepts every software developer should know.",
+      "answer": "Every software developer should have a strong understanding of the core principles and design practices of Object-Oriented Programming.\n\nMost Important Topics:\n\nClass and Object.\nEncapsulation.\nAbstraction.\nInheritance.\nPolymorphism.\nConstructors.\nMethod Overloading.\nMethod Overriding.\nInterfaces.\nAbstract Classes.\nAssociation.\nAggregation.\nComposition.\nSOLID Principles.\nDesign Patterns.\nDependency Injection.\nCoupling and Cohesion.\nException Handling.\nUML and OOAD.\n\nThese concepts collectively help developers build scalable, maintainable, reusable, and efficient software systems.\n\nMastering these topics provides a strong foundation for Java, C++, C#, Python, System Design, Backend Development, and Software Engineering interviews.",
+      "explanation": "Almost every real-world software system—from banking applications to e-commerce platforms—uses OOP concepts extensively. Understanding how these concepts work together is more important than memorizing definitions.",
+      "code_example": "// OOP concepts work together in real applications",
+      "key_takeaways": [
+        "OOP is the foundation of modern software development.",
+        "Four pillars are essential.",
+        "SOLID principles improve design.",
+        "Design patterns solve recurring problems.",
+        "Mastering OOP helps in interviews and real projects."
+      ]
+    },
+    {
+      "id": 81,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Multiple Inheritance and the Diamond Problem",
+      "question": "What is Multiple Inheritance? Explain the Diamond Problem, its challenges, solutions, and how different programming languages handle it.",
+      "answer": "Multiple Inheritance is a feature where a class can inherit properties and behaviors from more than one parent class.\n\nAdvantages:\n\nCode Reuse.\nCombining Features.\nReduced Duplication.\n\nHowever, Multiple Inheritance introduces a major issue known as the Diamond Problem.\n\nDiamond Problem:\n\nSuppose Class A contains a method display().\n\nClass B inherits A.\nClass C inherits A.\n\nClass D inherits both B and C.\n\nNow if D calls display(), the compiler cannot determine whether to use B's inherited version or C's inherited version.\n\nSolutions:\n\nVirtual Inheritance (C++).\nInterfaces (Java).\nMethod Resolution Order (Python).\n\nBecause of these complexities, Java does not support Multiple Inheritance through classes but supports it through interfaces.",
+      "explanation": "Imagine receiving the same instruction from two managers.\n\nIf both managers inherited the instruction from a common director but modified it differently, confusion occurs.\n\nThis ambiguity is similar to the Diamond Problem.",
+      "code_example": "interface A {}\ninterface B {}\nclass C implements A, B {}",
+      "key_takeaways": [
+        "Multiple inheritance allows multiple parents.",
+        "Can create ambiguity.",
+        "Diamond Problem is a common issue.",
+        "Java solves it using interfaces.",
+        "Frequently asked interview topic."
+      ]
+    },
+    {
+      "id": 82,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Object-Oriented Programming in Real Projects",
+      "question": "How are OOP concepts used in real-world software projects? Explain with practical examples.",
+      "answer": "Object-Oriented Programming is extensively used in enterprise software, web applications, mobile apps, games, banking systems, and cloud platforms.\n\nReal-World Usage:\n\nClasses represent entities.\nObjects represent real data.\nInheritance reduces duplication.\nPolymorphism provides flexibility.\nEncapsulation improves security.\nAbstraction hides complexity.\n\nExample: E-Commerce System\n\nClasses:\n\nUser.\nProduct.\nCart.\nOrder.\nPayment.\n\nRelationships:\n\nCustomer places Orders.\nOrder contains Products.\nPayment processes transactions.\n\nBenefits:\n\nMaintainability.\nScalability.\nReusability.\nModular Architecture.\n\nOOP enables large development teams to build complex systems efficiently.",
+      "explanation": "Amazon, Flipkart, banking applications, hospital systems, and ERP software all use OOP concepts to model real-world entities and interactions.",
+      "code_example": "class Product {}\nclass Order {}\nclass Customer {}",
+      "key_takeaways": [
+        "Widely used in industry.",
+        "Models real-world entities.",
+        "Improves scalability.",
+        "Supports modular development.",
+        "Foundation of enterprise software."
+      ]
+    },
+    {
+      "id": 83,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Benefits of Object-Oriented Programming",
+      "question": "Explain the major benefits of Object-Oriented Programming and why it became the dominant software development paradigm.",
+      "answer": "Object-Oriented Programming became popular because it solves many challenges associated with large software systems.\n\nMajor Benefits:\n\n1. Reusability:\nExisting classes can be reused through inheritance and composition.\n\n2. Maintainability:\nCode is divided into manageable modules.\n\n3. Scalability:\nNew features can be added without affecting existing functionality.\n\n4. Security:\nEncapsulation protects sensitive data.\n\n5. Flexibility:\nPolymorphism allows dynamic behavior.\n\n6. Real-World Modeling:\nObjects closely represent real entities.\n\n7. Team Collaboration:\nDifferent teams can work on different modules independently.\n\nThese benefits make OOP suitable for large-scale software development.",
+      "explanation": "Without OOP, managing applications containing thousands of files and millions of users would become significantly more difficult.",
+      "code_example": "// OOP improves software organization",
+      "key_takeaways": [
+        "Improves maintainability.",
+        "Supports code reuse.",
+        "Enhances security.",
+        "Enables scalability.",
+        "Ideal for large applications."
+      ]
+    },
+    {
+      "id": 84,
+      "subject": "Object Oriented Programming",
+      "topic": "Advanced OOP",
+      "difficulty": "Hard",
+      "title": "Limitations of Object-Oriented Programming",
+      "question": "What are the limitations and disadvantages of Object-Oriented Programming? Explain with examples.",
+      "answer": "Although OOP is extremely powerful, it is not always the best solution for every problem.\n\nLimitations:\n\n1. Steeper Learning Curve.\n\n2. Increased Memory Usage.\nObjects consume additional memory.\n\n3. Performance Overhead.\nDynamic dispatch and abstraction can introduce overhead.\n\n4. Complex Design.\nPoorly designed inheritance hierarchies become difficult to maintain.\n\n5. Overengineering Risk.\nDevelopers may create unnecessary abstractions.\n\n6. Longer Development Time.\nProper object modeling requires planning.\n\nFor small scripts and simple utilities, procedural programming may sometimes be more efficient than a full OOP approach.",
+      "explanation": "Creating dozens of classes for a simple calculator application may add unnecessary complexity without providing meaningful benefits.",
+      "code_example": "// Sometimes procedural code is simpler",
+      "key_takeaways": [
+        "Can increase complexity.",
+        "Requires careful design.",
+        "Consumes more memory.",
+        "Not ideal for every problem.",
+        "Understanding trade-offs is important."
+      ]
+    },
+    {
+      "id": 85,
+      "subject": "Object Oriented Programming",
+      "topic": "Interview Mastery",
+      "difficulty": "Hard",
+      "title": "Complete OOP Revision Question",
+      "question": "Explain Object-Oriented Programming from beginner level to advanced level, covering all major concepts that are commonly asked in interviews.",
+      "answer": "Object-Oriented Programming (OOP) is a software development paradigm that organizes programs around objects containing data and behavior.\n\nFundamental Concepts:\n\nClass.\nObject.\nConstructor.\nMethod.\n\nFour Pillars of OOP:\n\nEncapsulation.\nAbstraction.\nInheritance.\nPolymorphism.\n\nRelationships:\n\nAssociation.\nAggregation.\nComposition.\n\nAdvanced Concepts:\n\nMethod Overloading.\nMethod Overriding.\nDynamic Method Dispatch.\nAbstract Classes.\nInterfaces.\nDependency Injection.\nCoupling and Cohesion.\nSOLID Principles.\nDesign Patterns.\nOOAD.\nUML.\n\nBest Practices:\n\nDRY.\nKISS.\nYAGNI.\nFavor Composition Over Inheritance.\n\nA strong understanding of these concepts enables developers to design scalable, maintainable, secure, and reusable software systems.\n\nMastering OOP is essential for Java, C++, Python, C#, Backend Development, System Design, and Software Engineering interviews.",
+      "explanation": "If you understand Classes, Objects, Encapsulation, Abstraction, Inheritance, Polymorphism, SOLID Principles, and Design Patterns, you already possess the core knowledge required for most OOP interview rounds and real-world software development.",
+      "code_example": "class Student {\n    private String name;\n}",
+      "key_takeaways": [
+        "OOP is built around objects.",
+        "Four pillars are the foundation.",
+        "SOLID improves software quality.",
+        "Design patterns solve recurring problems.",
+        "Essential for software engineering careers."
+      ]
+    }
+  ]
+}

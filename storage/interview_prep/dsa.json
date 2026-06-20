@@ -1,0 +1,2525 @@
+{
+  "_comment": "Guidelines for Questions:\n- Available Difficulties: Easy, Intermediate, Hard\n- Available Topics: Arrays, Linked Lists, Trees, Graphs, Dynamic Programming\n- Make sure each question has an id, subject, topic, difficulty, title, question, answer, explanation, code_example (optional), and key_takeaways (array).",
+  "questions": [
+    {
+      "id": 1,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Introduction to DSA",
+      "difficulty": "Easy",
+      "title": "What is Data Structures and Algorithms (DSA)?",
+      "question": "What is Data Structures and Algorithms (DSA)? Explain its importance, objectives, real-world applications, and why it is considered one of the most important subjects in computer science.",
+      "answer": "Data Structures and Algorithms (DSA) is a fundamental branch of computer science that focuses on organizing, storing, managing, and processing data efficiently. A Data Structure is a method of organizing data in memory so that it can be accessed and modified efficiently, while an Algorithm is a step-by-step procedure used to solve a specific problem.\n\nThe primary goal of DSA is to improve the efficiency of software applications by optimizing both time and memory usage. As applications grow in complexity and scale, efficient data structures and algorithms become essential for maintaining performance.\n\nEvery software system, from social media platforms and search engines to banking systems and operating systems, relies heavily on data structures and algorithms. They determine how quickly data can be stored, searched, updated, deleted, and processed.\n\nDSA is one of the most important subjects for software engineers because it develops problem-solving skills, logical thinking, optimization techniques, and coding efficiency. It is also one of the most frequently tested topics in technical interviews conducted by companies such as Google, Amazon, Microsoft, Meta, Apple, Adobe, and many other technology organizations.",
+      "explanation": "Consider a library containing millions of books.\n\nIf books are scattered randomly, finding a specific book may take hours.\n\nHowever, if books are organized systematically using shelves, categories, and indexes, finding a book becomes significantly faster.\n\nSimilarly, computers process enormous amounts of data.\n\nData Structures help organize this data efficiently.\n\nAlgorithms provide efficient methods for performing operations on that data.\n\nFor example:\n\nGoogle Search uses sophisticated algorithms and data structures to search billions of web pages within milliseconds.\n\nFacebook uses graphs to represent friendships.\n\nUber uses shortest path algorithms for route optimization.\n\nNetflix uses recommendation algorithms to suggest movies.\n\nWithout DSA, modern software systems would be significantly slower and less scalable.",
+      "code_example": "// Conceptual Example\nData Structure -> Stores Data\nAlgorithm -> Processes Data",
+      "key_takeaways": [
+        "DSA consists of Data Structures and Algorithms.",
+        "Data Structures organize data efficiently.",
+        "Algorithms solve problems efficiently.",
+        "DSA improves software performance and scalability.",
+        "It is one of the most important topics in technical interviews."
+      ]
+    },
+    {
+      "id": 2,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Algorithm Analysis",
+      "difficulty": "Easy",
+      "title": "Time Complexity",
+      "question": "What is Time Complexity? Explain Big-O notation, why time complexity is important, and common complexity classes with examples.",
+      "answer": "Time Complexity is a mathematical measure used to estimate how the execution time of an algorithm grows as the size of the input increases. Instead of measuring actual execution time in seconds, time complexity focuses on the growth rate of operations performed by the algorithm.\n\nThe most commonly used notation for expressing time complexity is Big-O Notation. Big-O describes the upper bound or worst-case growth rate of an algorithm.\n\nTime complexity helps software engineers compare algorithms and choose the most efficient solution for large datasets.\n\nCommon complexity classes include:\n\nO(1) - Constant Time\nO(log n) - Logarithmic Time\nO(n) - Linear Time\nO(n log n) - Linearithmic Time\nO(n²) - Quadratic Time\nO(2ⁿ) - Exponential Time\nO(n!) - Factorial Time\n\nAs input size grows, algorithms with lower time complexity generally perform significantly better than algorithms with higher complexity.",
+      "explanation": "Suppose you have:\n\n10 records.\n100 records.\n1,000,000 records.\n\nAn O(1) operation takes approximately the same time regardless of input size.\n\nAn O(n) operation grows proportionally.\n\nAn O(n²) operation becomes extremely slow for large datasets.\n\nExample:\n\nSearching a value in an unsorted array requires checking elements one by one.\n\nWorst-case complexity:\nO(n)\n\nBinary Search on a sorted array:\nO(log n)\n\nThis is why Binary Search is dramatically faster for large datasets.",
+      "code_example": "for(int i = 0; i < n; i++) {\n    System.out.println(i);\n}\n// O(n)",
+      "key_takeaways": [
+        "Time Complexity measures algorithm efficiency.",
+        "Big-O notation describes growth rate.",
+        "Lower complexity generally means better performance.",
+        "O(1) is highly efficient.",
+        "Understanding complexity is essential for optimization."
+      ]
+    },
+    {
+      "id": 3,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Algorithm Analysis",
+      "difficulty": "Easy",
+      "title": "Space Complexity",
+      "question": "What is Space Complexity? Explain how memory usage is analyzed and why it matters in algorithm design.",
+      "answer": "Space Complexity measures the amount of memory required by an algorithm relative to the size of its input. While time complexity focuses on execution speed, space complexity focuses on memory consumption.\n\nSpace complexity includes:\n\nInput Storage.\nAuxiliary Memory.\nTemporary Variables.\nFunction Call Stack.\nDynamic Memory Allocations.\n\nEfficient algorithms attempt to optimize both execution time and memory usage. In many real-world systems, memory limitations are just as important as execution speed.\n\nSpace complexity is typically expressed using Big-O notation.",
+      "explanation": "Suppose an application processes 1 billion records.\n\nEven if the algorithm is fast, excessive memory consumption may cause:\n\nOut-of-memory errors.\nSystem crashes.\nPoor performance.\n\nExample:\n\nCreating a copy of an array requires O(n) additional memory.\n\nModifying the original array directly may require O(1) extra memory.\n\nMany interview questions require balancing time complexity and space complexity trade-offs.",
+      "code_example": "int sum = 0;\n// O(1) extra space",
+      "key_takeaways": [
+        "Space Complexity measures memory usage.",
+        "Expressed using Big-O notation.",
+        "Includes auxiliary memory requirements.",
+        "Important for large-scale systems.",
+        "Optimization often involves time-space tradeoffs."
+      ]
+    },
+    {
+      "id": 4,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Arrays",
+      "difficulty": "Easy",
+      "title": "Introduction to Arrays",
+      "question": "What is an Array? Explain its structure, characteristics, advantages, disadvantages, and common operations.",
+      "answer": "An Array is a linear data structure that stores multiple elements of the same data type in contiguous memory locations. Each element is identified using an index, allowing efficient access.\n\nArrays are among the most fundamental and widely used data structures in computer science.\n\nCharacteristics:\n\nFixed Size.\nIndexed Access.\nContiguous Memory Allocation.\nHomogeneous Elements.\n\nAdvantages:\n\nFast Random Access.\nSimple Implementation.\nMemory Efficient.\n\nDisadvantages:\n\nFixed Size.\nExpensive Insertions and Deletions.\nPotential Memory Wastage.\n\nArrays form the foundation of many advanced data structures including stacks, queues, heaps, hash tables, and matrices.",
+      "explanation": "Imagine lockers arranged in a straight line.\n\nEach locker has a number.\n\nIf you know the locker number, you can directly access it.\n\nSimilarly, arrays provide direct access using indexes.\n\nExample:\n\narr[0]\narr[1]\narr[2]\n\nThis direct access makes arrays extremely efficient for retrieval operations.",
+      "code_example": "int[] arr = {10, 20, 30, 40, 50};",
+      "key_takeaways": [
+        "Arrays store elements in contiguous memory.",
+        "Provide O(1) access using indexes.",
+        "Insertion may require shifting elements.",
+        "Widely used in programming.",
+        "Foundation for many advanced structures."
+      ]
+    },
+    {
+      "id": 5,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Arrays",
+      "difficulty": "Medium",
+      "title": "Array Operations",
+      "question": "Explain major Array operations including traversal, insertion, deletion, searching, and updating along with their complexities.",
+      "answer": "Arrays support several fundamental operations that are used extensively in programming and algorithm design.\n\nTraversal:\nVisiting every element.\nComplexity: O(n)\n\nInsertion:\nAdding an element.\nComplexity: O(n)\n\nDeletion:\nRemoving an element.\nComplexity: O(n)\n\nSearching:\nLinear Search: O(n)\nBinary Search: O(log n) if sorted.\n\nUpdating:\nChanging a value.\nComplexity: O(1)\n\nUnderstanding these operations is important because they influence algorithm performance and data structure selection.",
+      "explanation": "Suppose an array contains:\n\n[10, 20, 30, 40]\n\nInsert 25 at index 2:\n\n[10, 20, 25, 30, 40]\n\nElements after index 2 must shift.\n\nThis shifting causes insertion complexity to become O(n).\n\nSimilarly, deletions require shifting elements to fill gaps.",
+      "code_example": "arr[2] = 25;",
+      "key_takeaways": [
+        "Traversal visits all elements.",
+        "Insertion may require shifting.",
+        "Deletion may require shifting.",
+        "Updating is O(1).",
+        "Searching complexity depends on technique."
+      ]
+    },
+    {
+      "id": 6,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Searching",
+      "difficulty": "Medium",
+      "title": "Linear Search",
+      "question": "What is Linear Search? Explain its algorithm, working process, complexity analysis, advantages, and disadvantages.",
+      "answer": "Linear Search is a simple searching algorithm that sequentially checks each element in a collection until the target element is found or the end of the collection is reached. It works on both sorted and unsorted datasets and requires no preprocessing.\n\nAlthough easy to implement, Linear Search becomes inefficient for large datasets because it may need to inspect every element.\n\nTime Complexity:\n\nBest Case: O(1)\nAverage Case: O(n)\nWorst Case: O(n)\n\nSpace Complexity:\nO(1)",
+      "explanation": "Suppose the array is:\n\n[5, 12, 8, 20, 15]\n\nSearch for 20.\n\nCheck 5.\nCheck 12.\nCheck 8.\nCheck 20.\n\nFound.\n\nLinear Search is often used when datasets are small or unsorted.",
+      "code_example": "for(int num : arr){\n    if(num == target)\n        return true;\n}",
+      "key_takeaways": [
+        "Linear Search checks elements sequentially.",
+        "Works on unsorted arrays.",
+        "Easy to implement.",
+        "Inefficient for large datasets.",
+        "Worst-case complexity is O(n)."
+      ]
+    },
+    {
+      "id": 7,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Searching",
+      "difficulty": "Medium",
+      "title": "Binary Search",
+      "question": "What is Binary Search? Explain its algorithm, prerequisites, complexity, advantages, and limitations.",
+      "answer": "Binary Search is an efficient searching algorithm that works on sorted datasets. It repeatedly divides the search space into halves and eliminates the portion that cannot contain the target value.\n\nBecause it eliminates half of the remaining elements during each iteration, Binary Search is significantly faster than Linear Search for large datasets.\n\nPrerequisite:\nArray must be sorted.\n\nComplexities:\nBest Case: O(1)\nAverage Case: O(log n)\nWorst Case: O(log n)\n\nSpace Complexity:\nO(1) iterative version.",
+      "explanation": "Suppose:\n\n[10, 20, 30, 40, 50, 60, 70]\n\nSearch 60.\n\nMiddle = 40.\n\n60 > 40.\n\nIgnore left half.\n\nMiddle = 60.\n\nFound.\n\nInstead of checking every element, Binary Search quickly reduces the search space.",
+      "code_example": "int mid = (low + high) / 2;",
+      "key_takeaways": [
+        "Binary Search requires sorted data.",
+        "Eliminates half of search space each step.",
+        "Complexity is O(log n).",
+        "Much faster than Linear Search.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 8,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "title": "Bubble Sort",
+      "question": "What is Bubble Sort? Explain its algorithm, working process, complexity analysis, and limitations.",
+      "answer": "Bubble Sort is a simple comparison-based sorting algorithm that repeatedly compares adjacent elements and swaps them if they are in the wrong order. After each pass, the largest unsorted element moves to its correct position.\n\nAlthough easy to understand and implement, Bubble Sort is generally inefficient for large datasets and is primarily used for educational purposes.",
+      "explanation": "Example:\n\n[5, 3, 8, 1]\n\nPass 1:\nSwap 5 and 3.\nSwap 8 and 1.\n\nLargest value reaches the end.\n\nRepeated passes continue until the array becomes sorted.\n\nThe algorithm is called Bubble Sort because larger elements 'bubble up' toward the end of the array.",
+      "code_example": "for(int i=0;i<n-1;i++){\n  for(int j=0;j<n-i-1;j++){\n    if(arr[j]>arr[j+1])\n      swap(arr[j],arr[j+1]);\n  }\n}",
+      "key_takeaways": [
+        "Bubble Sort repeatedly swaps adjacent elements.",
+        "Easy to understand.",
+        "Not efficient for large datasets.",
+        "Worst-case complexity is O(n²).",
+        "Common educational sorting algorithm."
+      ]
+    },
+    {
+      "id": 9,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "title": "Selection Sort",
+      "question": "What is Selection Sort? Explain its algorithm, working, complexity, advantages, and disadvantages.",
+      "answer": "Selection Sort is a comparison-based sorting algorithm that repeatedly selects the smallest element from the unsorted portion of the array and places it at its correct position.\n\nUnlike Bubble Sort, Selection Sort minimizes the number of swaps but still performs many comparisons.\n\nComplexities:\n\nBest Case: O(n²)\nAverage Case: O(n²)\nWorst Case: O(n²)\n\nSpace Complexity:\nO(1)",
+      "explanation": "Example:\n\n[64, 25, 12, 22, 11]\n\nFind smallest element.\n\n11 found.\n\nSwap with first element.\n\nRepeat for remaining unsorted portion.\n\nEventually the entire array becomes sorted.",
+      "code_example": "int minIndex = i;",
+      "key_takeaways": [
+        "Selection Sort repeatedly selects minimum element.",
+        "Requires fewer swaps.",
+        "Still performs O(n²) comparisons.",
+        "Simple implementation.",
+        "Not suitable for large datasets."
+      ]
+    },
+    {
+      "id": 10,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sorting",
+      "difficulty": "Medium",
+      "title": "Insertion Sort",
+      "question": "What is Insertion Sort? Explain its algorithm, working mechanism, complexity analysis, and practical applications.",
+      "answer": "Insertion Sort is a comparison-based sorting algorithm that builds the final sorted array one element at a time. It works similarly to how people sort playing cards in their hands. Each new element is inserted into its correct position among previously sorted elements.\n\nInsertion Sort performs particularly well on small datasets and nearly sorted arrays.\n\nComplexities:\n\nBest Case: O(n)\nAverage Case: O(n²)\nWorst Case: O(n²)\n\nSpace Complexity:\nO(1)\n\nDue to its simplicity and efficiency for small inputs, Insertion Sort is often used internally in hybrid sorting algorithms.",
+      "explanation": "Suppose:\n\n[5, 2, 4, 6, 1]\n\nStart with 5.\n\nInsert 2 before 5.\n\nInsert 4 between 2 and 5.\n\nContinue until all elements are placed correctly.\n\nThe sorted portion grows after every iteration.",
+      "code_example": "int key = arr[i];\nwhile(j >= 0 && arr[j] > key){\n    arr[j+1] = arr[j];\n    j--;\n}",
+      "key_takeaways": [
+        "Insertion Sort builds sorted portion gradually.",
+        "Efficient for small datasets.",
+        "Best-case complexity is O(n).",
+        "Space complexity is O(1).",
+        "Often used in hybrid sorting algorithms."
+      ]
+    },
+    {
+      "id": 11,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sorting",
+      "difficulty": "Hard",
+      "title": "Merge Sort",
+      "question": "What is Merge Sort? Explain its Divide and Conquer approach, algorithm, complexity analysis, advantages, disadvantages, and practical applications.",
+      "answer": "Merge Sort is a highly efficient comparison-based sorting algorithm based on the Divide and Conquer paradigm. It works by recursively dividing the array into smaller subarrays until each subarray contains a single element. These smaller subarrays are then merged in a sorted manner to produce the final sorted array.\n\nMerge Sort guarantees O(n log n) performance in the best, average, and worst cases, making it one of the most reliable sorting algorithms. Because of its predictable performance and stability, Merge Sort is widely used in large-scale systems, external sorting, database systems, and distributed computing.\n\nUnlike simpler sorting algorithms such as Bubble Sort and Selection Sort, Merge Sort performs efficiently even on very large datasets.\n\nHowever, Merge Sort requires additional memory for temporary arrays during the merging process, which increases space complexity.",
+      "explanation": "Example:\n\nArray:\n[38, 27, 43, 3, 9, 82, 10]\n\nStep 1:\nDivide into halves.\n\n[38, 27, 43]\n[3, 9, 82, 10]\n\nStep 2:\nContinue dividing until single elements remain.\n\nStep 3:\nMerge sorted subarrays.\n\n[27, 38, 43]\n[3, 9, 10, 82]\n\nFinal Merge:\n\n[3, 9, 10, 27, 38, 43, 82]\n\nThis Divide and Conquer strategy significantly improves efficiency compared to quadratic sorting algorithms.",
+      "code_example": "mergeSort(arr, left, right);",
+      "key_takeaways": [
+        "Merge Sort uses Divide and Conquer.",
+        "Guaranteed O(n log n) complexity.",
+        "Stable sorting algorithm.",
+        "Requires additional memory.",
+        "Suitable for large datasets."
+      ]
+    },
+    {
+      "id": 12,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sorting",
+      "difficulty": "Hard",
+      "title": "Quick Sort",
+      "question": "What is Quick Sort? Explain its algorithm, partitioning process, complexity analysis, advantages, disadvantages, and practical applications.",
+      "answer": "Quick Sort is one of the fastest and most widely used sorting algorithms. It follows the Divide and Conquer approach by selecting a pivot element and partitioning the array into two groups: elements smaller than the pivot and elements larger than the pivot. The same process is then recursively applied to both partitions.\n\nQuick Sort is often faster than Merge Sort in practical applications because it has excellent cache performance and requires less additional memory.\n\nComplexities:\n\nBest Case: O(n log n)\nAverage Case: O(n log n)\nWorst Case: O(n²)\n\nSpace Complexity:\nO(log n)\n\nDespite its worst-case complexity, Quick Sort is extensively used because of its excellent average-case performance.",
+      "explanation": "Example:\n\nArray:\n[10, 80, 30, 90, 40, 50, 70]\n\nChoose Pivot:\n70\n\nPartition:\n\nSmaller:\n[10, 30, 40, 50]\n\nPivot:\n70\n\nLarger:\n[80, 90]\n\nRecursively sort partitions.\n\nEventually:\n\n[10, 30, 40, 50, 70, 80, 90]",
+      "code_example": "int pivot = arr[high];",
+      "key_takeaways": [
+        "Quick Sort uses partitioning.",
+        "Very efficient in practice.",
+        "Average complexity O(n log n).",
+        "Worst case O(n²).",
+        "Widely used in production systems."
+      ]
+    },
+    {
+      "id": 13,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Recursion",
+      "difficulty": "Medium",
+      "title": "Recursion",
+      "question": "What is Recursion? Explain how recursive algorithms work, their advantages, disadvantages, and common applications.",
+      "answer": "Recursion is a programming technique in which a function calls itself to solve smaller instances of the same problem. Recursive algorithms typically consist of two essential parts: a Base Case and a Recursive Case.\n\nThe Base Case terminates recursion and prevents infinite calls. The Recursive Case reduces the problem size and calls the function again.\n\nRecursion is widely used in tree traversal, graph algorithms, divide and conquer techniques, backtracking problems, dynamic programming, and mathematical computations.\n\nAlthough recursion can simplify solutions, excessive recursion may lead to stack overflow errors and increased memory consumption.",
+      "explanation": "Example:\n\nFactorial of 5:\n\n5! = 5 × 4!\n4! = 4 × 3!\n3! = 3 × 2!\n2! = 2 × 1!\n1! = 1\n\nThe recursion gradually reduces the problem until reaching the base case.",
+      "code_example": "int factorial(int n){\n  if(n==1) return 1;\n  return n * factorial(n-1);\n}",
+      "key_takeaways": [
+        "Recursion involves self-calling functions.",
+        "Requires a base case.",
+        "Simplifies complex problems.",
+        "Common in trees and graphs.",
+        "May consume additional stack memory."
+      ]
+    },
+    {
+      "id": 14,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Recursion",
+      "difficulty": "Hard",
+      "title": "Recursion Tree Method",
+      "question": "What is the Recursion Tree Method? Explain how it is used to analyze recursive algorithms.",
+      "answer": "The Recursion Tree Method is a technique used to analyze the time complexity of recursive algorithms. It visualizes recursive calls as a tree structure where each node represents a subproblem.\n\nBy calculating the work performed at each level and summing the costs across all levels, the overall time complexity can be determined.\n\nThis technique is particularly useful for understanding Divide and Conquer algorithms such as Merge Sort, Quick Sort, and Binary Search.",
+      "explanation": "Example:\n\nT(n) = 2T(n/2) + n\n\nRoot Cost:\nn\n\nLevel 1:\n2 × (n/2) = n\n\nLevel 2:\n4 × (n/4) = n\n\nEach level contributes n work.\n\nNumber of levels:\nlog n\n\nTotal:\nO(n log n)",
+      "code_example": "T(n) = 2T(n/2) + n",
+      "key_takeaways": [
+        "Used for analyzing recursion.",
+        "Visualizes recursive calls as a tree.",
+        "Helps derive complexity formulas.",
+        "Common in Divide and Conquer algorithms.",
+        "Important interview topic."
+      ]
+    },
+    {
+      "id": 15,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "title": "Introduction to Linked List",
+      "question": "What is a Linked List? Explain its structure, types, advantages, disadvantages, and common applications.",
+      "answer": "A Linked List is a linear data structure consisting of nodes, where each node contains data and a reference (pointer) to the next node in the sequence. Unlike arrays, linked lists do not require contiguous memory allocation.\n\nLinked Lists are dynamic in size and support efficient insertion and deletion operations.\n\nTypes:\n\nSingly Linked List.\nDoubly Linked List.\nCircular Linked List.\n\nLinked Lists are widely used in memory management, operating systems, browser history, playlists, and dynamic data storage systems.",
+      "explanation": "Example:\n\n10 → 20 → 30 → 40\n\nEach node stores:\n\nData.\nPointer to next node.\n\nUnlike arrays, elements can be inserted without shifting other elements.",
+      "code_example": "class Node {\n   int data;\n   Node next;\n}",
+      "key_takeaways": [
+        "Linked Lists use nodes.",
+        "Dynamic size.",
+        "Efficient insertion and deletion.",
+        "No contiguous memory required.",
+        "Foundation for many advanced structures."
+      ]
+    },
+    {
+      "id": 16,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "title": "Singly Linked List",
+      "question": "Explain Singly Linked Lists, their operations, complexities, and practical applications.",
+      "answer": "A Singly Linked List is a linked list where each node contains data and a pointer to the next node only.\n\nOperations:\n\nInsertion at Beginning.\nInsertion at End.\nDeletion.\nTraversal.\nSearching.\n\nComplexities:\n\nInsertion at Head: O(1)\nDeletion at Head: O(1)\nSearch: O(n)\nTraversal: O(n)\n\nSingly Linked Lists are simpler and consume less memory than doubly linked lists.",
+      "explanation": "Example:\n\nHead → 10 → 20 → 30 → NULL\n\nTo traverse the list:\n\nStart at Head.\nMove through next pointers until NULL.",
+      "code_example": "head = new Node(10);",
+      "key_takeaways": [
+        "Each node points to next node.",
+        "Simple implementation.",
+        "Efficient insertions.",
+        "Linear search complexity.",
+        "Memory efficient."
+      ]
+    },
+    {
+      "id": 17,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Medium",
+      "title": "Doubly Linked List",
+      "question": "What is a Doubly Linked List? Explain its structure, advantages, disadvantages, and operations.",
+      "answer": "A Doubly Linked List is a linked list where each node contains pointers to both the next node and the previous node. This allows traversal in both forward and backward directions.\n\nAdvantages:\n\nBidirectional Traversal.\nEfficient Deletion.\nEasy Backtracking.\n\nDisadvantages:\n\nExtra Memory Usage.\nMore Complex Implementation.\n\nDoubly Linked Lists are commonly used in browser navigation, undo-redo functionality, and cache systems.",
+      "explanation": "Structure:\n\nNULL ← 10 ⇄ 20 ⇄ 30 → NULL\n\nEach node contains:\n\nPrevious Pointer.\nData.\nNext Pointer.",
+      "code_example": "class Node {\n  int data;\n  Node prev;\n  Node next;\n}",
+      "key_takeaways": [
+        "Supports forward and backward traversal.",
+        "Uses extra memory.",
+        "Simplifies deletion.",
+        "Common in navigation systems.",
+        "More powerful than singly linked lists."
+      ]
+    },
+    {
+      "id": 18,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Hard",
+      "title": "Circular Linked List",
+      "question": "What is a Circular Linked List? Explain its structure, advantages, disadvantages, and applications.",
+      "answer": "A Circular Linked List is a linked list in which the last node points back to the first node rather than NULL. This creates a circular structure allowing traversal to continue indefinitely.\n\nAdvantages:\n\nEfficient Circular Traversal.\nUseful in Scheduling.\nNo Need for NULL Checks.\n\nApplications:\n\nRound Robin Scheduling.\nMultiplayer Games.\nCircular Buffers.\nMusic Playlists.\n\nCircular Linked Lists are commonly used when data must be processed repeatedly in cycles.",
+      "explanation": "Example:\n\n10 → 20 → 30\n↑         ↓\n← ← ← ← ←\n\nThe last node points back to the first node.",
+      "code_example": "last.next = head;",
+      "key_takeaways": [
+        "Last node points to first node.",
+        "Forms a circular structure.",
+        "Useful for cyclic operations.",
+        "Common in schedulers.",
+        "No NULL termination."
+      ]
+    },
+    {
+      "id": 19,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Hard",
+      "title": "Detect Loop in Linked List",
+      "question": "How can a loop be detected in a Linked List? Explain Floyd's Cycle Detection Algorithm in detail.",
+      "answer": "Loop detection is a common linked list problem where the goal is to determine whether a linked list contains a cycle.\n\nThe most efficient solution is Floyd's Cycle Detection Algorithm, also known as the Tortoise and Hare Algorithm.\n\nIt uses two pointers:\n\nSlow Pointer moves one step.\nFast Pointer moves two steps.\n\nIf a cycle exists, both pointers will eventually meet.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nThis is one of the most frequently asked linked list interview questions.",
+      "explanation": "Imagine two runners on a circular track.\n\nOne runs slowly.\nOne runs quickly.\n\nEventually the faster runner catches the slower runner.\n\nSimilarly, if a linked list contains a cycle, the fast pointer eventually meets the slow pointer.",
+      "code_example": "while(fast!=null && fast.next!=null){\n slow=slow.next;\n fast=fast.next.next;\n}",
+      "key_takeaways": [
+        "Uses slow and fast pointers.",
+        "Detects cycles efficiently.",
+        "O(n) time complexity.",
+        "O(1) space complexity.",
+        "Popular interview problem."
+      ]
+    },
+    {
+      "id": 20,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Hard",
+      "title": "Reverse a Linked List",
+      "question": "How do you reverse a Linked List? Explain iterative and recursive approaches with complexity analysis.",
+      "answer": "Reversing a Linked List is a classic interview problem that involves changing the direction of all pointers.\n\nIterative Approach:\n\nMaintain three pointers:\nPrevious.\nCurrent.\nNext.\n\nUpdate pointers until the list is reversed.\n\nRecursive Approach:\n\nReverse remaining list recursively and adjust pointers during backtracking.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity:\nIterative: O(1)\nRecursive: O(n) due to recursion stack.\n\nThis problem tests understanding of pointer manipulation and linked list traversal.",
+      "explanation": "Original:\n\n10 → 20 → 30 → NULL\n\nReversed:\n\nNULL ← 10 ← 20 ← 30\n\nFinal:\n\n30 → 20 → 10 → NULL",
+      "code_example": "Node prev = null;\nNode curr = head;",
+      "key_takeaways": [
+        "Important linked list problem.",
+        "Uses pointer manipulation.",
+        "Iterative solution uses O(1) space.",
+        "Time complexity O(n).",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 21,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "title": "Introduction to Stack",
+      "question": "What is a Stack? Explain its structure, working principle, operations, advantages, disadvantages, complexity analysis, and real-world applications.",
+      "answer": "A Stack is a linear data structure that follows the LIFO (Last In First Out) principle. This means that the element inserted most recently is the first one to be removed. A stack allows insertion and deletion operations at only one end, known as the Top of the Stack.\n\nStacks are widely used in computer science because many real-world and system-level operations naturally follow LIFO behavior.\n\nPrimary Operations:\n\nPush – Insert an element.\nPop – Remove an element.\nPeek/Top – View top element.\nisEmpty – Check whether stack is empty.\nisFull – Check whether stack is full (array implementation).\n\nComplexities:\n\nPush: O(1)\nPop: O(1)\nPeek: O(1)\nSearch: O(n)\n\nStacks can be implemented using arrays or linked lists.\n\nApplications include expression evaluation, recursion, browser history, undo-redo functionality, compiler design, syntax parsing, and memory management.",
+      "explanation": "Imagine a stack of plates.\n\nWhen adding a plate, it is placed on top.\n\nWhen removing a plate, the top plate is removed first.\n\nExample:\n\nPush 10\nPush 20\nPush 30\n\nStack:\n\n30 ← Top\n20\n10\n\nPop operation removes 30 first.\n\nThis demonstrates the Last In First Out principle.",
+      "code_example": "Stack<Integer> stack = new Stack<>();\nstack.push(10);\nstack.pop();",
+      "key_takeaways": [
+        "Stack follows LIFO principle.",
+        "Insertion and deletion occur at the top.",
+        "Push and Pop are O(1).",
+        "Used extensively in recursion and parsing.",
+        "Can be implemented using arrays or linked lists."
+      ]
+    },
+    {
+      "id": 22,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "title": "Stack Implementation Using Array",
+      "question": "How can a Stack be implemented using Arrays? Explain the implementation details, operations, advantages, disadvantages, and complexity analysis.",
+      "answer": "A Stack can be implemented using an array where a variable called Top keeps track of the current top element. Initially, Top is set to -1 indicating an empty stack.\n\nPush Operation:\nIncrement Top.\nInsert element at Top.\n\nPop Operation:\nRetrieve Top element.\nDecrement Top.\n\nPeek Operation:\nReturn element at Top.\n\nAdvantages:\n\nSimple implementation.\nFast access.\nLow overhead.\n\nDisadvantages:\n\nFixed size.\nPossible overflow.\nMemory wastage if underutilized.",
+      "explanation": "Example:\n\nArray Size = 5\n\nPush 10\nPush 20\nPush 30\n\nIndex:\n0 1 2\n\nValues:\n10 20 30\n\nTop = 2\n\nPop removes element at Top and decreases Top value.",
+      "code_example": "int[] stack = new int[100];\nint top = -1;",
+      "key_takeaways": [
+        "Uses an array and top pointer.",
+        "Fast operations.",
+        "Fixed memory allocation.",
+        "Simple implementation.",
+        "May suffer from overflow."
+      ]
+    },
+    {
+      "id": 23,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Stack",
+      "difficulty": "Medium",
+      "title": "Stack Implementation Using Linked List",
+      "question": "How can a Stack be implemented using Linked Lists? Explain the process, benefits, and complexity analysis.",
+      "answer": "A Stack can be efficiently implemented using a Linked List where the Head node acts as the Top of the Stack. New nodes are inserted at the beginning of the list and removed from the beginning.\n\nAdvantages:\n\nDynamic size.\nNo overflow unless memory is exhausted.\nEfficient insertions and deletions.\n\nComplexities:\n\nPush: O(1)\nPop: O(1)\nPeek: O(1)\n\nLinked List implementation is often preferred when stack size is unknown or changes dynamically.",
+      "explanation": "Example:\n\nPush 10\nPush 20\nPush 30\n\nHead → 30 → 20 → 10\n\nPop removes 30 directly from the head.",
+      "code_example": "Node top = null;",
+      "key_takeaways": [
+        "Uses dynamic memory.",
+        "No fixed size limitation.",
+        "Efficient operations.",
+        "Suitable for dynamic stacks.",
+        "Widely used in practice."
+      ]
+    },
+    {
+      "id": 24,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Stack",
+      "difficulty": "Hard",
+      "title": "Infix, Prefix, and Postfix Expressions",
+      "question": "Explain Infix, Prefix, and Postfix Expressions. Compare them and discuss their significance in computer science.",
+      "answer": "Expressions are different ways of representing mathematical operations.\n\nInfix:\nOperator appears between operands.\nExample: A + B\n\nPrefix:\nOperator appears before operands.\nExample: +AB\n\nPostfix:\nOperator appears after operands.\nExample: AB+\n\nComputers often prefer Prefix and Postfix expressions because they eliminate ambiguity and remove the need for parentheses.\n\nCompilers and interpreters frequently convert infix expressions into postfix or prefix notation before evaluation.",
+      "explanation": "Expression:\n\n(A + B) * C\n\nInfix:\n(A + B) * C\n\nPrefix:\n* + A B C\n\nPostfix:\nA B + C *\n\nPostfix evaluation is particularly convenient using stacks.",
+      "code_example": "A B + C *",
+      "key_takeaways": [
+        "Infix is human-friendly.",
+        "Postfix is machine-friendly.",
+        "Prefix eliminates ambiguity.",
+        "Used in compiler design.",
+        "Stack plays a major role in evaluation."
+      ]
+    },
+    {
+      "id": 25,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Stack",
+      "difficulty": "Hard",
+      "title": "Expression Evaluation Using Stack",
+      "question": "How are expressions evaluated using Stacks? Explain Postfix evaluation in detail.",
+      "answer": "Postfix Expression Evaluation is a classic stack application. The algorithm scans the expression from left to right.\n\nIf an operand is encountered:\nPush it onto the stack.\n\nIf an operator is encountered:\nPop required operands.\nPerform operation.\nPush result back.\n\nContinue until expression ends.\n\nFinal stack value represents the answer.\n\nComplexity:\n\nTime Complexity: O(n)\nSpace Complexity: O(n)",
+      "explanation": "Example:\n\nExpression:\n23+5*\n\nStep 1:\nPush 2\nPush 3\n\nStep 2:\nEncounter +\nPop 3 and 2\nResult = 5\nPush 5\n\nStep 3:\nPush 5\n\nStep 4:\nEncounter *\nPop 5 and 5\nResult = 25\n\nFinal Answer = 25",
+      "code_example": "if(isOperator(ch)){\n  int b = stack.pop();\n  int a = stack.pop();\n}",
+      "key_takeaways": [
+        "Stack simplifies expression evaluation.",
+        "Postfix evaluation is O(n).",
+        "Widely used in compilers.",
+        "Operands are pushed.",
+        "Operators trigger computation."
+      ]
+    },
+    {
+      "id": 26,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Queue",
+      "difficulty": "Medium",
+      "title": "Introduction to Queue",
+      "question": "What is a Queue? Explain its structure, operations, working principle, complexity analysis, and real-world applications.",
+      "answer": "A Queue is a linear data structure that follows the FIFO (First In First Out) principle. The first element inserted into the queue is the first element removed.\n\nPrimary Operations:\n\nEnqueue – Insert element.\nDequeue – Remove element.\nFront – View first element.\nRear – View last element.\n\nComplexities:\n\nEnqueue: O(1)\nDequeue: O(1)\nFront: O(1)\n\nQueues are used extensively in operating systems, scheduling systems, networking, printer management, call centers, task processing, and breadth-first search algorithms.",
+      "explanation": "Imagine people standing in a queue at a ticket counter.\n\nFirst person enters first.\nFirst person leaves first.\n\nExample:\n\nEnqueue 10\nEnqueue 20\nEnqueue 30\n\nQueue:\n\nFront → 10 20 30 ← Rear\n\nDequeue removes 10 first.",
+      "code_example": "Queue<Integer> q = new LinkedList<>();",
+      "key_takeaways": [
+        "Queue follows FIFO principle.",
+        "Insertion at rear.",
+        "Deletion from front.",
+        "Widely used in scheduling systems.",
+        "Supports efficient processing."
+      ]
+    },
+    {
+      "id": 27,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Queue",
+      "difficulty": "Medium",
+      "title": "Queue Implementation Using Array",
+      "question": "How can a Queue be implemented using Arrays? Explain implementation details and complexity analysis.",
+      "answer": "Queue implementation using arrays uses two pointers:\n\nFront.\nRear.\n\nInsertion occurs at Rear.\nDeletion occurs at Front.\n\nOperations:\n\nEnqueue.\nDequeue.\nPeek.\n\nChallenges:\n\nFixed size.\nFalse overflow issue.\nMemory wastage.\n\nComplexities:\n\nEnqueue: O(1)\nDequeue: O(1)",
+      "explanation": "Example:\n\nFront = 0\nRear = 2\n\n[10, 20, 30]\n\nDequeue removes 10.\n\nFront becomes 1.",
+      "code_example": "int front = 0;\nint rear = -1;",
+      "key_takeaways": [
+        "Uses front and rear pointers.",
+        "Supports FIFO processing.",
+        "May suffer from false overflow.",
+        "Simple implementation.",
+        "Limited by fixed size."
+      ]
+    },
+    {
+      "id": 28,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Queue",
+      "difficulty": "Hard",
+      "title": "Circular Queue",
+      "question": "What is a Circular Queue? Explain its structure, advantages, implementation, and applications.",
+      "answer": "A Circular Queue is an advanced version of a queue where the last position is connected back to the first position. This circular arrangement allows efficient reuse of vacant spaces created after deletions.\n\nCircular Queues solve the false overflow problem encountered in simple array-based queues.\n\nApplications:\n\nCPU Scheduling.\nMemory Buffers.\nStreaming Systems.\nNetwork Routers.\nMultimedia Applications.\n\nComplexities:\n\nEnqueue: O(1)\nDequeue: O(1)",
+      "explanation": "Example:\n\nSize = 5\n\nAfter several dequeue operations, unused positions at the beginning can be reused by wrapping around.\n\nThis makes memory utilization significantly better.",
+      "code_example": "rear = (rear + 1) % size;",
+      "key_takeaways": [
+        "Circular Queue reuses memory efficiently.",
+        "Solves false overflow.",
+        "Maintains FIFO order.",
+        "Used in scheduling systems.",
+        "Efficient implementation."
+      ]
+    },
+    {
+      "id": 29,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Queue",
+      "difficulty": "Hard",
+      "title": "Deque (Double Ended Queue)",
+      "question": "What is a Deque? Explain its operations, advantages, disadvantages, and applications.",
+      "answer": "A Deque (Double Ended Queue) is a data structure that allows insertion and deletion from both ends.\n\nOperations:\n\nInsert Front.\nInsert Rear.\nDelete Front.\nDelete Rear.\n\nTypes:\n\nInput Restricted Deque.\nOutput Restricted Deque.\n\nApplications:\n\nSliding Window Problems.\nBrowser History.\nTask Scheduling.\nPalindrome Checking.\nCaching Systems.",
+      "explanation": "Example:\n\nInsert Front 10\nInsert Rear 20\n\nDeque:\n\n10 20\n\nDelete Rear removes 20.\nDelete Front removes 10.",
+      "code_example": "Deque<Integer> dq = new ArrayDeque<>();",
+      "key_takeaways": [
+        "Insertion at both ends.",
+        "Deletion at both ends.",
+        "Highly flexible structure.",
+        "Useful in advanced algorithms.",
+        "Common interview topic."
+      ]
+    },
+    {
+      "id": 30,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Queue",
+      "difficulty": "Hard",
+      "title": "Priority Queue",
+      "question": "What is a Priority Queue? Explain its working, implementation methods, complexity analysis, and applications.",
+      "answer": "A Priority Queue is a special type of queue in which each element is assigned a priority. Elements with higher priority are processed before elements with lower priority regardless of insertion order.\n\nUnlike standard queues, FIFO ordering is not always followed.\n\nImplementation Methods:\n\nArray.\nLinked List.\nBinary Heap.\nFibonacci Heap.\n\nComplexities using Binary Heap:\n\nInsertion: O(log n)\nDeletion: O(log n)\nPeek: O(1)\n\nApplications:\n\nCPU Scheduling.\nDijkstra's Algorithm.\nA* Search Algorithm.\nEvent Simulation.\nNetwork Routing.\nOperating Systems.",
+      "explanation": "Example:\n\nTasks:\n\nTask A Priority 3\nTask B Priority 1\nTask C Priority 5\n\nProcessing Order:\n\nTask C\nTask A\nTask B\n\nHighest priority executes first.",
+      "code_example": "PriorityQueue<Integer> pq = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Priority determines execution order.",
+        "Often implemented using heaps.",
+        "Important in graph algorithms.",
+        "Used in scheduling systems.",
+        "Insertion and deletion O(log n)."
+      ]
+    },
+    {
+      "id": 31,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree",
+      "difficulty": "Medium",
+      "title": "Introduction to Trees",
+      "question": "What is a Tree Data Structure? Explain its terminology, properties, advantages, disadvantages, and real-world applications.",
+      "answer": "A Tree is a hierarchical non-linear data structure consisting of nodes connected by edges. Unlike linear data structures such as arrays, stacks, queues, and linked lists, trees organize data in a parent-child relationship. Trees are one of the most important data structures in computer science because they efficiently represent hierarchical information.\n\nA tree consists of a Root Node at the top and multiple child nodes beneath it. Every node may have zero or more child nodes. Nodes without children are called Leaf Nodes.\n\nImportant Terminologies:\n\nRoot Node.\nParent Node.\nChild Node.\nSibling Nodes.\nLeaf Node.\nInternal Node.\nDepth.\nHeight.\nLevel.\nSubtree.\n\nAdvantages:\n\nHierarchical organization.\nEfficient searching.\nEfficient insertion and deletion.\nScalability.\n\nDisadvantages:\n\nImplementation complexity.\nMemory overhead due to pointers.\n\nTrees are used extensively in file systems, databases, operating systems, compilers, AI systems, networking, and search engines.",
+      "explanation": "Consider a company organizational structure.\n\nCEO\n├── Manager A\n│   ├── Employee 1\n│   └── Employee 2\n└── Manager B\n    ├── Employee 3\n    └── Employee 4\n\nThis hierarchy naturally forms a tree.\n\nSimilarly, computer systems often store and process hierarchical information using trees.",
+      "code_example": "class TreeNode {\n   int data;\n   TreeNode left;\n   TreeNode right;\n}",
+      "key_takeaways": [
+        "Trees are hierarchical data structures.",
+        "Root node is the top-most node.",
+        "Leaf nodes have no children.",
+        "Used in many real-world systems.",
+        "Foundation for advanced structures like BST and Heap."
+      ]
+    },
+    {
+      "id": 32,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree",
+      "difficulty": "Medium",
+      "title": "Binary Tree",
+      "question": "What is a Binary Tree? Explain its structure, properties, types, advantages, and applications.",
+      "answer": "A Binary Tree is a tree data structure in which each node can have at most two children, commonly referred to as the Left Child and Right Child. Binary Trees are among the most widely used tree structures because of their simplicity and efficiency.\n\nProperties:\n\nMaximum two children per node.\nHierarchical organization.\nRecursive structure.\n\nTypes of Binary Trees:\n\nFull Binary Tree.\nComplete Binary Tree.\nPerfect Binary Tree.\nBalanced Binary Tree.\nDegenerate Binary Tree.\n\nApplications:\n\nExpression Trees.\nBinary Search Trees.\nHeaps.\nDecision Trees.\nSyntax Parsing.\n\nBinary Trees form the foundation for many advanced data structures and algorithms.",
+      "explanation": "Example:\n\n        10\n       /  \\\n      5    20\n     / \\   / \\\n    3  7 15 25\n\nEach node has at most two children.\n\nThis structure allows efficient traversal and searching techniques.",
+      "code_example": "TreeNode root = new TreeNode(10);",
+      "key_takeaways": [
+        "Binary Trees allow at most two children.",
+        "Widely used in computer science.",
+        "Foundation of BST and Heaps.",
+        "Support efficient traversals.",
+        "Represent hierarchical data."
+      ]
+    },
+    {
+      "id": 33,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree Traversal",
+      "difficulty": "Medium",
+      "title": "Depth First Traversal (DFS)",
+      "question": "What is Depth First Search (DFS) Traversal in Trees? Explain its types, working mechanism, and complexity analysis.",
+      "answer": "Depth First Search (DFS) is a tree traversal technique that explores a branch completely before moving to another branch. DFS is one of the most fundamental traversal methods in tree and graph algorithms.\n\nTypes of DFS Traversals:\n\nPreorder Traversal.\nInorder Traversal.\nPostorder Traversal.\n\nDFS can be implemented using recursion or stacks.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)\n\nwhere h represents tree height.\n\nDFS is used extensively in compilers, expression evaluation, graph processing, path finding, and tree manipulation algorithms.",
+      "explanation": "Suppose:\n\n       A\n      / \\\n     B   C\n    / \\\n   D   E\n\nDFS explores deep branches before moving sideways.\n\nTraversal depends on traversal type.",
+      "code_example": "void dfs(Node root){\n if(root==null) return;\n}",
+      "key_takeaways": [
+        "DFS explores depth before breadth.",
+        "Implemented recursively or using stack.",
+        "Visits every node once.",
+        "Complexity O(n).",
+        "Important tree traversal technique."
+      ]
+    },
+    {
+      "id": 34,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree Traversal",
+      "difficulty": "Medium",
+      "title": "Preorder Traversal",
+      "question": "What is Preorder Traversal? Explain its algorithm, working process, complexity analysis, and applications.",
+      "answer": "Preorder Traversal is a Depth First Traversal technique where the Root Node is processed first, followed by the Left Subtree and then the Right Subtree.\n\nTraversal Order:\n\nRoot → Left → Right\n\nPreorder traversal is commonly used for tree copying, serialization, expression trees, and hierarchy representation.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)",
+      "explanation": "Example Tree:\n\n       1\n      / \\\n     2   3\n    / \\\n   4   5\n\nPreorder:\n\n1 → 2 → 4 → 5 → 3\n\nRoot is always visited first.",
+      "code_example": "preorder(root.left);\npreorder(root.right);",
+      "key_takeaways": [
+        "Order: Root Left Right.",
+        "Root processed first.",
+        "Complexity O(n).",
+        "Used in tree serialization.",
+        "Important DFS traversal."
+      ]
+    },
+    {
+      "id": 35,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree Traversal",
+      "difficulty": "Medium",
+      "title": "Inorder Traversal",
+      "question": "What is Inorder Traversal? Explain its algorithm, complexity, and importance in Binary Search Trees.",
+      "answer": "Inorder Traversal is a DFS traversal technique where the Left Subtree is visited first, followed by the Root Node, and then the Right Subtree.\n\nTraversal Order:\n\nLeft → Root → Right\n\nOne of the most important properties of Inorder Traversal is that when applied to a Binary Search Tree (BST), it produces elements in sorted order.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)",
+      "explanation": "Example:\n\n       4\n      / \\\n     2   6\n    / \\ / \\\n   1 3 5 7\n\nInorder Output:\n\n1 2 3 4 5 6 7\n\nNotice that values appear in sorted order.",
+      "code_example": "inorder(root.left);\nvisit(root);\ninorder(root.right);",
+      "key_takeaways": [
+        "Order: Left Root Right.",
+        "Produces sorted output in BST.",
+        "Widely used in BST operations.",
+        "Complexity O(n).",
+        "Most important tree traversal."
+      ]
+    },
+    {
+      "id": 36,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree Traversal",
+      "difficulty": "Medium",
+      "title": "Postorder Traversal",
+      "question": "What is Postorder Traversal? Explain its algorithm, complexity analysis, and applications.",
+      "answer": "Postorder Traversal is a DFS traversal technique where the Left Subtree is processed first, followed by the Right Subtree, and finally the Root Node.\n\nTraversal Order:\n\nLeft → Right → Root\n\nPostorder traversal is useful for deleting trees, evaluating expression trees, dependency resolution, and bottom-up processing.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)",
+      "explanation": "Example:\n\n       1\n      / \\\n     2   3\n    / \\\n   4   5\n\nPostorder:\n\n4 → 5 → 2 → 3 → 1\n\nRoot is processed last.",
+      "code_example": "postorder(root.left);\npostorder(root.right);\nvisit(root);",
+      "key_takeaways": [
+        "Order: Left Right Root.",
+        "Root processed last.",
+        "Used for tree deletion.",
+        "Useful in expression evaluation.",
+        "Complexity O(n)."
+      ]
+    },
+    {
+      "id": 37,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree Traversal",
+      "difficulty": "Hard",
+      "title": "Level Order Traversal",
+      "question": "What is Level Order Traversal? Explain its algorithm, implementation using Queue, complexity analysis, and applications.",
+      "answer": "Level Order Traversal, also known as Breadth First Traversal (BFS), visits nodes level by level from top to bottom and left to right.\n\nUnlike DFS, BFS explores all nodes at the current level before moving to the next level.\n\nImplementation:\n\nUses a Queue.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(n)\n\nApplications:\n\nShortest Path Problems.\nTree Serialization.\nNetwork Routing.\nSocial Network Analysis.\nAI Search Algorithms.",
+      "explanation": "Example:\n\n       1\n      / \\\n     2   3\n    / \\ / \\\n   4 5 6 7\n\nLevel Order Output:\n\n1\n2 3\n4 5 6 7\n\nTraversal:\n1 → 2 → 3 → 4 → 5 → 6 → 7",
+      "code_example": "Queue<Node> q = new LinkedList<>();",
+      "key_takeaways": [
+        "Uses Queue.",
+        "Traverses level by level.",
+        "Also called BFS.",
+        "Complexity O(n).",
+        "Useful in shortest path problems."
+      ]
+    },
+    {
+      "id": 38,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Binary Search Tree",
+      "difficulty": "Hard",
+      "title": "Introduction to Binary Search Tree (BST)",
+      "question": "What is a Binary Search Tree (BST)? Explain its properties, operations, advantages, disadvantages, and applications.",
+      "answer": "A Binary Search Tree (BST) is a special type of Binary Tree that maintains an ordering property.\n\nFor every node:\n\nAll values in the left subtree are smaller.\nAll values in the right subtree are larger.\n\nThis property allows efficient searching, insertion, and deletion operations.\n\nComplexities (Balanced BST):\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nWorst Case:\nO(n)\n\nApplications:\n\nDatabase Indexing.\nFile Systems.\nDictionary Implementations.\nAutocomplete Systems.\nSearch Engines.",
+      "explanation": "Example:\n\n       50\n      /  \\\n    30    70\n   / \\   / \\\n 20 40 60 80\n\nSearch 60:\n\n60 > 50 → Go Right\n60 < 70 → Go Left\nFound.",
+      "code_example": "if(key < root.data)\n root.left = insert(root.left,key);",
+      "key_takeaways": [
+        "BST maintains ordering property.",
+        "Efficient searching.",
+        "Complexity O(log n) when balanced.",
+        "Widely used in indexing systems.",
+        "Foundation for AVL and Red-Black Trees."
+      ]
+    },
+    {
+      "id": 39,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Binary Search Tree",
+      "difficulty": "Hard",
+      "title": "Insertion in Binary Search Tree",
+      "question": "How is insertion performed in a Binary Search Tree? Explain the algorithm and complexity analysis.",
+      "answer": "Insertion in a BST follows the BST property.\n\nSteps:\n\nStart from root.\nCompare value.\nMove left if smaller.\nMove right if larger.\nInsert when NULL position is reached.\n\nComplexities:\n\nBalanced Tree: O(log n)\nSkewed Tree: O(n)\n\nProper insertion maintains BST ordering properties.",
+      "explanation": "Insert 65:\n\n       50\n      /  \\\n    30    70\n          /\n         60\n\n65 > 50\n65 < 70\n65 > 60\n\nInsert right of 60.",
+      "code_example": "root = insert(root,65);",
+      "key_takeaways": [
+        "Insertion follows BST rules.",
+        "Recursive or iterative approach possible.",
+        "Balanced trees provide O(log n).",
+        "Skewed trees degrade performance.",
+        "Maintains sorted structure."
+      ]
+    },
+    {
+      "id": 40,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Binary Search Tree",
+      "difficulty": "Hard",
+      "title": "Deletion in Binary Search Tree",
+      "question": "How is deletion performed in a Binary Search Tree? Explain all deletion cases and complexity analysis.",
+      "answer": "Deletion in a BST is more complex than insertion because BST properties must be preserved.\n\nThree Cases:\n\nCase 1:\nNode is a Leaf.\nSimply remove it.\n\nCase 2:\nNode has One Child.\nReplace node with child.\n\nCase 3:\nNode has Two Children.\nReplace node with Inorder Successor or Inorder Predecessor.\nDelete replacement node.\n\nComplexities:\n\nBalanced BST: O(log n)\nWorst Case: O(n)\n\nDeletion is one of the most important BST interview topics.",
+      "explanation": "Delete 50:\n\n       50\n      /  \\\n    30    70\n   / \\   / \\\n 20 40 60 80\n\nInorder Successor = 60\n\nReplace 50 with 60.\n\nDelete original 60 node.",
+      "code_example": "root = deleteNode(root,key);",
+      "key_takeaways": [
+        "Three deletion cases exist.",
+        "Most complex BST operation.",
+        "Uses successor or predecessor.",
+        "Maintains BST property.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 41,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Balanced Trees",
+      "difficulty": "Hard",
+      "title": "AVL Tree",
+      "question": "What is an AVL Tree? Explain its structure, balancing mechanism, rotations, complexity analysis, advantages, disadvantages, and practical applications.",
+      "answer": "An AVL Tree is a self-balancing Binary Search Tree (BST) invented by Adelson-Velsky and Landis. In an AVL Tree, the height difference between the left and right subtrees of any node, known as the Balance Factor, cannot exceed 1.\n\nBalance Factor = Height(Left Subtree) - Height(Right Subtree)\n\nPossible Balance Factors:\n\n-1\n0\n+1\n\nIf an insertion or deletion causes imbalance, AVL Trees perform rotations to restore balance.\n\nTypes of Rotations:\n\nLL Rotation (Single Right Rotation)\nRR Rotation (Single Left Rotation)\nLR Rotation (Left Right Rotation)\nRL Rotation (Right Left Rotation)\n\nComplexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nAdvantages:\n\nGuaranteed balanced structure.\nFast searching.\nEfficient updates.\n\nDisadvantages:\n\nComplex implementation.\nAdditional balancing overhead.\n\nAVL Trees are used in databases, indexing systems, memory management systems, and applications requiring frequent searching.",
+      "explanation": "Suppose a BST receives values:\n\n10\n20\n30\n\nTree becomes:\n\n10\n  \\\n   20\n     \\\n      30\n\nThis tree becomes unbalanced.\n\nPerform RR Rotation:\n\n     20\n    /  \\\n   10  30\n\nBalance is restored.",
+      "code_example": "balanceFactor = height(left) - height(right);",
+      "key_takeaways": [
+        "AVL Tree is a self-balancing BST.",
+        "Balance Factor must remain between -1 and 1.",
+        "Uses rotations to maintain balance.",
+        "Search operations remain O(log n).",
+        "Important advanced tree structure."
+      ]
+    },
+    {
+      "id": 42,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Balanced Trees",
+      "difficulty": "Hard",
+      "title": "Red-Black Tree",
+      "question": "What is a Red-Black Tree? Explain its properties, balancing rules, complexity analysis, advantages, and applications.",
+      "answer": "A Red-Black Tree is a self-balancing Binary Search Tree that uses node colors (Red and Black) to maintain balance. Unlike AVL Trees, Red-Black Trees maintain approximate balance rather than strict balance, making insertions and deletions more efficient in practice.\n\nProperties:\n\nEvery node is either Red or Black.\nRoot is always Black.\nRed nodes cannot have Red children.\nEvery path from root to leaf contains the same number of Black nodes.\nNULL leaves are considered Black.\n\nComplexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nAdvantages:\n\nEfficient updates.\nGood practical performance.\nUsed extensively in system libraries.\n\nApplications:\n\nJava TreeMap.\nC++ STL Map.\nLinux Kernel.\nDatabase indexing.",
+      "explanation": "Unlike AVL Trees, Red-Black Trees tolerate slight imbalance.\n\nThis reduces the number of rotations required.\n\nAs a result, insertion and deletion operations are often faster in real-world systems.",
+      "code_example": "enum Color { RED, BLACK };",
+      "key_takeaways": [
+        "Red-Black Tree is self-balancing.",
+        "Uses node colors.",
+        "Guarantees O(log n) operations.",
+        "Used in many standard libraries.",
+        "Balances efficiently with fewer rotations."
+      ]
+    },
+    {
+      "id": 43,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Heap",
+      "difficulty": "Medium",
+      "title": "Introduction to Heap",
+      "question": "What is a Heap Data Structure? Explain its properties, types, operations, advantages, and applications.",
+      "answer": "A Heap is a specialized tree-based data structure that satisfies the Heap Property. It is commonly implemented as a Complete Binary Tree.\n\nTypes:\n\nMax Heap.\nMin Heap.\n\nMax Heap Property:\nParent node is greater than or equal to children.\n\nMin Heap Property:\nParent node is smaller than or equal to children.\n\nOperations:\n\nInsertion.\nDeletion.\nExtract Max/Min.\nHeapify.\n\nComplexities:\n\nInsertion: O(log n)\nDeletion: O(log n)\nPeek: O(1)\n\nHeaps are extensively used in Priority Queues, scheduling systems, graph algorithms, and operating systems.",
+      "explanation": "Max Heap Example:\n\n        50\n       /  \\\n      30   40\n     / \\   /\n    10 20 35\n\nParent nodes are always larger than children.",
+      "code_example": "PriorityQueue<Integer> heap = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Heap is a complete binary tree.",
+        "Supports efficient priority operations.",
+        "Insertion and deletion are O(log n).",
+        "Foundation of Priority Queues.",
+        "Widely used in algorithms."
+      ]
+    },
+    {
+      "id": 44,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Heap",
+      "difficulty": "Hard",
+      "title": "Heap Operations",
+      "question": "Explain Heap Insertion, Deletion, Heapify, and Extract Operations with complexity analysis.",
+      "answer": "Heap operations maintain the Heap Property after modifications.\n\nInsertion:\nInsert at last position.\nPerform Heapify Up.\n\nDeletion:\nReplace root with last node.\nPerform Heapify Down.\n\nExtract Max/Min:\nRemove root.\nRestore heap property.\n\nHeapify:\nRearranges nodes to satisfy heap conditions.\n\nComplexities:\n\nInsertion: O(log n)\nDeletion: O(log n)\nExtract: O(log n)\nHeapify: O(log n)\n\nThese operations make heaps highly efficient for priority-based processing.",
+      "explanation": "Insert 60 into Max Heap:\n\nPlace at end.\n\nCompare with parent.\n\nSwap upward until Heap Property is restored.",
+      "code_example": "heap.offer(60);",
+      "key_takeaways": [
+        "Heap operations preserve heap property.",
+        "Heapify is fundamental.",
+        "Operations are O(log n).",
+        "Efficient for priority management.",
+        "Used heavily in scheduling systems."
+      ]
+    },
+    {
+      "id": 45,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Heap",
+      "difficulty": "Hard",
+      "title": "Heap Sort",
+      "question": "What is Heap Sort? Explain its algorithm, complexity analysis, advantages, disadvantages, and practical significance.",
+      "answer": "Heap Sort is a comparison-based sorting algorithm that uses a Heap Data Structure. It first builds a Max Heap and repeatedly extracts the maximum element, placing it in its correct sorted position.\n\nAlgorithm Steps:\n\nBuild Max Heap.\nSwap root with last element.\nReduce heap size.\nHeapify root.\nRepeat until sorted.\n\nComplexities:\n\nBest Case: O(n log n)\nAverage Case: O(n log n)\nWorst Case: O(n log n)\n\nSpace Complexity:\nO(1)\n\nHeap Sort is notable because it guarantees O(n log n) performance while requiring no additional memory.",
+      "explanation": "Array:\n\n[4, 10, 3, 5, 1]\n\nBuild Max Heap.\n\nRepeatedly move largest element to end.\n\nFinal Sorted Array:\n\n[1, 3, 4, 5, 10]",
+      "code_example": "heapSort(arr);",
+      "key_takeaways": [
+        "Uses Heap Data Structure.",
+        "Guaranteed O(n log n).",
+        "In-place sorting algorithm.",
+        "No additional memory required.",
+        "Important sorting technique."
+      ]
+    },
+    {
+      "id": 46,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Hashing",
+      "difficulty": "Medium",
+      "title": "Introduction to Hashing",
+      "question": "What is Hashing? Explain hash functions, hash tables, collision handling, complexity analysis, and applications.",
+      "answer": "Hashing is a technique used to store and retrieve data efficiently by mapping keys to memory locations using a Hash Function. The resulting structure is called a Hash Table.\n\nHash Function:\nConverts a key into an index.\n\nAdvantages:\n\nVery fast lookup.\nEfficient insertion.\nEfficient deletion.\n\nAverage Complexities:\n\nSearch: O(1)\nInsertion: O(1)\nDeletion: O(1)\n\nApplications:\n\nDatabases.\nCaching Systems.\nCompilers.\nPassword Storage.\nSearch Engines.\nDistributed Systems.\n\nHashing is one of the most powerful techniques in computer science for achieving near-constant-time performance.",
+      "explanation": "Suppose:\n\nKey = 123\n\nHash Function:\n123 % 10 = 3\n\nStore value at index 3.\n\nFuture lookups directly access index 3 without searching.",
+      "code_example": "HashMap<Integer, String> map = new HashMap<>();",
+      "key_takeaways": [
+        "Hashing provides fast access.",
+        "Uses hash functions.",
+        "Average complexity O(1).",
+        "Widely used in real-world systems.",
+        "Foundation of hash tables."
+      ]
+    },
+    {
+      "id": 47,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Hashing",
+      "difficulty": "Hard",
+      "title": "Collision Handling Techniques",
+      "question": "What are Hash Collisions? Explain collision handling techniques such as Chaining and Open Addressing.",
+      "answer": "A Collision occurs when two different keys produce the same hash value and attempt to occupy the same location in a hash table.\n\nSince collisions are unavoidable in practical systems, special handling techniques are required.\n\nMethods:\n\nSeparate Chaining.\nLinear Probing.\nQuadratic Probing.\nDouble Hashing.\n\nChaining stores multiple elements in linked lists.\n\nOpen Addressing searches for alternative empty slots.\n\nEfficient collision handling is critical for maintaining hash table performance.",
+      "explanation": "Example:\n\nHash Function:\nKey % 10\n\nKeys:\n15 → 5\n25 → 5\n\nCollision occurs.\n\nChaining:\n\nIndex 5:\n15 → 25",
+      "code_example": "LinkedList<Integer>[] table;",
+      "key_takeaways": [
+        "Collisions are unavoidable.",
+        "Chaining uses linked lists.",
+        "Open addressing finds alternate slots.",
+        "Collision handling impacts performance.",
+        "Important hashing concept."
+      ]
+    },
+    {
+      "id": 48,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph",
+      "difficulty": "Medium",
+      "title": "Introduction to Graphs",
+      "question": "What is a Graph? Explain graph terminology, types, representations, advantages, and applications.",
+      "answer": "A Graph is a non-linear data structure consisting of Vertices (Nodes) and Edges connecting those vertices. Graphs are used to represent relationships between entities.\n\nTerminology:\n\nVertex.\nEdge.\nDegree.\nPath.\nCycle.\nConnected Component.\n\nTypes:\n\nDirected Graph.\nUndirected Graph.\nWeighted Graph.\nUnweighted Graph.\nCyclic Graph.\nAcyclic Graph.\n\nRepresentations:\n\nAdjacency Matrix.\nAdjacency List.\n\nApplications:\n\nSocial Networks.\nNavigation Systems.\nComputer Networks.\nRecommendation Systems.\nSearch Engines.\nDependency Analysis.",
+      "explanation": "Example:\n\nA -- B\n|    |\nC -- D\n\nEach letter is a vertex.\n\nConnections represent edges.",
+      "code_example": "ArrayList<ArrayList<Integer>> graph;",
+      "key_takeaways": [
+        "Graphs model relationships.",
+        "Consist of vertices and edges.",
+        "Can be directed or undirected.",
+        "Widely used in modern systems.",
+        "Foundation of many advanced algorithms."
+      ]
+    },
+    {
+      "id": 49,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Traversal",
+      "difficulty": "Hard",
+      "title": "Breadth First Search (BFS)",
+      "question": "What is Breadth First Search (BFS)? Explain its algorithm, implementation, complexity analysis, and applications.",
+      "answer": "Breadth First Search (BFS) is a graph traversal algorithm that explores nodes level by level. It uses a Queue to ensure that nodes are processed in the order they are discovered.\n\nAlgorithm:\n\nVisit source node.\nAdd source to queue.\nProcess queue until empty.\nVisit all adjacent unvisited nodes.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nShortest Path in Unweighted Graphs.\nSocial Networks.\nWeb Crawlers.\nGPS Navigation.\nNetwork Broadcasting.",
+      "explanation": "Graph:\n\nA → B → D\n|\nC\n\nBFS Starting at A:\n\nA → B → C → D\n\nNodes are processed level by level.",
+      "code_example": "Queue<Integer> q = new LinkedList<>();",
+      "key_takeaways": [
+        "BFS uses a queue.",
+        "Traverses level by level.",
+        "Complexity O(V + E).",
+        "Useful for shortest paths.",
+        "Fundamental graph algorithm."
+      ]
+    },
+    {
+      "id": 50,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Traversal",
+      "difficulty": "Hard",
+      "title": "Depth First Search (DFS) in Graphs",
+      "question": "What is Depth First Search (DFS) in Graphs? Explain its algorithm, implementation, complexity analysis, and applications.",
+      "answer": "Depth First Search (DFS) is a graph traversal algorithm that explores as far as possible along a branch before backtracking. DFS can be implemented using recursion or an explicit stack.\n\nAlgorithm:\n\nVisit node.\nMark as visited.\nRecursively visit adjacent nodes.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nCycle Detection.\nTopological Sorting.\nConnected Components.\nMaze Solving.\nPath Finding.\nStrongly Connected Components.\n\nDFS is one of the most important graph algorithms and forms the basis of many advanced graph techniques.",
+      "explanation": "Graph:\n\nA → B → D\n|\nC\n\nDFS Starting at A:\n\nA → B → D → C\n\nIt explores depth first before backtracking.",
+      "code_example": "dfs(node){\n visited[node]=true;\n}",
+      "key_takeaways": [
+        "DFS explores depth before breadth.",
+        "Uses recursion or stack.",
+        "Complexity O(V + E).",
+        "Used in many advanced graph algorithms.",
+        "Fundamental interview topic."
+      ]
+    },
+    {
+      "id": 51,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Dijkstra's Algorithm",
+      "question": "What is Dijkstra's Algorithm? Explain its working, algorithm steps, complexity analysis, advantages, limitations, and real-world applications.",
+      "answer": "Dijkstra's Algorithm is one of the most important shortest-path algorithms in computer science. It is used to find the shortest path from a source vertex to all other vertices in a weighted graph where all edge weights are non-negative.\n\nThe algorithm follows a greedy approach. At every step, it selects the vertex with the smallest known distance from the source and updates the distances of its neighboring vertices.\n\nAlgorithm Steps:\n\n1. Initialize distance of source vertex as 0.\n2. Initialize all other vertices with infinity.\n3. Insert source into a Priority Queue.\n4. Extract vertex with minimum distance.\n5. Relax all neighboring edges.\n6. Update distances if a shorter path is found.\n7. Repeat until Priority Queue becomes empty.\n\nComplexities:\n\nUsing Priority Queue:\nTime Complexity: O((V + E) log V)\n\nUsing Array:\nTime Complexity: O(V²)\n\nSpace Complexity: O(V)\n\nAdvantages:\n\nEfficient for non-negative weighted graphs.\nGuaranteed shortest paths.\nWidely used in routing systems.\n\nLimitations:\n\nCannot handle negative edge weights.\n\nApplications:\n\nGPS Navigation.\nGoogle Maps.\nNetwork Routing.\nFlight Systems.\nInternet Packet Routing.",
+      "explanation": "Suppose:\n\nA → B = 4\nA → C = 2\nC → B = 1\n\nInitially:\n\nDistance(A)=0\nDistance(B)=∞\nDistance(C)=∞\n\nAfter processing:\n\nDistance(C)=2\nDistance(B)=3\n\nShortest Path:\n\nA → C → B\n\nTotal Cost = 3",
+      "code_example": "PriorityQueue<Pair> pq = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Finds shortest paths.",
+        "Uses greedy approach.",
+        "Requires non-negative weights.",
+        "Uses priority queue efficiently.",
+        "Widely used in navigation systems."
+      ]
+    },
+    {
+      "id": 52,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Bellman-Ford Algorithm",
+      "question": "What is Bellman-Ford Algorithm? Explain its working, complexity analysis, advantages, limitations, and differences from Dijkstra's Algorithm.",
+      "answer": "Bellman-Ford Algorithm is a shortest path algorithm capable of handling graphs containing negative edge weights. Unlike Dijkstra's Algorithm, Bellman-Ford repeatedly relaxes all edges to compute shortest paths.\n\nAlgorithm Steps:\n\n1. Initialize source distance as 0.\n2. Initialize remaining vertices with infinity.\n3. Relax all edges V-1 times.\n4. Perform one extra iteration.\n5. If any distance updates occur, a negative cycle exists.\n\nComplexities:\n\nTime Complexity: O(VE)\nSpace Complexity: O(V)\n\nAdvantages:\n\nHandles negative weights.\nDetects negative cycles.\n\nDisadvantages:\n\nSlower than Dijkstra.\n\nApplications:\n\nCurrency Exchange Systems.\nNetwork Routing.\nFinancial Systems.\nDistributed Computing.",
+      "explanation": "Consider:\n\nA → B = 4\nB → C = -2\nA → C = 5\n\nBellman-Ford can correctly identify:\n\nA → B → C = 2\n\nWhich is shorter than direct path cost 5.",
+      "code_example": "for(int i=1;i<V;i++){\n  relaxEdges();\n}",
+      "key_takeaways": [
+        "Supports negative edge weights.",
+        "Detects negative cycles.",
+        "Complexity O(VE).",
+        "More flexible than Dijkstra.",
+        "Important shortest path algorithm."
+      ]
+    },
+    {
+      "id": 53,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Floyd-Warshall Algorithm",
+      "question": "What is Floyd-Warshall Algorithm? Explain its working, complexity analysis, applications, and advantages.",
+      "answer": "Floyd-Warshall Algorithm is an All-Pairs Shortest Path algorithm that computes the shortest path between every pair of vertices in a weighted graph. It uses Dynamic Programming to progressively improve shortest path estimates.\n\nThe algorithm considers each vertex as an intermediate node and checks whether passing through that vertex results in a shorter path.\n\nComplexities:\n\nTime Complexity: O(V³)\nSpace Complexity: O(V²)\n\nAdvantages:\n\nSimple implementation.\nComputes all-pairs shortest paths.\nHandles negative weights.\n\nLimitations:\n\nCannot handle negative cycles.\nHigh computational cost.\n\nApplications:\n\nNetwork Analysis.\nTransportation Systems.\nRouting Optimization.\nSocial Network Analysis.",
+      "explanation": "Instead of solving shortest path from one source, Floyd-Warshall computes shortest paths between every pair simultaneously.\n\nFor a graph with 100 cities, it calculates shortest routes between all city pairs.",
+      "code_example": "dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);",
+      "key_takeaways": [
+        "Computes all-pairs shortest paths.",
+        "Uses dynamic programming.",
+        "Complexity O(V³).",
+        "Handles negative weights.",
+        "Widely used in network analysis."
+      ]
+    },
+    {
+      "id": 54,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Minimum Spanning Tree (MST)",
+      "question": "What is a Minimum Spanning Tree? Explain its properties, significance, and practical applications.",
+      "answer": "A Minimum Spanning Tree (MST) is a subset of edges in a connected weighted graph that connects all vertices without forming cycles while minimizing the total edge weight.\n\nProperties:\n\nContains all vertices.\nContains exactly V-1 edges.\nContains no cycles.\nHas minimum possible total weight.\n\nImportance:\n\nReduces infrastructure cost.\nOptimizes network connections.\nImproves resource utilization.\n\nApplications:\n\nTelecommunication Networks.\nRoad Construction.\nElectrical Grids.\nComputer Networks.\nPipeline Systems.\nCluster Analysis.\n\nMST forms the foundation of many optimization problems in computer science.",
+      "explanation": "Suppose five cities must be connected.\n\nConnecting every city directly would be expensive.\n\nMST identifies the cheapest set of roads that connects all cities while avoiding unnecessary cycles.",
+      "code_example": "MST Weight = Sum of Selected Edges",
+      "key_takeaways": [
+        "Connects all vertices with minimum cost.",
+        "Contains no cycles.",
+        "Uses V-1 edges.",
+        "Important optimization problem.",
+        "Used in network design."
+      ]
+    },
+    {
+      "id": 55,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Kruskal's Algorithm",
+      "question": "What is Kruskal's Algorithm? Explain its working, complexity analysis, and role in Minimum Spanning Trees.",
+      "answer": "Kruskal's Algorithm is a greedy algorithm used to find the Minimum Spanning Tree of a weighted graph. It works by selecting edges in increasing order of weight while ensuring that no cycles are formed.\n\nAlgorithm Steps:\n\n1. Sort all edges by weight.\n2. Select smallest edge.\n3. Check if adding edge forms a cycle.\n4. If no cycle, include edge.\n5. Repeat until MST contains V-1 edges.\n\nCycle detection is typically performed using the Disjoint Set Union (Union-Find) data structure.\n\nComplexities:\n\nTime Complexity: O(E log E)\nSpace Complexity: O(V)\n\nApplications:\n\nNetwork Design.\nTransportation Planning.\nInfrastructure Optimization.",
+      "explanation": "Example:\n\nEdges:\nA-B = 1\nB-C = 2\nA-C = 5\n\nChoose:\nA-B\nB-C\n\nIgnore A-C because it creates a cycle.",
+      "code_example": "Collections.sort(edges);",
+      "key_takeaways": [
+        "Greedy MST algorithm.",
+        "Sorts edges by weight.",
+        "Uses Union-Find.",
+        "Complexity O(E log E).",
+        "Popular interview topic."
+      ]
+    },
+    {
+      "id": 56,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Prim's Algorithm",
+      "question": "What is Prim's Algorithm? Explain its working, complexity analysis, and comparison with Kruskal's Algorithm.",
+      "answer": "Prim's Algorithm is a greedy algorithm used to construct a Minimum Spanning Tree by growing the tree one vertex at a time. It starts from any vertex and repeatedly adds the minimum-weight edge that connects a visited vertex to an unvisited vertex.\n\nAlgorithm Steps:\n\n1. Choose starting vertex.\n2. Mark as visited.\n3. Select smallest edge connecting visited and unvisited vertices.\n4. Add edge and vertex.\n5. Repeat until all vertices are included.\n\nComplexities:\n\nUsing Priority Queue:\nO(E log V)\n\nApplications:\n\nNetwork Infrastructure.\nRoad Systems.\nPower Distribution Networks.\n\nPrim's and Kruskal's algorithms both generate MSTs but use different strategies.",
+      "explanation": "Prim's grows from a vertex.\n\nKruskal's grows from edges.\n\nBoth eventually produce a minimum spanning tree.",
+      "code_example": "PriorityQueue<Edge> pq = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Greedy MST algorithm.",
+        "Grows tree incrementally.",
+        "Uses priority queue.",
+        "Complexity O(E log V).",
+        "Alternative to Kruskal's."
+      ]
+    },
+    {
+      "id": 57,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Disjoint Set",
+      "difficulty": "Hard",
+      "title": "Union-Find (Disjoint Set Union)",
+      "question": "What is the Disjoint Set Union (Union-Find) Data Structure? Explain its operations, optimizations, complexity analysis, and applications.",
+      "answer": "Disjoint Set Union (DSU), also known as Union-Find, is a data structure used to maintain a collection of non-overlapping sets. It efficiently supports set merging and membership queries.\n\nOperations:\n\nMakeSet.\nFind.\nUnion.\n\nOptimizations:\n\nPath Compression.\nUnion by Rank.\nUnion by Size.\n\nComplexities:\n\nNearly O(1) per operation.\nMore precisely O(α(n)), where α is the inverse Ackermann function.\n\nApplications:\n\nKruskal's Algorithm.\nNetwork Connectivity.\nCycle Detection.\nImage Processing.\nSocial Networks.",
+      "explanation": "Suppose:\n\nA and B belong to same group.\n\nC and D belong to another group.\n\nUnion operation merges both groups.\n\nFind operation quickly determines whether two elements belong to the same set.",
+      "code_example": "parent[x] = find(parent[x]);",
+      "key_takeaways": [
+        "Maintains disjoint sets.",
+        "Supports union and find operations.",
+        "Used in Kruskal's algorithm.",
+        "Path compression improves efficiency.",
+        "Nearly constant-time operations."
+      ]
+    },
+    {
+      "id": 58,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Medium",
+      "title": "Introduction to Dynamic Programming",
+      "question": "What is Dynamic Programming? Explain its principles, characteristics, advantages, disadvantages, and problem-solving approach.",
+      "answer": "Dynamic Programming (DP) is an optimization technique used to solve problems by breaking them into overlapping subproblems and storing previously computed results to avoid redundant calculations.\n\nDynamic Programming is based on two key properties:\n\nOverlapping Subproblems.\nOptimal Substructure.\n\nApproaches:\n\nMemoization (Top-Down).\nTabulation (Bottom-Up).\n\nAdvantages:\n\nAvoids repeated computations.\nImproves efficiency dramatically.\n\nDisadvantages:\n\nHigher memory usage.\nCan be difficult to formulate.\n\nDynamic Programming is one of the most important advanced algorithmic paradigms and is heavily tested in interviews.",
+      "explanation": "Consider Fibonacci:\n\nF(5)\n\nRequires F(4) and F(3).\n\nF(4) again requires F(3).\n\nWithout DP, F(3) is computed repeatedly.\n\nDP stores results and reuses them.",
+      "code_example": "dp[n] = dp[n-1] + dp[n-2];",
+      "key_takeaways": [
+        "Solves overlapping subproblems.",
+        "Uses stored results.",
+        "Supports memoization and tabulation.",
+        "Improves efficiency significantly.",
+        "Major interview topic."
+      ]
+    },
+    {
+      "id": 59,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Medium",
+      "title": "Memoization vs Tabulation",
+      "question": "Compare Memoization and Tabulation in Dynamic Programming. Explain their working, advantages, disadvantages, and use cases.",
+      "answer": "Memoization and Tabulation are two approaches for implementing Dynamic Programming.\n\nMemoization:\n\nTop-Down approach.\nUses recursion.\nStores results when needed.\n\nTabulation:\n\nBottom-Up approach.\nUses iteration.\nBuilds solutions progressively.\n\nMemoization Advantages:\n\nEasy to implement.\nNatural recursive formulation.\n\nTabulation Advantages:\n\nAvoids recursion overhead.\nOften more memory efficient.\n\nChoice depends on problem characteristics and implementation requirements.",
+      "explanation": "Fibonacci Example:\n\nMemoization:\nCompute only required states.\n\nTabulation:\nBuild table from F(0) to F(n).\n\nBoth produce same result but use different strategies.",
+      "code_example": "dp[i] = dp[i-1] + dp[i-2];",
+      "key_takeaways": [
+        "Memoization is top-down.",
+        "Tabulation is bottom-up.",
+        "Both avoid redundant computation.",
+        "Memoization uses recursion.",
+        "Tabulation uses iteration."
+      ]
+    },
+    {
+      "id": 60,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "0/1 Knapsack Problem",
+      "question": "What is the 0/1 Knapsack Problem? Explain the problem statement, recursive solution, dynamic programming solution, complexity analysis, and real-world significance.",
+      "answer": "The 0/1 Knapsack Problem is one of the most famous Dynamic Programming problems. Given a set of items, each with a weight and value, the objective is to maximize the total value without exceeding the capacity of the knapsack.\n\nEach item can either be:\n\nIncluded (1)\nExcluded (0)\n\nHence the name 0/1 Knapsack.\n\nRecursive Solution:\n\nTry including or excluding each item.\n\nComplexity:\nO(2ⁿ)\n\nDynamic Programming Solution:\n\nStore intermediate results.\n\nComplexity:\n\nTime Complexity: O(nW)\nSpace Complexity: O(nW)\n\nWhere:\n\nn = Number of Items\nW = Knapsack Capacity\n\nApplications:\n\nResource Allocation.\nInvestment Planning.\nBudget Optimization.\nCargo Loading.\nCloud Resource Management.",
+      "explanation": "Example:\n\nCapacity = 50\n\nItems:\nWeight 10 Value 60\nWeight 20 Value 100\nWeight 30 Value 120\n\nOptimal Selection:\n\nWeight 20 + 30 = 50\n\nValue = 220\n\nThis gives maximum profit within capacity.",
+      "code_example": "dp[i][w] = Math.max(include, exclude);",
+      "key_takeaways": [
+        "Classic dynamic programming problem.",
+        "Each item chosen at most once.",
+        "DP reduces exponential complexity.",
+        "Widely asked in interviews.",
+        "Demonstrates optimal substructure."
+      ]
+    },
+    {
+      "id": 61,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Longest Common Subsequence (LCS)",
+      "question": "What is the Longest Common Subsequence (LCS) Problem? Explain the problem statement, recursive approach, dynamic programming solution, complexity analysis, and real-world applications.",
+      "answer": "The Longest Common Subsequence (LCS) Problem is a classic Dynamic Programming problem that involves finding the longest sequence of characters that appears in the same relative order in two given strings. The characters do not need to be contiguous, but their order must be preserved.\n\nFor example:\n\nString 1 = ABCDGH\nString 2 = AEDFHR\n\nLongest Common Subsequence = ADH\n\nLength = 3\n\nRecursive Idea:\n\nIf current characters match:\n1 + LCS(remaining strings)\n\nIf characters do not match:\nTake maximum of two possibilities.\n\nDynamic Programming Solution:\n\nCreate a DP table where dp[i][j] stores the LCS length for prefixes of both strings.\n\nComplexities:\n\nTime Complexity: O(m × n)\nSpace Complexity: O(m × n)\n\nApplications:\n\nDNA Sequence Analysis.\nVersion Control Systems.\nFile Comparison Tools.\nText Editors.\nPlagiarism Detection.\nBioinformatics.",
+      "explanation": "Consider:\n\nString A = ABCDEF\nString B = ABEF\n\nCommon subsequences include:\n\nAB\nABE\nABEF\n\nLongest Common Subsequence:\n\nABEF\n\nLength = 4\n\nThe DP table avoids recalculating the same subproblems repeatedly.",
+      "code_example": "if(s1.charAt(i-1)==s2.charAt(j-1))\n dp[i][j] = 1 + dp[i-1][j-1];",
+      "key_takeaways": [
+        "Classic Dynamic Programming problem.",
+        "Order matters but continuity does not.",
+        "Complexity O(m × n).",
+        "Widely used in comparison systems.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 62,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Longest Increasing Subsequence (LIS)",
+      "question": "What is the Longest Increasing Subsequence (LIS) Problem? Explain its solution approaches, complexity analysis, and applications.",
+      "answer": "The Longest Increasing Subsequence (LIS) Problem involves finding the longest subsequence of an array such that elements appear in strictly increasing order.\n\nExample:\n\nArray:\n[10, 22, 9, 33, 21, 50, 41, 60]\n\nLIS:\n[10, 22, 33, 50, 60]\n\nLength = 5\n\nApproaches:\n\nRecursive Solution.\nDynamic Programming Solution.\nBinary Search Optimization.\n\nComplexities:\n\nDP Approach: O(n²)\nOptimized Approach: O(n log n)\n\nApplications:\n\nStock Market Analysis.\nData Sequencing.\nPattern Recognition.\nMachine Learning.\nBioinformatics.",
+      "explanation": "The sequence does not need to be contiguous.\n\nOnly increasing order matters.\n\nThe challenge is identifying the longest valid subsequence while skipping unnecessary elements.",
+      "code_example": "if(arr[j] < arr[i])\n dp[i] = Math.max(dp[i], dp[j] + 1);",
+      "key_takeaways": [
+        "Finds longest increasing subsequence.",
+        "Different from subarray problems.",
+        "DP solution O(n²).",
+        "Optimized solution O(n log n).",
+        "Important interview problem."
+      ]
+    },
+    {
+      "id": 63,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Greedy Algorithms",
+      "difficulty": "Medium",
+      "title": "Introduction to Greedy Algorithms",
+      "question": "What are Greedy Algorithms? Explain their characteristics, advantages, disadvantages, design principles, and applications.",
+      "answer": "Greedy Algorithms are a class of algorithms that make the locally optimal choice at every step with the hope of obtaining a globally optimal solution. Instead of considering all possible future outcomes, greedy algorithms immediately choose the best available option.\n\nCharacteristics:\n\nGreedy Choice Property.\nOptimal Substructure.\n\nAdvantages:\n\nSimple implementation.\nEfficient execution.\nLow memory usage.\n\nDisadvantages:\n\nMay not always produce optimal solutions.\nProblem-specific applicability.\n\nApplications:\n\nKruskal's Algorithm.\nPrim's Algorithm.\nDijkstra's Algorithm.\nHuffman Coding.\nJob Scheduling.\nActivity Selection.",
+      "explanation": "Imagine selecting coins to make change.\n\nGreedy approach:\nAlways choose the largest possible coin.\n\nFor many currency systems, this produces the optimal solution efficiently.",
+      "code_example": "Choose Best Local Option;",
+      "key_takeaways": [
+        "Makes locally optimal choices.",
+        "Often highly efficient.",
+        "Not always globally optimal.",
+        "Common optimization strategy.",
+        "Foundation of many algorithms."
+      ]
+    },
+    {
+      "id": 64,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Greedy Algorithms",
+      "difficulty": "Hard",
+      "title": "Activity Selection Problem",
+      "question": "What is the Activity Selection Problem? Explain the greedy solution, complexity analysis, and significance.",
+      "answer": "The Activity Selection Problem involves selecting the maximum number of non-overlapping activities from a given set of activities, each having a start time and finish time.\n\nGreedy Strategy:\n\nSort activities by finish time.\nSelect first activity.\nChoose next activity whose start time is greater than or equal to previous finish time.\n\nComplexities:\n\nSorting: O(n log n)\nSelection: O(n)\n\nTotal: O(n log n)\n\nApplications:\n\nTask Scheduling.\nConference Management.\nResource Allocation.\nCPU Scheduling.\nProject Planning.",
+      "explanation": "Activities:\n\nA(1,2)\nB(3,4)\nC(0,6)\nD(5,7)\n\nSelect activities finishing earliest first.\n\nThis leaves maximum room for future activities.",
+      "code_example": "Arrays.sort(activities);",
+      "key_takeaways": [
+        "Classic greedy problem.",
+        "Sorts by finish time.",
+        "Produces optimal solution.",
+        "Complexity O(n log n).",
+        "Popular interview question."
+      ]
+    },
+    {
+      "id": 65,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Greedy Algorithms",
+      "difficulty": "Hard",
+      "title": "Huffman Coding",
+      "question": "What is Huffman Coding? Explain its algorithm, working mechanism, complexity analysis, and real-world applications.",
+      "answer": "Huffman Coding is a greedy algorithm used for lossless data compression. It assigns shorter binary codes to frequently occurring characters and longer codes to less frequent characters.\n\nAlgorithm Steps:\n\nCalculate character frequencies.\nCreate leaf nodes.\nInsert into priority queue.\nRepeatedly merge smallest-frequency nodes.\nBuild Huffman Tree.\nGenerate binary codes.\n\nComplexities:\n\nTime Complexity: O(n log n)\n\nApplications:\n\nZIP Compression.\nJPEG Compression.\nPNG Compression.\nMultimedia Systems.\nData Transmission.\n\nHuffman Coding significantly reduces storage and transmission requirements.",
+      "explanation": "Suppose:\n\nA appears 100 times.\nB appears 10 times.\n\nA receives a shorter code.\nB receives a longer code.\n\nOverall storage size decreases.",
+      "code_example": "PriorityQueue<Node> pq = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Lossless compression algorithm.",
+        "Uses greedy approach.",
+        "Builds Huffman Tree.",
+        "Reduces storage requirements.",
+        "Widely used in compression systems."
+      ]
+    },
+    {
+      "id": 66,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Backtracking",
+      "difficulty": "Hard",
+      "title": "Introduction to Backtracking",
+      "question": "What is Backtracking? Explain its principles, working mechanism, advantages, disadvantages, and applications.",
+      "answer": "Backtracking is an algorithmic technique used to solve problems incrementally by building a solution step-by-step and abandoning paths that cannot lead to valid solutions.\n\nThe core idea is:\n\nChoose.\nExplore.\nBacktrack if necessary.\n\nBacktracking systematically explores all possible solutions while pruning invalid paths.\n\nApplications:\n\nN-Queens Problem.\nSudoku Solver.\nMaze Solving.\nGraph Coloring.\nSubset Generation.\nPermutation Generation.\n\nAdvantages:\n\nFinds exact solutions.\nFlexible framework.\n\nDisadvantages:\n\nCan be computationally expensive.\nMay explore exponential search spaces.",
+      "explanation": "Imagine navigating a maze.\n\nIf a path leads to a dead end:\n\nReturn to previous intersection.\nTry another path.\n\nThis trial-and-error strategy is the essence of backtracking.",
+      "code_example": "if(isValid())\n solve(nextState);",
+      "key_takeaways": [
+        "Uses trial and error.",
+        "Builds solution incrementally.",
+        "Backtracks when necessary.",
+        "Common in constraint problems.",
+        "Important advanced technique."
+      ]
+    },
+    {
+      "id": 67,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Backtracking",
+      "difficulty": "Hard",
+      "title": "N-Queens Problem",
+      "question": "What is the N-Queens Problem? Explain the backtracking solution, complexity analysis, and significance.",
+      "answer": "The N-Queens Problem requires placing N queens on an N×N chessboard such that no two queens attack each other.\n\nA queen attacks horizontally, vertically, and diagonally.\n\nGoal:\n\nPlace all queens safely.\n\nBacktracking Approach:\n\nPlace queen row by row.\nCheck validity.\nProceed recursively.\nBacktrack when conflicts occur.\n\nComplexity:\n\nWorst Case: O(N!)\n\nApplications:\n\nConstraint Satisfaction Problems.\nAI Search Techniques.\nOptimization Problems.\nAlgorithm Design Education.",
+      "explanation": "For 4 Queens:\n\nOne valid arrangement:\n\n. Q . .\n. . . Q\nQ . . .\n. . Q .\n\nNo queen attacks another.",
+      "code_example": "solve(row + 1);",
+      "key_takeaways": [
+        "Classic backtracking problem.",
+        "Uses recursive exploration.",
+        "Requires conflict checking.",
+        "Demonstrates pruning techniques.",
+        "Popular interview topic."
+      ]
+    },
+    {
+      "id": 68,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Backtracking",
+      "difficulty": "Hard",
+      "title": "Sudoku Solver",
+      "question": "How does a Sudoku Solver work using Backtracking? Explain the algorithm, complexity, and practical importance.",
+      "answer": "A Sudoku Solver uses Backtracking to fill empty cells while satisfying Sudoku constraints.\n\nRules:\n\nNumbers 1–9 appear once per row.\nNumbers 1–9 appear once per column.\nNumbers 1–9 appear once per 3×3 grid.\n\nAlgorithm:\n\nFind empty cell.\nTry numbers 1–9.\nCheck validity.\nProceed recursively.\nBacktrack if necessary.\n\nComplexity:\n\nExponential in worst case.\n\nApplications:\n\nPuzzle Solving.\nConstraint Satisfaction.\nArtificial Intelligence.\nSearch Algorithms.",
+      "explanation": "Whenever an invalid number is placed:\n\nUndo placement.\nTry another number.\n\nEventually a valid board configuration is discovered.",
+      "code_example": "board[row][col] = num;",
+      "key_takeaways": [
+        "Uses recursive backtracking.",
+        "Solves constraint satisfaction problems.",
+        "Widely known example.",
+        "May require extensive search.",
+        "Good demonstration of backtracking."
+      ]
+    },
+    {
+      "id": 69,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Medium",
+      "title": "Introduction to String Algorithms",
+      "question": "Why are String Algorithms important? Explain common string operations, challenges, and applications.",
+      "answer": "String Algorithms are specialized techniques used to process, analyze, search, compare, and manipulate textual data efficiently. Since text data is one of the most common forms of information processed by computers, string algorithms play a critical role in software systems.\n\nCommon Operations:\n\nSearching.\nPattern Matching.\nComparison.\nSubstring Detection.\nCompression.\nParsing.\n\nApplications:\n\nSearch Engines.\nText Editors.\nDNA Analysis.\nNatural Language Processing.\nCybersecurity.\nData Compression.\nCompilers.\n\nEfficient string processing is essential for handling large-scale text datasets.",
+      "explanation": "Examples:\n\nGoogle Search.\nAutocomplete.\nSpell Checking.\nPlagiarism Detection.\nChat Applications.\n\nAll depend heavily on efficient string algorithms.",
+      "code_example": "String text = 'hello';",
+      "key_takeaways": [
+        "String algorithms process textual data.",
+        "Essential in modern applications.",
+        "Support pattern matching and searching.",
+        "Used in NLP and search engines.",
+        "Important interview topic."
+      ]
+    },
+    {
+      "id": 70,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Hard",
+      "title": "KMP (Knuth-Morris-Pratt) Algorithm",
+      "question": "What is the KMP Algorithm? Explain its working, LPS array construction, complexity analysis, and advantages over naive pattern matching.",
+      "answer": "The Knuth-Morris-Pratt (KMP) Algorithm is an efficient string matching algorithm used to find occurrences of a pattern within a text.\n\nUnlike the naive approach, KMP avoids redundant comparisons by utilizing information from previous matches.\n\nCore Idea:\n\nConstruct LPS (Longest Prefix Suffix) Array.\n\nLPS stores the length of the longest proper prefix which is also a suffix.\n\nUsing LPS, the algorithm skips unnecessary comparisons when mismatches occur.\n\nComplexities:\n\nLPS Construction: O(m)\nPattern Matching: O(n)\nTotal: O(n + m)\n\nApplications:\n\nText Editors.\nSearch Engines.\nBioinformatics.\nPattern Recognition.\nCybersecurity.",
+      "explanation": "Suppose:\n\nText:\nABABDABACDABABCABAB\n\nPattern:\nABABCABAB\n\nNaive search repeats many comparisons.\n\nKMP uses LPS information to skip redundant work and achieve linear complexity.",
+      "code_example": "int[] lps = new int[m];",
+      "key_takeaways": [
+        "Efficient pattern matching algorithm.",
+        "Uses LPS array.",
+        "Complexity O(n + m).",
+        "Avoids redundant comparisons.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 71,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Hard",
+      "title": "Rabin-Karp Algorithm",
+      "question": "What is the Rabin-Karp Algorithm? Explain its rolling hash technique, working process, complexity analysis, advantages, disadvantages, and practical applications.",
+      "answer": "The Rabin-Karp Algorithm is a string matching algorithm that uses hashing to efficiently search for a pattern within a larger text. Instead of comparing characters one by one at every position, Rabin-Karp computes hash values for the pattern and text windows and compares hashes first. Only when hashes match does it perform character-by-character verification.\n\nThe key idea behind Rabin-Karp is the Rolling Hash technique, which allows the hash value of the next substring to be calculated efficiently from the previous hash.\n\nAlgorithm Steps:\n\n1. Compute hash of the pattern.\n2. Compute hash of the first text window.\n3. Compare hashes.\n4. If hashes match, verify characters.\n5. Slide the window using rolling hash.\n6. Repeat until the text ends.\n\nComplexities:\n\nBest Case: O(n + m)\nAverage Case: O(n + m)\nWorst Case: O(n × m)\n\nApplications:\n\nPlagiarism Detection.\nDocument Comparison.\nCybersecurity.\nSearch Engines.\nDNA Sequence Matching.\nPattern Recognition.",
+      "explanation": "Suppose:\n\nText = ABCDABCDABCD\nPattern = ABCD\n\nInstead of comparing every character repeatedly, Rabin-Karp compares hash values.\n\nIf the pattern hash equals the current window hash, only then is a detailed comparison performed.\n\nThis significantly reduces unnecessary work in many practical situations.",
+      "code_example": "hash = (hash * base + newChar) % mod;",
+      "key_takeaways": [
+        "Uses rolling hash technique.",
+        "Efficient for multiple pattern searches.",
+        "Average complexity O(n + m).",
+        "May suffer from hash collisions.",
+        "Common string matching algorithm."
+      ]
+    },
+    {
+      "id": 72,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Hard",
+      "title": "Trie Data Structure",
+      "question": "What is a Trie Data Structure? Explain its structure, operations, complexity analysis, advantages, disadvantages, and applications.",
+      "answer": "A Trie, also known as a Prefix Tree, is a specialized tree-like data structure used for storing and searching strings efficiently. Each node represents a character, and paths from the root to leaf nodes represent complete words.\n\nUnlike hash tables, Tries support efficient prefix-based searching.\n\nOperations:\n\nInsertion.\nSearching.\nDeletion.\nPrefix Matching.\n\nComplexities:\n\nInsertion: O(L)\nSearch: O(L)\nDelete: O(L)\n\nWhere L is the length of the word.\n\nAdvantages:\n\nFast prefix searches.\nEfficient autocomplete.\nDictionary implementation.\n\nDisadvantages:\n\nHigh memory usage.\nComplex implementation.\n\nApplications:\n\nAutocomplete Systems.\nSpell Checkers.\nSearch Engines.\nIP Routing.\nDictionary Systems.",
+      "explanation": "Words:\n\nCAT\nCAR\nCAN\n\nShared prefix:\n\nCA\n\nTrie stores common prefixes only once, reducing duplicate storage and enabling efficient searches.",
+      "code_example": "class TrieNode {\n Map<Character, TrieNode> children;\n}",
+      "key_takeaways": [
+        "Stores strings efficiently.",
+        "Excellent for prefix searches.",
+        "Complexity O(L).",
+        "Used in autocomplete systems.",
+        "Important advanced data structure."
+      ]
+    },
+    {
+      "id": 73,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Bit Manipulation",
+      "difficulty": "Medium",
+      "title": "Introduction to Bit Manipulation",
+      "question": "What is Bit Manipulation? Explain its importance, common operations, advantages, and applications.",
+      "answer": "Bit Manipulation involves directly operating on individual bits of binary numbers. Since computers internally represent data in binary format, bit operations are often extremely fast and memory-efficient.\n\nCommon Operations:\n\nAND (&)\nOR (|)\nXOR (^)\nNOT (~)\nLeft Shift (<<)\nRight Shift (>>)\n\nAdvantages:\n\nHigh performance.\nMemory efficiency.\nFast computation.\n\nApplications:\n\nCompetitive Programming.\nCryptography.\nCompression Algorithms.\nOperating Systems.\nEmbedded Systems.\nNetwork Programming.\n\nBit Manipulation is considered one of the most powerful optimization techniques in algorithm design.",
+      "explanation": "Example:\n\n5 = 0101\n3 = 0011\n\nAND:\n0001 = 1\n\nOR:\n0111 = 7\n\nXOR:\n0110 = 6\n\nOperations occur directly at the hardware level.",
+      "code_example": "int result = a & b;",
+      "key_takeaways": [
+        "Works directly with binary representation.",
+        "Provides fast computations.",
+        "Useful for optimization.",
+        "Widely used in low-level programming.",
+        "Popular interview topic."
+      ]
+    },
+    {
+      "id": 74,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Bit Manipulation",
+      "difficulty": "Hard",
+      "title": "Bitwise Operators",
+      "question": "Explain all Bitwise Operators in detail including AND, OR, XOR, NOT, Left Shift, and Right Shift with examples.",
+      "answer": "Bitwise Operators perform operations directly on individual bits.\n\nAND (&):\nReturns 1 only if both bits are 1.\n\nOR (|):\nReturns 1 if at least one bit is 1.\n\nXOR (^):\nReturns 1 if bits differ.\n\nNOT (~):\nFlips all bits.\n\nLeft Shift (<<):\nShifts bits left.\nEquivalent to multiplication by powers of 2.\n\nRight Shift (>>):\nShifts bits right.\nEquivalent to division by powers of 2.\n\nBitwise operations are heavily used in system programming and optimization problems.",
+      "explanation": "Example:\n\nA = 5 = 0101\nB = 3 = 0011\n\nA & B = 0001\nA | B = 0111\nA ^ B = 0110\n\n5 << 1 = 10\n5 >> 1 = 2",
+      "code_example": "int x = 5 << 1;",
+      "key_takeaways": [
+        "Operate directly on bits.",
+        "Extremely fast operations.",
+        "Useful for optimization.",
+        "Common in system software.",
+        "Important interview concept."
+      ]
+    },
+    {
+      "id": 75,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Bit Manipulation",
+      "difficulty": "Hard",
+      "title": "Power of Two Check",
+      "question": "How can Bit Manipulation be used to check whether a number is a power of two? Explain the logic and complexity analysis.",
+      "answer": "A number is a power of two if it contains exactly one set bit in its binary representation.\n\nExamples:\n\n1 = 0001\n2 = 0010\n4 = 0100\n8 = 1000\n\nKey Observation:\n\nFor any power of two:\n\nn & (n - 1) = 0\n\nThis works because subtracting 1 flips the rightmost set bit and all lower bits.\n\nComplexity:\n\nTime Complexity: O(1)\nSpace Complexity: O(1)\n\nThis is one of the most frequently asked bit manipulation interview questions.",
+      "explanation": "Example:\n\nn = 8\n\n1000\n0111\n----\n0000\n\nResult = 0\n\nTherefore 8 is a power of two.",
+      "code_example": "return (n > 0) && ((n & (n - 1)) == 0);",
+      "key_takeaways": [
+        "Power of two contains one set bit.",
+        "Uses n & (n-1).",
+        "Complexity O(1).",
+        "Very common interview problem.",
+        "Elegant bit manipulation trick."
+      ]
+    },
+    {
+      "id": 76,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Bit Manipulation",
+      "difficulty": "Hard",
+      "title": "Counting Set Bits",
+      "question": "How can the number of set bits in a binary number be counted efficiently? Explain different approaches and complexity analysis.",
+      "answer": "Counting Set Bits means determining how many bits are equal to 1 in a binary representation.\n\nApproaches:\n\nNaive Method:\nCheck each bit individually.\n\nBrian Kernighan's Algorithm:\nRepeatedly remove the rightmost set bit.\n\nFormula:\n\nn = n & (n - 1)\n\nEach iteration removes one set bit.\n\nComplexities:\n\nNaive: O(number of bits)\nBrian Kernighan: O(number of set bits)\n\nApplications:\n\nCryptography.\nCompetitive Programming.\nCompression.\nNetwork Systems.",
+      "explanation": "Example:\n\n13 = 1101\n\nSet Bits = 3\n\nBrian Kernighan:\n\n1101 → 1100\n1100 → 1000\n1000 → 0000\n\nTotal iterations = 3",
+      "code_example": "count++;\nn = n & (n - 1);",
+      "key_takeaways": [
+        "Counts number of 1 bits.",
+        "Brian Kernighan is efficient.",
+        "Useful in many algorithms.",
+        "Popular interview question.",
+        "Complexity depends on set bits."
+      ]
+    },
+    {
+      "id": 77,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Segment Tree",
+      "question": "What is a Segment Tree? Explain its structure, operations, complexity analysis, advantages, disadvantages, and applications.",
+      "answer": "A Segment Tree is a tree-based data structure used for efficient range queries and updates on arrays. It divides an array into segments and stores information about each segment in a tree structure.\n\nSupported Operations:\n\nRange Sum Query.\nRange Minimum Query.\nRange Maximum Query.\nRange Updates.\n\nComplexities:\n\nBuild: O(n)\nQuery: O(log n)\nUpdate: O(log n)\n\nAdvantages:\n\nEfficient range operations.\nSupports dynamic updates.\n\nDisadvantages:\n\nHigher memory usage.\nComplex implementation.\n\nApplications:\n\nCompetitive Programming.\nDatabase Systems.\nAnalytics Platforms.\nFinancial Systems.",
+      "explanation": "Suppose:\n\nArray:\n[1, 3, 5, 7, 9, 11]\n\nNeed sum from index 1 to 4.\n\nInstead of scanning every element, Segment Tree answers efficiently using precomputed segments.",
+      "code_example": "build(node, start, end);",
+      "key_takeaways": [
+        "Supports range queries efficiently.",
+        "Query complexity O(log n).",
+        "Update complexity O(log n).",
+        "Widely used in competitive programming.",
+        "Important advanced data structure."
+      ]
+    },
+    {
+      "id": 78,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Fenwick Tree (Binary Indexed Tree)",
+      "question": "What is a Fenwick Tree? Explain its structure, operations, complexity analysis, advantages, and applications.",
+      "answer": "A Fenwick Tree, also called a Binary Indexed Tree (BIT), is a data structure used for efficient prefix sum calculations and updates.\n\nCompared to Segment Trees, Fenwick Trees are simpler and require less memory.\n\nOperations:\n\nUpdate.\nPrefix Sum Query.\nRange Sum Query.\n\nComplexities:\n\nUpdate: O(log n)\nQuery: O(log n)\n\nAdvantages:\n\nSimple implementation.\nMemory efficient.\nFast operations.\n\nApplications:\n\nCompetitive Programming.\nFinancial Analytics.\nFrequency Counting.\nRange Queries.",
+      "explanation": "Instead of storing complete segments like Segment Trees, Fenwick Trees store cumulative information using clever binary indexing techniques.",
+      "code_example": "index += index & (-index);",
+      "key_takeaways": [
+        "Also called Binary Indexed Tree.",
+        "Efficient prefix sums.",
+        "Complexity O(log n).",
+        "Simpler than Segment Tree.",
+        "Popular in contests."
+      ]
+    },
+    {
+      "id": 79,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Algorithms",
+      "difficulty": "Hard",
+      "title": "Topological Sorting",
+      "question": "What is Topological Sorting? Explain its algorithm, complexity analysis, applications, and limitations.",
+      "answer": "Topological Sorting is a linear ordering of vertices in a Directed Acyclic Graph (DAG) such that for every directed edge U → V, vertex U appears before V in the ordering.\n\nMethods:\n\nDFS Based Approach.\nKahn's Algorithm (BFS Based).\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nCourse Scheduling.\nDependency Resolution.\nBuild Systems.\nTask Scheduling.\nCompiler Design.\nProject Planning.\n\nTopological Sorting is only possible in Directed Acyclic Graphs.",
+      "explanation": "Example:\n\nMath → DSA\nDSA → System Design\n\nValid Order:\n\nMath\nDSA\nSystem Design\n\nDependencies are respected.",
+      "code_example": "topologicalSort(graph);",
+      "key_takeaways": [
+        "Works only on DAGs.",
+        "Respects dependency ordering.",
+        "Complexity O(V + E).",
+        "Important graph algorithm.",
+        "Used in scheduling systems."
+      ]
+    },
+    {
+      "id": 80,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Algorithms",
+      "difficulty": "Hard",
+      "title": "Cycle Detection in Graphs",
+      "question": "How can cycles be detected in graphs? Explain methods for both directed and undirected graphs along with complexity analysis.",
+      "answer": "Cycle Detection is the process of determining whether a graph contains a cycle.\n\nUndirected Graph Methods:\n\nDFS with Parent Tracking.\nUnion-Find.\n\nDirected Graph Methods:\n\nDFS with Recursion Stack.\nTopological Sorting.\n\nComplexities:\n\nDFS Approach:\nO(V + E)\n\nUnion-Find:\nO(E α(V))\n\nApplications:\n\nDeadlock Detection.\nDependency Analysis.\nCompiler Design.\nNetwork Analysis.\nDatabase Systems.\n\nCycle detection is one of the most important graph-related interview topics.",
+      "explanation": "Example:\n\nA → B\nB → C\nC → A\n\nA cycle exists because traversal returns to the starting node.",
+      "code_example": "if(recStack[node]) return true;",
+      "key_takeaways": [
+        "Detects cycles in graphs.",
+        "Different methods for directed and undirected graphs.",
+        "Complexity O(V + E).",
+        "Used in dependency management.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 81,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Strongly Connected Components (SCC)",
+      "question": "What are Strongly Connected Components (SCCs)? Explain their significance, Kosaraju's Algorithm, Tarjan's Algorithm, complexity analysis, and practical applications.",
+      "answer": "A Strongly Connected Component (SCC) is a maximal group of vertices in a Directed Graph such that every vertex is reachable from every other vertex within the same group.\n\nIn simple terms, if you can travel from node A to node B and also from node B back to node A, both nodes belong to the same SCC.\n\nSCCs are important because they help identify tightly connected regions within a graph.\n\nPopular Algorithms:\n\nKosaraju's Algorithm.\nTarjan's Algorithm.\n\nKosaraju's Algorithm:\n\n1. Perform DFS and store finishing order.\n2. Reverse all graph edges.\n3. Perform DFS in reverse finishing order.\n4. Each DFS traversal identifies one SCC.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nSocial Network Analysis.\nCompiler Optimization.\nDependency Management.\nWeb Crawling.\nNetwork Analysis.\nDistributed Systems.",
+      "explanation": "Consider:\n\nA → B\n↑   ↓\nD ← C\n\nAll nodes can reach each other.\n\nTherefore:\n\n{A, B, C, D}\n\nforms one Strongly Connected Component.",
+      "code_example": "stack.push(node);",
+      "key_takeaways": [
+        "SCC exists in directed graphs.",
+        "Every node is reachable from every other node.",
+        "Kosaraju and Tarjan are popular algorithms.",
+        "Complexity O(V + E).",
+        "Important graph theory concept."
+      ]
+    },
+    {
+      "id": 82,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Tarjan's Algorithm",
+      "question": "What is Tarjan's Algorithm? Explain its working, low-link values, complexity analysis, and significance.",
+      "answer": "Tarjan's Algorithm is an efficient Depth First Search-based algorithm used to find Strongly Connected Components in a Directed Graph.\n\nUnlike Kosaraju's Algorithm, Tarjan's Algorithm finds SCCs in a single DFS traversal.\n\nCore Concepts:\n\nDiscovery Time.\nLow-Link Value.\nDFS Stack.\n\nLow-Link Value:\nRepresents the earliest reachable ancestor from a node.\n\nAlgorithm:\n\n1. Perform DFS.\n2. Assign discovery time.\n3. Compute low-link values.\n4. Identify SCC roots.\n5. Extract SCC from stack.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nDependency Analysis.\nCompiler Design.\nGraph Optimization.\nNetwork Analysis.",
+      "explanation": "Tarjan's Algorithm efficiently discovers SCCs during DFS itself without requiring graph reversal.",
+      "code_example": "low[node] = Math.min(low[node], low[neighbor]);",
+      "key_takeaways": [
+        "Finds SCCs efficiently.",
+        "Uses low-link values.",
+        "Single DFS traversal.",
+        "Complexity O(V + E).",
+        "Advanced graph algorithm."
+      ]
+    },
+    {
+      "id": 83,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Matrix Chain Multiplication",
+      "question": "What is the Matrix Chain Multiplication Problem? Explain the Dynamic Programming solution, complexity analysis, and practical significance.",
+      "answer": "Matrix Chain Multiplication is a classic Dynamic Programming problem that determines the most efficient way to multiply a sequence of matrices.\n\nAlthough matrix multiplication is associative, the order of multiplication significantly affects the number of operations required.\n\nGoal:\n\nFind the parenthesization that minimizes multiplication cost.\n\nDynamic Programming Approach:\n\n1. Divide problem into smaller subproblems.\n2. Compute minimum multiplication cost.\n3. Store results in DP table.\n4. Reuse previously computed values.\n\nComplexities:\n\nTime Complexity: O(n³)\nSpace Complexity: O(n²)\n\nApplications:\n\nCompiler Optimization.\nScientific Computing.\nMachine Learning.\nLinear Algebra Systems.",
+      "explanation": "Example:\n\nMatrices:\nA(10×30)\nB(30×5)\nC(5×60)\n\n(A×B)×C requires fewer operations than A×(B×C).\n\nDynamic Programming identifies the optimal order.",
+      "code_example": "dp[i][j] = min(cost);",
+      "key_takeaways": [
+        "Optimizes matrix multiplication order.",
+        "Classic DP problem.",
+        "Complexity O(n³).",
+        "Reduces computational cost.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 84,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Coin Change Problem",
+      "question": "What is the Coin Change Problem? Explain its dynamic programming solution, complexity analysis, and practical applications.",
+      "answer": "The Coin Change Problem asks how many ways a target amount can be formed using a given set of coin denominations.\n\nVariants:\n\nMinimum Coins Required.\nNumber of Ways to Form Amount.\n\nDynamic Programming Approach:\n\nBreak amount into smaller amounts.\nStore intermediate results.\nReuse solutions.\n\nComplexities:\n\nTime Complexity: O(n × amount)\nSpace Complexity: O(amount)\n\nApplications:\n\nFinancial Systems.\nPayment Processing.\nResource Allocation.\nOptimization Problems.",
+      "explanation": "Coins:\n\n1, 2, 5\n\nTarget:\n5\n\nPossible ways:\n\n5\n2+2+1\n2+1+1+1\n1+1+1+1+1\n\nDP efficiently counts all valid combinations.",
+      "code_example": "dp[i] += dp[i - coin];",
+      "key_takeaways": [
+        "Classic dynamic programming problem.",
+        "Multiple variations exist.",
+        "Uses subproblem reuse.",
+        "Complexity O(n × amount).",
+        "Popular interview question."
+      ]
+    },
+    {
+      "id": 85,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Subset Sum Problem",
+      "question": "What is the Subset Sum Problem? Explain recursive and dynamic programming solutions with complexity analysis.",
+      "answer": "The Subset Sum Problem determines whether a subset of given numbers exists whose sum equals a specified target value.\n\nGiven:\n\nSet of integers.\nTarget sum.\n\nGoal:\n\nDetermine whether a valid subset exists.\n\nApproaches:\n\nRecursive.\nDynamic Programming.\n\nRecursive Complexity:\nO(2ⁿ)\n\nDP Complexity:\nO(n × sum)\n\nApplications:\n\nResource Allocation.\nCryptography.\nBudget Planning.\nOptimization Problems.",
+      "explanation": "Numbers:\n\n3, 34, 4, 12, 5, 2\n\nTarget = 9\n\nSubset:\n\n4 + 5 = 9\n\nAnswer = True",
+      "code_example": "dp[i][j] = dp[i-1][j] || dp[i-1][j-arr[i-1]];",
+      "key_takeaways": [
+        "Determines subset existence.",
+        "Classic DP problem.",
+        "DP greatly improves performance.",
+        "Related to knapsack problems.",
+        "Common interview topic."
+      ]
+    },
+    {
+      "id": 86,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Sliding Window",
+      "difficulty": "Medium",
+      "title": "Sliding Window Technique",
+      "question": "What is the Sliding Window Technique? Explain its working, advantages, complexity analysis, and common applications.",
+      "answer": "The Sliding Window Technique is an optimization method used to process contiguous subarrays or substrings efficiently.\n\nInstead of recomputing results for every window, the algorithm reuses previous computations by moving the window incrementally.\n\nAdvantages:\n\nReduces nested loops.\nImproves efficiency.\nSimplifies many array and string problems.\n\nComplexities:\n\nTypically O(n).\n\nApplications:\n\nMaximum Subarray Sum.\nLongest Substring Problems.\nNetwork Monitoring.\nData Streaming.\nString Matching.",
+      "explanation": "Example:\n\nArray:\n[1, 2, 3, 4, 5]\n\nWindow Size = 3\n\nInstead of recalculating every sum from scratch, update the sum by removing the outgoing element and adding the incoming element.",
+      "code_example": "windowSum += arr[right] - arr[left];",
+      "key_takeaways": [
+        "Optimizes contiguous range problems.",
+        "Usually reduces O(n²) to O(n).",
+        "Widely used in interviews.",
+        "Simple but powerful technique.",
+        "Useful for arrays and strings."
+      ]
+    },
+    {
+      "id": 87,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Two Pointers",
+      "difficulty": "Medium",
+      "title": "Two Pointer Technique",
+      "question": "What is the Two Pointer Technique? Explain its working, advantages, complexity analysis, and practical applications.",
+      "answer": "The Two Pointer Technique uses two indices that move through a data structure according to specific rules. It is commonly applied to sorted arrays, linked lists, and strings.\n\nAdvantages:\n\nReduces brute-force complexity.\nUses constant extra space.\nImproves efficiency.\n\nCommon Applications:\n\nPair Sum Problems.\nPalindrome Checking.\nRemoving Duplicates.\nMerging Sorted Arrays.\nLinked List Problems.\n\nComplexities:\n\nTypically O(n).\n\nThis technique is heavily used in coding interviews because it often converts quadratic solutions into linear solutions.",
+      "explanation": "Example:\n\nArray:\n[1, 2, 3, 4, 6]\n\nTarget = 6\n\nLeft = 1\nRight = 6\n\nMove pointers intelligently until desired pair is found.",
+      "code_example": "while(left < right){\n left++;\n right--;\n}",
+      "key_takeaways": [
+        "Uses two moving indices.",
+        "Reduces time complexity.",
+        "Often achieves O(n).",
+        "Common interview technique.",
+        "Works well on sorted data."
+      ]
+    },
+    {
+      "id": 88,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Binary Search",
+      "difficulty": "Hard",
+      "title": "Binary Search Variations",
+      "question": "What are common Binary Search variations? Explain First Occurrence, Last Occurrence, Lower Bound, Upper Bound, and Search Space Binary Search.",
+      "answer": "Binary Search is not limited to searching elements. Many advanced problems use Binary Search on answers or search spaces.\n\nVariations:\n\nStandard Binary Search.\nFirst Occurrence.\nLast Occurrence.\nLower Bound.\nUpper Bound.\nBinary Search on Answer.\n\nComplexity:\n\nO(log n)\n\nApplications:\n\nSearching.\nOptimization Problems.\nScheduling.\nAllocation Problems.\nCompetitive Programming.\n\nUnderstanding variations is essential for solving advanced interview problems.",
+      "explanation": "Example:\n\nArray:\n[1,2,2,2,3,4]\n\nFirst Occurrence of 2 = Index 1\n\nLast Occurrence of 2 = Index 3\n\nSpecialized Binary Search variations efficiently solve these problems.",
+      "code_example": "mid = low + (high - low) / 2;",
+      "key_takeaways": [
+        "Binary Search has many forms.",
+        "Used beyond searching arrays.",
+        "Complexity remains O(log n).",
+        "Important interview topic.",
+        "Powerful optimization technique."
+      ]
+    },
+    {
+      "id": 89,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Monotonic Stack",
+      "difficulty": "Hard",
+      "title": "Monotonic Stack",
+      "question": "What is a Monotonic Stack? Explain its structure, working mechanism, complexity analysis, and applications.",
+      "answer": "A Monotonic Stack is a specialized stack that maintains elements in either increasing or decreasing order.\n\nTypes:\n\nMonotonically Increasing Stack.\nMonotonically Decreasing Stack.\n\nBenefits:\n\nEfficient nearest greater/smaller element computation.\nOptimized range queries.\n\nComplexity:\n\nTime Complexity: O(n)\nSpace Complexity: O(n)\n\nApplications:\n\nNext Greater Element.\nLargest Rectangle in Histogram.\nStock Span Problem.\nRain Water Trapping.\n\nMonotonic stacks are a powerful interview technique.",
+      "explanation": "Instead of repeatedly searching neighbors, the stack maintains useful candidates, enabling linear-time solutions.",
+      "code_example": "while(!stack.isEmpty() && stack.peek() < current){\n stack.pop();\n}",
+      "key_takeaways": [
+        "Maintains sorted stack order.",
+        "Enables O(n) solutions.",
+        "Useful for nearest element problems.",
+        "Common interview pattern.",
+        "Powerful optimization technique."
+      ]
+    },
+    {
+      "id": 90,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Arrays",
+      "difficulty": "Hard",
+      "title": "Kadane's Algorithm",
+      "question": "What is Kadane's Algorithm? Explain its working, complexity analysis, significance, and applications.",
+      "answer": "Kadane's Algorithm is an efficient algorithm used to find the Maximum Sum Contiguous Subarray within an array.\n\nInstead of checking all possible subarrays, Kadane's Algorithm maintains a running sum and decides whether extending the current subarray is beneficial.\n\nAlgorithm:\n\nCurrent Sum.\nMaximum Sum.\n\nFor each element:\n\nCurrent Sum = max(element, Current Sum + element)\n\nUpdate Maximum Sum.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nApplications:\n\nFinancial Analysis.\nStock Trading.\nSignal Processing.\nPerformance Monitoring.\nData Analytics.",
+      "explanation": "Array:\n\n[-2,1,-3,4,-1,2,1,-5,4]\n\nMaximum Sum Subarray:\n\n[4,-1,2,1]\n\nSum = 6\n\nKadane's Algorithm finds this in linear time.",
+      "code_example": "current = Math.max(arr[i], current + arr[i]);",
+      "key_takeaways": [
+        "Finds maximum subarray sum.",
+        "Complexity O(n).",
+        "Uses dynamic programming principle.",
+        "Very popular interview question.",
+        "Optimal solution."
+      ]
+    },
+    {
+      "id": 91,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Arrays",
+      "difficulty": "Hard",
+      "title": "Maximum Product Subarray",
+      "question": "What is the Maximum Product Subarray Problem? Explain the optimal solution, complexity analysis, challenges, and practical significance.",
+      "answer": "The Maximum Product Subarray Problem asks us to find the contiguous subarray within an array that has the largest product.\n\nUnlike Maximum Sum Subarray problems, this problem is more challenging because negative numbers can dramatically change the result.\n\nFor example:\n\nPositive × Positive = Positive\nNegative × Negative = Positive\nPositive × Negative = Negative\n\nTherefore, we must track both:\n\nMaximum Product Ending at Current Position.\nMinimum Product Ending at Current Position.\n\nThe minimum product is important because multiplying two negative numbers can produce a larger positive result later.\n\nAlgorithm:\n\nMaintain:\n\ncurrentMax\ncurrentMin\nresult\n\nUpdate them for every element.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nApplications:\n\nFinancial Analysis.\nSignal Processing.\nData Analytics.\nOptimization Problems.",
+      "explanation": "Example:\n\nArray:\n[2, 3, -2, 4]\n\nProducts:\n\n2\n2×3 = 6\n2×3×(-2) = -12\n4\n\nMaximum Product = 6\n\nTracking only maximum values would fail in many cases involving negative numbers.",
+      "code_example": "tempMax = Math.max(num, Math.max(num*max, num*min));",
+      "key_takeaways": [
+        "Requires tracking both maximum and minimum products.",
+        "Handles negative numbers carefully.",
+        "Complexity O(n).",
+        "Common interview question.",
+        "Extension of Kadane's concept."
+      ]
+    },
+    {
+      "id": 92,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Arrays",
+      "difficulty": "Hard",
+      "title": "Trapping Rain Water",
+      "question": "What is the Trapping Rain Water Problem? Explain different approaches, optimal solution, complexity analysis, and practical significance.",
+      "answer": "The Trapping Rain Water Problem involves calculating how much water can be trapped between bars of different heights after rainfall.\n\nGiven an elevation map represented by an array, determine the total water stored.\n\nApproaches:\n\nBrute Force.\nPrefix-Suffix Arrays.\nTwo Pointer Technique.\nStack-Based Solution.\n\nOptimal Two Pointer Solution:\n\nMaintain:\n\nLeft Pointer.\nRight Pointer.\nLeft Maximum.\nRight Maximum.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nApplications:\n\nCivil Engineering.\nTerrain Analysis.\n3D Modeling.\nGIS Systems.\nWater Resource Planning.",
+      "explanation": "Example:\n\nHeight:\n[0,1,0,2,1,0,1,3,2,1,2,1]\n\nWater accumulates in valleys.\n\nTotal Water = 6 Units.",
+      "code_example": "water += leftMax - height[left];",
+      "key_takeaways": [
+        "Classic two-pointer problem.",
+        "Frequently asked in interviews.",
+        "Optimal complexity O(n).",
+        "Multiple solution approaches exist.",
+        "Tests problem-solving skills."
+      ]
+    },
+    {
+      "id": 93,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Arrays",
+      "difficulty": "Hard",
+      "title": "Dutch National Flag Algorithm",
+      "question": "What is the Dutch National Flag Algorithm? Explain its working, complexity analysis, and applications.",
+      "answer": "The Dutch National Flag Algorithm was proposed by Edsger Dijkstra and is used to sort arrays containing only three distinct values efficiently.\n\nA common example is sorting arrays containing:\n\n0, 1, and 2.\n\nThe algorithm uses three pointers:\n\nLow.\nMid.\nHigh.\n\nBased on the value at Mid:\n\n0 → Swap with Low.\n1 → Move Mid.\n2 → Swap with High.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nApplications:\n\nColor Sorting Problems.\nPartitioning Algorithms.\nQuick Sort Optimization.\nData Classification.",
+      "explanation": "Example:\n\n[2,0,2,1,1,0]\n\nAfter processing:\n\n[0,0,1,1,2,2]\n\nOnly one traversal is required.",
+      "code_example": "while(mid <= high){ }",
+      "key_takeaways": [
+        "Uses three pointers.",
+        "Sorts in one pass.",
+        "Complexity O(n).",
+        "No extra memory required.",
+        "Important interview algorithm."
+      ]
+    },
+    {
+      "id": 94,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Hard",
+      "title": "Merge Two Sorted Linked Lists",
+      "question": "How do you merge two sorted linked lists? Explain iterative and recursive approaches with complexity analysis.",
+      "answer": "Merging two sorted linked lists is a common interview problem where two individually sorted lists must be combined into one sorted linked list.\n\nApproaches:\n\nIterative.\nRecursive.\n\nAlgorithm:\n\nCompare current nodes.\nSelect smaller node.\nMove corresponding pointer.\nContinue until one list ends.\nAppend remaining nodes.\n\nComplexities:\n\nTime Complexity: O(n + m)\nSpace Complexity:\nIterative: O(1)\nRecursive: O(n + m)\n\nApplications:\n\nMerge Sort.\nDatabase Systems.\nData Processing Pipelines.",
+      "explanation": "List 1:\n\n1 → 3 → 5\n\nList 2:\n\n2 → 4 → 6\n\nMerged:\n\n1 → 2 → 3 → 4 → 5 → 6",
+      "code_example": "if(l1.val < l2.val){ }",
+      "key_takeaways": [
+        "Important linked list problem.",
+        "Uses two pointers.",
+        "Complexity O(n + m).",
+        "Common interview question.",
+        "Related to merge sort."
+      ]
+    },
+    {
+      "id": 95,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Linked List",
+      "difficulty": "Hard",
+      "title": "Middle of Linked List",
+      "question": "How can the middle element of a Linked List be found efficiently? Explain different approaches and complexity analysis.",
+      "answer": "Finding the middle node of a linked list is a classic problem.\n\nApproaches:\n\nCount Nodes Then Traverse.\nSlow and Fast Pointer Technique.\n\nOptimal Solution:\n\nSlow Pointer moves one step.\nFast Pointer moves two steps.\n\nWhen Fast reaches the end:\n\nSlow points to the middle node.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(1)\n\nThis technique is also used in cycle detection and linked list splitting.",
+      "explanation": "Example:\n\n1 → 2 → 3 → 4 → 5\n\nSlow:\n1→2→3\n\nFast:\n1→3→5\n\nMiddle = 3",
+      "code_example": "slow = slow.next;\nfast = fast.next.next;",
+      "key_takeaways": [
+        "Uses slow and fast pointers.",
+        "Complexity O(n).",
+        "No extra memory required.",
+        "Very common interview question.",
+        "Useful in many linked list problems."
+      ]
+    },
+    {
+      "id": 96,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree",
+      "difficulty": "Hard",
+      "title": "Lowest Common Ancestor (LCA)",
+      "question": "What is the Lowest Common Ancestor (LCA) Problem? Explain algorithms, complexity analysis, and practical applications.",
+      "answer": "The Lowest Common Ancestor (LCA) of two nodes in a tree is the deepest node that is an ancestor of both nodes.\n\nLCA is one of the most important tree problems.\n\nApproaches:\n\nPath Comparison.\nRecursive DFS.\nBinary Lifting.\nEuler Tour + RMQ.\n\nComplexities:\n\nRecursive DFS: O(n)\nBinary Lifting: O(log n)\n\nApplications:\n\nFile Systems.\nNetwork Routing.\nGenealogy Systems.\nHierarchical Databases.\nTree Queries.",
+      "explanation": "Tree:\n\n       3\n      / \\\n     5   1\n    / \\ / \\\n   6  2 0  8\n\nLCA(6,2) = 5\n\nBecause 5 is the lowest node that is an ancestor of both.",
+      "code_example": "if(root == p || root == q) return root;",
+      "key_takeaways": [
+        "Important tree problem.",
+        "Finds common ancestor.",
+        "Multiple efficient solutions exist.",
+        "Frequently asked in interviews.",
+        "Used in hierarchical systems."
+      ]
+    },
+    {
+      "id": 97,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Tree",
+      "difficulty": "Hard",
+      "title": "Diameter of Binary Tree",
+      "question": "What is the Diameter of a Binary Tree? Explain the optimal algorithm, complexity analysis, and significance.",
+      "answer": "The Diameter of a Binary Tree is the length of the longest path between any two nodes in the tree.\n\nThe path may or may not pass through the root.\n\nNaive Approach:\n\nCalculate height repeatedly.\n\nComplexity: O(n²)\n\nOptimal Approach:\n\nCompute height and diameter simultaneously using DFS.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)\n\nApplications:\n\nNetwork Design.\nTree Analytics.\nHierarchical Systems.\nGraph Theory.",
+      "explanation": "Example:\n\n       1\n      / \\\n     2   3\n    / \\\n   4   5\n\nLongest Path:\n\n4 → 2 → 5\n\nDiameter = 2 Edges.",
+      "code_example": "diameter = Math.max(diameter, left + right);",
+      "key_takeaways": [
+        "Longest path in tree.",
+        "Not necessarily through root.",
+        "Optimal complexity O(n).",
+        "Classic tree problem.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 98,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Binary Search Tree",
+      "difficulty": "Hard",
+      "title": "Validate Binary Search Tree",
+      "question": "How can you determine whether a Binary Tree is a valid Binary Search Tree? Explain different approaches and complexity analysis.",
+      "answer": "Validating a BST means checking whether every node satisfies BST ordering properties.\n\nConditions:\n\nLeft subtree values < Root.\nRight subtree values > Root.\n\nApproaches:\n\nInorder Traversal.\nRange Validation.\nRecursive Constraints.\n\nOptimal Solution:\n\nMaintain valid min and max ranges.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(h)\n\nApplications:\n\nDatabase Systems.\nSearch Structures.\nTree Verification.",
+      "explanation": "Tree:\n\n      5\n     / \\\n    3   7\n\nValid BST.\n\nTree:\n\n      5\n     / \\\n    7   3\n\nInvalid BST.",
+      "code_example": "isValid(node, min, max);",
+      "key_takeaways": [
+        "Checks BST property.",
+        "Complexity O(n).",
+        "Uses recursion efficiently.",
+        "Common interview problem.",
+        "Important BST operation."
+      ]
+    },
+    {
+      "id": 99,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Bridge in Graph",
+      "question": "What is a Bridge in a Graph? Explain Tarjan's Bridge Algorithm, complexity analysis, and applications.",
+      "answer": "A Bridge is an edge in an undirected graph whose removal increases the number of connected components.\n\nIn simpler terms, removing a bridge disconnects part of the graph.\n\nTarjan's Algorithm uses:\n\nDFS.\nDiscovery Time.\nLow Values.\n\nCondition:\n\nlow[child] > disc[parent]\n\nThen edge is a bridge.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nNetwork Reliability.\nInfrastructure Analysis.\nRoad Networks.\nCommunication Systems.",
+      "explanation": "Example:\n\nA --- B --- C\n\nRemoving B-C disconnects C.\n\nTherefore B-C is a bridge.",
+      "code_example": "if(low[v] > disc[u])",
+      "key_takeaways": [
+        "Bridge removal disconnects graph.",
+        "Uses DFS and low-link values.",
+        "Complexity O(V + E).",
+        "Important graph concept.",
+        "Used in network analysis."
+      ]
+    },
+    {
+      "id": 100,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Articulation Point",
+      "question": "What is an Articulation Point in a Graph? Explain the algorithm, complexity analysis, significance, and applications.",
+      "answer": "An Articulation Point (Cut Vertex) is a vertex whose removal increases the number of connected components in a graph.\n\nIn practical terms, removing such a node disconnects part of the network.\n\nTarjan's Algorithm identifies articulation points using:\n\nDFS.\nDiscovery Times.\nLow-Link Values.\n\nConditions:\n\nRoot has multiple DFS children.\nNon-root node where low[child] >= disc[parent].\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nNetwork Design.\nPower Grids.\nRoad Systems.\nCommunication Networks.\nInfrastructure Planning.",
+      "explanation": "Example:\n\nA\n|\nB\n/ \\\nC  D\n\nRemoving B disconnects A from C and D.\n\nTherefore B is an articulation point.",
+      "code_example": "if(low[v] >= disc[u])",
+      "key_takeaways": [
+        "Critical vertex in graph.",
+        "Removal disconnects graph.",
+        "Uses DFS and low values.",
+        "Complexity O(V + E).",
+        "Important advanced graph topic."
+      ]
+    },
+    {
+      "id": 101,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Edit Distance (Levenshtein Distance)",
+      "question": "What is the Edit Distance Problem? Explain the dynamic programming solution, operations involved, complexity analysis, and practical applications.",
+      "answer": "Edit Distance, also known as Levenshtein Distance, is a classic Dynamic Programming problem that measures the minimum number of operations required to transform one string into another.\n\nAllowed Operations:\n\nInsert a character.\nDelete a character.\nReplace a character.\n\nThe goal is to determine the minimum number of edits needed.\n\nDynamic Programming Approach:\n\nCreate a DP table where dp[i][j] represents the minimum operations required to convert the first i characters of String A into the first j characters of String B.\n\nTransition:\n\nIf characters match:\nNo operation required.\n\nIf characters differ:\nTake minimum of:\n\nInsert.\nDelete.\nReplace.\n\nComplexities:\n\nTime Complexity: O(m × n)\nSpace Complexity: O(m × n)\n\nApplications:\n\nSpell Checkers.\nAuto Correction Systems.\nDNA Analysis.\nPlagiarism Detection.\nSearch Engines.\nNatural Language Processing.",
+      "explanation": "Example:\n\nWord 1: CAT\nWord 2: CUT\n\nOperations:\n\nReplace A with U\n\nEdit Distance = 1\n\nThe DP table efficiently computes the minimum edits by reusing previously solved subproblems.",
+      "code_example": "dp[i][j] = 1 + Math.min(insert, Math.min(delete, replace));",
+      "key_takeaways": [
+        "Measures string similarity.",
+        "Uses Dynamic Programming.",
+        "Complexity O(m × n).",
+        "Supports insert, delete, replace.",
+        "Widely used in NLP systems."
+      ]
+    },
+    {
+      "id": 102,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Longest Palindromic Subsequence",
+      "question": "What is the Longest Palindromic Subsequence Problem? Explain its dynamic programming solution, complexity analysis, and applications.",
+      "answer": "The Longest Palindromic Subsequence (LPS) Problem asks for the longest subsequence of a string that reads the same forwards and backwards.\n\nUnlike substrings, subsequences do not require contiguous characters.\n\nDynamic Programming Solution:\n\nIf characters at both ends match:\n\n2 + LPS(inner substring)\n\nOtherwise:\n\nTake maximum of two possibilities.\n\nComplexities:\n\nTime Complexity: O(n²)\nSpace Complexity: O(n²)\n\nApplications:\n\nDNA Analysis.\nPattern Recognition.\nBioinformatics.\nText Processing.",
+      "explanation": "String:\n\nBBABCBCAB\n\nLongest Palindromic Subsequence:\n\nBABCBAB\n\nLength = 7",
+      "code_example": "dp[i][j] = dp[i+1][j-1] + 2;",
+      "key_takeaways": [
+        "Uses dynamic programming.",
+        "Different from palindromic substring.",
+        "Complexity O(n²).",
+        "Important DP problem.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 103,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Longest Palindromic Substring",
+      "question": "What is the Longest Palindromic Substring Problem? Explain different approaches, complexity analysis, and practical applications.",
+      "answer": "The Longest Palindromic Substring Problem requires finding the longest contiguous substring that forms a palindrome.\n\nApproaches:\n\nBrute Force.\nDynamic Programming.\nExpand Around Center.\nManacher's Algorithm.\n\nOptimal Common Solution:\n\nExpand Around Center.\n\nComplexities:\n\nTime Complexity: O(n²)\nSpace Complexity: O(1)\n\nApplications:\n\nText Processing.\nDNA Analysis.\nPattern Detection.\nData Analytics.",
+      "explanation": "String:\n\nBANANA\n\nLongest Palindromic Substring:\n\nANANA\n\nLength = 5",
+      "code_example": "expand(left, right);",
+      "key_takeaways": [
+        "Requires contiguous characters.",
+        "Different from subsequence problem.",
+        "Expand-around-center is popular.",
+        "Complexity O(n²).",
+        "Classic interview problem."
+      ]
+    },
+    {
+      "id": 104,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Backtracking",
+      "difficulty": "Hard",
+      "title": "Generate All Permutations",
+      "question": "How can all permutations of a set be generated using Backtracking? Explain the algorithm, complexity analysis, and applications.",
+      "answer": "Generating all permutations is a classic backtracking problem where every possible arrangement of elements must be produced.\n\nAlgorithm:\n\nChoose an element.\nPlace it in current position.\nRecursively generate remaining positions.\nBacktrack.\n\nComplexities:\n\nTime Complexity: O(n × n!)\nSpace Complexity: O(n)\n\nApplications:\n\nScheduling Problems.\nGame Theory.\nCryptography.\nOptimization Problems.\nCombinatorial Search.",
+      "explanation": "Elements:\n\n[1,2,3]\n\nPermutations:\n\n123\n132\n213\n231\n312\n321\n\nTotal = 3! = 6",
+      "code_example": "swap(arr, start, i);",
+      "key_takeaways": [
+        "Classic backtracking problem.",
+        "Generates all arrangements.",
+        "Complexity O(n!).",
+        "Uses recursion extensively.",
+        "Popular coding interview topic."
+      ]
+    },
+    {
+      "id": 105,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Backtracking",
+      "difficulty": "Hard",
+      "title": "Generate All Subsets (Power Set)",
+      "question": "What is the Power Set Problem? Explain how all subsets can be generated using Backtracking and complexity analysis.",
+      "answer": "The Power Set Problem requires generating all possible subsets of a given set.\n\nEvery element has two choices:\n\nInclude.\nExclude.\n\nBacktracking recursively explores both possibilities.\n\nComplexities:\n\nTime Complexity: O(2ⁿ)\nSpace Complexity: O(n)\n\nApplications:\n\nFeature Selection.\nCombinatorial Optimization.\nDecision Making Systems.\nMachine Learning.",
+      "explanation": "Set:\n\n[1,2]\n\nSubsets:\n\n[]\n[1]\n[2]\n[1,2]\n\nTotal = 2² = 4",
+      "code_example": "subset.add(nums[i]);",
+      "key_takeaways": [
+        "Generates all subsets.",
+        "Uses include/exclude strategy.",
+        "Complexity O(2ⁿ).",
+        "Important recursion problem.",
+        "Frequently asked in interviews."
+      ]
+    },
+    {
+      "id": 106,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Greedy Algorithms",
+      "difficulty": "Hard",
+      "title": "Fractional Knapsack Problem",
+      "question": "What is the Fractional Knapsack Problem? Explain the greedy solution, complexity analysis, and difference from 0/1 Knapsack.",
+      "answer": "The Fractional Knapsack Problem allows items to be divided into fractions. The objective is to maximize total value while staying within weight capacity.\n\nGreedy Strategy:\n\nCalculate value-to-weight ratio.\nSort items by ratio.\nTake highest ratio items first.\nTake fractions when necessary.\n\nComplexities:\n\nTime Complexity: O(n log n)\nSpace Complexity: O(1)\n\nDifference from 0/1 Knapsack:\n\n0/1 Knapsack:\nEntire item selected or rejected.\n\nFractional Knapsack:\nPartial selection allowed.\n\nThis property makes a greedy solution optimal.",
+      "explanation": "Capacity = 50\n\nItems:\n\nWeight 10 Value 60\nWeight 20 Value 100\nWeight 30 Value 120\n\nChoose highest value/weight ratios first.\n\nMaximum profit achieved efficiently.",
+      "code_example": "Collections.sort(items);",
+      "key_takeaways": [
+        "Greedy solution works optimally.",
+        "Items can be divided.",
+        "Complexity O(n log n).",
+        "Different from 0/1 Knapsack.",
+        "Classic optimization problem."
+      ]
+    },
+    {
+      "id": 107,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Greedy Algorithms",
+      "difficulty": "Hard",
+      "title": "Job Sequencing Problem",
+      "question": "What is the Job Sequencing Problem? Explain the greedy approach, complexity analysis, and practical applications.",
+      "answer": "The Job Sequencing Problem involves scheduling jobs with deadlines and profits in order to maximize total profit.\n\nEach job:\n\nHas a deadline.\nHas a profit.\nRequires one unit of time.\n\nGreedy Strategy:\n\nSort jobs by profit.\nSchedule highest-profit jobs first.\nAssign latest available slot before deadline.\n\nComplexities:\n\nTime Complexity: O(n²)\n\nApplications:\n\nTask Scheduling.\nCloud Computing.\nManufacturing Systems.\nProject Planning.\nResource Optimization.",
+      "explanation": "Jobs:\n\nA Profit 100 Deadline 2\nB Profit 50 Deadline 1\n\nSchedule highest-profit jobs first while respecting deadlines.",
+      "code_example": "jobs.sort((a,b)->b.profit-a.profit);",
+      "key_takeaways": [
+        "Greedy scheduling problem.",
+        "Maximizes profit.",
+        "Uses deadlines and profits.",
+        "Common interview topic.",
+        "Practical scheduling application."
+      ]
+    },
+    {
+      "id": 108,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Trees",
+      "difficulty": "Hard",
+      "title": "B-Tree",
+      "question": "What is a B-Tree? Explain its structure, properties, operations, complexity analysis, and database applications.",
+      "answer": "A B-Tree is a self-balancing multi-way search tree optimized for systems that read and write large blocks of data. Unlike Binary Search Trees, B-Trees allow multiple keys and multiple children per node.\n\nProperties:\n\nBalanced structure.\nMultiple keys per node.\nMultiple children.\nAll leaves at same level.\n\nOperations:\n\nSearch.\nInsertion.\nDeletion.\n\nComplexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nApplications:\n\nDatabases.\nFile Systems.\nIndexing Systems.\nStorage Engines.\nOperating Systems.",
+      "explanation": "Databases store millions of records.\n\nB-Trees minimize disk access by storing many keys in a single node.\n\nThis dramatically improves performance.",
+      "code_example": "BTreeNode root;",
+      "key_takeaways": [
+        "Database-friendly tree structure.",
+        "Minimizes disk access.",
+        "Balanced tree.",
+        "Operations O(log n).",
+        "Used extensively in DBMS."
+      ]
+    },
+    {
+      "id": 109,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Trees",
+      "difficulty": "Hard",
+      "title": "B+ Tree",
+      "question": "What is a B+ Tree? Explain its structure, differences from B-Tree, advantages, and database applications.",
+      "answer": "A B+ Tree is an advanced version of a B-Tree where all actual data records are stored only at leaf nodes. Internal nodes contain only keys used for navigation.\n\nDifferences from B-Tree:\n\nData stored only in leaves.\nLeaf nodes linked together.\nFaster range queries.\nBetter sequential access.\n\nComplexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nApplications:\n\nMySQL.\nPostgreSQL.\nOracle Database.\nFile Systems.\nIndexing Engines.",
+      "explanation": "Linked leaf nodes allow fast sequential scanning.\n\nThis makes B+ Trees particularly effective for database range queries.",
+      "code_example": "Leaf nodes contain actual records;",
+      "key_takeaways": [
+        "Extension of B-Tree.",
+        "Data stored in leaves only.",
+        "Efficient range queries.",
+        "Widely used in databases.",
+        "Important system design topic."
+      ]
+    },
+    {
+      "id": 110,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Suffix Array",
+      "question": "What is a Suffix Array? Explain its construction, complexity analysis, advantages, and applications in string processing.",
+      "answer": "A Suffix Array is a sorted array containing all suffixes of a string. It is a space-efficient alternative to Suffix Trees and is widely used in advanced string-processing applications.\n\nConstruction:\n\nGenerate all suffixes.\nSort suffixes lexicographically.\nStore starting indices.\n\nApplications:\n\nPattern Matching.\nBioinformatics.\nSearch Engines.\nData Compression.\nText Analytics.\nGenome Sequencing.\n\nComplexities:\n\nConstruction:\nO(n log n)\n\nSearching:\nO(m log n)\n\nWhere:\n\nn = Text Length\nm = Pattern Length\n\nSuffix Arrays are extremely important in advanced competitive programming and string processing systems.",
+      "explanation": "String:\n\nBANANA\n\nSuffixes:\n\nBANANA\nANANA\nNANA\nANA\nNA\nA\n\nSort these suffixes and store their positions.",
+      "code_example": "Arrays.sort(suffixes);",
+      "key_takeaways": [
+        "Stores sorted suffixes.",
+        "Supports efficient pattern matching.",
+        "Used in advanced string algorithms.",
+        "Space efficient compared to suffix trees.",
+        "Important advanced DSA topic."
+      ]
+    },
+    {
+      "id": 111,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Suffix Tree",
+      "question": "What is a Suffix Tree? Explain its structure, construction, complexity analysis, advantages, disadvantages, and applications.",
+      "answer": "A Suffix Tree is a compressed trie-like data structure that contains all suffixes of a given string. It allows extremely fast string processing operations and is one of the most powerful data structures used in advanced text algorithms.\n\nEach path from the root to a leaf represents a suffix of the string.\n\nKey Features:\n\nStores all suffixes.\nSupports fast pattern matching.\nEfficient substring queries.\n\nComplexities:\n\nConstruction: O(n)\nPattern Search: O(m)\n\nWhere:\n\nn = Length of text.\nm = Length of pattern.\n\nAdvantages:\n\nVery fast searching.\nEfficient substring operations.\nSupports many advanced algorithms.\n\nDisadvantages:\n\nComplex implementation.\nHigh memory usage.\n\nApplications:\n\nDNA Sequencing.\nSearch Engines.\nBioinformatics.\nData Compression.\nPlagiarism Detection.\nNatural Language Processing.",
+      "explanation": "String:\n\nBANANA\n\nSuffixes:\n\nBANANA\nANANA\nNANA\nANA\nNA\nA\n\nA Suffix Tree stores all these suffixes in a compressed tree structure, allowing substring searches in linear time.",
+      "code_example": "SuffixTree tree = new SuffixTree(text);",
+      "key_takeaways": [
+        "Stores all suffixes of a string.",
+        "Pattern search complexity O(m).",
+        "Powerful string processing structure.",
+        "High memory consumption.",
+        "Used in advanced text processing."
+      ]
+    },
+    {
+      "id": 112,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Hard",
+      "title": "Z Algorithm",
+      "question": "What is the Z Algorithm? Explain its working, Z-array construction, complexity analysis, and applications.",
+      "answer": "The Z Algorithm is a linear-time string matching algorithm used to find pattern occurrences efficiently. It computes a Z-array where Z[i] represents the length of the longest substring starting at position i that matches the prefix of the string.\n\nThe algorithm avoids redundant comparisons by maintaining a Z-box.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(n)\n\nApplications:\n\nPattern Matching.\nString Searching.\nText Editors.\nBioinformatics.\nCompetitive Programming.\n\nCompared to naive approaches, the Z Algorithm achieves linear performance.",
+      "explanation": "Pattern:\n\nABC\n\nText:\n\nABCABCABC\n\nCreate:\n\nABC$ABCABCABC\n\nCompute Z-array.\n\nPositions where Z value equals pattern length indicate pattern matches.",
+      "code_example": "int[] z = new int[n];",
+      "key_takeaways": [
+        "Linear-time string matching.",
+        "Uses Z-array.",
+        "Complexity O(n).",
+        "Alternative to KMP.",
+        "Popular competitive programming topic."
+      ]
+    },
+    {
+      "id": 113,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "A* Search Algorithm",
+      "question": "What is the A* Search Algorithm? Explain its working, heuristic function, complexity analysis, and applications.",
+      "answer": "A* (A-Star) is an informed search algorithm used to find the shortest path between two nodes. It combines the advantages of Dijkstra's Algorithm and heuristic-based searching.\n\nEvaluation Function:\n\nf(n) = g(n) + h(n)\n\nWhere:\n\ng(n) = Actual cost from source.\nh(n) = Estimated cost to destination.\n\nA* selects the node with the smallest f(n).\n\nAdvantages:\n\nFast pathfinding.\nOptimal solution when heuristic is admissible.\nEfficient exploration.\n\nApplications:\n\nGPS Navigation.\nVideo Games.\nRobotics.\nAI Systems.\nPath Planning.",
+      "explanation": "Suppose a robot must reach a destination.\n\nDijkstra explores many unnecessary nodes.\n\nA* uses a heuristic estimate to focus the search toward the goal, significantly improving performance.",
+      "code_example": "f = g + h;",
+      "key_takeaways": [
+        "Uses actual and estimated cost.",
+        "Popular pathfinding algorithm.",
+        "Widely used in AI.",
+        "More focused than Dijkstra.",
+        "Uses heuristics."
+      ]
+    },
+    {
+      "id": 114,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Maximum Flow Problem",
+      "question": "What is the Maximum Flow Problem? Explain its formulation, significance, and real-world applications.",
+      "answer": "The Maximum Flow Problem determines the maximum amount of flow that can be sent from a source node to a destination node in a flow network while respecting capacity constraints.\n\nComponents:\n\nSource Node.\nSink Node.\nCapacity of Edges.\nFlow Values.\n\nGoal:\n\nMaximize total flow from source to sink.\n\nApplications:\n\nNetwork Routing.\nInternet Traffic Management.\nSupply Chain Optimization.\nTransportation Systems.\nProject Scheduling.\nTelecommunication Networks.\n\nThe Maximum Flow Problem is one of the most important optimization problems in graph theory.",
+      "explanation": "Imagine water flowing through pipes.\n\nEach pipe has a capacity.\n\nThe objective is to determine the maximum amount of water that can flow from the source reservoir to the destination reservoir.",
+      "code_example": "maxFlow(source, sink);",
+      "key_takeaways": [
+        "Optimization problem on graphs.",
+        "Uses capacities and flows.",
+        "Important in networking.",
+        "Foundation for many advanced algorithms.",
+        "Widely used in industry."
+      ]
+    },
+    {
+      "id": 115,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Ford-Fulkerson Algorithm",
+      "question": "What is the Ford-Fulkerson Algorithm? Explain its working, residual graph concept, complexity analysis, and applications.",
+      "answer": "Ford-Fulkerson is a classic algorithm used to solve the Maximum Flow Problem. It repeatedly finds augmenting paths from source to sink and increases flow until no more augmenting paths exist.\n\nKey Concepts:\n\nResidual Graph.\nAugmenting Path.\nFlow Capacity.\n\nAlgorithm Steps:\n\nFind augmenting path.\nDetermine bottleneck capacity.\nUpdate flow.\nUpdate residual graph.\nRepeat.\n\nComplexity:\n\nO(E × MaxFlow)\n\nApplications:\n\nNetwork Routing.\nResource Allocation.\nTraffic Management.\nSupply Chain Systems.",
+      "explanation": "Each iteration pushes additional flow through available paths.\n\nWhen no path remains from source to sink, maximum flow has been achieved.",
+      "code_example": "while(hasAugmentingPath())",
+      "key_takeaways": [
+        "Solves maximum flow problems.",
+        "Uses residual graphs.",
+        "Based on augmenting paths.",
+        "Foundation of network flow theory.",
+        "Important graph algorithm."
+      ]
+    },
+    {
+      "id": 116,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Edmonds-Karp Algorithm",
+      "question": "What is the Edmonds-Karp Algorithm? Explain how it improves Ford-Fulkerson and analyze its complexity.",
+      "answer": "Edmonds-Karp is a specific implementation of Ford-Fulkerson that uses Breadth First Search (BFS) to find the shortest augmenting path in terms of edge count.\n\nAdvantages:\n\nPredictable behavior.\nGuaranteed polynomial complexity.\n\nAlgorithm:\n\nUse BFS to find augmenting path.\nUpdate residual graph.\nRepeat until no path exists.\n\nComplexities:\n\nTime Complexity: O(VE²)\n\nApplications:\n\nNetwork Optimization.\nCommunication Systems.\nFlow Analysis.\nResource Distribution.",
+      "explanation": "Unlike Ford-Fulkerson, which can choose arbitrary paths, Edmonds-Karp consistently chooses shortest augmenting paths, improving theoretical guarantees.",
+      "code_example": "Queue<Integer> q = new LinkedList<>();",
+      "key_takeaways": [
+        "Uses BFS.",
+        "Extension of Ford-Fulkerson.",
+        "Polynomial-time guarantee.",
+        "Important maximum flow algorithm.",
+        "Complexity O(VE²)."
+      ]
+    },
+    {
+      "id": 117,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Bitmask Dynamic Programming",
+      "question": "What is Bitmask Dynamic Programming? Explain its working, advantages, complexity analysis, and applications.",
+      "answer": "Bitmask Dynamic Programming combines bit manipulation with dynamic programming to efficiently represent subsets.\n\nA bitmask uses bits to indicate whether elements are included or excluded.\n\nExample:\n\n1011\n\nRepresents a subset where certain elements are selected.\n\nAdvantages:\n\nCompact representation.\nFast subset operations.\nEfficient state storage.\n\nApplications:\n\nTraveling Salesman Problem.\nAssignment Problems.\nSubset Optimization.\nGame Theory.\nCompetitive Programming.\n\nBitmask DP is especially useful when the number of elements is small but all subset combinations must be explored.",
+      "explanation": "For n elements, there are 2ⁿ subsets.\n\nBitmasking efficiently stores and processes these subsets using integers.",
+      "code_example": "dp[mask][city]",
+      "key_takeaways": [
+        "Combines DP and bit manipulation.",
+        "Efficient subset representation.",
+        "Useful for state compression.",
+        "Popular in advanced interviews.",
+        "Common in optimization problems."
+      ]
+    },
+    {
+      "id": 118,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Traveling Salesman Problem (TSP)",
+      "question": "What is the Traveling Salesman Problem? Explain the problem statement, DP solution, complexity analysis, and significance.",
+      "answer": "The Traveling Salesman Problem (TSP) asks for the shortest possible route that visits every city exactly once and returns to the starting city.\n\nTSP is one of the most famous NP-Hard problems.\n\nBrute Force:\n\nTry all possible permutations.\n\nComplexity:\nO(n!)\n\nDynamic Programming with Bitmasking:\n\nComplexity:\nO(n² × 2ⁿ)\n\nApplications:\n\nLogistics.\nRoute Optimization.\nDelivery Systems.\nManufacturing.\nCircuit Design.\nRobotics.",
+      "explanation": "Suppose a salesperson must visit 10 cities.\n\nTrying every route becomes computationally expensive.\n\nDP with Bitmasking dramatically reduces redundant calculations.",
+      "code_example": "tsp(mask, city);",
+      "key_takeaways": [
+        "Classic NP-Hard problem.",
+        "Uses bitmask DP.",
+        "Important optimization challenge.",
+        "Applications in routing systems.",
+        "Frequently discussed in advanced algorithms."
+      ]
+    },
+    {
+      "id": 119,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Mathematical Algorithms",
+      "difficulty": "Medium",
+      "title": "Sieve of Eratosthenes",
+      "question": "What is the Sieve of Eratosthenes? Explain its working, complexity analysis, and applications.",
+      "answer": "The Sieve of Eratosthenes is an efficient algorithm used to find all prime numbers up to a given limit.\n\nAlgorithm:\n\nMark all numbers as prime.\nStart from 2.\nMark multiples as non-prime.\nContinue until √n.\n\nComplexities:\n\nTime Complexity: O(n log log n)\nSpace Complexity: O(n)\n\nApplications:\n\nNumber Theory.\nCryptography.\nCompetitive Programming.\nPrime Number Generation.\nMathematical Research.",
+      "explanation": "For n = 30:\n\nMark multiples of 2.\nMark multiples of 3.\nMark multiples of 5.\n\nRemaining numbers are prime.",
+      "code_example": "prime[j] = false;",
+      "key_takeaways": [
+        "Efficient prime generation algorithm.",
+        "Complexity O(n log log n).",
+        "Widely used in mathematics.",
+        "Important interview topic.",
+        "Useful in competitive programming."
+      ]
+    },
+    {
+      "id": 120,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Mathematical Algorithms",
+      "difficulty": "Medium",
+      "title": "Euclidean Algorithm",
+      "question": "What is the Euclidean Algorithm? Explain its working, complexity analysis, advantages, and applications.",
+      "answer": "The Euclidean Algorithm is an efficient method for finding the Greatest Common Divisor (GCD) of two integers.\n\nPrinciple:\n\nGCD(a, b) = GCD(b, a mod b)\n\nRepeat until remainder becomes zero.\n\nThe last non-zero value is the GCD.\n\nComplexities:\n\nTime Complexity: O(log(min(a,b)))\n\nApplications:\n\nFraction Simplification.\nCryptography.\nModular Arithmetic.\nNumber Theory.\nRSA Encryption.\nCompetitive Programming.\n\nIt is one of the oldest and most efficient algorithms still widely used today.",
+      "explanation": "Find GCD(48,18)\n\n48 mod 18 = 12\n18 mod 12 = 6\n12 mod 6 = 0\n\nGCD = 6",
+      "code_example": "return gcd(b, a % b);",
+      "key_takeaways": [
+        "Finds greatest common divisor.",
+        "Very efficient algorithm.",
+        "Complexity O(log n).",
+        "Widely used in mathematics.",
+        "Important foundation for cryptography."
+      ]
+    },
+    {
+      "id": 121,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Mathematical Algorithms",
+      "difficulty": "Hard",
+      "title": "Modular Arithmetic",
+      "question": "What is Modular Arithmetic? Explain its properties, operations, complexity benefits, and applications in computer science.",
+      "answer": "Modular Arithmetic is a system of arithmetic where numbers wrap around after reaching a certain value called the modulus. It is commonly represented using the modulo operator (%).\n\nFor example:\n\n17 % 5 = 2\n\nImportant Properties:\n\n(a + b) % m = ((a % m) + (b % m)) % m\n\n(a - b) % m = ((a % m) - (b % m) + m) % m\n\n(a × b) % m = ((a % m) × (b % m)) % m\n\nModular arithmetic is extremely useful when dealing with very large numbers because it prevents integer overflow and keeps calculations manageable.\n\nApplications:\n\nCryptography.\nHash Functions.\nCompetitive Programming.\nNumber Theory.\nBlockchain Systems.\nRSA Encryption.\nDigital Signatures.\n\nMany advanced algorithms rely heavily on modular arithmetic for correctness and efficiency.",
+      "explanation": "Suppose we want to calculate:\n\n1000000007 × 1000000007\n\nThe result becomes extremely large.\n\nUsing modulo arithmetic allows calculations to remain within limits while preserving important mathematical properties.",
+      "code_example": "long result = (a % mod * b % mod) % mod;",
+      "key_takeaways": [
+        "Works with remainders.",
+        "Prevents overflow in large computations.",
+        "Essential in competitive programming.",
+        "Used heavily in cryptography.",
+        "Supports efficient mathematical operations."
+      ]
+    },
+    {
+      "id": 122,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Mathematical Algorithms",
+      "difficulty": "Hard",
+      "title": "Fast Exponentiation (Binary Exponentiation)",
+      "question": "What is Binary Exponentiation? Explain its algorithm, complexity analysis, and practical applications.",
+      "answer": "Binary Exponentiation, also called Fast Exponentiation, is an efficient algorithm used to compute large powers.\n\nInstead of multiplying a number repeatedly, it uses divide-and-conquer principles.\n\nKey Idea:\n\nIf n is even:\n\naⁿ = (a^(n/2))²\n\nIf n is odd:\n\naⁿ = a × aⁿ⁻¹\n\nThis reduces the number of multiplications significantly.\n\nComplexities:\n\nTime Complexity: O(log n)\nSpace Complexity: O(1) iterative version.\n\nApplications:\n\nCryptography.\nModular Arithmetic.\nCompetitive Programming.\nMatrix Exponentiation.\nScientific Computing.",
+      "explanation": "Calculate:\n\n2¹⁰\n\nInstead of multiplying 2 ten times:\n\n2¹⁰ = (2⁵)²\n2⁵ = 2 × (2²)²\n\nThe number of operations decreases dramatically.",
+      "code_example": "while(n > 0){\n if((n & 1)==1) result *= a;\n a *= a;\n n >>= 1;\n}",
+      "key_takeaways": [
+        "Computes powers efficiently.",
+        "Uses divide-and-conquer.",
+        "Complexity O(log n).",
+        "Useful in cryptography.",
+        "Important mathematical algorithm."
+      ]
+    },
+    {
+      "id": 123,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Dynamic Programming",
+      "difficulty": "Hard",
+      "title": "Digit Dynamic Programming",
+      "question": "What is Digit Dynamic Programming? Explain its concept, state representation, complexity analysis, and applications.",
+      "answer": "Digit Dynamic Programming (Digit DP) is an advanced DP technique used to solve problems involving digits of numbers within a given range.\n\nInstead of iterating through every number, Digit DP processes numbers digit by digit.\n\nTypical State Components:\n\nPosition.\nTight Constraint.\nLeading Zeros.\nProblem-Specific State.\n\nComplexities depend on the number of digits and states but are usually far more efficient than brute-force solutions.\n\nApplications:\n\nCounting Numbers.\nDigit Sum Problems.\nRange Queries.\nNumber Theory.\nCompetitive Programming.",
+      "explanation": "Suppose we need to count how many numbers from 1 to 1,000,000 contain digit 5.\n\nChecking every number individually is expensive.\n\nDigit DP processes digit positions and counts valid numbers efficiently.",
+      "code_example": "dp[pos][tight][state]",
+      "key_takeaways": [
+        "Processes numbers digit by digit.",
+        "Advanced dynamic programming technique.",
+        "Useful for range counting problems.",
+        "Avoids brute-force enumeration.",
+        "Popular in advanced contests."
+      ]
+    },
+    {
+      "id": 124,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Bipartite Graph",
+      "question": "What is a Bipartite Graph? Explain its properties, detection methods, complexity analysis, and applications.",
+      "answer": "A Bipartite Graph is a graph whose vertices can be divided into two disjoint sets such that no edge connects vertices within the same set.\n\nProperties:\n\nTwo-colorable.\nContains no odd-length cycle.\n\nDetection Methods:\n\nBFS Coloring.\nDFS Coloring.\n\nAlgorithm:\n\nAssign first color.\nAssign opposite color to neighbors.\nContinue traversal.\nIf a conflict occurs, graph is not bipartite.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nJob Assignment.\nMatching Problems.\nScheduling.\nRecommendation Systems.\nSocial Networks.",
+      "explanation": "Example:\n\nStudents ↔ Projects\n\nStudents belong to one set.\nProjects belong to another.\n\nEdges represent assignments.\n\nThis naturally forms a bipartite graph.",
+      "code_example": "color[neighbor] = 1 - color[node];",
+      "key_takeaways": [
+        "Vertices divided into two groups.",
+        "No odd cycle exists.",
+        "Can be checked using BFS or DFS.",
+        "Important graph property.",
+        "Used in matching problems."
+      ]
+    },
+    {
+      "id": 125,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Top K Elements using Heap",
+      "question": "How can Heaps be used to find Top K Elements efficiently? Explain the algorithm, complexity analysis, and applications.",
+      "answer": "Finding Top K Elements is a common problem where we need the largest or smallest K values from a dataset.\n\nUsing a Heap:\n\nMaintain a Min Heap of size K.\nInsert elements.\nRemove smaller elements when necessary.\n\nComplexities:\n\nTime Complexity: O(n log k)\nSpace Complexity: O(k)\n\nAdvantages:\n\nEfficient for large datasets.\nBetter than sorting entire array.\n\nApplications:\n\nSearch Engines.\nLeaderboards.\nRecommendation Systems.\nAnalytics Platforms.\nStreaming Data Processing.",
+      "explanation": "Suppose:\n\nArray:\n[5, 20, 10, 40, 30]\n\nK = 2\n\nTop Elements:\n\n40, 30\n\nHeap avoids sorting the entire dataset.",
+      "code_example": "PriorityQueue<Integer> heap = new PriorityQueue<>();",
+      "key_takeaways": [
+        "Uses heap efficiently.",
+        "Complexity O(n log k).",
+        "Suitable for large datasets.",
+        "Common interview problem.",
+        "Widely used in analytics."
+      ]
+    },
+    {
+      "id": 126,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Sparse Table",
+      "question": "What is a Sparse Table? Explain its construction, query processing, complexity analysis, and applications.",
+      "answer": "A Sparse Table is an advanced data structure used for answering immutable range queries efficiently.\n\nIt is particularly useful when the array does not change after construction.\n\nSupported Queries:\n\nRange Minimum Query.\nRange Maximum Query.\nGreatest Common Divisor Queries.\n\nComplexities:\n\nPreprocessing: O(n log n)\nQuery: O(1)\n\nAdvantages:\n\nExtremely fast queries.\nSuitable for static datasets.\n\nApplications:\n\nCompetitive Programming.\nAnalytics Systems.\nDatabase Query Optimization.\nScientific Computing.",
+      "explanation": "If an array never changes but thousands of range minimum queries must be answered, Sparse Tables provide excellent performance.",
+      "code_example": "st[i][j]",
+      "key_takeaways": [
+        "Efficient for immutable arrays.",
+        "Query complexity O(1).",
+        "Preprocessing O(n log n).",
+        "Useful for RMQ problems.",
+        "Advanced data structure."
+      ]
+    },
+    {
+      "id": 127,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "LRU Cache",
+      "question": "What is an LRU Cache? Explain its implementation, operations, complexity analysis, and real-world applications.",
+      "answer": "LRU (Least Recently Used) Cache is a caching mechanism that removes the least recently accessed item when capacity is exceeded.\n\nEfficient Implementation:\n\nHashMap + Doubly Linked List.\n\nOperations:\n\nGet.\nPut.\nUpdate.\nEviction.\n\nComplexities:\n\nGet: O(1)\nPut: O(1)\n\nApplications:\n\nWeb Browsers.\nOperating Systems.\nDatabases.\nAPI Gateways.\nDistributed Systems.\nCaching Layers.\n\nLRU is one of the most frequently asked system design and DSA interview topics.",
+      "explanation": "Cache Capacity = 3\n\nAccess:\n1, 2, 3\n\nAccess 1 again.\n\nInsert 4.\n\nLeast recently used item (2) is removed.",
+      "code_example": "Map<Integer, Node> cache;",
+      "key_takeaways": [
+        "Evicts least recently used item.",
+        "Uses HashMap and Doubly Linked List.",
+        "Operations O(1).",
+        "Very common interview topic.",
+        "Widely used in caching systems."
+      ]
+    },
+    {
+      "id": 128,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "LFU Cache",
+      "question": "What is an LFU Cache? Explain its working, implementation challenges, complexity analysis, and applications.",
+      "answer": "LFU (Least Frequently Used) Cache removes the item that has been accessed the fewest number of times.\n\nUnlike LRU, which considers recency, LFU focuses on frequency.\n\nOperations:\n\nGet.\nPut.\nFrequency Update.\nEviction.\n\nComplexities:\n\nOptimized implementations achieve O(1).\n\nApplications:\n\nContent Delivery Networks.\nDatabases.\nCaching Systems.\nRecommendation Engines.\nDistributed Systems.\n\nLFU often performs better when frequently used items should remain cached for longer periods.",
+      "explanation": "Cache:\n\nA accessed 20 times.\nB accessed 5 times.\nC accessed 1 time.\n\nWhen space is needed, C is removed first.",
+      "code_example": "frequencyMap.get(freq);",
+      "key_takeaways": [
+        "Removes least frequently used item.",
+        "Frequency-based eviction policy.",
+        "Advanced cache design topic.",
+        "Can achieve O(1) operations.",
+        "Used in high-performance systems."
+      ]
+    },
+    {
+      "id": 129,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Algorithms",
+      "difficulty": "Hard",
+      "title": "Reservoir Sampling",
+      "question": "What is Reservoir Sampling? Explain the algorithm, complexity analysis, and real-world applications.",
+      "answer": "Reservoir Sampling is a randomized algorithm used to select k items uniformly at random from a stream of unknown size.\n\nThe algorithm ensures every element has an equal probability of being selected.\n\nAlgorithm:\n\nStore first k elements.\nProcess remaining elements.\nRandomly replace existing elements with decreasing probability.\n\nComplexities:\n\nTime Complexity: O(n)\nSpace Complexity: O(k)\n\nApplications:\n\nBig Data Systems.\nStreaming Analytics.\nMachine Learning.\nOnline Sampling.\nDistributed Computing.",
+      "explanation": "Suppose a stream contains billions of records.\n\nStoring everything is impossible.\n\nReservoir Sampling allows random selection while using limited memory.",
+      "code_example": "int j = random.nextInt(i + 1);",
+      "key_takeaways": [
+        "Random sampling from data streams.",
+        "Works with unknown input size.",
+        "Memory efficient.",
+        "Useful in big data systems.",
+        "Popular advanced algorithm."
+      ]
+    },
+    {
+      "id": 130,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Algorithms",
+      "difficulty": "Hard",
+      "title": "Bloom Filter",
+      "question": "What is a Bloom Filter? Explain its structure, operations, complexity analysis, advantages, disadvantages, and applications.",
+      "answer": "A Bloom Filter is a probabilistic data structure used to test whether an element is possibly in a set.\n\nIt can return:\n\nDefinitely Not Present.\nPossibly Present.\n\nComponents:\n\nBit Array.\nMultiple Hash Functions.\n\nOperations:\n\nInsert.\nMembership Check.\n\nComplexities:\n\nInsertion: O(k)\nLookup: O(k)\n\nWhere k is the number of hash functions.\n\nAdvantages:\n\nMemory efficient.\nExtremely fast.\nScalable.\n\nDisadvantages:\n\nFalse positives possible.\nFalse negatives impossible.\n\nApplications:\n\nDatabases.\nDistributed Systems.\nWeb Caches.\nSearch Engines.\nNetworking.\nBlockchain Systems.",
+      "explanation": "When checking whether a URL exists in a massive dataset, a Bloom Filter quickly eliminates most non-existent entries without requiring expensive database lookups.",
+      "code_example": "bitArray[hash(value)] = true;",
+      "key_takeaways": [
+        "Probabilistic data structure.",
+        "Very memory efficient.",
+        "Supports fast lookups.",
+        "Allows false positives.",
+        "Widely used in large-scale systems."
+      ]
+    },
+    {
+      "id": 131,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Skip List",
+      "question": "What is a Skip List? Explain its structure, working mechanism, complexity analysis, advantages, disadvantages, and real-world applications.",
+      "answer": "A Skip List is a probabilistic data structure that provides efficient search, insertion, and deletion operations by maintaining multiple levels of linked lists. It was designed as an alternative to balanced trees such as AVL Trees and Red-Black Trees.\n\nThe bottom level contains all elements in sorted order. Higher levels act as express lanes that allow the algorithm to skip large portions of the list.\n\nOperations:\n\nSearch.\nInsertion.\nDeletion.\n\nAverage Complexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nWorst Case:\n\nO(n)\n\nAdvantages:\n\nSimple implementation.\nEfficient performance.\nSupports dynamic updates.\n\nDisadvantages:\n\nRelies on randomness.\nPerformance is probabilistic.\n\nApplications:\n\nDatabases.\nIn-Memory Indexing.\nRedis.\nDistributed Systems.\nSearch Engines.",
+      "explanation": "Imagine searching for a name in a huge linked list.\n\nInstead of checking every node one by one, Skip Lists use upper levels to jump over large sections.\n\nThis dramatically reduces search time while maintaining relatively simple code.",
+      "code_example": "class SkipNode {\n int value;\n SkipNode[] forward;\n}",
+      "key_takeaways": [
+        "Probabilistic alternative to balanced trees.",
+        "Average complexity O(log n).",
+        "Uses multiple linked-list levels.",
+        "Simpler than many balanced trees.",
+        "Used in high-performance systems."
+      ]
+    },
+    {
+      "id": 132,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Advanced Data Structures",
+      "difficulty": "Hard",
+      "title": "Treap",
+      "question": "What is a Treap? Explain its structure, balancing strategy, complexity analysis, and applications.",
+      "answer": "A Treap is a randomized balanced binary search tree that combines properties of a Binary Search Tree (BST) and a Heap.\n\nEach node stores:\n\nKey.\nPriority.\n\nBST Property:\n\nLeft subtree contains smaller keys.\nRight subtree contains larger keys.\n\nHeap Property:\n\nParent priority must satisfy heap rules.\n\nOperations:\n\nSearch.\nInsertion.\nDeletion.\n\nAverage Complexities:\n\nSearch: O(log n)\nInsertion: O(log n)\nDeletion: O(log n)\n\nApplications:\n\nCompetitive Programming.\nOrdered Sets.\nDatabase Indexing.\nRange Queries.",
+      "explanation": "Treaps use random priorities.\n\nThis randomness helps maintain balance without requiring strict balancing rules like AVL Trees.",
+      "code_example": "node.priority = random.nextInt();",
+      "key_takeaways": [
+        "Combination of BST and Heap.",
+        "Uses random priorities.",
+        "Average complexity O(log n).",
+        "Self-balancing structure.",
+        "Popular in competitive programming."
+      ]
+    },
+    {
+      "id": 133,
+      "subject": "Data Structures and Algorithms",
+      "topic": "String Algorithms",
+      "difficulty": "Hard",
+      "title": "Manacher's Algorithm",
+      "question": "What is Manacher's Algorithm? Explain its working, complexity analysis, advantages, and applications.",
+      "answer": "Manacher's Algorithm is an advanced string-processing algorithm used to find the longest palindromic substring in linear time.\n\nTraditional approaches require O(n²) time.\n\nManacher's Algorithm achieves:\n\nTime Complexity: O(n)\n\nIt uses previously computed palindrome information to avoid redundant comparisons.\n\nKey Concepts:\n\nCenter Expansion.\nMirror Property.\nPalindrome Radius Array.\n\nApplications:\n\nDNA Analysis.\nPattern Recognition.\nText Processing.\nNatural Language Processing.\nCompetitive Programming.\n\nIt is considered one of the most elegant string algorithms.",
+      "explanation": "Instead of expanding from every position independently, Manacher's Algorithm reuses information from previously discovered palindromes.\n\nThis eliminates unnecessary work and enables linear performance.",
+      "code_example": "int[] radius = new int[n];",
+      "key_takeaways": [
+        "Finds longest palindromic substring.",
+        "Linear time O(n).",
+        "Advanced string algorithm.",
+        "Uses palindrome radius information.",
+        "Frequently appears in advanced interviews."
+      ]
+    },
+    {
+      "id": 134,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Range Query Algorithms",
+      "difficulty": "Hard",
+      "title": "Mo's Algorithm",
+      "question": "What is Mo's Algorithm? Explain its working, complexity analysis, and applications.",
+      "answer": "Mo's Algorithm is an offline query processing algorithm used to answer multiple range queries efficiently on static arrays.\n\nInstead of processing queries independently, Mo's Algorithm sorts them in a special order to minimize movement of pointers.\n\nKey Idea:\n\nDivide array into blocks.\nSort queries based on block number.\nMove pointers efficiently.\nUpdate answer incrementally.\n\nComplexities:\n\nApproximately O((N + Q)√N)\n\nWhere:\n\nN = Array Size\nQ = Number of Queries\n\nApplications:\n\nFrequency Queries.\nDistinct Element Queries.\nCompetitive Programming.\nRange Statistics.",
+      "explanation": "If thousands of range queries must be answered, processing each separately becomes expensive.\n\nMo's Algorithm reuses work between neighboring queries.",
+      "code_example": "Collections.sort(queries);",
+      "key_takeaways": [
+        "Offline range query algorithm.",
+        "Uses square root decomposition.",
+        "Efficient for many queries.",
+        "Popular competitive programming topic.",
+        "Reduces repeated computation."
+      ]
+    },
+    {
+      "id": 135,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Range Query Algorithms",
+      "difficulty": "Hard",
+      "title": "Square Root Decomposition",
+      "question": "What is Square Root Decomposition? Explain its construction, query processing, complexity analysis, and applications.",
+      "answer": "Square Root Decomposition is a technique used to process range queries efficiently by dividing data into blocks of approximately √N elements.\n\nConstruction:\n\nDivide array into blocks.\nStore summary information for each block.\n\nOperations:\n\nRange Sum Queries.\nRange Minimum Queries.\nUpdates.\n\nComplexities:\n\nQuery: O(√N)\nUpdate: O(√N)\n\nApplications:\n\nRange Queries.\nCompetitive Programming.\nData Analytics.\nDatabase Optimization.",
+      "explanation": "Instead of scanning every element in a large range, entire blocks can be processed together.\n\nThis significantly improves performance.",
+      "code_example": "blockSize = (int)Math.sqrt(n);",
+      "key_takeaways": [
+        "Uses block partitioning.",
+        "Complexity O(√N).",
+        "Useful for range queries.",
+        "Simple alternative to segment trees.",
+        "Important optimization technique."
+      ]
+    },
+    {
+      "id": 136,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Kahn's Algorithm",
+      "question": "What is Kahn's Algorithm? Explain its working, complexity analysis, advantages, and applications.",
+      "answer": "Kahn's Algorithm is a Breadth First Search (BFS)-based algorithm used to perform Topological Sorting of a Directed Acyclic Graph (DAG).\n\nAlgorithm Steps:\n\nCompute indegree of every node.\nInsert nodes with indegree 0 into a queue.\nProcess queue.\nReduce indegrees of neighbors.\nAdd new indegree-0 nodes.\n\nComplexities:\n\nTime Complexity: O(V + E)\nSpace Complexity: O(V)\n\nApplications:\n\nCourse Scheduling.\nDependency Resolution.\nBuild Systems.\nProject Planning.\nCompiler Design.",
+      "explanation": "A task can only be executed when all prerequisites are complete.\n\nKahn's Algorithm processes tasks in valid dependency order.",
+      "code_example": "Queue<Integer> queue = new LinkedList<>();",
+      "key_takeaways": [
+        "Performs topological sorting.",
+        "Uses BFS approach.",
+        "Works only on DAGs.",
+        "Complexity O(V + E).",
+        "Important graph algorithm."
+      ]
+    },
+    {
+      "id": 137,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Graph Algorithms",
+      "difficulty": "Hard",
+      "title": "Johnson's Algorithm",
+      "question": "What is Johnson's Algorithm? Explain its working, complexity analysis, and applications.",
+      "answer": "Johnson's Algorithm is an all-pairs shortest path algorithm designed for sparse graphs. It combines Bellman-Ford and Dijkstra algorithms.\n\nAlgorithm:\n\nAdd temporary source vertex.\nRun Bellman-Ford.\nReweight edges.\nRun Dijkstra from every vertex.\n\nAdvantages:\n\nHandles negative weights.\nEfficient for sparse graphs.\n\nComplexities:\n\nTime Complexity:\nO(V² log V + VE)\n\nApplications:\n\nTransportation Systems.\nCommunication Networks.\nRouting Systems.\nGraph Analytics.",
+      "explanation": "Floyd-Warshall works well for dense graphs.\n\nJohnson's Algorithm becomes more efficient when graphs are sparse.",
+      "code_example": "bellmanFord();\ndijkstra();",
+      "key_takeaways": [
+        "All-pairs shortest path algorithm.",
+        "Combines Bellman-Ford and Dijkstra.",
+        "Handles negative weights.",
+        "Efficient for sparse graphs.",
+        "Advanced graph topic."
+      ]
+    },
+    {
+      "id": 138,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Computational Geometry",
+      "difficulty": "Hard",
+      "title": "Convex Hull",
+      "question": "What is a Convex Hull? Explain its significance, algorithms, complexity analysis, and applications.",
+      "answer": "A Convex Hull is the smallest convex polygon that contains all given points in a plane.\n\nImagine stretching a rubber band around a set of points.\n\nThe shape formed is the convex hull.\n\nPopular Algorithms:\n\nGraham Scan.\nJarvis March.\nMonotonic Chain.\n\nComplexities:\n\nTypically O(n log n).\n\nApplications:\n\nComputer Graphics.\nGIS Systems.\nRobotics.\nPattern Recognition.\nImage Processing.\nNavigation Systems.",
+      "explanation": "Convex Hull helps identify the outer boundary of a set of points.\n\nMany geometric problems become easier after constructing the hull.",
+      "code_example": "Collections.sort(points);",
+      "key_takeaways": [
+        "Smallest convex boundary.",
+        "Important geometry concept.",
+        "Complexity O(n log n).",
+        "Used in graphics and GIS.",
+        "Advanced algorithm topic."
+      ]
+    },
+    {
+      "id": 139,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Computational Geometry",
+      "difficulty": "Hard",
+      "title": "Line Sweep Algorithm",
+      "question": "What is the Line Sweep Technique? Explain its working, complexity analysis, and applications.",
+      "answer": "Line Sweep is a computational geometry technique where an imaginary line moves across a plane while maintaining information about active objects.\n\nThe algorithm processes events in sorted order.\n\nAdvantages:\n\nEfficient geometric processing.\nReduces brute-force comparisons.\n\nApplications:\n\nInterval Overlap Detection.\nRectangle Intersection.\nClosest Pair Problems.\nGIS Systems.\nComputer Graphics.\nScheduling Problems.\n\nComplexities often improve from O(n²) to O(n log n).",
+      "explanation": "Instead of comparing every object with every other object, the sweep line tracks only currently relevant objects.",
+      "code_example": "PriorityQueue<Event> events;",
+      "key_takeaways": [
+        "Processes events in order.",
+        "Common geometry technique.",
+        "Improves efficiency significantly.",
+        "Used in interval problems.",
+        "Advanced algorithm design method."
+      ]
+    },
+    {
+      "id": 140,
+      "subject": "Data Structures and Algorithms",
+      "topic": "Randomized Algorithms",
+      "difficulty": "Hard",
+      "title": "Randomized QuickSort",
+      "question": "What is Randomized QuickSort? Explain its working, complexity analysis, advantages, disadvantages, and applications.",
+      "answer": "Randomized QuickSort is a variation of QuickSort that selects a pivot randomly instead of using a fixed strategy.\n\nThe randomness significantly reduces the probability of worst-case performance.\n\nAlgorithm:\n\nChoose random pivot.\nPartition array.\nRecursively sort subarrays.\n\nComplexities:\n\nBest Case: O(n log n)\nAverage Case: O(n log n)\nWorst Case: O(n²)\n\nAdvantages:\n\nSimple implementation.\nExcellent average performance.\nReduces adversarial input impact.\n\nApplications:\n\nSorting Systems.\nDatabase Engines.\nCompetitive Programming.\nGeneral-Purpose Libraries.",
+      "explanation": "Traditional QuickSort can perform poorly on already sorted input.\n\nRandomized pivot selection makes such worst-case scenarios extremely unlikely.",
+      "code_example": "int pivot = low + random.nextInt(high - low + 1);",
+      "key_takeaways": [
+        "Uses random pivot selection.",
+        "Average complexity O(n log n).",
+        "Reduces worst-case probability.",
+        "Widely used sorting strategy.",
+        "Important randomized algorithm."
+      ]
+    }
+  ]
+}
