@@ -62,10 +62,10 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && status != "suspended"
+    status != "suspended"
   end
 
   def inactive_message
-    status == "suspended" ? :suspended : super
+    status == "suspended" ? :suspended : :inactive
   end
 end
