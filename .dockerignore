@@ -27,6 +27,8 @@
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
+!/storage/interview_prep/
+!/storage/interview_prep/*.json
 /tmp/storage/*
 !/tmp/storage/.keep
 
