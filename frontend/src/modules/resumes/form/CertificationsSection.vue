@@ -34,7 +34,6 @@
             Duplicate
           </button>
           <button
-            v-if="entries.length > 1"
             type="button"
             class="rounded-lg px-2.5 py-1 text-xs font-semibold text-red-500 transition hover:bg-red-50"
             @click="remove(idx)"
@@ -81,11 +80,11 @@ import { emptyCertification } from '../../../utils/profileToResume'
 const props = defineProps({ modelValue: { type: Array, default: () => [] } })
 const emit = defineEmits(['update:modelValue'])
 
-const entries = ref(props.modelValue.length ? props.modelValue.map((c) => ({ ...c })) : [emptyCertification()])
+const entries = ref(props.modelValue.length ? props.modelValue.map((c) => ({ ...c })) : [])
 
 watch(() => props.modelValue, (val) => {
   if (JSON.stringify(val) !== JSON.stringify(entries.value)) {
-    entries.value = val.length ? val.map((c) => ({ ...c })) : [emptyCertification()]
+    entries.value = (val || []).length ? (val || []).map((c) => ({ ...c })) : []
   }
 }, { deep: true })
 

@@ -8,7 +8,6 @@
       <div class="mb-3 flex items-center justify-between gap-3">
         <span class="text-xs font-bold uppercase tracking-wider text-brand">Achievement {{ idx + 1 }}</span>
         <button
-          v-if="entries.length > 1"
           type="button"
           class="rounded-lg px-2.5 py-1 text-xs font-semibold text-red-500 transition hover:bg-red-50"
           @click="remove(idx)"
@@ -46,11 +45,11 @@ import { emptyAchievement } from '../../../utils/profileToResume'
 const props = defineProps({ modelValue: { type: Array, default: () => [] } })
 const emit = defineEmits(['update:modelValue'])
 
-const entries = ref(props.modelValue.length ? props.modelValue.map((a) => ({ ...a })) : [emptyAchievement()])
+const entries = ref(props.modelValue.length ? props.modelValue.map((a) => ({ ...a })) : [])
 
 watch(() => props.modelValue, (val) => {
   if (JSON.stringify(val) !== JSON.stringify(entries.value)) {
-    entries.value = val.length ? val.map((a) => ({ ...a })) : [emptyAchievement()]
+    entries.value = (val || []).length ? (val || []).map((a) => ({ ...a })) : []
   }
 }, { deep: true })
 

@@ -545,6 +545,7 @@ const sectionValidations = computed(() => {
     
     if (res.missing.length > 0) res.status = 'INCOMPLETE'
     else if (res.suggestions.length > 0 && res.status !== 'INCOMPLETE') res.status = 'OPTIMIZATION'
+    else if (getSectionCount(key) === 0 && !['personal', 'summary', 'skills'].includes(key)) res.status = 'EMPTY'
     
     v[key] = res
   }

@@ -15,7 +15,6 @@
         </select>
       </div>
       <button
-        v-if="entries.length > 1"
         type="button"
         class="shrink-0 rounded-lg p-1.5 text-red-400 transition hover:bg-red-50 hover:text-red-600"
         @click="remove(idx)"
@@ -44,11 +43,11 @@ const proficiencyOptions = ['Native', 'Fluent', 'Conversational', 'Basic']
 const props = defineProps({ modelValue: { type: Array, default: () => [] } })
 const emit = defineEmits(['update:modelValue'])
 
-const entries = ref(props.modelValue.length ? props.modelValue.map((l) => ({ ...l })) : [emptyLanguage()])
+const entries = ref(props.modelValue.length ? props.modelValue.map((l) => ({ ...l })) : [])
 
 watch(() => props.modelValue, (val) => {
   if (JSON.stringify(val) !== JSON.stringify(entries.value)) {
-    entries.value = val.length ? val.map((l) => ({ ...l })) : [emptyLanguage()]
+    entries.value = (val || []).length ? (val || []).map((l) => ({ ...l })) : []
   }
 }, { deep: true })
 
