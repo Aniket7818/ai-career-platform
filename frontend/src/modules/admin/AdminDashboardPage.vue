@@ -133,11 +133,18 @@
                 <td class="px-5 py-4 text-slate-400">{{ formatDate(user.last_login_at) }}</td>
                 <td class="px-5 py-4"><StatusBadge :tone="user.status === 'active' ? 'green' : 'red'">{{ user.status }}</StatusBadge></td>
                 <td class="px-5 py-4">
-                  <select class="admin-select plan-select" :value="user.subscription_plan" @change="saveUser(user.id, { subscription_plan: $event.target.value })">
-                    <option value="free">Free</option>
-                    <option value="pro">Pro - ₹99/mo</option>
-                    <option value="team">Team - ₹199/mo</option>
-                  </select>
+                  <div class="flex flex-col gap-1">
+                    <select class="admin-select plan-select" :value="user.subscription_plan" @change="saveUser(user.id, { subscription_plan: $event.target.value, billing_cycle: userBillingCycle(user) })">
+                      <option value="free">Free</option>
+                      <option value="plus">Plus - ₹{{ PRICING_PLANS.find(p => p.id === 'plus').monthlyPrice }}/mo</option>
+                      <option value="pro">Pro - ₹{{ PRICING_PLANS.find(p => p.id === 'pro').monthlyPrice }}/mo</option>
+                      <option v-if="user.subscription_plan === 'team'" value="team">Team (Legacy)</option>
+                    </select>
+                    <select v-if="user.subscription_plan !== 'free'" class="admin-select" :value="userBillingCycle(user)" @change="saveUser(user.id, { billing_cycle: $event.target.value })">
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                    </select>
+                  </div>
                 </td>
                 <td class="px-5 py-4">
                   <div class="flex flex-wrap gap-1.5">
@@ -198,26 +205,16 @@
         </div>
 
         <div class="rounded-2xl border border-white/5 bg-[#121826] p-6">
-          <h2 class="text-lg font-bold text-white">Announcements & Pricing</h2>
+          <h2 class="text-lg font-bold text-white">Announcements</h2>
           <div class="mt-5 space-y-4">
             <div>
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Announcement</label>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Global Announcement Message</label>
               <textarea
                 class="admin-textarea mt-2"
-                rows="3"
+                rows="4"
                 :value="data.settings?.announcements?.message || ''"
                 @change="saveSetting('announcements', { message: $event.target.value })"
               />
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Free (₹)</label>
-                <input class="admin-textarea mt-2" type="number" :value="data.settings?.pricing_plans?.free ?? 0" @change="updatePricing('free', $event.target.value)" />
-              </div>
-              <div>
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Pro (₹)</label>
-                <input class="admin-textarea mt-2" type="number" :value="data.settings?.pricing_plans?.pro ?? 499" @change="updatePricing('pro', $event.target.value)" />
-              </div>
             </div>
           </div>
         </div>
@@ -290,7 +287,13 @@
           <div class="mt-6 grid gap-3 rounded-xl bg-white/[0.03] p-4 text-sm">
             <div class="flex justify-between"><span class="text-slate-500">Role</span><span class="font-semibold text-white capitalize">{{ selectedUser.role.replace('_', ' ') }}</span></div>
             <div class="flex justify-between"><span class="text-slate-500">Status</span><StatusBadge :tone="selectedUser.status === 'active' ? 'green' : 'red'">{{ selectedUser.status }}</StatusBadge></div>
-            <div class="flex justify-between"><span class="text-slate-500">Subscription</span><span class="font-semibold text-white capitalize">{{ selectedUser.subscription_plan }}</span></div>
+            <div class="flex justify-between border-y border-white/5 py-2 my-2">
+              <span class="text-slate-500">Subscription</span>
+              <span class="font-semibold text-white text-right">
+                {{ getUserPlanDisplay(selectedUser) }}
+              </span>
+            </div>
+            <div v-if="selectedUser.subscription_plan !== 'free'" class="flex justify-between"><span class="text-slate-500">Plan valid until</span><span class="font-semibold text-brand">{{ formatDate(selectedUser.subscription_expires_at) }}</span></div>
             <div class="flex justify-between"><span class="text-slate-500">PDF downloads</span><span class="font-semibold text-white">{{ selectedUser.resume_downloads_count }}</span></div>
             <div class="flex justify-between"><span class="text-slate-500">Verified</span><span class="text-white">{{ selectedUser.verified ? 'Yes' : 'No' }}</span></div>
             <div class="flex justify-between"><span class="text-slate-500">Created</span><span class="text-white">{{ formatDate(selectedUser.created_at) }}</span></div>
@@ -308,6 +311,7 @@ import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import AdminShell from '../../components/layout/AdminShell.vue'
 import { adminService } from '../../services/adminService'
+import { PRICING_PLANS } from '../../constants/pricing'
 import { toast } from '../../utils/toast'
 
 const StatusBadge = defineComponent({
@@ -395,6 +399,7 @@ const resumeRows = computed(() => [
 
 const subscriptionRows = computed(() => [
   ['Free Users', data.value.subscription_analytics.free_users],
+  ['Plus Users', data.value.subscription_analytics.plus_users],
   ['Pro Users', data.value.subscription_analytics.pro_users],
   ['Revenue', rupees(data.value.subscription_analytics.revenue)],
   ['Monthly Revenue', rupees(data.value.subscription_analytics.monthly_revenue)],
@@ -468,14 +473,29 @@ const saveSetting = async (key, value) => {
 
 const toggleFlag = (key, enabled) => saveSetting('feature_flags', { ...(data.value.settings.feature_flags || {}), [key]: enabled })
 
-const updatePricing = (plan, value) => {
-  saveSetting('pricing_plans', { ...(data.value.settings.pricing_plans || {}), [plan]: Number(value) })
-}
-
 const userInitial = (user) => (user.name || user.username || 'U').charAt(0).toUpperCase()
 const isSelf = (user) => user.id === currentUser.value.id
 const formatDate = (date) => date ? new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(date)) : 'Never'
 const rupees = (value) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(value || 0)
+
+const userBillingCycle = (user) => {
+  if (!user.subscription_started_at || !user.subscription_expires_at) return 'monthly'
+  const start = new Date(user.subscription_started_at)
+  const end = new Date(user.subscription_expires_at)
+  return (end - start) / (1000 * 60 * 60 * 24) > 300 ? 'yearly' : 'monthly'
+}
+
+const getUserPlanDisplay = (user) => {
+  if (user.subscription_plan === 'free') return 'Free Plan'
+  if (user.subscription_plan === 'team') return 'Team (Legacy)'
+  
+  const cycle = userBillingCycle(user)
+  const planDetails = PRICING_PLANS.find(p => p.id === user.subscription_plan)
+  if (!planDetails) return user.subscription_plan
+  
+  const price = cycle === 'yearly' ? planDetails.yearlyPrice : planDetails.monthlyPrice
+  return `${planDetails.name} (₹${price}/${cycle === 'yearly' ? 'yr' : 'mo'}) - ${cycle.charAt(0).toUpperCase() + cycle.slice(1)}`
+}
 </script>
 
 <style scoped>

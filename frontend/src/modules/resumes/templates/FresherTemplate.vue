@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-[420px] text-[0.929em] leading-relaxed sm:min-h-[560px] lg:min-h-[720px]"
+    class="text-[0.929em] leading-relaxed"
     :style="{ color: '#0f172a', ...appearStyle }"
   >
     <header class="border-b-4 px-8 py-8" :style="{ borderColor: primaryHex, background: `linear-gradient(to right, ${primaryHex}0d, transparent)` }">

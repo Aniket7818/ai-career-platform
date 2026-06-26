@@ -94,7 +94,7 @@
           <div class="mb-5 rounded-xl border border-brand/15 bg-brand/5 p-4">
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-3">
-                <span class="flex size-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">{{ planLabel === 'Team' ? 'T' : planLabel === 'Pro' ? 'P' : 'S' }}</span>
+                <span class="flex size-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">{{ planIcon }}</span>
                 <div>
                   <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Current Plan</p>
                   <p class="text-lg font-bold text-ink">{{ planLabel }}</p>
@@ -215,7 +215,17 @@ const recent = computed(() => store.state.dashboard.recent)
 const stats = computed(() => store.state.dashboard.stats)
 const planLabel = computed(() => {
   const plan = user.value?.subscription_plan || 'free'
-  return plan === 'team' ? 'Team' : plan === 'pro' ? 'Pro' : 'Free'
+  if (plan === 'team') return 'Team (Legacy)'
+  if (plan === 'pro') return 'CareerAI Pro'
+  if (plan === 'plus') return 'CareerAI Plus'
+  return 'Free'
+})
+const planIcon = computed(() => {
+  const plan = user.value?.subscription_plan || 'free'
+  if (plan === 'team') return 'T'
+  if (plan === 'pro') return 'P'
+  if (plan === 'plus') return '+'
+  return 'F'
 })
 const isPaidPlan = computed(() => {
   const plan = user.value?.subscription_plan || 'free'

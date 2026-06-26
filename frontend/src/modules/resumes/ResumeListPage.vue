@@ -43,10 +43,6 @@
                 <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" /><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
                 {{ t('resumes.edit') }}
               </RouterLink>
-              <button class="inline-flex items-center gap-2 rounded-xl border border-brand/30 bg-brand/5 px-4 py-2 text-sm font-semibold text-brand transition hover:bg-brand/10 disabled:opacity-60" :disabled="downloadingId === resume.id" @click="download(resume.id)">
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
-                {{ downloadingId === resume.id ? t('common.loading') : t('resumes.download') }}
-              </button>
               <button class="inline-flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-500/20" @click="remove(resume.id)">
                 <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" /></svg>
                 {{ t('resumes.delete') }}
@@ -67,12 +63,10 @@ import LoadingState from '../../components/ui/LoadingState.vue'
 import ErrorState from '../../components/ui/ErrorState.vue'
 import PageHero from '../../components/ui/PageHero.vue'
 import ResumeStatusBadge from '../../components/ui/ResumeStatusBadge.vue'
-import { downloadResume } from '../../utils/downloadResume'
 import { toast } from '../../utils/toast'
 import { t } from '../../utils/i18n'
 
 const store = useStore()
-const downloadingId = ref(null)
 
 onMounted(() => store.dispatch('resumes/load'))
 
@@ -84,18 +78,6 @@ const remove = async (id) => {
   await store.dispatch('resumes/remove', id)
   if (!store.state.resumes.error) toast.success(t('toast.deleteSuccess'), t('toast.deleteSuccessBody'))
   else toast.error(t('toast.deleteError'), store.state.resumes.error)
-}
-
-const download = async (id) => {
-  downloadingId.value = id
-  const resume = await store.dispatch('resumes/loadOne', id)
-  if (resume) {
-    downloadResume(resume)
-    toast.success(t('toast.downloadSuccess'), t('toast.downloadSuccessBody'))
-  } else {
-    toast.error(t('toast.downloadError'), store.state.resumes.error)
-  }
-  downloadingId.value = null
 }
 
 const formatDate = (value) => {

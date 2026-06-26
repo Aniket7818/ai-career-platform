@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-[420px] px-5 py-6 text-[0.929em] leading-relaxed sm:min-h-[560px] sm:px-8 sm:py-9 lg:min-h-[720px]"
+    class="px-8 py-9 text-[0.929em] leading-relaxed"
     :style="{ color: '#0f172a', ...appearStyle }"
   >
     <header class="border-b-2 border-slate-800 pb-5 text-center">

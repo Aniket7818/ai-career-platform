@@ -1,7 +1,7 @@
 <template>
   <component :is="wrapper">
-    <div class="min-h-full w-full max-w-full bg-surface text-white">
-      <div v-if="!user" class="w-full border-b border-white/10 bg-surface/90 backdrop-blur">
+    <div class="min-h-full w-full max-w-full bg-surface text-white pb-20">
+      <div v-if="!user" class="w-full border-b border-white/10 bg-surface/90 backdrop-blur sticky top-0 z-50">
         <div class="page-container flex items-center justify-between gap-3 py-3 sm:py-4">
           <RouterLink class="flex min-w-0 items-center gap-2 text-lg font-bold text-white sm:text-xl" to="/">
             <span class="grid size-9 shrink-0 place-items-center rounded-md bg-brand text-white">C</span>
@@ -32,116 +32,104 @@
         </div>
       </div>
 
-      <div class="page-container space-y-8 py-6 sm:py-8 lg:py-10">
-        <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink via-surface-light to-surface p-5 shadow-glow sm:p-8 lg:p-10">
-          <div class="absolute -right-20 -top-20 size-72 rounded-full bg-brand/20 blur-3xl" />
-          <div class="absolute -bottom-16 -left-16 size-56 rounded-full bg-mint/10 blur-3xl" />
-          <div class="relative grid gap-8 lg:grid-cols-[1fr_340px] lg:items-center">
-            <div>
-              <p class="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand">
-                <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-75" /><span class="relative inline-flex size-2 rounded-full bg-brand" /></span>
-                {{ t('comingSoon.liveUpdates') }}
-              </p>
-              <h1 class="mt-5 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">{{ t('comingSoon.title') }}</h1>
-              <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">{{ t('comingSoon.subtitle') }}</p>
-              <div class="mt-6 flex flex-wrap gap-3">
-                <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">{{ features.length }} {{ t('comingSoon.featuresCount') }}</span>
-                <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300">{{ launchingCount }} {{ t('comingSoon.launchingLabel') }}</span>
-              </div>
+      <div class="page-container space-y-16 py-10 sm:py-16 lg:py-20">
+        
+        <!-- HERO -->
+        <section class="text-center max-w-3xl mx-auto">
+          <p class="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand mb-6">
+            <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-75" /><span class="relative inline-flex size-2 rounded-full bg-brand" /></span>
+            Product Roadmap
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+            Building the Future of Careers
+          </h1>
+          <p class="mt-6 text-lg text-slate-400 leading-relaxed">
+            Explore what we've already delivered and see what's coming next on our journey to create the ultimate career toolkit.
+          </p>
+        </section>
+
+        <!-- SECTION 1: Available Today -->
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="flex size-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-surface/60 p-5 backdrop-blur">
-              <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">{{ t('comingSoon.trendTitle') }}</p>
-              <p class="mt-2 text-3xl font-bold"><AnimatedNumber :value="stats.total_interests || 0" /></p>
-              <p class="text-sm text-slate-400">{{ t('comingSoon.trendSubtitle') }}</p>
-              <div class="mt-4 h-24">
-                <MiniSparkline :values="trend.values || []" color="#35d6b4" :height="96" :width="300" />
+            <h2 class="text-2xl font-bold">Available Today</h2>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-for="feature in availableToday" :key="feature" class="flex items-center gap-4 rounded-2xl border border-white/5 bg-surface-light/30 p-5 transition hover:bg-surface-light/50 hover:border-white/10">
+              <div class="grid size-10 shrink-0 place-items-center rounded-full bg-white/5 text-slate-300">
+                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
-              <div class="mt-3 flex justify-between text-[10px] uppercase tracking-wider text-slate-500">
-                <span v-for="label in trend.labels || []" :key="label">{{ label }}</span>
+              <span class="font-medium text-slate-200">{{ feature }}</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Coming Next -->
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="flex size-10 items-center justify-center rounded-xl bg-brand/20 text-brand border border-brand/20">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold">Coming Next</h2>
+          </div>
+          <div class="grid gap-6 md:grid-cols-3">
+            <div v-for="feature in comingNext" :key="feature.title" class="group relative overflow-hidden rounded-3xl border border-white/10 bg-surface-light/40 p-6 sm:p-8 transition-all hover:-translate-y-1 hover:border-brand/30 hover:bg-surface-light/60 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+              <div class="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-brand/10 blur-3xl transition-all group-hover:bg-brand/20" />
+              <div class="relative">
+                <h3 class="text-xl font-bold text-white">{{ feature.title }}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-slate-400">{{ feature.description }}</p>
               </div>
             </div>
           </div>
         </section>
 
-        <LoadingState v-if="loading" />
-        <ErrorState v-else-if="error" :message="error" />
+        <!-- SECTION 3: Product Roadmap -->
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="flex size-10 items-center justify-center rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/20">
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold">Roadmap</h2>
+          </div>
+          
+          <div class="relative ml-5 border-l-2 border-white/10 space-y-10 pb-6 pt-2">
+             <div v-for="(phase, index) in roadmap" :key="phase.name" class="relative pl-8">
+               <div class="absolute -left-[9px] top-1.5 size-4 rounded-full border-4 border-surface" :class="phase.color"></div>
+               <div class="flex flex-wrap items-center gap-3 mb-2">
+                 <h3 class="text-lg font-bold text-white">{{ phase.name }}</h3>
+                 <span class="rounded-full border border-white/10 px-2.5 py-0.5 text-xs font-medium" :class="phase.badgeColor">{{ phase.status }}</span>
+               </div>
+               <p class="text-slate-400 text-sm max-w-2xl">{{ phase.description }}</p>
+             </div>
+          </div>
+        </section>
 
-        <template v-else>
-          <ComingSoonStats :stats="stats" :trend="trend" />
-
-          <section class="grid w-full gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,380px)]">
-            <div class="rounded-2xl border border-white/10 bg-surface-light/50 p-6">
-              <div class="flex items-center justify-between">
-                <h2 class="text-lg font-bold">{{ t('comingSoon.interestChart') }}</h2>
-                <span class="text-xs text-slate-400">{{ t('comingSoon.liveUpdates') }}</span>
-              </div>
-              <div class="mt-6">
-                <InterestBarChart :items="chartItems" />
-              </div>
+        <!-- SECTION 4: Join Waitlist -->
+        <section class="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-ink via-surface-light to-surface p-10 sm:p-16 text-center shadow-glow">
+          <div class="absolute -right-20 -top-20 size-72 rounded-full bg-brand/20 blur-3xl" />
+          <div class="absolute -bottom-16 -left-16 size-56 rounded-full bg-mint/10 blur-3xl" />
+          
+          <div class="relative z-10 mx-auto max-w-2xl">
+            <h2 class="text-3xl font-bold sm:text-4xl">Be the first to know</h2>
+            <p class="mt-4 text-lg text-slate-300">Join our waitlist to get notified the moment our new AI features launch. No spam, just product updates.</p>
+            <div class="mt-8">
+              <button
+                type="button"
+                class="inline-flex h-12 sm:h-14 items-center justify-center rounded-xl bg-brand px-8 text-base font-semibold text-white transition-all hover:bg-brand-light hover:shadow-[0_0_20px_rgba(53,214,180,0.4)] active:scale-95"
+                @click="openWaitlistModal"
+              >
+                Join Waitlist
+              </button>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-surface-light/50 p-6">
-              <h2 class="text-lg font-bold">{{ t('comingSoon.pipelineTitle') }}</h2>
-              <p class="mt-2 text-sm text-slate-400">{{ t('comingSoon.pipelineSubtitle') }}</p>
-              <div class="mt-6 space-y-4">
-                <div v-for="pipe in pipeline" :key="pipe.status">
-                  <div class="mb-1.5 flex justify-between text-sm">
-                    <span class="text-slate-300">{{ pipe.label }}</span>
-                    <span class="font-semibold">{{ pipe.count }}</span>
-                  </div>
-                  <div class="h-2 overflow-hidden rounded-full bg-white/10">
-                    <div class="h-full rounded-full" :class="pipe.color" :style="{ width: `${pipe.percent}%` }" />
-                  </div>
-                </div>
-              </div>
-              <div class="mt-8 rounded-xl border border-dashed border-white/15 bg-surface/50 p-5 text-center">
-                <div class="mx-auto grid size-14 place-items-center rounded-2xl bg-brand/15 text-brand">
-                  <svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
-                </div>
-                <p class="mt-4 text-sm font-semibold text-white">{{ t('comingSoon.emptyState.title') }}</p>
-                <p class="mt-2 text-xs leading-5 text-slate-400">{{ t('comingSoon.emptyState.body') }}</p>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h2 class="text-2xl font-bold">{{ t('comingSoon.featuresTitle') }}</h2>
-                <p class="mt-2 text-sm text-slate-400">{{ t('comingSoon.featuresSubtitle') }}</p>
-              </div>
-              <div class="flex gap-2">
-                <button
-                  v-for="filter in statusFilters"
-                  :key="filter.value"
-                  class="rounded-full px-3 py-1.5 text-xs font-semibold transition"
-                  :class="activeFilter === filter.value ? 'bg-brand text-white' : 'border border-white/10 text-slate-400 hover:text-white'"
-                  @click="activeFilter = filter.value"
-                >
-                  {{ filter.label }}
-                </button>
-              </div>
-            </div>
-            <div v-if="filteredFeatures.length" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              <FeatureCard
-                v-for="feature in filteredFeatures"
-                :key="feature.key"
-                :feature="feature"
-                :loading="notifyingKey === feature.key"
-                @notify="handleNotify"
-                @unnotify="handleUnnotify"
-              />
-            </div>
-            <div v-else class="rounded-2xl border border-dashed border-white/15 bg-surface-light/30 p-12 text-center">
-              <p class="text-lg font-semibold">{{ t('comingSoon.noResults') }}</p>
-              <p class="mt-2 text-sm text-slate-400">{{ t('comingSoon.noResultsHint') }}</p>
-            </div>
-          </section>
-        </template>
+          </div>
+        </section>
       </div>
 
       <NotifyMeModal
         :open="modalOpen"
-        :feature-key="pendingKey"
+        feature-key="general_waitlist"
         :loading="modalLoading"
         :error="modalError"
         :default-email="user?.email || ''"
@@ -153,124 +141,107 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import AppShell from '../../components/layout/AppShell.vue'
-import LoadingState from '../../components/ui/LoadingState.vue'
-import ErrorState from '../../components/ui/ErrorState.vue'
-import ComingSoonStats from '../../components/coming-soon/ComingSoonStats.vue'
-import FeatureCard from '../../components/coming-soon/FeatureCard.vue'
-import InterestBarChart from '../../components/coming-soon/InterestBarChart.vue'
-import MiniSparkline from '../../components/coming-soon/MiniSparkline.vue'
-import AnimatedNumber from '../../components/coming-soon/AnimatedNumber.vue'
 import NotifyMeModal from '../../components/coming-soon/NotifyMeModal.vue'
-import { FEATURE_STATUS } from '../../constants/features'
 import { toast } from '../../utils/toast'
 import { t } from '../../utils/i18n'
 
 const store = useStore()
 const guestMenuOpen = ref(false)
-const activeFilter = ref('all')
-const notifyingKey = ref('')
 const modalOpen = ref(false)
 const modalLoading = ref(false)
 const modalError = ref('')
-const pendingKey = ref('')
-let pollTimer = null
 
 const user = computed(() => store.state.auth.user)
 const wrapper = computed(() => (user.value ? AppShell : 'div'))
-const loading = computed(() => store.state.comingSoon.loading)
-const error = computed(() => store.state.comingSoon.error)
-const stats = computed(() => store.state.comingSoon.stats)
-const trend = computed(() => store.state.comingSoon.trend)
-const features = computed(() => store.state.comingSoon.features)
 
-const launchingCount = computed(() => features.value.filter((f) => f.status === FEATURE_STATUS.LAUNCHING_SOON).length)
+const availableToday = [
+  'Resume Builder',
+  'ATS Templates',
+  'Smart Pagination',
+  'PDF Export',
+  'Resume Preview',
+  'Resume Customization'
+]
 
-const statusFilters = computed(() => [
-  { value: 'all', label: t('comingSoon.filters.all') },
-  { value: FEATURE_STATUS.LAUNCHING_SOON, label: t('comingSoon.status.launching_soon') },
-  { value: FEATURE_STATUS.IN_DEVELOPMENT, label: t('comingSoon.status.in_development') },
-  { value: FEATURE_STATUS.PLANNED, label: t('comingSoon.status.planned') }
-])
-
-const filteredFeatures = computed(() => {
-  if (activeFilter.value === 'all') return features.value
-  return features.value.filter((f) => f.status === activeFilter.value)
-})
-
-const chartItems = computed(() =>
-  features.value.map((f) => ({
-    key: f.key,
-    count: f.interest_count || 0,
-    label: t(`comingSoon.features.${f.key}.title`),
-    shortLabel: t(`comingSoon.features.${f.key}.short`)
-  }))
-)
-
-const pipeline = computed(() => {
-  const total = features.value.length || 1
-  const counts = {
-    [FEATURE_STATUS.PLANNED]: features.value.filter((f) => f.status === FEATURE_STATUS.PLANNED).length,
-    [FEATURE_STATUS.IN_DEVELOPMENT]: features.value.filter((f) => f.status === FEATURE_STATUS.IN_DEVELOPMENT).length,
-    [FEATURE_STATUS.LAUNCHING_SOON]: features.value.filter((f) => f.status === FEATURE_STATUS.LAUNCHING_SOON).length
+const comingNext = [
+  {
+    title: 'ATS Score',
+    description: 'Instantly score your resume against ATS systems with advanced keyword analysis and optimization suggestions.'
+  },
+  {
+    title: 'Resume Health Dashboard',
+    description: 'Get actionable insights on your resume\'s strengths and weaknesses, including readability and impact.'
+  },
+  {
+    title: 'AI Cover Letter Generator',
+    description: 'Generate tailored, compelling cover letters for any job posting with just one click.'
   }
-  return [
-    { status: FEATURE_STATUS.LAUNCHING_SOON, label: t('comingSoon.status.launching_soon'), count: counts[FEATURE_STATUS.LAUNCHING_SOON], percent: (counts[FEATURE_STATUS.LAUNCHING_SOON] / total) * 100, color: 'bg-emerald-400' },
-    { status: FEATURE_STATUS.IN_DEVELOPMENT, label: t('comingSoon.status.in_development'), count: counts[FEATURE_STATUS.IN_DEVELOPMENT], percent: (counts[FEATURE_STATUS.IN_DEVELOPMENT] / total) * 100, color: 'bg-amber-400' },
-    { status: FEATURE_STATUS.PLANNED, label: t('comingSoon.status.planned'), count: counts[FEATURE_STATUS.PLANNED], percent: (counts[FEATURE_STATUS.PLANNED] / total) * 100, color: 'bg-sky-400' }
-  ]
-})
+]
 
-const load = () => store.dispatch('comingSoon/load')
+const roadmap = [
+  {
+    name: 'Phase 1',
+    status: 'Completed',
+    color: 'bg-emerald-400',
+    badgeColor: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20',
+    description: 'Core resume builder, smart pagination, basic templates, and PDF export functionality.'
+  },
+  {
+    name: 'Phase 2',
+    status: 'In Progress',
+    color: 'bg-brand',
+    badgeColor: 'bg-brand/10 text-brand border-brand/20',
+    description: 'ATS scoring, resume health analytics, and AI-powered cover letter generation.'
+  },
+  {
+    name: 'Phase 3',
+    status: 'Planned',
+    color: 'bg-slate-500',
+    badgeColor: 'bg-slate-500/10 text-slate-300 border-slate-500/20',
+    description: 'AI mock interviews, LinkedIn profile review, and automated portfolio website generation.'
+  },
+  {
+    name: 'Phase 4',
+    status: 'Future',
+    color: 'bg-slate-700',
+    badgeColor: 'bg-slate-700/30 text-slate-400 border-slate-700/50',
+    description: 'Job application tracking, career roadmap generator, and advanced placement preparation hub.'
+  }
+]
 
-const handleNotify = async (key) => {
+const openWaitlistModal = async () => {
   if (user.value) {
-    notifyingKey.value = key
-    const result = await store.dispatch('comingSoon/notify', { feature_key: key })
-    notifyingKey.value = ''
+    const result = await store.dispatch('comingSoon/notify', { feature_key: 'general_waitlist' })
     if (result) toast.success(t('toast.notifySuccess'), t('toast.notifySuccessBody'))
     return
   }
-  pendingKey.value = key
   modalError.value = ''
   modalOpen.value = true
 }
 
-const handleUnnotify = async (key) => {
-  notifyingKey.value = key
-  const result = await store.dispatch('comingSoon/unregister', { feature_key: key })
-  notifyingKey.value = ''
-  if (result) toast.info(t('toast.notifyRemoved'), t('toast.notifyRemovedBody'))
-}
-
 const closeModal = () => {
   modalOpen.value = false
-  pendingKey.value = ''
   modalError.value = ''
 }
 
 const submitNotify = async (payload) => {
   modalLoading.value = true
   modalError.value = ''
-  const result = await store.dispatch('comingSoon/notify', payload)
+  const requestPayload = { ...payload, feature_key: 'general_waitlist' }
+  const result = await store.dispatch('comingSoon/notify', requestPayload)
   modalLoading.value = false
   if (result) {
     closeModal()
     toast.success(t('toast.notifySuccess'), t('toast.notifySuccessBody'))
   } else {
-    modalError.value = store.state.comingSoon.error
+    modalError.value = store.state.comingSoon.error || 'Something went wrong.'
   }
 }
 
 onMounted(async () => {
   await store.dispatch('auth/fetchMe')
-  load()
-  pollTimer = setInterval(load, 30000)
-})
-
-onUnmounted(() => {
-  if (pollTimer) clearInterval(pollTimer)
 })
 </script>

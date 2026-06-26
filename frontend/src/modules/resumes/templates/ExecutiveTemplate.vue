@@ -1,10 +1,10 @@
 <template>
   <div
-    class="min-h-[420px] text-[0.929em] leading-relaxed sm:min-h-[560px] lg:min-h-[720px]"
+    class="text-[0.929em] leading-relaxed"
     :style="{ color: '#0f172a', ...appearStyle }"
   >
-    <header class="px-5 py-6 text-white sm:px-8 sm:py-9" :style="{ backgroundColor: '#0f172a' }">
-      <h1 class="text-[1.714em] font-bold tracking-tight sm:text-[2.143em]">{{ personal.fullName || title }}</h1>
+    <header class="px-8 py-9 text-white" :style="{ backgroundColor: '#0f172a' }">
+      <h1 class="text-[2.143em] font-bold tracking-tight">{{ personal.fullName || title }}</h1>
       <p v-if="personal.headline" class="mt-2 text-[1.071em] font-medium text-slate-300">{{ personal.headline }}</p>
       <p v-if="contactStr" class="mt-4 text-[0.786em] text-slate-400">{{ contactStr }}</p>
     </header>

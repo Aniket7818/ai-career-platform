@@ -47,7 +47,7 @@ module Api
         Resume.transaction do
           @resume.increment!(:download_count)
           @resume.update!(downloaded_at: Time.current)
-          current_user.increment!(:resume_downloads_count) unless current_user.paid_plan?
+          current_user.increment!(:resume_downloads_count)
         end
 
         render json: {
@@ -73,7 +73,7 @@ module Api
         Resume.transaction do
           @resume.increment!(:download_count)
           @resume.update!(downloaded_at: Time.current)
-          current_user.increment!(:resume_downloads_count) unless current_user.paid_plan?
+          current_user.increment!(:resume_downloads_count)
         end
 
         send_data pdf_data, filename: "resume_#{@resume.id}.pdf", type: 'application/pdf', disposition: 'attachment'

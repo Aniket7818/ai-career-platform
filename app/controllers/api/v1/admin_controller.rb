@@ -36,6 +36,8 @@ module Api
           end
         end
         attrs = user_params.to_h
+        cycle = params.dig(:user, :billing_cycle)
+
         if attrs["subscription_plan"].present? && attrs["subscription_plan"] != user.subscription_plan
           if attrs["subscription_plan"] == "free"
             attrs["subscription_started_at"] = nil
@@ -43,8 +45,13 @@ module Api
             attrs["razorpay_subscription_id"] = nil
           else
             attrs["subscription_started_at"] = Time.current
-            attrs["subscription_expires_at"] = 1.month.from_now
+            cycle_val = cycle || "monthly"
+            attrs["subscription_expires_at"] = (cycle_val == "yearly" ? 1.year.from_now : 1.month.from_now)
           end
+        elsif cycle.present? && user.subscription_plan != "free"
+          start_date = user.subscription_started_at || Time.current
+          attrs["subscription_started_at"] = start_date
+          attrs["subscription_expires_at"] = (cycle == "yearly" ? (start_date + 1.year) : (start_date + 1.month))
         end
 
         user.assign_attributes(attrs)
@@ -55,6 +62,8 @@ module Api
             "verified their account"
           elsif k == "subscription_plan"
             "changed plan to #{v[1]}"
+          elsif k == "subscription_expires_at"
+            "updated billing cycle"
           elsif k == "role"
             "changed role to #{v[1].humanize.downcase}"
           else
@@ -160,11 +169,12 @@ module Api
       def subscription_analytics
         {
           free_users: User.where(subscription_plan: "free").count,
+          plus_users: User.where(subscription_plan: "plus").count,
           pro_users: User.where(subscription_plan: "pro").count,
           team_users: User.where(subscription_plan: "team").count,
           revenue: PaymentOrder.where(status: "paid").sum(:amount_paise) / 100,
           monthly_revenue: PaymentOrder.where(status: "paid", activated_at: Time.current.beginning_of_month..).sum(:amount_paise) / 100,
-          cancelled_plans: 0
+          cancelled_plans: AuditLog.where(action: "cancelled_subscription").count
         }
       end
 
@@ -173,7 +183,7 @@ module Api
           "feature_flags" => { "ats_checker" => true, "mock_interview" => false, "portfolio_generator" => false },
           "maintenance_mode" => { "enabled" => false },
           "announcements" => { "message" => "Build resumes faster with polished templates." },
-          "pricing_plans" => { "free" => 0, "pro" => 1, "team" => 2 }
+          "pricing_plans" => { "free" => 0, "plus" => 99, "pro" => 199, "team" => 2 }
         }
         stored = AdminSetting.all.index_by(&:key).transform_values(&:value)
         defaults.merge(stored)

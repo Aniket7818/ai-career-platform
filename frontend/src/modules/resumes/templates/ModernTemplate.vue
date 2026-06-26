@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex flex-col text-[0.929em] leading-relaxed sm:flex-row min-h-full print-bg-gradient"
+    class="flex flex-row text-[0.929em] leading-relaxed min-h-full print-bg-gradient"
     :style="{ color: '#0f172a', ...appearStyle, background: `linear-gradient(to right, ${primaryHex} 34%, white 34%)` }"
   >
     <!-- Sidebar -->
-    <aside class="w-full shrink-0 px-5 py-6 text-white sm:w-[34%] sm:px-6 sm:py-8 bg-transparent">
+    <aside class="w-[34%] shrink-0 px-6 py-8 text-white bg-transparent">
       <h1 class="text-[1.571em] font-bold leading-tight">{{ personal.fullName || title }}</h1>
       <p v-if="personal.headline" class="mt-2 text-[1em] font-medium" style="opacity:0.8">{{ personal.headline }}</p>
 

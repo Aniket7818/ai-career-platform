@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       post "resumes/:id/download_pdf", to: "resumes#download_pdf"
       post "payments", to: "payments#create"
       post "payments/verify", to: "payments#verify"
+      delete "payments", to: "payments#destroy"
       get "dashboard", to: "dashboard#show"
       get "admin", to: "admin#show"
       patch "admin/users/:id", to: "admin#update_user"

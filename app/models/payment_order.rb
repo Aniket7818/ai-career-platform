@@ -1,7 +1,8 @@
 class PaymentOrder < ApplicationRecord
   PLANS = {
-    "pro" => { amount_paise: 9900, label: "Pro" },
-    "team" => { amount_paise: 19900, label: "Team" }
+    "plus" => { monthly_paise: 100, yearly_paise: 200, label: "CareerAI Plus" },
+    "pro" => { monthly_paise: 300, yearly_paise: 400, label: "CareerAI Pro" },
+    "team" => { monthly_paise: 500, yearly_paise: 500, label: "Team (Legacy)" }
   }.freeze
 
   belongs_to :user
@@ -12,17 +13,20 @@ class PaymentOrder < ApplicationRecord
 
   before_validation :set_amount, on: :create
 
-  def self.plan_amount(plan)
-    PLANS.fetch(plan.to_s).fetch(:amount_paise)
+  def self.plan_amount(plan, billing_cycle)
+    plan_config = PLANS.fetch(plan.to_s)
+    billing_cycle == "yearly" ? plan_config[:yearly_paise] : plan_config[:monthly_paise]
   end
 
   def activate!
     transaction do
       update!(status: "paid", activated_at: Time.current)
+      cycle = metadata["billing_cycle"] || "monthly"
+      expires_in = cycle == "yearly" ? 1.year : 1.month
       user.update!(
         subscription_plan: plan,
         subscription_started_at: Time.current,
-        subscription_expires_at: 1.month.from_now,
+        subscription_expires_at: expires_in.from_now,
         razorpay_subscription_id: razorpay_order_id
       )
     end
@@ -31,6 +35,6 @@ class PaymentOrder < ApplicationRecord
   private
 
   def set_amount
-    self.amount_paise ||= self.class.plan_amount(plan) if plan.present?
+    self.amount_paise ||= self.class.plan_amount(plan, metadata["billing_cycle"] || "monthly") if plan.present?
   end
 end

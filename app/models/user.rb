@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   ROLES = %w[user admin super_admin].freeze
   STATUSES = %w[active suspended].freeze
-  SUBSCRIPTION_PLANS = %w[free pro team].freeze
+  SUBSCRIPTION_PLANS = %w[free plus pro team].freeze
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable
 
@@ -46,7 +46,7 @@ class User < ApplicationRecord
   end
 
   def paid_plan?
-    subscription_plan.in?(%w[pro team]) && subscription_expires_at.present? && subscription_expires_at.future?
+    subscription_plan.in?(%w[plus pro team]) && subscription_expires_at.present? && subscription_expires_at.future?
   end
 
   def free_downloads_remaining

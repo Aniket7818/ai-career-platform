@@ -164,6 +164,7 @@ const handleDownload = async () => {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+    await store.dispatch('auth/fetchMe')
     toast.success(t('toast.downloadSuccess'), t('toast.downloadSuccessBody'))
   } catch (error) {
     console.error('PDF Download Error:', error)

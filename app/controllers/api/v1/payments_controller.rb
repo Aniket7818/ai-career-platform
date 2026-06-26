@@ -10,10 +10,11 @@ module Api
 
       def create
         plan = params.require(:plan).to_s
+        billing_cycle = params[:billing_cycle] == "yearly" ? "yearly" : "monthly"
         return render json: { error: "Free plan does not need payment." }, status: :unprocessable_entity if plan == "free"
         return render json: { error: "Unknown plan." }, status: :unprocessable_entity unless PaymentOrder::PLANS.key?(plan)
 
-        order = current_user.payment_orders.create!(plan: plan, metadata: { source: "checkout" })
+        order = current_user.payment_orders.create!(plan: plan, metadata: { source: "checkout", billing_cycle: billing_cycle })
         order.update!(razorpay_order_id: create_razorpay_order(order))
 
         render json: {
@@ -36,6 +37,17 @@ module Api
 
         order.activate!
         render json: { user: UserSerializer.new(current_user.reload).as_json, order: payment_order_payload(order) }
+      end
+
+      def destroy
+        AuditLog.create!(
+          actor: current_user,
+          user: current_user,
+          action: "cancelled_subscription",
+          details: "User cancelled their #{current_user.subscription_plan} plan"
+        )
+        current_user.update!(subscription_plan: 'free', subscription_expires_at: nil, razorpay_subscription_id: nil)
+        render json: { user: UserSerializer.new(current_user).as_json, message: "Subscription cancelled." }
       end
 
       private
