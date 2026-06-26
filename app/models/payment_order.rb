@@ -1,8 +1,8 @@
 class PaymentOrder < ApplicationRecord
   PLANS = {
-    "plus" => { monthly_paise: 100, yearly_paise: 200, label: "CareerAI Plus" },
-    "pro" => { monthly_paise: 300, yearly_paise: 400, label: "CareerAI Pro" },
-    "team" => { monthly_paise: 500, yearly_paise: 500, label: "Team (Legacy)" }
+    "plus" => { monthly_paise: 9900, yearly_paise: 99900, label: "CareerAI Plus" },
+    "pro" => { monthly_paise: 19900, yearly_paise: 199900, label: "CareerAI Pro" },
+    "team" => { monthly_paise: 49900, yearly_paise: 49900, label: "Team (Legacy)" }
   }.freeze
 
   belongs_to :user

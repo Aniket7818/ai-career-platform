@@ -22,8 +22,8 @@ export const PRICING_PLANS = [
   {
     id: 'plus',
     name: 'CareerAI Plus',
-    monthlyPrice: 1,
-    yearlyPrice: 2,
+    monthlyPrice: 99,
+    yearlyPrice: 999,
     credits: 50,
     badge: 'Most Popular',
     features: [
@@ -41,8 +41,8 @@ export const PRICING_PLANS = [
   {
     id: 'pro',
     name: 'CareerAI Pro',
-    monthlyPrice: 3,
-    yearlyPrice: 4,
+    monthlyPrice: 199,
+    yearlyPrice: 1999,
     credits: 200,
     badge: 'Best Value',
     features: [
