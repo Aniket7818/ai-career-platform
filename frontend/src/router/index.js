@@ -14,6 +14,8 @@ import ProfilePage from '../modules/profile/ProfilePage.vue'
 import SettingsPage from '../modules/settings/SettingsPage.vue'
 import StaticPage from '../modules/pages/StaticPage.vue'
 
+import ResumePrintView from '../modules/resumes/ResumePrintView.vue'
+
 import InterviewPrepList from '../modules/interview-prep/InterviewPrepList.vue'
 import InterviewPrepSubject from '../modules/interview-prep/InterviewPrepSubject.vue'
 import InterviewPrepQuestion from '../modules/interview-prep/InterviewPrepQuestion.vue'
@@ -50,6 +52,7 @@ const routes = [
   { path: '/resumes', name: ROUTE_NAMES.RESUMES, component: ResumeListPage, meta: { requiresAuth: true } },
   { path: '/resumes/new', name: ROUTE_NAMES.RESUME_NEW, component: ResumeEditorPage, meta: { requiresAuth: true } },
   { path: '/resumes/:id/edit', name: ROUTE_NAMES.RESUME_EDIT, component: ResumeEditorPage, meta: { requiresAuth: true } },
+  { path: '/resumes/:id/print', name: 'resume-print', component: ResumePrintView, meta: { requiresAuth: true } },
   { path: '/interview-prep', name: ROUTE_NAMES.INTERVIEW_PREP, component: InterviewPrepList, meta: { requiresAuth: true } },
   { path: '/interview-prep/:subject', name: ROUTE_NAMES.INTERVIEW_PREP_SUBJECT, component: InterviewPrepSubject, meta: { requiresAuth: true } },
   { path: '/interview-prep/:subject/:question_id', name: ROUTE_NAMES.INTERVIEW_PREP_QUESTION, component: InterviewPrepQuestion, meta: { requiresAuth: true } }

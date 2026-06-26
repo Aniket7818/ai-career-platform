@@ -270,7 +270,46 @@ export default {
     profileSaved: 'Profile updated', profileSavedBody: 'Your profile changes were saved successfully.', profileSaveError: 'Could not save profile',
     profileFilled: 'Profile applied', profileFilledBody: 'Resume fields were filled from your profile.'
   },
-  builder: { personal: 'Personal information', education: 'Education', experience: 'Experience', projects: 'Projects', skills: 'Skills', certifications: 'Certifications', fullName: 'Full name', headline: 'Headline', summary: 'Professional summary', school: 'School', company: 'Company', role: 'Role', projectName: 'Project name', skillList: 'Skills', certName: 'Certification' },
+  builder: {
+    personal: 'Personal information', experience: 'Experience', education: 'Education',
+    projects: 'Projects', skills: 'Skills', certifications: 'Certifications',
+    languages: 'Languages', achievements: 'Achievements', interests: 'Interests',
+    socialLinks: 'Social Links', summary: 'Professional Summary',
+    fullName: 'Full name', headline: 'Headline',
+    summaryLabel: 'Professional summary',
+    // Experience
+    role: 'Role / Title', company: 'Company', startDate: 'Start date', endDate: 'End date',
+    description: 'Description', addExperience: '+ Add Experience', deleteExperience: 'Delete',
+    // Education
+    school: 'School / University', degree: 'Degree', cgpa: 'CGPA (optional)',
+    addEducation: '+ Add Education', deleteEducation: 'Delete',
+    // Projects
+    projectName: 'Project name', projectLink: 'Project link (URL)', technologies: 'Technologies used',
+    addProject: '+ Add Project', deleteProject: 'Delete',
+    // Certifications
+    certName: 'Certification name', issuingOrg: 'Issuing organization', issueDate: 'Issue date', credentialUrl: 'Credential URL',
+    addCertification: '+ Add Certification', deleteCertification: 'Delete',
+    // Skills
+    skillList: 'Skills (comma-separated)',
+    // Languages
+    language: 'Language', proficiency: 'Proficiency',
+    proficiencyOptions: ['Native', 'Fluent', 'Conversational', 'Basic'],
+    addLanguage: '+ Add Language', deleteLanguage: 'Delete',
+    // Achievements
+    achievementTitle: 'Achievement title', achievementDesc: 'Description (optional)',
+    addAchievement: '+ Add Achievement', deleteAchievement: 'Delete',
+    // Interests
+    interestPlaceholder: 'Add an interest and press Enter',
+    // Social Links
+    leetcode: 'LeetCode URL', codeforces: 'Codeforces URL', hackerrank: 'HackerRank URL',
+    // Customization panel
+    customize: 'Customize Resume', sectionVisibility: 'Section Visibility',
+    sectionOrder: 'Section Order', moveUp: '↑', moveDown: '↓',
+    // Appearance
+    appearance: 'Appearance', fontFamily: 'Font Family', fontSize: 'Font Size', primaryColor: 'Primary Color',
+    // Preview controls
+    zoom: 'Zoom', fullPreview: 'Full Preview', closePreview: 'Close'
+  },
   common: { loading: 'Loading...', error: 'Something went wrong.', save: 'Save', cancel: 'Cancel' },
   comingSoon: {
     title: 'The future of your career toolkit',

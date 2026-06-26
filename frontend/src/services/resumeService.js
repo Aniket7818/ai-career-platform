@@ -6,5 +6,6 @@ export const resumeService = {
   create: (resume) => http.post('/resumes', { resume }),
   update: (id, resume) => http.put(`/resumes/${id}`, { resume }),
   download: (id) => http.post(`/resumes/${id}/download`),
+  downloadPdf: (id) => http.post(`/resumes/${id}/download_pdf`, {}, { responseType: 'blob' }),
   destroy: (id) => http.delete(`/resumes/${id}`)
 }

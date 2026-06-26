@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resource :profile, only: %i[show update]
       resources :resumes
       post "resumes/:id/download", to: "resumes#download"
+      post "resumes/:id/download_pdf", to: "resumes#download_pdf"
       post "payments", to: "payments#create"
       post "payments/verify", to: "payments#verify"
       get "dashboard", to: "dashboard#show"

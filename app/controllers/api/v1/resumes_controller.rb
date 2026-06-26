@@ -2,7 +2,7 @@ module Api
   module V1
     class ResumesController < ApplicationController
       before_action :authenticate_api_user!
-      before_action :set_resume, only: %i[show update destroy download]
+      before_action :set_resume, only: %i[show update destroy download download_pdf]
 
       def index
         resumes = current_user.resumes.order(updated_at: :desc)
@@ -54,6 +54,31 @@ module Api
           resume: ResumeSerializer.new(@resume.reload).as_json,
           user: UserSerializer.new(current_user.reload).as_json
         }
+      end
+
+      def download_pdf
+        # Ensure the user has the right to download
+        unless current_user.paid_plan? || current_user.free_downloads_remaining.positive?
+          return render json: {
+            error: "Your free plan supports only 3 PDF downloads. Upgrade your plan to download more resumes.",
+            upgrade_required: true
+          }, status: :payment_required
+        end
+
+        # We pass the user's raw Cookie header to Ferrum so the headless browser is authenticated
+        service = ResumePdfService.new(@resume.id, request.headers['Cookie'])
+        pdf_data = service.generate_pdf
+
+        # Update download counts
+        Resume.transaction do
+          @resume.increment!(:download_count)
+          @resume.update!(downloaded_at: Time.current)
+          current_user.increment!(:resume_downloads_count) unless current_user.paid_plan?
+        end
+
+        send_data pdf_data, filename: "resume_#{@resume.id}.pdf", type: 'application/pdf', disposition: 'attachment'
+      rescue StandardError => e
+        render json: { error: "Failed to generate PDF: #{e.message}" }, status: :internal_server_error
       end
 
       private
