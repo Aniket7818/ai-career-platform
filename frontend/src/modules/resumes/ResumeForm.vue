@@ -884,7 +884,15 @@ const update = (key, value) => { props.model[key] = value }
 // Collapsible section open state — personal open by default
 const openSections = reactive(Object.fromEntries(ALL_SECTIONS.map((s, i) => [s.key, i === 0])))
 const toggleSection = (key) => {
-  openSections[key] = !openSections[key]
+  if (isMobile.value) {
+    // Single-accordion on mobile: close all others
+    const wasOpen = openSections[key]
+    ALL_SECTIONS.forEach(s => { openSections[s.key] = false })
+    openSections[key] = !wasOpen
+    // Removed auto-scroll logic to prevent scroll jumping on mobile
+  } else {
+    openSections[key] = !openSections[key]
+  }
 }
 
 // Left Sidebar state

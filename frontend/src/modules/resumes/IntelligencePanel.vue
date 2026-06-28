@@ -49,7 +49,7 @@
 
       <!-- Score breakdown collapsed within the hero -->
       <Transition name="slide">
-        <div v-if="activeSection['']" class="w-full mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-3 text-left">
+        <div v-if="activeSection['health']" class="w-full mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-3 text-left">
           <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Score Breakdown</p>
           <div v-for="s in fullScoreBreakdown" :key="s.name" class="text-[11px] space-y-1">
             <div class="flex justify-between">
@@ -66,18 +66,18 @@
     </div>
 
     <!-- ═══ 2. Resume Coach ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('coach')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['coach'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('coach')" :aria-expanded="activeSection['coach']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
             <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Resume Coach</span>
           </div>
-          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['coach'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3 space-y-3">
+        <div v-if="activeSection['coach']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3 space-y-3">
           <template v-if="canUseResumeCoach">
             <div class="rounded-xl bg-gradient-to-br from-brand/5 to-purple-50 dark:from-brand/10 dark:to-purple-900/20 p-4 border border-brand/10 dark:border-brand/20">
               <p class="text-sm font-semibold text-ink dark:text-slate-200 leading-relaxed">Your resume is stronger than <span class="text-brand font-bold">{{ coachPercentile }}%</span> of {{ experienceLevel.label }} resumes.</p>
@@ -115,8 +115,8 @@
     </div>
 
     <!-- ═══ 3. Resume Checklist ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('checklist')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['checklist'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('checklist')" :aria-expanded="activeSection['checklist']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a4 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
@@ -124,12 +124,12 @@
           </div>
           <div class="flex items-center gap-2">
             <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400">{{ checklistDone }}/{{ checklist.length }} Completed</span>
-            <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['checklist'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </div>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 space-y-2 border-t border-slate-100 dark:border-slate-800/80 pt-3">
+        <div v-if="activeSection['checklist']" class="mt-3 space-y-2 border-t border-slate-100 dark:border-slate-800/80 pt-3">
           <p class="text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-2">
             {{ checklist.length - checklistDone === 0 ? 'Resume checklist complete!' : `${checklist.length - checklistDone} recommendation${checklist.length - checklistDone > 1 ? 's' : ''} remaining` }}
           </p>
@@ -152,8 +152,8 @@
     </div>
 
     <!-- ═══ 4. ATS Analysis ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('ats')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['ats'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('ats')" :aria-expanded="activeSection['ats']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -164,11 +164,11 @@
               Locked
             </span>
           </div>
-          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['ats'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
+        <div v-if="activeSection['ats']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
           <template v-if="canUseATS">
             <div class="space-y-2 max-h-[350px] overflow-y-auto custom-scrollbar w-full">
               <div v-for="rule in atsAnalysis.rules" :key="rule.id" class="rounded-lg p-2 text-[11px] cursor-pointer transition-colors" :class="rule.passed ? 'bg-emerald-50/50 hover:bg-emerald-50 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20' : rule.category === 'critical' ? 'bg-red-50/50 hover:bg-red-50 dark:bg-red-500/10 dark:hover:bg-red-500/20' : 'bg-amber-50/50 hover:bg-amber-50 dark:bg-amber-500/10 dark:hover:bg-amber-500/20'" @click="toggleAtsRule(rule.id)">
@@ -212,8 +212,8 @@
     </div>
 
     <!-- ═══ 5. Keyword Analysis ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('keywords')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['keywords'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('keywords')" :aria-expanded="activeSection['keywords']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -224,11 +224,11 @@
               Locked
             </span>
           </div>
-          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['keywords'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
+        <div v-if="activeSection['keywords']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
           <template v-if="canUseKeywords">
             <div v-if="!targetRole" class="rounded-lg bg-slate-50 dark:bg-slate-800/50 p-3 text-center border border-slate-100 dark:border-slate-700/50">
               <svg class="size-6 text-slate-400 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -287,18 +287,18 @@
     </div>
 
     <!-- ═══ 6. Statistics ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('stats')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['stats'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('stats')" :aria-expanded="activeSection['stats']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
             <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Statistics</span>
           </div>
-          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['stats'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
+        <div v-if="activeSection['stats']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3">
           <div class="grid grid-cols-2 gap-2">
             <div v-for="(val, key) in statsDisplay" :key="key" class="flex flex-col rounded-xl bg-slate-50/50 dark:bg-slate-800/50 border border-slate-100/60 dark:border-slate-700/50 p-3 relative overflow-hidden group">
               <!-- Decorative subtle background element -->
@@ -314,8 +314,8 @@
     </div>
 
     <!-- ═══ 7. Experience Level ═══ -->
-    <div class="intel-card group" :class="{ 'is-expanded': activeSection[''] }">
-      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('level')" :aria-expanded="activeSection['']">
+    <div class="intel-card group" :class="{ 'is-expanded': activeSection['level'] }">
+      <button type="button" class="w-full text-left focus:outline-none" @click="toggleSection('level')" :aria-expanded="activeSection['level']">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <svg class="size-4 text-slate-400 group-hover:text-brand transition-colors duration-250" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
@@ -323,12 +323,12 @@
           </div>
           <div class="flex items-center gap-1">
             <span class="rounded-full bg-brand/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-brand">{{ experienceLevel.label }}</span>
-            <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection[''] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            <svg class="size-4 text-slate-400 transition-transform duration-250 ease-out" :class="activeSection['level'] && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </div>
         </div>
       </button>
       <Transition name="slide">
-        <div v-if="activeSection['']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3 space-y-3">
+        <div v-if="activeSection['level']" class="mt-3 border-t border-slate-100 dark:border-slate-800/80 pt-3 space-y-3">
           <div class="grid grid-cols-2 gap-2 text-[11px]">
             <div>
               <p class="text-slate-400 text-[10px]">Career Level</p>
@@ -438,6 +438,11 @@ watch(() => props.healthScore, (newVal) => {
 
 const toggleSection = (section) => {
   activeSection[section] = !activeSection[section]
+  if (activeSection.value) {
+    // localStorage tracking disabled for multi-select
+  } else {
+    
+  }
 }
 
 // ATS rules expansion logic

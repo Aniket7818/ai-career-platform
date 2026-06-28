@@ -67,10 +67,13 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
-    } else {
-      // Ensure smooth scroll to top on every navigation
-      return { top: 0, behavior: 'smooth' }
     }
+    // Don't reset scroll if navigating within the same page (e.g. hash changes)
+    if (to.path === from.path) {
+      return
+    }
+    // Ensure smooth scroll to top on every navigation
+    return { top: 0, behavior: 'smooth' }
   }
 })
 
