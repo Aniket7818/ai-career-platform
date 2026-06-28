@@ -10,12 +10,18 @@ module Api
 
       def invoice
         history = current_user.billing_histories.find(params[:id])
+        unless history.invoice_pdf_path && File.exist?(history.invoice_pdf_path)
+          InvoiceGeneratorService.new(history, current_user).generate_pdfs!
+        end
         return head :not_found unless history.invoice_pdf_path && File.exist?(history.invoice_pdf_path)
         send_file history.invoice_pdf_path, type: "application/pdf", disposition: "attachment"
       end
 
       def receipt
         history = current_user.billing_histories.find(params[:id])
+        unless history.receipt_pdf_path && File.exist?(history.receipt_pdf_path)
+          InvoiceGeneratorService.new(history, current_user).generate_pdfs!
+        end
         return head :not_found unless history.receipt_pdf_path && File.exist?(history.receipt_pdf_path)
         send_file history.receipt_pdf_path, type: "application/pdf", disposition: "attachment"
       end
