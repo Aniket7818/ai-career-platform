@@ -9,7 +9,7 @@
     </Transition>
 
     <!-- Top Progress Bar (Visual Only) -->
-    <div class="fixed top-0 left-0 right-0 h-1 bg-slate-100 z-50">
+    <div class="fixed top-0 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 z-50">
       <div class="h-full bg-brand transition-all duration-500 ease-out" :style="{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }"></div>
     </div>
 
@@ -54,14 +54,14 @@
               <span 
                 class="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-black uppercase tracking-wider"
                 :class="{
-                  'bg-emerald-50 text-emerald-700 border border-emerald-200/50': question.difficulty === 'Easy',
-                  'bg-amber-50 text-amber-700 border border-amber-200/50': question.difficulty === 'Intermediate',
-                  'bg-rose-50 text-rose-700 border border-rose-200/50': question.difficulty === 'Hard'
+                  'bg-emerald-50 text-emerald-700 border border-emerald-200/50 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20': question.difficulty === 'Easy',
+                  'bg-amber-50 text-amber-700 border border-amber-200/50 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20': question.difficulty === 'Intermediate',
+                  'bg-rose-50 text-rose-700 border border-rose-200/50 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20': question.difficulty === 'Hard'
                 }"
               >
                 {{ question.difficulty }}
               </span>
-              <span class="inline-flex items-center text-xs font-bold text-slate-600 bg-slate-100 rounded-md px-2.5 py-1 border border-slate-200/50">
+              <span class="inline-flex items-center text-xs font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-md px-2.5 py-1 border border-slate-200/50 dark:border-slate-700/50">
                 {{ question.topic }}
               </span>
               <span v-if="question.isHighFrequency" class="inline-flex items-center text-xs font-bold text-amber-600 bg-amber-50 rounded-md px-2.5 py-1 border border-amber-200/50">
@@ -84,7 +84,7 @@
             </div>
           </div>
           
-          <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">{{ question.title }}</h1>
+          <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">{{ question.title }}</h1>
         </header>
 
         <!-- Question Box -->
@@ -101,33 +101,33 @@
         <article class="prose prose-slate max-w-none prose-p:leading-relaxed prose-headings:font-extrabold prose-a:text-brand prose-a:no-underline hover:prose-a:underline">
           <!-- Answer Section -->
           <div class="mb-8 mt-4 md:mt-8">
-            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
-              <span class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-sm">
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center gap-3">
+              <span class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-sm">
                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </span>
               Solution
             </h2>
-            <div class="bg-white rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-sm border border-slate-200/60 text-slate-700 space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-sm border border-slate-200/60 dark:border-slate-800/60 text-slate-700 dark:text-slate-300 space-y-6">
               
               <!-- Parsed Answer Sections -->
               <div v-for="(section, sIdx) in parsedAnswerSections" :key="sIdx" class="space-y-2">
-                <h4 v-if="section.title" class="text-base font-bold text-slate-900">{{ section.title }}</h4>
+                <h4 v-if="section.title" class="text-base font-bold text-slate-900 dark:text-white">{{ section.title }}</h4>
                 <p class="whitespace-pre-wrap">{{ section.content }}</p>
               </div>
               
-              <div v-if="question.explanation" class="mt-8 pt-8 border-t border-slate-100">
-                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <div v-if="question.explanation" class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                   Detailed Explanation
                 </h3>
-                <p class="whitespace-pre-wrap text-slate-600">{{ question.explanation }}</p>
+                <p class="whitespace-pre-wrap text-slate-600 dark:text-slate-400">{{ question.explanation }}</p>
               </div>
             </div>
           </div>
 
           <!-- Code Example -->
           <div v-if="question.code_example" class="mb-8 md:mb-10 mt-6 md:mt-0">
-            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white mb-4 md:mb-6 flex items-center gap-3">
               <span class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-sm">
                 <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
               </span>
@@ -173,7 +173,7 @@
 
           <!-- Key Takeaways -->
           <div v-if="question.key_takeaways && question.key_takeaways.length > 0" class="mb-10">
-            <h2 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-3">
+            <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
               <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-sm">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </span>
@@ -181,11 +181,11 @@
             </h2>
             <div class="grid grid-cols-1 gap-4">
               <div v-for="(takeaway, idx) in question.key_takeaways" :key="idx" 
-                   class="flex gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-200/60 hover:border-brand/30 hover:bg-brand/5 transition-colors group">
+                   class="flex gap-4 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/50 hover:border-brand/30 dark:hover:border-brand/30 hover:bg-brand/5 dark:hover:bg-brand/10 transition-colors group">
                 <div class="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-colors">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <div class="text-slate-700 leading-relaxed font-medium">
+                <div class="text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                   {{ takeaway }}
                 </div>
               </div>
@@ -195,9 +195,9 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else class="text-center py-32 bg-white rounded-3xl border border-dashed border-slate-300 shadow-sm">
-        <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Question Not Found</h3>
-        <p class="text-slate-500 mb-8">This question may have been moved or removed.</p>
+      <div v-else class="text-center py-32 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 shadow-sm">
+        <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">Question Not Found</h3>
+        <p class="text-slate-500 dark:text-slate-400 mb-8">This question may have been moved or removed.</p>
         <RouterLink :to="{ name: 'interview-prep' }" class="inline-flex rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-brand transition-colors">
           Return to Library
         </RouterLink>
@@ -205,7 +205,7 @@
     </div>
 
     <!-- Mobile Sticky Floating Nav -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:hidden z-40 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] rounded-t-3xl flex flex-col gap-3">
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/80 dark:border-slate-800/80 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:hidden z-40 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] rounded-t-3xl flex flex-col gap-3">
       <!-- Mini Progress bar -->
       <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
         <div class="h-full bg-brand transition-all duration-300" :style="{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }"></div>
@@ -261,7 +261,7 @@
     </div>
 
     <!-- Desktop Footer Nav -->
-    <div v-if="question" class="hidden md:block border-t border-slate-200/80 bg-slate-50/50 mt-12 py-8">
+    <div v-if="question" class="hidden md:block border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50 mt-12 py-8">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <RouterLink :to="{ name: 'interview-prep-subject', params: { subject: route.params.subject } }" class="inline-flex items-center text-sm font-bold text-slate-500 hover:text-brand transition-colors">
           <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>

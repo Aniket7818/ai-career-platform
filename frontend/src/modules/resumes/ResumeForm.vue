@@ -884,21 +884,7 @@ const update = (key, value) => { props.model[key] = value }
 // Collapsible section open state — personal open by default
 const openSections = reactive(Object.fromEntries(ALL_SECTIONS.map((s, i) => [s.key, i === 0])))
 const toggleSection = (key) => {
-  if (isMobile.value) {
-    // Single-accordion on mobile: close all others
-    const wasOpen = openSections[key]
-    ALL_SECTIONS.forEach(s => { openSections[s.key] = false })
-    openSections[key] = !wasOpen
-    // Auto-scroll expanded section into view
-    if (!wasOpen) {
-      nextTick(() => {
-        const el = document.getElementById(`section-${key}`)
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      })
-    }
-  } else {
-    openSections[key] = !openSections[key]
-  }
+  openSections[key] = !openSections[key]
 }
 
 // Left Sidebar state
@@ -1105,10 +1091,6 @@ const handleCommandAction = (action) => {
   else if (action.type === 'add-section') {
     // Open the accordion
     openSections[action.payload] = true
-    nextTick(() => {
-      const el = document.getElementById(`section-${action.payload}`)
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
   }
 }
 

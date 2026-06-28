@@ -1,9 +1,9 @@
 <template>
-  <article class="relative flex flex-col min-h-[420px] lg:h-full overflow-hidden rounded-2xl bg-slate-100/50 sm:min-h-[560px] border border-slate-200/60">
+  <article class="relative flex flex-col min-h-[420px] lg:h-full overflow-hidden rounded-2xl bg-slate-100/50 dark:bg-slate-900/50 sm:min-h-[560px] border border-slate-200/60 dark:border-slate-800/60">
     <!-- Top Status Bar -->
-    <div class="flex items-center justify-between px-5 py-3 border-b border-slate-200/50 bg-white">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-900">
       <div class="flex items-center gap-3">
-        <span class="rounded bg-slate-50 px-2 py-0.5 text-[10px] font-bold text-slate-500 border border-slate-100">
+        <span class="rounded bg-slate-50 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
           Page {{ pageCount }}
         </span>
         <span v-if="pageCount > 1" class="text-[10px] font-bold text-amber-500 flex items-center gap-1">
@@ -20,41 +20,41 @@
 
     <!-- Skeleton Loading State (Priority 11) -->
     <Transition name="fade">
-      <div v-if="isRendering" class="absolute inset-0 z-30 bg-slate-100 flex flex-col items-center justify-center p-8 sm:p-12">
-        <div class="relative bg-white shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded border border-slate-200/50 flex flex-col gap-4 p-8 w-full max-w-[420px] h-[580px] animate-pulse">
+      <div v-if="isRendering" class="absolute inset-0 z-30 bg-slate-100 dark:bg-slate-950 flex flex-col items-center justify-center p-8 sm:p-12">
+        <div class="relative bg-white dark:bg-slate-900 shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded border border-slate-200/50 dark:border-slate-800/50 flex flex-col gap-4 p-8 w-full max-w-[420px] h-[580px] animate-pulse">
           <!-- Premium Loader Message -->
-          <div class="absolute inset-0 flex items-center justify-center bg-white/30 backdrop-blur-[1px] z-10">
-            <span class="bg-slate-900/90 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-wider">
+          <div class="absolute inset-0 flex items-center justify-center bg-white/30 dark:bg-slate-950/30 backdrop-blur-[1px] z-10">
+            <span class="bg-slate-900/90 dark:bg-slate-800/90 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-wider">
               <svg class="size-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2v4M12 18v4"></path></svg>
               Rendering Resume...
             </span>
           </div>
 
           <!-- Dummy lines mimicking A4 structure -->
-          <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <div class="flex items-center justify-between pb-6 border-b border-slate-100 dark:border-slate-800">
             <div class="space-y-2 flex-1">
-              <div class="h-5 w-1/3 bg-slate-200 rounded"></div>
-              <div class="h-3 w-1/2 bg-slate-100 rounded"></div>
+              <div class="h-5 w-1/3 bg-slate-200 dark:bg-slate-800 rounded"></div>
+              <div class="h-3 w-1/2 bg-slate-100 dark:bg-slate-800/50 rounded"></div>
             </div>
-            <div class="size-10 bg-slate-200 rounded-full"></div>
+            <div class="size-10 bg-slate-200 dark:bg-slate-800 rounded-full"></div>
           </div>
           <div class="space-y-3 flex-1 mt-4">
-            <div class="h-3 w-1/4 bg-slate-200 rounded"></div>
-            <div class="h-2 w-full bg-slate-100 rounded"></div>
-            <div class="h-2 w-full bg-slate-100 rounded"></div>
-            <div class="h-2 w-5/6 bg-slate-100 rounded"></div>
+            <div class="h-3 w-1/4 bg-slate-200 dark:bg-slate-800 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 dark:bg-slate-800/50 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 dark:bg-slate-800/50 rounded"></div>
+            <div class="h-2 w-5/6 bg-slate-100 dark:bg-slate-800/50 rounded"></div>
             
-            <div class="h-3 w-1/4 bg-slate-200 rounded mt-8"></div>
-            <div class="h-2 w-full bg-slate-100 rounded"></div>
-            <div class="h-2 w-full bg-slate-100 rounded"></div>
-            <div class="h-2 w-4/5 bg-slate-100 rounded"></div>
+            <div class="h-3 w-1/4 bg-slate-200 dark:bg-slate-800 rounded mt-8"></div>
+            <div class="h-2 w-full bg-slate-100 dark:bg-slate-800/50 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 dark:bg-slate-800/50 rounded"></div>
+            <div class="h-2 w-4/5 bg-slate-100 dark:bg-slate-800/50 rounded"></div>
           </div>
         </div>
       </div>
     </Transition>
 
     <!-- Zoom wrapper (Grey workspace bg, floating A4 style paper) -->
-    <div class="flex-1 overflow-auto custom-scrollbar p-6 sm:p-12 flex items-start justify-center bg-slate-100/40 select-none">
+    <div class="flex-1 overflow-auto custom-scrollbar p-6 sm:p-12 flex items-start justify-center bg-slate-100/40 dark:bg-slate-950/40 select-none">
       <div 
         class="relative bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08),0_4px_12px_rgba(15,23,42,0.04)] border border-slate-200/50 rounded-sm transition-all duration-300 ease-out origin-top hover:-translate-y-0.5 hover:shadow-[0_30px_70px_rgba(15,23,42,0.12),0_8px_24px_rgba(15,23,42,0.06)]"
         :style="zoomWrapStyle"
