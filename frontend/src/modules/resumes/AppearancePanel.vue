@@ -1,12 +1,5 @@
 <template>
-  <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-panel space-y-6">
-    <h3 class="text-sm font-bold text-ink flex items-center gap-2">
-      <svg class="size-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93 17.66 6.34M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41"/>
-      </svg>
-      {{ t('builder.appearance') }}
-    </h3>
-
+  <div class="space-y-6">
     <!-- Font Family -->
     <div>
       <label class="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-500">

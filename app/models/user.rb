@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :feature_interests, dependent: :destroy
   has_many :audit_logs, dependent: :nullify
   has_many :payment_orders, dependent: :destroy
+  has_many :billing_histories, dependent: :destroy
+  has_many :credit_transactions, dependent: :destroy
   has_many :login_sessions, dependent: :destroy
   has_many :email_verification_logs, dependent: :destroy
 
@@ -67,5 +69,15 @@ class User < ApplicationRecord
 
   def inactive_message
     status == "suspended" ? :suspended : :inactive
+  end
+
+  before_create :initialize_welcome_credits
+
+  private
+
+  def initialize_welcome_credits
+    self.monthly_credit_limit ||= 10
+    self.remaining_credits ||= 10
+    self.used_credits ||= 0
   end
 end

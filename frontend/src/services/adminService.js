@@ -8,5 +8,6 @@ export const adminService = {
   promoteUser: (id) => http.patch(`/admin/users/${id}/promote`),
   deleteUser: (id) => http.delete(`/admin/users/${id}`),
   updateSettings: (key, value) => http.patch('/admin/settings', { key, value }),
+  getSettings: () => http.get('/admin/settings'),
   exportUrl: (kind) => `/api/v1/admin/export/${kind}`
 }

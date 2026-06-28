@@ -5,11 +5,11 @@
       :key="cert.id"
       class="group relative rounded-xl border border-slate-200 bg-white p-5 transition hover:border-brand/30 hover:shadow-sm"
     >
-      <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
         <span class="text-xs font-bold uppercase tracking-wider text-brand">
           {{ entries.length > 1 ? `Certification ${idx + 1}` : 'Certification' }}
         </span>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button
             type="button"
             class="rounded px-2 py-1 text-[10px] font-semibold text-slate-500 hover:bg-slate-100 disabled:opacity-30"

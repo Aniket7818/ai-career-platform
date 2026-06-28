@@ -54,11 +54,25 @@ const routes = [
   { path: '/resumes/:id/edit', name: ROUTE_NAMES.RESUME_EDIT, component: ResumeEditorPage, meta: { requiresAuth: true } },
   { path: '/resumes/:id/print', name: 'resume-print', component: ResumePrintView, meta: { requiresAuth: true } },
   { path: '/interview-prep', name: ROUTE_NAMES.INTERVIEW_PREP, component: InterviewPrepList, meta: { requiresAuth: true } },
+  { path: '/interview-prep/bookmarks', name: 'interview-prep-bookmarks', component: () => import('../modules/interview-prep/InterviewPrepFilteredList.vue'), meta: { requiresAuth: true, listType: 'bookmarks' } },
+  { path: '/interview-prep/completed', name: 'interview-prep-completed', component: () => import('../modules/interview-prep/InterviewPrepFilteredList.vue'), meta: { requiresAuth: true, listType: 'completed' } },
+  { path: '/interview-prep/history', name: 'interview-prep-history', component: () => import('../modules/interview-prep/InterviewPrepFilteredList.vue'), meta: { requiresAuth: true, listType: 'history' } },
   { path: '/interview-prep/:subject', name: ROUTE_NAMES.INTERVIEW_PREP_SUBJECT, component: InterviewPrepSubject, meta: { requiresAuth: true } },
   { path: '/interview-prep/:subject/:question_id', name: ROUTE_NAMES.INTERVIEW_PREP_QUESTION, component: InterviewPrepQuestion, meta: { requiresAuth: true } }
 ]
 
-const router = createRouter({ history: createWebHistory(), routes })
+const router = createRouter({ 
+  history: createWebHistory(), 
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      // Ensure smooth scroll to top on every navigation
+      return { top: 0, behavior: 'smooth' }
+    }
+  }
+})
 
 router.beforeEach(async (to) => {
   // Clear any global auth errors when navigating to a new page

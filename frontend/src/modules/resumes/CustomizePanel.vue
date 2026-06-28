@@ -1,12 +1,5 @@
 <template>
-  <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-panel space-y-5">
-    <h3 class="text-sm font-bold text-ink flex items-center gap-2">
-      <svg class="size-4 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-      </svg>
-      {{ t('builder.customize') }}
-    </h3>
-
+  <div class="space-y-5">
     <!-- Section Visibility -->
     <div>
       <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">{{ t('builder.sectionVisibility') }}</p>

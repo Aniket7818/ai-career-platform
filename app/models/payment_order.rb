@@ -1,8 +1,8 @@
 class PaymentOrder < ApplicationRecord
   PLANS = {
-    "plus" => { monthly_paise: 9900, yearly_paise: 99900, label: "CareerAI Plus" },
-    "pro" => { monthly_paise: 19900, yearly_paise: 199900, label: "CareerAI Pro" },
-    "team" => { monthly_paise: 49900, yearly_paise: 49900, label: "Team (Legacy)" }
+    "plus" => { monthly_paise: 100, yearly_paise: 200, label: "CareerAI Plus" },
+    "pro" => { monthly_paise: 300, yearly_paise: 400, label: "CareerAI Pro" },
+    "team" => { monthly_paise: 500, yearly_paise: 500, label: "Team (Legacy)" }
   }.freeze
 
   belongs_to :user
@@ -14,8 +14,7 @@ class PaymentOrder < ApplicationRecord
   before_validation :set_amount, on: :create
 
   def self.plan_amount(plan, billing_cycle)
-    plan_config = PLANS.fetch(plan.to_s)
-    billing_cycle == "yearly" ? plan_config[:yearly_paise] : plan_config[:monthly_paise]
+    PricingService.plan_price_in_paise(plan, billing_cycle)
   end
 
   def activate!
@@ -23,11 +22,27 @@ class PaymentOrder < ApplicationRecord
       update!(status: "paid", activated_at: Time.current)
       cycle = metadata["billing_cycle"] || "monthly"
       expires_in = cycle == "yearly" ? 1.year : 1.month
+      
+      credits = plan == "pro" ? 500 : 150
+
       user.update!(
         subscription_plan: plan,
         subscription_started_at: Time.current,
         subscription_expires_at: expires_in.from_now,
-        razorpay_subscription_id: razorpay_order_id
+        razorpay_subscription_id: razorpay_order_id,
+        monthly_credit_limit: credits,
+        remaining_credits: credits,
+        used_credits: 0,
+        credit_reset_date: expires_in.from_now
+      )
+
+      user.credit_transactions.create!(
+        feature_name: "Plan Activation (#{plan.upcase})",
+        credits_used: credits,
+        balance_before: 0,
+        balance_after: credits,
+        action: "add",
+        reference_id: "activation_#{id}"
       )
     end
   end

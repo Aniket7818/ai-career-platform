@@ -51,3 +51,6 @@ group :development, :test do
 end
 
 gem "ferrum", "~> 0.17.2"
+gem "prawn"
+gem "prawn-table"
+gem "matrix"

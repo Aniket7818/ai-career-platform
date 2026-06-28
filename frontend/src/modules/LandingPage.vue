@@ -2,20 +2,23 @@
   <div class="min-h-screen w-full max-w-full bg-white">
     <PublicHeader />
 
-    <section class="relative w-full max-w-full overflow-hidden bg-white">
+    <section class="relative w-full max-w-full overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       <div class="pointer-events-none absolute -right-32 top-0 size-96 rounded-full bg-brand/8 blur-3xl" />
       <div class="pointer-events-none absolute -left-24 bottom-0 size-72 rounded-full bg-mint/10 blur-3xl" />
-      <div class="page-container relative grid items-center gap-8 py-10 sm:gap-12 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:py-24">
+      <div class="page-container relative grid items-center gap-8 pt-16 pb-12 sm:gap-12 sm:pt-20 sm:pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,520px)] lg:pt-24 lg:pb-20">
         <div class="min-w-0 animate-fade-up">
           <p class="inline-flex rounded-full bg-brand/10 px-3 py-1 text-sm font-semibold text-brand">{{ t('landing.badge') }}</p>
-          <h1 class="mt-5 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl md:text-5xl lg:text-6xl">{{ t('landing.title') }}</h1>
-          <p class="mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{{ t('landing.subtitle') }}</p>
-          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-            <RouterLink class="rounded-md bg-brand px-5 py-3 text-center font-semibold text-white shadow-lg shadow-brand/25 transition hover:bg-brand/90" :to="user ? '/dashboard' : '/signup'">{{ t('landing.start') }}</RouterLink>
-            <a class="rounded-md border border-slate-200 bg-white px-5 py-3 text-center font-semibold text-ink transition hover:border-slate-300 hover:bg-slate-50" href="#features">{{ t('landing.explore') }}</a>
+          <h1 class="mt-6 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl md:text-6xl">{{ t('landing.title') }}</h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl sm:leading-9">{{ t('landing.subtitle') }}</p>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+            <RouterLink class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-indigo-600 px-6 py-3.5 text-center font-bold text-white shadow-lg shadow-brand/25 transition-all hover:scale-105 hover:shadow-brand/40" :to="user ? '/dashboard' : '/signup'">
+              {{ t('landing.start') }}
+              <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </RouterLink>
+            <a class="inline-flex items-center justify-center rounded-full border-2 border-slate-200 bg-white px-6 py-3.5 text-center font-bold text-ink transition-all hover:border-slate-300 hover:bg-slate-50" href="#features">{{ t('landing.explore') }}</a>
           </div>
         </div>
-        <div class="min-w-0 animate-fade-up rounded-2xl border border-slate-100 bg-gradient-to-br from-skyglass to-white p-4 shadow-panel sm:p-5">
+        <div class="min-w-0 animate-fade-up rounded-2xl border border-slate-100 bg-gradient-to-br from-skyglass to-white p-4 shadow-panel sm:p-5 transition-transform hover:-translate-y-2 duration-500 hover:shadow-2xl">
           <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div class="min-w-0">
               <p class="text-[10px] font-bold uppercase tracking-widest text-brand">Live Preview</p>
@@ -40,6 +43,7 @@
                 :title="activeDemo.title"
                 :content="activeDemo.content"
                 :template-id="activeDemo.templateId"
+                :zoom="previewZoom"
               />
             </Transition>
           </div>
@@ -47,11 +51,11 @@
       </div>
     </section>
 
-    <section class="w-full max-w-full border-y border-slate-100 bg-white py-10 sm:py-12">
+    <section class="w-full max-w-full border-y border-slate-100 bg-white py-12 sm:py-16 relative z-10">
       <div class="page-container grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div v-for="stat in stats" :key="stat.label" class="text-center">
-          <p class="text-3xl font-bold text-brand lg:text-4xl">{{ stat.value }}</p>
-          <p class="mt-1 text-sm font-medium text-slate-500">{{ stat.label }}</p>
+        <div v-for="stat in stats" :key="stat.label" class="text-center group p-6 rounded-2xl hover:bg-slate-50 transition duration-300">
+          <p class="text-4xl font-extrabold text-brand lg:text-5xl transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">{{ stat.value }}</p>
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-slate-500">{{ stat.label }}</p>
         </div>
       </div>
     </section>
@@ -64,12 +68,13 @@
         </div>
         <div class="mt-12 grid gap-6 md:grid-cols-3">
           <div
-            v-for="item in features"
+            v-for="(item, idx) in features"
             :key="item.title"
-            class="group rounded-2xl border border-slate-100 bg-white p-7 shadow-panel transition hover:-translate-y-1 hover:border-brand/20 hover:shadow-glow"
+            class="group flex h-full flex-col rounded-2xl border border-slate-100 bg-white p-7 shadow-panel transition-all duration-500 hover:-translate-y-2 hover:border-brand/30 hover:shadow-xl"
+            :style="{ transitionDelay: `${idx * 50}ms` }"
           >
-            <div class="grid size-12 place-items-center rounded-xl bg-brand/10 text-brand transition group-hover:bg-brand group-hover:text-white">
-              <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <div class="grid size-14 place-items-center rounded-xl bg-brand/10 text-brand transition-all duration-300 group-hover:scale-110 group-hover:bg-brand group-hover:text-white group-hover:shadow-lg group-hover:shadow-brand/30">
+              <svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                 <path v-if="item.icon === 'resume'" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8" />
                 <path v-else-if="item.icon === 'shield'" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 <template v-else>
@@ -77,8 +82,8 @@
                 </template>
               </svg>
             </div>
-            <p class="mt-5 text-lg font-bold text-ink">{{ item.title }}</p>
-            <p class="mt-3 text-sm leading-7 text-slate-500">{{ item.description }}</p>
+            <p class="mt-6 text-xl font-bold text-ink">{{ item.title }}</p>
+            <p class="mt-3 text-base leading-7 text-slate-500 flex-1">{{ item.description }}</p>
           </div>
         </div>
         <div class="mt-10 text-center">
@@ -87,43 +92,7 @@
       </div>
     </section>
 
-    <section id="pricing" class="w-full max-w-full bg-white py-14 sm:py-20">
-      <div class="page-container">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-ink lg:text-4xl">{{ t('landing.pricingTitle') }}</h2>
-        <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{{ t('landing.pricingSubtitle') }}</p>
-      </div>
-      <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <div
-          v-for="plan in plans"
-          :key="plan.name"
-          class="relative rounded-2xl border p-7 shadow-panel transition hover:-translate-y-1"
-          :class="plan.highlighted ? 'border-brand bg-gradient-to-b from-brand/5 to-white ring-2 ring-brand/20' : 'border-slate-200 bg-white'"
-        >
-          <span v-if="plan.highlighted" class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">Most popular</span>
-          <p class="text-lg font-bold text-ink">{{ plan.name }}</p>
-          <div class="mt-3 flex items-baseline gap-1">
-            <span class="text-4xl font-bold text-ink">{{ plan.price }}</span>
-            <span class="text-slate-500">{{ plan.period }}</span>
-          </div>
-          <p class="mt-3 text-sm text-slate-500">{{ plan.description }}</p>
-          <ul class="mt-6 space-y-3">
-            <li v-for="feature in plan.features" :key="feature" class="flex items-center gap-2 text-sm text-slate-600">
-              <svg class="size-4 shrink-0 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5" /></svg>
-              {{ feature }}
-            </li>
-          </ul>
-          <button
-            class="mt-8 block rounded-md px-5 py-3 text-center font-semibold transition"
-            :class="plan.highlighted ? 'bg-brand text-white shadow-lg shadow-brand/20 hover:bg-brand/90' : 'border border-slate-200 text-ink hover:bg-slate-50'"
-            @click="selectPlan(plan)"
-          >
-            {{ plan.id === 'free' ? t('landing.start') : 'Buy plan' }}
-          </button>
-        </div>
-      </div>
-      </div>
-    </section>
+
 
     <section class="w-full max-w-full bg-ink py-14 text-white sm:py-20">
       <div class="page-container">
@@ -144,15 +113,18 @@
           <h2 class="text-3xl font-bold text-ink lg:text-4xl">{{ t('landing.testimonialsTitle') }}</h2>
           <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{{ t('landing.testimonialsSubtitle') }}</p>
         </div>
-        <div class="mt-12 grid gap-6 md:grid-cols-3">
-          <div v-for="item in testimonials" :key="item.name" class="rounded-2xl border border-slate-100 bg-white p-7 shadow-panel">
-            <svg class="size-8 text-brand/30" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-            <p class="mt-4 text-sm leading-7 text-slate-600">"{{ item.quote }}"</p>
-            <div class="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
-              <div class="grid size-10 place-items-center rounded-full bg-brand/10 text-sm font-bold text-brand">{{ item.name.charAt(0) }}</div>
+        <div class="mt-12 flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 md:grid md:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 hide-scrollbar">
+          <div v-for="item in testimonials" :key="item.name" class="min-w-[85vw] snap-center rounded-2xl border border-slate-100 bg-white p-8 shadow-panel transition-all duration-300 hover:-translate-y-2 hover:shadow-xl md:min-w-0 flex flex-col h-full">
+            <div class="flex gap-1 text-amber-400 mb-5">
+              <svg v-for="i in 5" :key="i" class="size-5 drop-shadow-sm" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+            </div>
+            <p class="text-base leading-8 text-slate-700 italic flex-1">"{{ item.quote }}"</p>
+            <div class="mt-8 flex items-center gap-4 border-t border-slate-100 pt-6">
+              <img v-if="item.avatar" :src="item.avatar" class="size-12 rounded-full object-cover shadow-sm" :alt="item.name" />
+              <div v-else class="grid size-12 place-items-center rounded-full bg-brand/10 text-lg font-bold text-brand shadow-sm">{{ item.name.charAt(0) }}</div>
               <div>
-                <p class="text-sm font-semibold text-ink">{{ item.name }}</p>
-                <p class="text-xs text-slate-500">{{ item.role }}</p>
+                <p class="text-base font-bold text-ink">{{ item.name }}</p>
+                <p class="text-sm font-medium text-slate-500">{{ item.role }}</p>
               </div>
             </div>
           </div>
@@ -160,45 +132,27 @@
       </div>
     </section>
 
-    <section class="relative w-full max-w-full overflow-hidden py-14 sm:py-20">
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand/5 via-skyglass to-mint/5" />
-      <div class="page-container relative max-w-3xl text-center lg:mx-auto">
-        <h2 class="text-3xl font-bold text-ink lg:text-4xl">{{ t('landing.ctaTitle') }}</h2>
-        <p class="mx-auto mt-4 max-w-xl text-lg text-slate-600">{{ t('landing.ctaBody') }}</p>
-        <RouterLink class="mt-8 inline-flex rounded-md bg-brand px-6 py-3 font-semibold text-white shadow-lg shadow-brand/25 transition hover:bg-brand/90" :to="user ? '/dashboard' : '/signup'">{{ t('landing.ctaButton') }}</RouterLink>
+    <section class="relative w-full max-w-full overflow-hidden py-20 sm:py-28">
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand/10 via-skyglass to-mint/10" />
+      <div class="pointer-events-none absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-20" />
+      <div class="page-container relative max-w-4xl text-center lg:mx-auto bg-white/60 backdrop-blur-xl rounded-3xl p-10 sm:p-16 border border-white/80 shadow-[0_20px_50px_rgba(15,23,42,0.06)]">
+        <h2 class="text-3xl font-extrabold tracking-tight text-ink lg:text-5xl">{{ t('landing.ctaTitle') }}</h2>
+        <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-700">{{ t('landing.ctaBody') }}</p>
+        <RouterLink class="mt-10 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand to-indigo-600 px-8 py-4 font-bold text-white shadow-lg shadow-brand/30 transition-all hover:scale-105 hover:shadow-brand/50" :to="user ? '/dashboard' : '/signup'">
+          {{ t('landing.ctaButton') }}
+          <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        </RouterLink>
       </div>
     </section>
 
     <SiteFooter />
 
-    <Teleport to="body">
-      <div v-if="selectedPlan" class="fixed inset-0 z-50 grid place-items-center bg-ink/70 p-5 backdrop-blur" @click.self="selectedPlan = null">
-        <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl">
-          <h2 class="text-xl font-bold text-ink">Confirm purchase</h2>
-          <p class="mt-2 text-sm text-slate-600">You are buying {{ selectedPlan.name }} for {{ selectedPlan.price }}{{ selectedPlan.period }}. The active plan will replace any previous plan and expire after one month.</p>
-          <div class="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Payment QR / Razorpay Checkout</p>
-            <div class="mx-auto mt-3 grid size-28 place-items-center rounded-md bg-white text-3xl font-bold text-brand shadow-inner">₹</div>
-            <p class="mt-3 text-xs text-slate-500">Razorpay checkout opens when keys are configured. Local test mode can activate after confirmation.</p>
-          </div>
-          <label class="mt-5 flex items-start gap-3 text-sm text-slate-600">
-            <input v-model="acceptedPolicies" class="mt-1" type="checkbox" />
-            <span>I agree to the <RouterLink class="text-brand" to="/privacy">Privacy Policy</RouterLink>, <RouterLink class="text-brand" to="/terms">Terms</RouterLink>, <RouterLink class="text-brand" to="/refund-policy">Refund Policy</RouterLink>, and <RouterLink class="text-brand" to="/shipping-policy">Shipping Policy</RouterLink>.</span>
-          </label>
-          <div class="mt-6 flex gap-3">
-            <button class="flex-1 rounded-md border border-slate-200 px-4 py-3 font-semibold text-ink" @click="selectedPlan = null">Cancel</button>
-            <button class="flex-1 rounded-md bg-brand px-4 py-3 font-semibold text-white disabled:opacity-50" :disabled="!acceptedPolicies || purchasing" @click="purchasePlan">
-              {{ purchasing ? 'Processing...' : 'Pay now' }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </Teleport>
+
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import PublicHeader from '../components/layout/PublicHeader.vue'
 import SiteFooter from '../components/layout/SiteFooter.vue'
@@ -213,15 +167,20 @@ const router = useRouter()
 const user = computed(() => store.state.auth.user)
 const stats = t('landing.stats')
 const features = t('landing.featureCards')
-const plans = t('landing.pricingCards')
 const testimonials = t('landing.testimonials')
-
 const activeIndex = ref(0)
-const selectedPlan = ref(null)
-const acceptedPolicies = ref(false)
-const purchasing = ref(false)
+const windowWidth = ref(window.innerWidth)
 let timer
 let paused = false
+
+const handleResize = () => { windowWidth.value = window.innerWidth }
+
+const previewZoom = computed(() => {
+  if (windowWidth.value < 500) return 30
+  if (windowWidth.value < 640) return 35
+  if (windowWidth.value < 1024) return 38
+  return 42
+})
 
 const goToSlide = (index) => {
   activeIndex.value = index
@@ -230,73 +189,20 @@ const goToSlide = (index) => {
 const pauseCarousel = () => { paused = true }
 const resumeCarousel = () => { paused = false }
 
-const selectPlan = (plan) => {
-  if (plan.id === 'free') {
-    router.push(user.value ? '/dashboard' : '/signup')
-    return
-  }
-  if (!user.value) {
-    router.push('/signup')
-    return
-  }
-  selectedPlan.value = plan
-  acceptedPolicies.value = false
-}
 
-const purchasePlan = async () => {
-  purchasing.value = true
-  try {
-    const { data } = await paymentService.create(selectedPlan.value.id)
-    if (data.razorpay_key_id && window.Razorpay) {
-      await openRazorpay(data)
-    } else {
-      await paymentService.verify({
-        razorpay_order_id: data.order.razorpay_order_id,
-        razorpay_payment_id: `local_${Date.now()}`,
-        razorpay_signature: ''
-      })
-    }
-    await store.dispatch('auth/fetchMe')
-    toast.success('Plan activated', `${selectedPlan.value.name} is active for one month.`)
-    selectedPlan.value = null
-    router.push('/dashboard')
-  } catch (error) {
-    toast.error('Payment failed', error.response?.data?.error || 'Please try again.')
-  } finally {
-    purchasing.value = false
-  }
-}
-
-const openRazorpay = (data) => new Promise((resolve, reject) => {
-  const checkout = new window.Razorpay({
-    key: data.razorpay_key_id,
-    amount: data.order.amount_paise,
-    currency: data.order.currency,
-    name: 'CareerAI',
-    description: `${selectedPlan.value.name} monthly subscription`,
-    order_id: data.order.razorpay_order_id,
-    prefill: { name: user.value?.full_name, email: user.value?.email },
-    handler: async (response) => {
-      try {
-        await paymentService.verify(response)
-        resolve()
-      } catch (error) {
-        reject(error)
-      }
-    },
-    modal: { ondismiss: () => reject(new Error('Payment cancelled.')) },
-    theme: { color: '#6d4aff' }
-  })
-  checkout.open()
-})
 
 onMounted(() => {
+  window.addEventListener('resize', handleResize)
   if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
     const script = document.createElement('script')
     script.src = 'https://checkout.razorpay.com/v1/checkout.js'
     script.async = true
     document.head.appendChild(script)
   }
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
 })
 
 const demos = [
@@ -307,11 +213,11 @@ const demos = [
     templateId: 'modern',
     content: {
       personal: { fullName: 'John Doe', headline: 'Senior Product Manager', email: 'john.doe@example.com', phone: '+91 98765 43210', location: 'Bengaluru, India', linkedin: 'linkedin.com/in/johndoe', summary: 'Product leader with 8 years of experience launching B2B SaaS platforms, improving activation, and aligning engineering, design, and revenue teams around measurable customer outcomes.' },
-      education: { school: 'MBA, Indian School of Business' },
-      experience: { role: 'Senior Product Manager', company: 'CloudWorks Labs - Led roadmap strategy for analytics products serving 40K monthly users and improved trial-to-paid conversion by 18%.' },
-      projects: { projectName: 'Self-serve onboarding revamp, usage-based billing launch, enterprise reporting suite' },
-      skills: { skillList: 'Product Strategy, Roadmapping, SQL, Analytics, A/B Testing, Stakeholder Management, SaaS Pricing' },
-      certifications: { certName: 'Certified Scrum Product Owner, Product Analytics Certification' }
+      education: { school: 'MBA, Indian School of Business', degree: 'MBA', date: '2016 - 2018' },
+      experience: { role: 'Senior Product Manager', company: 'CloudWorks Labs\n- Led roadmap strategy for analytics products serving 40K monthly users and improved trial-to-paid conversion by 18%.\n- Directed a cross-functional team of 12 engineers and 3 designers to deliver 5 major product updates.\n- Reduced churn by 14% by introducing proactive health scores.\n\nProduct Manager | InnovateX\n- Launched MVP for mobile dashboard resulting in 20K active users in month one.\n- Streamlined agile development cycles reducing time-to-market by 25%.' },
+      projects: { projectName: 'Self-serve onboarding revamp, usage-based billing launch, enterprise reporting suite\n\nAI Driven Candidate Matching\n- Built an AI model matching resumes to JDs with 92% accuracy.' },
+      skills: { skillList: 'Product Strategy, Roadmapping, SQL, Analytics, A/B Testing, Stakeholder Management, SaaS Pricing, Go-To-Market, OKRs, Agile Scrum' },
+      certifications: { certName: 'Certified Scrum Product Owner, Product Analytics Certification (Reforge)' }
     }
   },
   {
@@ -386,14 +292,22 @@ onUnmounted(() => window.clearInterval(timer))
 <style scoped>
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.45s ease;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .slide-enter-from {
   opacity: 0;
-  transform: translateX(24px);
+  transform: translateX(30px) scale(0.98);
 }
 .slide-leave-to {
   opacity: 0;
-  transform: translateX(-24px);
+  transform: translateX(-30px) scale(0.98);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

@@ -9,7 +9,6 @@
       <nav class="hidden items-center gap-5 text-sm md:flex">
         <a class="text-slate-600 transition hover:text-ink" href="/#features">{{ t('nav.features') }}</a>
         <RouterLink class="text-slate-600 transition hover:text-ink" to="/coming-soon">{{ t('nav.comingSoon') }}</RouterLink>
-        <a class="text-slate-600 transition hover:text-ink" href="/#pricing">{{ t('nav.pricing') }}</a>
         <template v-if="user">
           <RouterLink class="text-slate-700 transition hover:text-ink" to="/dashboard">{{ t('nav.dashboard') }}</RouterLink>
           <RouterLink v-if="['admin', 'super_admin'].includes(user.role)" class="inline-flex items-center gap-1.5 rounded-md border border-brand/30 bg-brand/5 px-3 py-2 font-semibold text-brand transition hover:bg-brand/10" to="/admin">
@@ -46,7 +45,6 @@
         <nav class="flex flex-col gap-1">
           <a class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#features" @click="close">{{ t('nav.features') }}</a>
           <RouterLink class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/coming-soon" @click="close">{{ t('nav.comingSoon') }}</RouterLink>
-          <a class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" href="/#pricing" @click="close">{{ t('nav.pricing') }}</a>
           <template v-if="user">
             <RouterLink class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50" to="/dashboard" @click="close">{{ t('nav.dashboard') }}</RouterLink>
             <RouterLink v-if="['admin', 'super_admin'].includes(user.role)" class="block rounded-xl px-4 py-3 text-sm font-medium text-brand transition hover:bg-brand/5" to="/admin" @click="close">Admin</RouterLink>

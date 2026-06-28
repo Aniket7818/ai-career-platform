@@ -16,10 +16,22 @@
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="social.label"
-              class="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-brand/40 hover:bg-brand/20 hover:text-white"
+              class="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition-all hover:-translate-y-1 hover:border-brand/40 hover:bg-brand/20 hover:text-white"
             >
               <SocialIcon :name="social.name" />
             </a>
+          </div>
+
+          <div class="mt-10 rounded-2xl bg-white/5 p-6 border border-white/10 relative overflow-hidden group transition-all hover:border-brand/30">
+            <h3 class="text-sm font-bold text-white mb-2">Subscribe to our Newsletter</h3>
+            <p class="text-xs leading-5 text-slate-400 mb-4">Get the latest career tips and product updates delivered to your inbox.</p>
+            <div class="flex gap-2">
+              <input type="email" placeholder="Enter your email" class="w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand disabled:opacity-50" disabled />
+              <button class="rounded-lg bg-brand px-4 py-2 text-sm font-bold text-white transition-all shadow-md shadow-brand/20 disabled:opacity-50" disabled>Subscribe</button>
+            </div>
+            <div class="absolute inset-0 bg-ink/60 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+              <span class="inline-flex rounded-full bg-brand/20 px-3 py-1 text-xs font-bold text-brand ring-1 ring-brand/30 uppercase tracking-wider">Coming Soon</span>
+            </div>
           </div>
         </div>
 

@@ -36,6 +36,27 @@ module Api
         end
 
         order.activate!
+        
+        # Create billing history record
+        billing_history = current_user.billing_histories.create!(
+          plan_name: order.plan,
+          amount: order.amount_paise / 100.0,
+          currency: order.currency,
+          payment_provider: "Razorpay",
+          payment_id: order.razorpay_payment_id,
+          order_id: order.razorpay_order_id,
+          invoice_number: "INV-#{Time.current.year}-#{SecureRandom.hex(3).upcase}",
+          billing_cycle: order.metadata&.dig("billing_cycle") || "monthly",
+          payment_status: "Paid",
+          paid_at: Time.current,
+          renewal_date: current_user.subscription_expires_at
+        )
+
+        InvoiceGeneratorService.new(billing_history, current_user).generate_pdfs!
+
+        # Send activation email asynchronously (does not block payment flow)
+        SubscriptionMailer.with(user: current_user, billing_history: billing_history).activated.deliver_later
+
         render json: { user: UserSerializer.new(current_user.reload).as_json, order: payment_order_payload(order) }
       end
 

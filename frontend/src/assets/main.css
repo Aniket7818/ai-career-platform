@@ -1,18 +1,61 @@
+/* ─── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .page-container {
-    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
-  }
+/* ══════════════════════════════════════════════════════════════════
+   CareerAI Design System — Premium Foundation
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── Design Tokens ─── */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  
+  /* Mobile nav height */
+  --bottom-nav-height: 64px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* ─── Base Reset ─── */
 html {
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
   -webkit-text-size-adjust: 100%;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -22,6 +65,7 @@ body {
   overflow-x: clip;
   min-height: 100dvh;
   margin: 0;
+  font-family: var(--font-sans);
 }
 
 #app {
@@ -31,10 +75,332 @@ body {
   min-height: 100dvh;
 }
 
+/* ─── Typography ─── */
+* {
+  font-family: var(--font-sans);
+}
+
+/* ─── Form Elements — Premium Inputs ─── */
 input, textarea, select {
-  @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/15;
+  @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-ink outline-none transition-all;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-xs);
+}
+
+input:focus, textarea:focus, select:focus {
+  @apply border-brand ring-2 ring-brand/15;
+  box-shadow: var(--shadow-sm);
+}
+
+input:hover:not(:focus), textarea:hover:not(:focus), select:hover:not(:focus) {
+  @apply border-slate-300;
+}
+
+/* Mobile: larger touch targets */
+@media (max-width: 768px) {
+  input, textarea, select {
+    @apply py-3.5 text-base;
+    min-height: 48px;
+  }
 }
 
 label {
   @apply text-xs font-semibold uppercase tracking-wide text-slate-500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Micro-Animations
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Score count-up animation */
+@keyframes score-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Subtle fade-in */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide up for cards */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide in from bottom for mobile tabs */
+@keyframes slide-in-bottom {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress bar fill */
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+
+/* Gentle pulse for live indicators */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Score increment flash */
+@keyframes score-increment {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Checkmark animation */
+@keyframes check-draw {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Card entrance */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Shimmer for loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Animation Utility Classes ─── */
+.animate-fade-in {
+  animation: fade-in var(--duration-normal) var(--ease-out) both;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-card-enter {
+  animation: card-enter var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-score-pulse {
+  animation: score-pulse 0.6s var(--ease-spring);
+}
+
+.animate-progress-fill {
+  animation: progress-fill 0.8s var(--ease-out) both;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  animation: card-enter var(--duration-slow) var(--ease-out) both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+
+/* ══════════════════════════════════════════════════════════════════
+   Custom Scrollbar
+   ══════════════════════════════════════════════════════════════════ */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Hidden scrollbar but still scrollable */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Bottom Navigation (Mobile)
+   ══════════════════════════════════════════════════════════════════ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  padding-bottom: var(--safe-area-bottom);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  position: relative;
+  min-width: 64px;
+}
+
+.bottom-nav-item.active {
+  color: var(--tw-brand, #6D28D9);
+}
+
+.bottom-nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: var(--tw-brand, #6D28D9);
+  border-radius: 0 0 3px 3px;
+}
+
+.bottom-nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* Ensure content doesn't hide behind bottom nav */
+.has-bottom-nav {
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 8px);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Premium Card Styles
+   ══════════════════════════════════════════════════════════════════ */
+.premium-card {
+  background: white;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.premium-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(203, 213, 225, 0.8);
+}
+
+.premium-card-interactive {
+  cursor: pointer;
+}
+
+.premium-card-interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.premium-card-interactive:active {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Tab Content Transitions
+   ══════════════════════════════════════════════════════════════════ */
+.tab-content-enter-active {
+  animation: fade-in var(--duration-normal) var(--ease-out);
+}
+
+.tab-content-leave-active {
+  animation: fade-in var(--duration-fast) var(--ease-out) reverse;
+  position: absolute;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Inline Feedback Toast (not system toast)
+   ══════════════════════════════════════════════════════════════════ */
+.inline-feedback {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(16, 185, 129, 0.95);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 60;
+  animation: slide-in-bottom var(--duration-normal) var(--ease-spring);
+  pointer-events: none;
+}
+
+.inline-feedback.negative {
+  background: rgba(239, 68, 68, 0.95);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Responsive Breakpoint Safety
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Prevent ANY horizontal overflow globally */
+*, *::before, *::after {
+  max-width: 100%;
+}
+
+/* But exempt certain elements that need to overflow */
+.overflow-exempt,
+.overflow-exempt *,
+svg, canvas, img, video,
+[style*="transform"],
+.resume-print-context,
+.resume-print-context * {
+  max-width: none;
+}
+
+/* Ensure proper touch target sizes on mobile */
+@media (max-width: 768px) {
+  button, [role="button"], a {
+    min-height: 44px;
+  }
+  /* Exception: small pill chips, badges, icon-only buttons can override via inline style */
+  button[style*="min-height"] {
+    min-height: revert;
+  }
 }

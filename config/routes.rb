@@ -17,15 +17,22 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :profile, only: %i[show update]
+      resource :profile, only: %i[show update destroy]
+      put "profile/change_password", to: "profiles#change_password"
       resources :resumes
       post "resumes/:id/download", to: "resumes#download"
       post "resumes/:id/download_pdf", to: "resumes#download_pdf"
       post "payments", to: "payments#create"
       post "payments/verify", to: "payments#verify"
       delete "payments", to: "payments#destroy"
+      get "billing/history", to: "billing#history"
+      get "billing/invoice/:id", to: "billing#invoice"
+      get "billing/receipt/:id", to: "billing#receipt"
+      get "credits/history", to: "credits#history"
       get "dashboard", to: "dashboard#show"
+      get "pricing", to: "pricing#index"
       get "admin", to: "admin#show"
+      get "admin/settings", to: "admin#get_settings"
       patch "admin/users/:id", to: "admin#update_user"
       patch "admin/users/:id/suspend", to: "admin#suspend_user"
       patch "admin/users/:id/activate", to: "admin#activate_user"

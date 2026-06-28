@@ -97,6 +97,77 @@
         </div>
       </section>
 
+      <!-- New Billing & Analytics Dashboard Section -->
+      <section id="billing" class="scroll-mt-24 space-y-6">
+        <div class="flex items-center justify-between border-b border-white/5 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white">Billing & Revenue Dashboard</h2>
+            <p class="mt-1 text-sm text-slate-500">Real-time metrics, MRR, ARR, and transaction logs.</p>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div v-for="item in billingRows" :key="item.label" class="rounded-2xl border border-white/5 bg-[#121826] p-5 transition hover:border-brand/30 hover:shadow-glow">
+            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">{{ item.label }}</p>
+            <p class="mt-3 text-2xl font-bold text-white">{{ item.value }}</p>
+          </div>
+        </div>
+
+        <!-- Tables -->
+        <div class="grid gap-6 xl:grid-cols-3">
+          <!-- Recent Payments -->
+          <div class="rounded-2xl border border-white/5 bg-[#121826] p-5">
+            <h3 class="font-bold text-white mb-4">Latest Transactions</h3>
+            <div class="space-y-3">
+              <div v-for="pay in data.billing_analytics?.recent_payments" :key="pay.id" class="flex items-center justify-between rounded-xl bg-white/[0.03] p-3 text-sm">
+                <div>
+                  <p class="text-white font-medium truncate max-w-[120px]">{{ pay.user.split('@')[0] }}</p>
+                  <p class="text-slate-500 text-xs">{{ formatDate(pay.created_at) }}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-emerald-400 font-bold">+₹{{ pay.amount }}</p>
+                  <p class="text-brand text-[10px] font-bold uppercase">{{ pay.plan }}</p>
+                </div>
+              </div>
+              <p v-if="!data.billing_analytics?.recent_payments?.length" class="text-slate-500 text-sm">No recent payments.</p>
+            </div>
+          </div>
+          
+          <!-- Failed Payments -->
+          <div class="rounded-2xl border border-white/5 bg-[#121826] p-5">
+            <h3 class="font-bold text-white mb-4">Failed Payments</h3>
+            <div class="space-y-3">
+              <div v-for="pay in data.billing_analytics?.failed_payments" :key="pay.id" class="flex items-center justify-between rounded-xl bg-white/[0.03] p-3 text-sm">
+                <div>
+                  <p class="text-white font-medium truncate max-w-[120px]">{{ pay.user.split('@')[0] }}</p>
+                  <p class="text-slate-500 text-xs">{{ formatDate(pay.created_at) }}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-rose-400 font-bold">Failed</p>
+                  <p class="text-slate-400 text-[10px] font-bold uppercase">{{ pay.plan }}</p>
+                </div>
+              </div>
+              <p v-if="!data.billing_analytics?.failed_payments?.length" class="text-slate-500 text-sm">No recent failures.</p>
+            </div>
+          </div>
+          
+          <!-- Top Consumers -->
+          <div class="rounded-2xl border border-white/5 bg-[#121826] p-5">
+            <h3 class="font-bold text-white mb-4">Top AI Consumers</h3>
+            <div class="space-y-3">
+              <div v-for="user in data.billing_analytics?.top_consumers" :key="user.email" class="flex items-center justify-between rounded-xl bg-white/[0.03] p-3 text-sm">
+                <p class="text-white font-medium truncate max-w-[140px]">{{ user.email.split('@')[0] }}</p>
+                <div class="text-right">
+                  <p class="text-brand font-bold">{{ user.used_credits }} / {{ user.total_credits }}</p>
+                  <p class="text-slate-500 text-[10px] font-bold uppercase">Credits</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="users" class="scroll-mt-24 rounded-2xl border border-white/5 bg-[#121826]">
         <div class="border-b border-white/5 p-6">
           <h2 class="text-xl font-bold text-white">User Management</h2>
@@ -405,6 +476,18 @@ const subscriptionRows = computed(() => [
   ['Monthly Revenue', rupees(data.value.subscription_analytics.monthly_revenue)],
   ['Cancelled Plans', data.value.subscription_analytics.cancelled_plans]
 ].map(([label, value]) => ({ label, value: value ?? 0 })))
+
+const billingRows = computed(() => {
+  const b = data.value.billing_analytics || {}
+  return [
+    ['Revenue Today', rupees(b.revenue_today)],
+    ['Revenue This Month', rupees(b.revenue_this_month)],
+    ['MRR (Monthly Recurring)', rupees(b.mrr)],
+    ['ARR (Annual Recurring)', rupees(b.arr)],
+    ['Active Subscriptions', b.active_subscriptions || 0],
+    ['Most Popular Plan', b.most_popular_plan || 'None']
+  ].map(([label, value]) => ({ label, value }))
+})
 
 const growthMax = computed(() => Math.max(...data.value.growth.values, 1))
 

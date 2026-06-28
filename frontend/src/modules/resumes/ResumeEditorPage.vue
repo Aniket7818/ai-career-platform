@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-50">
+  <div class="min-h-screen bg-slate-50 relative">
     <ErrorState v-if="error" :message="error" />
     <LoadingState v-if="loading && !resume.id && !isNew" />
     <ResumeForm 
@@ -13,6 +13,14 @@
       @fill-from-profile="fillFromProfile"
       @download="handleDownload"
     />
+    
+    <!-- Inline Feedback Toast -->
+    <Transition name="fade">
+      <div v-if="showInlineFeedback" class="inline-feedback">
+        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5" /></svg>
+        <span>{{ inlineFeedbackMessage }}</span>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -61,6 +69,8 @@ onMounted(async () => {
   } else if (store.state.auth.user) {
     resume.content = mergeProfileIntoContent(emptyResumeContent(), store.state.auth.user)
   }
+  // Capture baseline snapshot so the watcher can detect real changes
+  lastSavedSnapshot = getContentSnapshot()
   window.addEventListener('beforeunload', handleUnload)
 })
 
@@ -73,7 +83,32 @@ let autoSaveTimeout = null
 let autoSaveInterval = null
 let hasUnsavedChanges = false
 let isSaving = false
+let lastSavedSnapshot = ''
 const saveStatus = ref('saved')
+
+const showInlineFeedback = ref(false)
+const inlineFeedbackMessage = ref('')
+let feedbackTimeout = null
+
+const triggerInlineFeedback = (message) => {
+  inlineFeedbackMessage.value = message
+  showInlineFeedback.value = true
+  if (feedbackTimeout) clearTimeout(feedbackTimeout)
+  feedbackTimeout = setTimeout(() => {
+    showInlineFeedback.value = false
+  }, 2500)
+}
+
+const getContentSnapshot = () => {
+  try {
+    return JSON.stringify({
+      title: resume.title,
+      status: resume.status,
+      template_id: resume.template_id,
+      content: resume.content
+    })
+  } catch { return '' }
+}
 
 const handleUnload = (e) => {
   if (hasUnsavedChanges && resume.title) {
@@ -84,6 +119,10 @@ const handleUnload = (e) => {
 }
 
 watch(resume, () => {
+  // Only flag as unsaved if actual content changed (prevents accordion/scroll triggers)
+  const current = getContentSnapshot()
+  if (current === lastSavedSnapshot) return
+  
   hasUnsavedChanges = true
   saveStatus.value = 'unsaved'
   if (autoSaveTimeout) clearTimeout(autoSaveTimeout)
@@ -119,11 +158,12 @@ const save = async (isAutoSave = false) => {
     resume.id = saved.id
     resume.template_id = saved.template_id || DEFAULT_TEMPLATE_ID
     saveStatus.value = 'saved'
+    lastSavedSnapshot = getContentSnapshot()
     
     if (isNew.value) {
       router.replace(`/resumes/${saved.id}/edit`)
     } else if (!isAutoSave) {
-      toast.success(t('toast.saveSuccess'), t('toast.saveSuccessBody'))
+      triggerInlineFeedback(t('toast.saveSuccess'))
     }
   } else if (store.state.resumes.error && !isAutoSave) {
     hasUnsavedChanges = true // revert
@@ -138,7 +178,7 @@ const fillFromProfile = async () => {
   resume.content = mergeProfileIntoContent(resume.content, user)
   hasUnsavedChanges = true
   saveStatus.value = 'unsaved'
-  toast.success(t('toast.profileFilled'), t('toast.profileFilledBody'))
+  triggerInlineFeedback(t('toast.profileFilled'))
 }
 
 import { resumeService } from '../../services/resumeService'

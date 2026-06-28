@@ -20,6 +20,48 @@ class ApplicationController < ActionController::API
     render json: { error: "Admin access is required." }, status: :forbidden
   end
 
+  def authorize_feature!(feature_key)
+    unless user_signed_in?
+      return render json: { error: I18n.t("api.errors.unauthorized") }, status: :unauthorized
+    end
+
+    # Bypass for admin / super_admin
+    return if current_user.role.in?(%w[admin super_admin])
+
+    plan = current_user.subscription_plan || 'free'
+    is_paid = current_user.paid_plan?
+    active_plan = is_paid ? plan : 'free'
+
+    allowed = case feature_key.to_s.underscore.to_sym
+              when :ats, :can_use_ats, :ai_ats_checker
+                active_plan.in?(%w[plus pro team])
+              when :resume_coach, :can_use_resume_coach, :ai_resume_assistant
+                active_plan.in?(%w[plus pro team])
+              when :keywords, :can_use_keywords
+                active_plan.in?(%w[plus pro team])
+              when :resume_rewrite, :can_use_resume_rewrite
+                active_plan.in?(%w[plus pro team])
+              when :cover_letter, :can_use_cover_letter, :ai_cover_letter
+                active_plan.in?(%w[plus pro team])
+              when :linkedin_review, :can_use_linkedin_review, :linkedin_review
+                active_plan.in?(%w[plus pro team])
+              when :interview_prep, :can_use_interview_prep, :ai_mock_interviews
+                active_plan.in?(%w[pro team])
+              when :career_roadmap, :can_use_career_roadmap, :career_roadmap
+                active_plan.in?(%w[pro team])
+              when :job_match, :can_use_job_match
+                active_plan.in?(%w[pro team])
+              when :advanced_ats, :can_use_advanced_ats
+                active_plan.in?(%w[pro team])
+              else
+                false
+              end
+
+    unless allowed
+      render json: { error: "Upgrade required. This feature is not available on your current plan." }, status: :forbidden
+    end
+  end
+
   def render_not_found
     render json: { error: I18n.t("api.errors.not_found") }, status: :not_found
   end

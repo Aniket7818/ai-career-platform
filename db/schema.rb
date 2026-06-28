@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_27_211548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,48 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
     t.index ["actor_id"], name: "index_audit_logs_on_actor_id"
     t.index ["created_at"], name: "index_audit_logs_on_created_at"
     t.index ["user_id"], name: "index_audit_logs_on_user_id"
+  end
+
+  create_table "billing_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "plan_name"
+    t.decimal "amount"
+    t.string "currency"
+    t.string "payment_provider"
+    t.string "payment_id"
+    t.string "order_id"
+    t.string "invoice_number"
+    t.string "billing_cycle"
+    t.string "payment_status"
+    t.datetime "paid_at"
+    t.datetime "renewal_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "invoice_pdf_path"
+    t.string "receipt_pdf_path"
+    t.index ["user_id"], name: "index_billing_histories_on_user_id"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_bookmarks_on_question_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
+  create_table "credit_transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "feature_name"
+    t.integer "credits_used"
+    t.integer "balance_before"
+    t.integer "balance_after"
+    t.string "action"
+    t.string "reference_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
   create_table "email_verification_logs", force: :cascade do |t|
@@ -87,6 +129,83 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
     t.index ["user_id"], name: "index_payment_orders_on_user_id"
   end
 
+  create_table "question_notes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_notes_on_question_id"
+    t.index ["user_id"], name: "index_question_notes_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "title"
+    t.string "slug"
+    t.text "content"
+    t.text "answer"
+    t.integer "difficulty", default: 0
+    t.integer "question_type", default: 0
+    t.bigint "subject_id", null: false
+    t.bigint "topic_id", null: false
+    t.string "tags", default: [], array: true
+    t.integer "estimated_reading_time", default: 5
+    t.boolean "is_premium", default: false
+    t.boolean "is_active", default: true
+    t.integer "view_count", default: 0
+    t.integer "bookmark_count", default: 0
+    t.integer "created_by_id"
+    t.integer "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "explanation"
+    t.jsonb "code_examples"
+    t.jsonb "key_takeaways"
+    t.jsonb "follow_up_questions"
+    t.index ["slug"], name: "index_questions_on_slug", unique: true
+    t.index ["subject_id"], name: "index_questions_on_subject_id"
+    t.index ["topic_id"], name: "index_questions_on_topic_id"
+  end
+
+  create_table "quiz_answers", force: :cascade do |t|
+    t.bigint "quiz_attempt_id", null: false
+    t.bigint "quiz_question_id", null: false
+    t.text "selected_answer"
+    t.boolean "is_correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_attempt_id"], name: "index_quiz_answers_on_quiz_attempt_id"
+    t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
+  end
+
+  create_table "quiz_attempts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "quiz_id", null: false
+    t.integer "score"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quiz_attempts_on_quiz_id"
+    t.index ["user_id"], name: "index_quiz_attempts_on_user_id"
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.bigint "quiz_id", null: false
+    t.bigint "question_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_quiz_questions_on_question_id"
+    t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "difficulty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "resumes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
@@ -100,6 +219,60 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
     t.index ["status"], name: "index_resumes_on_status"
     t.index ["user_id", "updated_at"], name: "index_resumes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_resumes_on_user_id"
+  end
+
+  create_table "study_plan_items", force: :cascade do |t|
+    t.bigint "study_plan_id", null: false
+    t.bigint "subject_id", null: false
+    t.bigint "topic_id", null: false
+    t.integer "day_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_plan_id"], name: "index_study_plan_items_on_study_plan_id"
+    t.index ["subject_id"], name: "index_study_plan_items_on_subject_id"
+    t.index ["topic_id"], name: "index_study_plan_items_on_topic_id"
+  end
+
+  create_table "study_plans", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.text "description"
+    t.string "icon"
+    t.integer "display_order"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_subjects_on_slug", unique: true
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.bigint "subject_id", null: false
+    t.string "name"
+    t.string "slug"
+    t.text "description"
+    t.integer "display_order"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_topics_on_slug", unique: true
+    t.index ["subject_id"], name: "index_topics_on_subject_id"
+  end
+
+  create_table "user_question_progresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_user_question_progresses_on_question_id"
+    t.index ["user_id"], name: "index_user_question_progresses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -139,6 +312,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
     t.integer "reset_emails_sent_count", default: 0
     t.datetime "last_reset_request_at"
     t.integer "password_reset_strikes", default: 0
+    t.integer "monthly_credit_limit"
+    t.integer "remaining_credits"
+    t.integer "used_credits"
+    t.datetime "credit_reset_date"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["razorpay_subscription_id"], name: "index_users_on_razorpay_subscription_id"
@@ -152,9 +329,29 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_13_193620) do
 
   add_foreign_key "audit_logs", "users"
   add_foreign_key "audit_logs", "users", column: "actor_id"
+  add_foreign_key "billing_histories", "users"
+  add_foreign_key "bookmarks", "questions"
+  add_foreign_key "bookmarks", "users"
+  add_foreign_key "credit_transactions", "users"
   add_foreign_key "email_verification_logs", "users"
   add_foreign_key "feature_interests", "users"
   add_foreign_key "login_sessions", "users"
   add_foreign_key "payment_orders", "users"
+  add_foreign_key "question_notes", "questions"
+  add_foreign_key "question_notes", "users"
+  add_foreign_key "questions", "subjects"
+  add_foreign_key "questions", "topics"
+  add_foreign_key "quiz_answers", "quiz_attempts"
+  add_foreign_key "quiz_answers", "quiz_questions"
+  add_foreign_key "quiz_attempts", "quizzes"
+  add_foreign_key "quiz_attempts", "users"
+  add_foreign_key "quiz_questions", "questions"
+  add_foreign_key "quiz_questions", "quizzes"
   add_foreign_key "resumes", "users"
+  add_foreign_key "study_plan_items", "study_plans"
+  add_foreign_key "study_plan_items", "subjects"
+  add_foreign_key "study_plan_items", "topics"
+  add_foreign_key "topics", "subjects"
+  add_foreign_key "user_question_progresses", "questions"
+  add_foreign_key "user_question_progresses", "users"
 end

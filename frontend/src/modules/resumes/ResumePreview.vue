@@ -1,32 +1,70 @@
 <template>
-  <article class="flex flex-col min-h-[420px] max-h-[800px] overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-panel sm:min-h-[560px] lg:min-h-[720px]">
-    <div class="flex items-center justify-between border-b border-slate-100 bg-gradient-to-r from-brand/5 to-mint/5 px-6 py-3">
-      <div class="flex items-center gap-4">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-brand">{{ t('resumes.preview') }}</p>
-        <span class="rounded bg-white/60 px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm border border-slate-200">
+  <article class="relative flex flex-col min-h-[420px] lg:h-full overflow-hidden rounded-2xl bg-slate-100/50 sm:min-h-[560px] border border-slate-200/60">
+    <!-- Top Status Bar -->
+    <div class="flex items-center justify-between px-5 py-3 border-b border-slate-200/50 bg-white">
+      <div class="flex items-center gap-3">
+        <span class="rounded bg-slate-50 px-2 py-0.5 text-[10px] font-bold text-slate-500 border border-slate-100">
           Page {{ pageCount }}
+        </span>
+        <span v-if="pageCount > 1" class="text-[10px] font-bold text-amber-500 flex items-center gap-1">
+          <svg class="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          Multi-page
         </span>
       </div>
       <div class="flex items-center gap-2">
-        <span v-if="pageCount > 1" class="text-[10px] font-bold text-amber-600 flex items-center gap-1">
-          ⚠ Multi-page
-        </span>
-        <span v-if="showAts" class="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
+        <span v-if="showAts" class="rounded-full bg-brand/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand">
           ATS {{ atsScore }}
         </span>
       </div>
     </div>
 
-    <!-- Zoom wrapper -->
-    <div class="flex-1 overflow-auto bg-slate-200/50 custom-scrollbar p-4 sm:p-8 relative">
-      <div class="mx-auto relative shadow-2xl bg-white transition-all duration-300" :style="zoomWrapStyle">
-        
+    <!-- Skeleton Loading State (Priority 11) -->
+    <Transition name="fade">
+      <div v-if="isRendering" class="absolute inset-0 z-30 bg-slate-100 flex flex-col items-center justify-center p-8 sm:p-12">
+        <div class="relative bg-white shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded border border-slate-200/50 flex flex-col gap-4 p-8 w-full max-w-[420px] h-[580px] animate-pulse">
+          <!-- Premium Loader Message -->
+          <div class="absolute inset-0 flex items-center justify-center bg-white/30 backdrop-blur-[1px] z-10">
+            <span class="bg-slate-900/90 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-wider">
+              <svg class="size-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2v4M12 18v4"></path></svg>
+              Rendering Resume...
+            </span>
+          </div>
+
+          <!-- Dummy lines mimicking A4 structure -->
+          <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+            <div class="space-y-2 flex-1">
+              <div class="h-5 w-1/3 bg-slate-200 rounded"></div>
+              <div class="h-3 w-1/2 bg-slate-100 rounded"></div>
+            </div>
+            <div class="size-10 bg-slate-200 rounded-full"></div>
+          </div>
+          <div class="space-y-3 flex-1 mt-4">
+            <div class="h-3 w-1/4 bg-slate-200 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 rounded"></div>
+            <div class="h-2 w-5/6 bg-slate-100 rounded"></div>
+            
+            <div class="h-3 w-1/4 bg-slate-200 rounded mt-8"></div>
+            <div class="h-2 w-full bg-slate-100 rounded"></div>
+            <div class="h-2 w-full bg-slate-100 rounded"></div>
+            <div class="h-2 w-4/5 bg-slate-100 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Zoom wrapper (Grey workspace bg, floating A4 style paper) -->
+    <div class="flex-1 overflow-auto custom-scrollbar p-6 sm:p-12 flex items-start justify-center bg-slate-100/40 select-none">
+      <div 
+        class="relative bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08),0_4px_12px_rgba(15,23,42,0.04)] border border-slate-200/50 rounded-sm transition-all duration-300 ease-out origin-top hover:-translate-y-0.5 hover:shadow-[0_30px_70px_rgba(15,23,42,0.12),0_8px_24px_rgba(15,23,42,0.06)]"
+        :style="zoomWrapStyle"
+      >
         <!-- Render the A4 page break dividers based on calculated actual breaks -->
         <div class="absolute inset-0 pointer-events-none z-10 overflow-hidden">
            <div v-for="(breakY, idx) in calculatedBreaks" :key="idx" 
-                class="absolute left-0 right-0 border-b-2 border-dashed border-red-500 flex items-center justify-center opacity-90"
+                class="absolute left-0 right-0 border-b border-dashed border-rose-400 flex items-center justify-center opacity-85"
                 :style="{ top: `${breakY * scale}px` }">
-              <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold -translate-y-1/2 shadow-sm">Continues on Next Page</span>
+              <span class="bg-rose-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold -translate-y-1/2 shadow-sm uppercase tracking-wider">Page break</span>
            </div>
         </div>
 
@@ -97,6 +135,8 @@ const props = defineProps({
   zoom:              { type: Number,  default: 100 }
 })
 
+const emit = defineEmits(['page-update'])
+
 const activeComponent = computed(() => TEMPLATE_MAP[props.templateId] || ModernTemplate)
 const atsScore        = computed(() => calculateAtsScore(props.content))
 
@@ -111,9 +151,10 @@ const A4_HEIGHT_PX = 1122.5 // Exact 297mm at 96 DPI
 import { calculatePagination } from '../../utils/paginationEngine'
 const calculatedBreaks = ref([])
 const sectionsData = ref([])
-const realEstateData = ref({})
+const realEstateData = ref([])
 const totalHeight = ref(0)
-const showDebug = ref(import.meta.env.DEV) // Hidden in production per requirements
+const showDebug = ref(false) // Hidden in production per requirements
+const isRendering = ref(false)
 
 let resizeObserver = null
 let debounceTimer = null
@@ -121,12 +162,12 @@ let debounceTimer = null
 const runPaginationEngine = () => {
   if (!contentRef.value) return
   
-  // Need to ensure the component adds the required avoid-break classes
-  // The 'resume-print-context' class ensures child elements simulate print break behaviors if needed
-  
   const result = calculatePagination(contentRef.value, scale.value)
   
-  if (pageCount.value !== result.pageCount) pageCount.value = result.pageCount
+  if (pageCount.value !== result.pageCount) {
+    pageCount.value = result.pageCount
+    emit('page-update', result.pageCount)
+  }
   calculatedBreaks.value = result.breaks
   sectionsData.value = result.sections
   realEstateData.value = result.realEstate
@@ -137,15 +178,22 @@ const runPaginationEngine = () => {
 watch(
   () => [props.content, props.templateId, props.appearance, props.sectionOrder, props.sectionVisibility, props.zoom],
   () => {
+    isRendering.value = true
     nextTick(() => {
       if (debounceTimer) clearTimeout(debounceTimer)
-      debounceTimer = setTimeout(runPaginationEngine, 50)
+      debounceTimer = setTimeout(() => {
+        runPaginationEngine()
+        setTimeout(() => {
+          isRendering.value = false
+        }, 250) // premium rendering duration
+      }, 50)
     })
   },
   { deep: true }
 )
 
 onMounted(() => {
+  isRendering.value = true
   const observeDOM = () => {
     if (debounceTimer) clearTimeout(debounceTimer)
     debounceTimer = setTimeout(runPaginationEngine, 100) 
@@ -156,7 +204,12 @@ onMounted(() => {
   if (contentRef.value) {
     resizeObserver.observe(contentRef.value)
     // Run initially
-    setTimeout(runPaginationEngine, 200)
+    setTimeout(() => {
+      runPaginationEngine()
+      setTimeout(() => {
+        isRendering.value = false
+      }, 250)
+    }, 200)
   }
 })
 
@@ -165,8 +218,6 @@ onBeforeUnmount(() => {
 })
 
 const zoomWrapStyle = computed(() => {
-  // Fix infinite loop: explicitly constrain the wrapper to exact A4 page multiples.
-  // Using totalHeight + h-full causes the scrollHeight to grow continuously due to currentShift.
   const actualHeight = A4_HEIGHT_PX * pageCount.value
   return {
     width: `${794 * scale.value}px`, // Standard A4 width at 96 DPI
@@ -191,3 +242,12 @@ const containerBgStyle = computed(() => {
   return { background: 'white' }
 })
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 200ms ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

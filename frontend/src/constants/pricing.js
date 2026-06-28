@@ -4,56 +4,53 @@ export const PRICING_PLANS = [
     name: 'Free',
     monthlyPrice: 0,
     yearlyPrice: 0,
-    credits: 0,
+    credits: 10,
     badge: null,
     features: [
       { name: 'Resume Builder', included: true },
-      { name: '1 Resume', included: true },
-      { name: '3 PDF Downloads', included: true },
-      { name: 'Basic ATS Score', included: true },
-      { name: 'Profile Management', included: true },
-      { name: 'AI Resume Rewrite', included: false },
-      { name: 'AI Cover Letter Generator', included: false },
-      { name: 'AI Interview Preparation', included: false },
-      { name: 'Job Match Analysis', included: false },
-      { name: 'LinkedIn Review', included: false }
+      { name: 'Interview Preparation', included: true },
+      { name: 'Basic ATS Check', included: true },
+      { name: '3 PDF Downloads limit', included: true },
+      { name: '10 Welcome AI Credits', included: true },
+      { name: 'Resume Rewrite', included: false },
+      { name: 'Advanced ATS Suggestions', included: false },
+      { name: 'LinkedIn Review', included: false },
+      { name: 'Cover Letter Generator', included: false },
+      { name: 'AI Mock Interviews', included: false }
     ]
   },
   {
     id: 'plus',
     name: 'CareerAI Plus',
-    monthlyPrice: 99,
-    yearlyPrice: 999,
-    credits: 50,
-    badge: 'Most Popular',
+    monthlyPrice: 199,
+    yearlyPrice: 1999,
+    credits: 150,
+    badge: 'Recommended',
     features: [
-      { name: '50 AI Credits per month', included: true },
-      { name: 'Unlimited PDF Downloads', included: true },
-      { name: 'ATS Optimization', included: true },
-      { name: 'AI Resume Assistant', included: true },
-      { name: 'AI Resume Rewrite', included: true },
-      { name: 'AI Cover Letter Generator', included: true },
-      { name: 'Portfolio Generator', included: true },
+      { name: '150 AI Credits per month', included: true },
+      { name: 'Everything in Free', included: true },
+      { name: 'Resume Rewrite', included: true },
+      { name: 'Advanced ATS Suggestions', included: true },
       { name: 'LinkedIn Review', included: true },
+      { name: 'Cover Letter Generator', included: true },
+      { name: 'Portfolio Generator', included: true },
       { name: 'Priority Support', included: true }
     ]
   },
   {
     id: 'pro',
     name: 'CareerAI Pro',
-    monthlyPrice: 199,
-    yearlyPrice: 1999,
-    credits: 200,
+    monthlyPrice: 499,
+    yearlyPrice: 4999,
+    credits: 500,
     badge: 'Best Value',
     features: [
-      { name: '200 AI Credits per month', included: true },
+      { name: '500 AI Credits per month', included: true },
       { name: 'Everything in Plus', included: true },
       { name: 'AI Mock Interviews', included: true },
       { name: 'Job Match Analysis', included: true },
       { name: 'Career Roadmap Generator', included: true },
-      { name: 'Advanced ATS Reports', included: true },
-      { name: 'Priority Processing', included: true },
-      { name: 'Early Access Features', included: true }
+      { name: 'Priority Support (Recruiter)', included: true }
     ]
   }
 ]
@@ -68,8 +65,8 @@ export const FEATURE_COMPARISON = [
   { name: 'Job Match Analysis', free: '-', plus: '-', pro: 'Yes' },
   { name: 'LinkedIn Review', free: '-', plus: 'Yes (Credits)', pro: 'Yes (Credits)' },
   { name: 'Career Roadmaps', free: '-', plus: '-', pro: 'Yes' },
-  { name: 'AI Credits', free: '0', plus: '50 / month', pro: '200 / month' },
-  { name: 'Support Level', free: 'Community', plus: 'Priority', pro: 'Priority' }
+  { name: 'AI Credits', free: '10', plus: '150 / month', pro: '500 / month' },
+  { name: 'Support Level', free: 'Community', plus: 'Priority', pro: 'Priority Recruiter' }
 ]
 
 export const AI_CREDIT_COSTS = [

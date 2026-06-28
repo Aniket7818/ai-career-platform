@@ -1,80 +1,136 @@
 <template>
   <form
     class="flex flex-col lg:flex-row min-h-screen lg:h-screen w-full lg:overflow-hidden bg-slate-50"
+    :class="{ 'has-bottom-nav': isMobile }"
     @submit.prevent="$emit('submit')"
   >
     <!-- ═══════════════════════════════════════════════════════════════
          LEFT COLUMN: Sidebar & Customization
     ═══════════════════════════════════════════════════════════════ -->
     <aside 
-      class="left-sidebar relative flex shrink-0 flex-col border-b lg:border-b-0 lg:border-r border-slate-200 bg-white"
-      :style="{ '--lg-width': `${leftWidth}px` }"
+      v-if="!isMobile"
+      class="left-sidebar relative flex shrink-0 flex-col border-b lg:border-b-0 lg:border-r border-slate-200 bg-white transition-all duration-300 ease-in-out"
+      :class="leftSidebarCollapsed ? '!w-0 !border-r-0 overflow-hidden opacity-0' : ''"
+      :style="{ '--lg-width': leftSidebarCollapsed ? '0px' : `${leftWidth}px` }"
     >
-      <div class="flex items-center gap-3 border-b border-slate-200 p-5">
+      <div class="flex items-center gap-3 border-b border-slate-200 p-5 shrink-0">
         <RouterLink to="/resumes" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-ink">
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           {{ t('nav.dashboard') }}
         </RouterLink>
       </div>
-      <div class="lg:flex-1 lg:overflow-y-auto p-5 space-y-6">
-        <!-- Template picker -->
-        <TemplatePicker v-model="model.template_id" :content="model.content" />
+      <div class="lg:flex-1 lg:overflow-y-auto custom-scrollbar">
+        <!-- Sidebar Accordions (Phase 5) -->
+        <div class="flex flex-col">
+          <!-- Template Section -->
+          <div class="border-b border-slate-100">
+            <button type="button" class="w-full flex items-center justify-between px-5 py-4 text-left transition hover:bg-slate-50/50" @click="sidebarState.template = !sidebarState.template">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Template</span>
+              <svg class="size-4 text-slate-400 transition-transform duration-200" :class="sidebarState.template ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <Transition name="collapse">
+              <div v-if="sidebarState.template" class="px-5 pb-5">
+                <TemplatePicker v-model="model.template_id" :content="model.content" />
+              </div>
+            </Transition>
+          </div>
 
-        <!-- Customization panel -->
-        <CustomizePanel
-          v-model:order="model.content.sectionOrder"
-          v-model:visibility="model.content.sectionVisibility"
-        />
+          <!-- Appearance Section -->
+          <div class="border-b border-slate-100">
+            <button type="button" class="w-full flex items-center justify-between px-5 py-4 text-left transition hover:bg-slate-50/50" @click="sidebarState.appearance = !sidebarState.appearance">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Settings</span>
+              <svg class="size-4 text-slate-400 transition-transform duration-200" :class="sidebarState.appearance ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <Transition name="collapse">
+              <div v-if="sidebarState.appearance" class="px-5 pb-5">
+                <AppearancePanel v-model="model.content.appearance" />
+              </div>
+            </Transition>
+          </div>
 
-        <!-- Appearance panel -->
-        <AppearancePanel v-model="model.content.appearance" />
+          <!-- Customize Section -->
+          <div class="border-b border-slate-100">
+            <button type="button" class="w-full flex items-center justify-between px-5 py-4 text-left transition hover:bg-slate-50/50" @click="sidebarState.customize = !sidebarState.customize">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Reorder & Layout</span>
+              <svg class="size-4 text-slate-400 transition-transform duration-200" :class="sidebarState.customize ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <Transition name="collapse">
+              <div v-if="sidebarState.customize" class="px-5 pb-5">
+                <CustomizePanel v-model:order="model.content.sectionOrder" v-model:visibility="model.content.sectionVisibility" />
+              </div>
+            </Transition>
+          </div>
+        </div>
       </div>
       <!-- Resizer Handle -->
       <div 
-        class="hidden lg:block absolute right-0 top-0 h-full w-1.5 cursor-col-resize hover:bg-brand/50 active:bg-brand z-10 -mr-[3px]"
+        v-if="!leftSidebarCollapsed"
+        class="hidden lg:block absolute right-0 top-0 h-full w-2 cursor-col-resize z-30 group"
         @mousedown.prevent="startResizeLeft"
-      />
+      >
+        <div class="w-[2px] h-full bg-slate-200 group-hover:bg-brand group-active:bg-brand mx-auto transition-colors duration-200"></div>
+      </div>
     </aside>
 
     <!-- ═══════════════════════════════════════════════════════════════
          MIDDLE COLUMN: Form sections
     ═══════════════════════════════════════════════════════════════ -->
-    <main class="flex-1 lg:overflow-y-auto">
+    <main v-if="showResumeEditor" class="flex-1 lg:overflow-y-auto">
       <div class="mx-auto max-w-3xl space-y-6 p-5 sm:p-8">
-        <!-- Header -->
-        <div class="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p class="text-sm font-semibold text-brand">{{ t('nav.builder') }}</p>
-            <h1 class="mt-1 text-3xl font-bold text-ink">{{ isNew ? t('resumes.new') : t('resumes.edit') }}</h1>
-            <p class="mt-2 text-sm text-slate-500">{{ t('resumes.editorSubtitle') }}</p>
+        <!-- ─── Minimal Premium Header (Phases 2 & 6) ─── -->
+        <div class="mb-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between border-b border-slate-100 pb-6">
+          <div class="flex items-center gap-3">
+            <!-- Sidebar Toggle Button for Desktop -->
+            <button 
+              v-if="!isMobile"
+              type="button" 
+              class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors duration-200 shrink-0"
+              @click="leftSidebarCollapsed = !leftSidebarCollapsed"
+              :title="leftSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'"
+            >
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M9 3v18" :class="leftSidebarCollapsed ? 'translate-x-[-3px]' : ''" class="transition-transform duration-200" />
+              </svg>
+            </button>
+            <div>
+              <h1 class="text-2xl font-bold tracking-tight text-slate-900">
+                <template v-if="userName">{{ greeting }}, <span class="text-brand">{{ userName }} 👋</span></template>
+                <template v-else>{{ isNew ? t('resumes.new') : t('resumes.edit') }}</template>
+              </h1>
+              <p class="text-xs text-slate-500 mt-1">Let’s craft a world-class resume today.</p>
+            </div>
           </div>
-          <button
-            type="button"
-            class="inline-flex items-center gap-2 rounded-xl border border-brand/30 bg-brand/5 px-4 py-2.5 text-sm font-semibold text-brand transition hover:bg-brand/10 disabled:opacity-50 disabled:cursor-not-allowed"
-            @click="$emit('download')"
-            :disabled="isDownloading"
-          >
-            <svg v-if="isDownloading" class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
-            <svg v-else class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
-            {{ isDownloading ? 'Generating...' : t('resumes.download') }}
-          </button>
+
+          <!-- Header Stats (Stripe style) -->
+          <div class="flex items-center gap-5 text-[11px] self-start md:self-auto">
+            <div class="flex flex-col">
+              <span class="font-bold uppercase tracking-wider text-slate-400 text-[9px] mb-0.5">Resume Health</span>
+              <span class="font-extrabold" :class="'text-' + healthColor + '-600'">{{ healthScore }}%</span>
+            </div>
+            <div class="h-6 w-px bg-slate-200"></div>
+            <div class="flex flex-col">
+              <span class="font-bold uppercase tracking-wider text-slate-400 text-[9px] mb-0.5">ATS Score</span>
+              <span class="font-extrabold text-slate-800">{{ atsAnalysis.score }}</span>
+            </div>
+            <div class="h-6 w-px bg-slate-200"></div>
+            <div class="flex flex-col">
+              <span class="font-bold uppercase tracking-wider text-slate-400 text-[9px] mb-0.5">Last Saved</span>
+              <span class="font-extrabold text-slate-800">
+                <template v-if="saveStatus === 'saved'">Just now</template>
+                <template v-else-if="saveStatus === 'unsaved'">Unsaved changes</template>
+                <template v-else>Saving...</template>
+              </span>
+            </div>
+            <div class="h-6 w-px bg-slate-200 hidden sm:block"></div>
+            <div class="flex flex-col hidden sm:flex">
+              <span class="font-bold uppercase tracking-wider text-slate-400 text-[9px] mb-0.5">Completion</span>
+              <span class="font-extrabold text-slate-800">{{ completionScore }}%</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Profile Completion -->
-        <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-panel sm:p-6">
-          <div class="mb-2 flex items-center justify-between text-sm font-bold text-ink">
-            <span>Profile Completion</span>
-            <span class="text-brand">{{ completionScore }}%</span>
-          </div>
-          <div class="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-            <div
-              class="h-full bg-brand transition-all duration-500"
-              :style="{ width: `${completionScore}%` }"
-            />
-          </div>
-        </div>
-
-        <!-- Resume meta: title + status -->
+        <!-- Resume meta: title + status + target role -->
         <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-panel sm:p-6 space-y-4">
           <div class="grid gap-4 md:grid-cols-2">
             <div>
@@ -88,6 +144,9 @@
               </select>
             </div>
           </div>
+
+          <!-- Target Role Selector -->
+          <TargetRoleSelector v-model="targetRole" />
 
           <!-- Fill from profile CTA -->
           <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand/20 bg-brand/5 p-4">
@@ -105,11 +164,12 @@
           </div>
         </div>
 
-        <!-- Collapsible sections -->
         <div
           v-for="section in ALL_SECTIONS"
           :key="section.key"
-          class="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-panel"
+          :id="`section-${section.key}`"
+          class="overflow-hidden rounded-2xl transition-all duration-300"
+          :class="openSections[section.key] ? 'bg-white shadow-panel ring-1 ring-black/5' : 'bg-transparent hover:bg-white/60'"
         >
           <!-- Section header (click to toggle) -->
           <button
@@ -117,17 +177,23 @@
             class="flex w-full items-center justify-between gap-3 p-5 sm:p-6 text-left transition hover:bg-slate-50/70"
             @click="toggleSection(section.key)"
           >
-            <div class="flex items-center gap-3">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand/10 text-brand">
-                <span v-html="section.icon" class="size-4 [&>svg]:size-full" />
-              </span>
-              <span class="text-sm font-bold text-ink">
-                {{ section.label }}
-                <span v-if="getSectionCount(section.key) > 0" class="ml-1 text-xs text-slate-500 font-normal">({{ getSectionCount(section.key) }})</span>
-              </span>
-            </div>
-            <div class="flex items-center gap-3">
-              <template v-if="sectionValidations[section.key]">
+              <div class="flex items-center gap-3">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                  <span v-html="section.icon" class="size-4 [&>svg]:size-full" />
+                </span>
+                <div class="flex flex-col text-left">
+                  <span class="text-sm font-bold text-ink flex items-center">
+                    {{ section.label }}
+                    <span v-if="getSectionCount(section.key) > 0" class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500">{{ getSectionCount(section.key) }}</span>
+                  </span>
+                  <!-- Show hint if section is empty and expanded -->
+                  <span v-if="openSections[section.key] && getSectionCount(section.key) === 0 && section.hint" class="text-[11px] text-slate-500 mt-0.5 max-w-[240px] leading-snug animate-fade-in">
+                    {{ section.hint }}
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <template v-if="sectionValidations[section.key]">
                 <!-- Complete Indicator -->
                 <span 
                   v-if="sectionValidations[section.key].status === 'COMPLETE'" 
@@ -161,7 +227,7 @@
 
           <!-- Section body -->
           <Transition name="collapse">
-            <div v-if="openSections[section.key]" class="border-t border-slate-100 p-5 sm:p-6">
+            <div v-if="openSections[section.key]" class="p-5 sm:p-6 sm:pt-2">
               <!-- Personal -->
               <template v-if="section.key === 'personal'">
                 <div class="grid gap-4 md:grid-cols-2">
@@ -274,41 +340,67 @@
          RIGHT COLUMN: Live preview
     ═══════════════════════════════════════════════════════════════ -->
     <aside 
-      class="right-sidebar relative flex shrink-0 flex-col border-t lg:border-t-0 lg:border-l border-slate-200 bg-slate-100/50"
+      v-if="!isMobile"
+      class="right-sidebar relative flex shrink-0 flex-col border-t lg:border-t-0 lg:border-l border-slate-200 bg-slate-100/30"
       :style="{ '--lg-width': `${rightWidth}px` }"
     >
       <!-- Resizer Handle -->
       <div 
-        class="hidden lg:block absolute left-0 top-0 h-full w-1.5 cursor-col-resize hover:bg-brand/50 active:bg-brand z-10 -ml-[3px]"
+        class="hidden lg:block absolute left-0 top-0 h-full w-2 cursor-col-resize z-30 group"
         @mousedown.prevent="startResizeRight"
-      />
-      <div class="flex items-center justify-between border-b border-slate-200 bg-slate-100 p-4">
+      >
+        <div class="w-[2px] h-full bg-slate-200 group-hover:bg-brand group-active:bg-brand mx-auto transition-colors duration-200"></div>
+      </div>
+      <div class="flex items-center justify-between border-b border-slate-200/60 bg-white p-4">
         <div class="flex items-center gap-2">
           <h2 class="text-sm font-bold text-ink">{{ t('resumes.preview') }}</h2>
-          <span class="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600">
+          <span class="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-600">
             {{ t('resumes.live') }}
           </span>
         </div>
         <div class="flex items-center gap-1.5">
-          <!-- Zoom selector -->
-          <select
-            v-model="previewZoom"
-            class="h-[34px] rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-600"
-          >
-            <option v-for="z in ZOOM_LEVELS" :key="z" :value="z">{{ z }}%</option>
-          </select>
-          <!-- Full preview button -->
-          <button
-            type="button"
-            class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
-            @click="showFullPreview = true"
-          >
-            {{ t('builder.fullPreview') }}
-          </button>
+          <!-- Desktop Toolbar (Priority 4 Overhaul) -->
+          <div class="flex items-center gap-1 bg-white border border-slate-200/80 rounded-full p-1.5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] backdrop-blur-sm">
+            <button type="button" class="p-1.5 text-slate-500 hover:bg-slate-100 rounded-full transition-colors" @click="zoomOut" title="Zoom Out">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM8 10h6"/></svg>
+            </button>
+            <button type="button" class="text-[10px] font-bold text-slate-700 w-10 text-center select-none hover:bg-slate-100 rounded-full transition cursor-pointer" @click="previewZoom = 100" title="Reset to 100%">
+              {{ Math.round(previewZoom) }}%
+            </button>
+            <button type="button" class="p-1.5 text-slate-500 hover:bg-slate-100 rounded-full transition-colors" @click="zoomIn" title="Zoom In">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg>
+            </button>
+            <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
+            <button type="button" class="px-2 py-1 text-slate-500 hover:bg-slate-100 rounded-full transition text-[9px] font-bold uppercase tracking-wider flex items-center gap-0.5" @click="fitToWidth" title="Fit Width">
+              <svg class="size-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12l4-4m-4 4l4 4m12-4l-4-4m4 4l-4 4"/></svg>
+              Width
+            </button>
+            <button type="button" class="px-2 py-1 text-slate-500 hover:bg-slate-100 rounded-full transition text-[9px] font-bold uppercase tracking-wider flex items-center gap-0.5" @click="fitToPage" title="Fit Page">
+              <svg class="size-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M12 4l-4 4m4-4l4 4m-4 12l-4-4m4 4l-4-4"/></svg>
+              Page
+            </button>
+            <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
+            <button type="button" class="p-1.5 text-slate-500 hover:bg-slate-100 rounded-full transition-colors" @click="showFullPreview = true" title="Fullscreen">
+              <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+            </button>
+            
+            <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
+            <!-- Download PDF Button (Integrated in Desktop Toolbar) -->
+            <button 
+              type="button" 
+              class="flex items-center gap-1 rounded-full bg-brand px-3 py-1 text-[10px] font-bold text-white hover:bg-brand/90 active:scale-95 transition-all shadow-sm"
+              @click="$emit('download')"
+              :disabled="isDownloading"
+            >
+              <svg v-if="isDownloading" class="size-3 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2v4M12 18v4"></path></svg>
+              <svg v-else class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Download</span>
+            </button>
+          </div>
         </div>
       </div>
       
-      <div class="flex-1 overflow-y-auto p-4 xl:p-8">
+      <div class="flex-1 overflow-y-auto p-4 xl:p-8 space-y-6">
         <!-- Live preview component -->
         <ResumePreview
           :title="model.title"
@@ -318,6 +410,22 @@
           :section-order="model.content.sectionOrder"
           :section-visibility="model.content.sectionVisibility"
           :zoom="previewZoom"
+          @page-update="actualPageCount = $event"
+        />
+
+        <!-- ═══ Intelligence Panel ═══ -->
+        <IntelligencePanel
+          :health-score="healthScore"
+          :health-label="healthLabel"
+          :health-color="healthColor"
+          :section-health="sectionHealth"
+          :ats-analysis="atsAnalysis"
+          :keyword-analysis="keywordAnalysis"
+          :checklist="checklist"
+          :statistics="statistics"
+          :tips="tips"
+          :experience-level="experienceLevel"
+          :target-role="targetRole"
         />
       </div>
     </aside>
@@ -351,9 +459,203 @@
                 :appearance="model.content.appearance"
                 :section-order="model.content.sectionOrder"
                 :section-visibility="model.content.sectionVisibility"
+                @page-update="actualPageCount = $event"
               />
             </div>
           </div>
+        </div>
+      </Transition>
+    </Teleport>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         Command Palette (Cmd+K)
+    ═══════════════════════════════════════════════════════════════ -->
+    <CommandPalette v-model="showCommandPalette" @action="handleCommandAction" />
+
+    <!-- ═══ MOBILE: Preview Tab (full-screen) ═══ -->
+    <div v-if="isMobile && activeTab === 'preview'" class="flex-1 flex flex-col min-h-0">
+      <div class="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sticky top-0 z-10">
+        <h2 class="text-sm font-bold text-ink">Preview</h2>
+        <div class="flex items-center gap-2">
+          <!-- Mobile Toolbar -->
+          <div class="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-lg p-1">
+            <button type="button" class="p-1 text-slate-500 hover:bg-slate-200 rounded transition" @click="zoomOut">
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM8 10h6"/></svg>
+            </button>
+            <button type="button" class="text-[10px] font-bold text-slate-700 w-9 text-center select-none hover:bg-slate-200 rounded transition" @click="previewZoom = 100">{{ Math.round(previewZoom) }}%</button>
+            <button type="button" class="p-1 text-slate-500 hover:bg-slate-200 rounded transition" @click="zoomIn">
+              <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m-3-3h6"/></svg>
+            </button>
+          </div>
+          <button type="button" class="rounded-lg border border-brand/30 bg-brand/5 px-3 py-1 text-xs font-semibold text-brand" @click="$emit('download')" :disabled="isDownloading">
+            {{ isDownloading ? '...' : 'PDF' }}
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 overflow-auto bg-slate-100 p-4">
+        <ResumePreview
+          :title="model.title" :content="model.content" :template-id="model.template_id"
+          :appearance="model.content.appearance" :section-order="model.content.sectionOrder"
+          :section-visibility="model.content.sectionVisibility" :zoom="previewZoom"
+          @page-update="actualPageCount = $event"
+        />
+      </div>
+    </div>
+
+    <!-- ═══ MOBILE: Insights Tab (full-screen) ═══ -->
+    <div v-if="isMobile && activeTab === 'insights'" class="flex-1 overflow-y-auto bg-slate-50 p-4 space-y-4">
+      <div class="flex items-center gap-2 mb-2">
+        <h2 class="text-lg font-bold text-ink">Resume Intelligence</h2>
+        <span class="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-600">Free</span>
+      </div>
+      <TargetRoleSelector v-model="targetRole" />
+      <IntelligencePanel
+        :health-score="healthScore" :health-label="healthLabel" :health-color="healthColor"
+        :section-health="sectionHealth" :ats-analysis="atsAnalysis" :keyword-analysis="keywordAnalysis"
+        :checklist="checklist" :statistics="statistics" :tips="tips"
+        :experience-level="experienceLevel" :target-role="targetRole"
+      />
+    </div>
+
+    <!-- ═══ MOBILE: More Tab (full-screen) ═══ -->
+    <div v-if="isMobile && activeTab === 'more'" class="flex-1 overflow-y-auto bg-slate-50 p-5 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-200/50 pb-3">
+        <h2 class="text-base font-bold text-slate-800">Settings</h2>
+        <RouterLink to="/resumes" class="text-xs font-semibold text-slate-500 hover:text-ink flex items-center gap-1">
+          <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </RouterLink>
+      </div>
+
+      <!-- Segmented Settings Category Bar -->
+      <div class="flex items-center gap-1 overflow-x-auto scrollbar-none bg-slate-100 p-1 rounded-xl shrink-0">
+        <button 
+          v-for="cat in ['templates', 'content', 'appearance', 'export']" 
+          :key="cat"
+          type="button" 
+          class="flex-1 text-center py-2 px-3 text-xs font-bold rounded-lg capitalize whitespace-nowrap transition-all duration-200"
+          :class="activeSettingsCategory === cat ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800'"
+          @click="activeSettingsCategory = cat"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <!-- Settings Category Panels -->
+      <Transition name="fade" mode="out-in">
+        <div v-if="activeSettingsCategory === 'templates'" class="space-y-3">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Templates</p>
+          <TemplatePicker v-model="model.template_id" :content="model.content" />
+        </div>
+        <div v-else-if="activeSettingsCategory === 'content'" class="space-y-3">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Layout & Reorder</p>
+          <CustomizePanel v-model:order="model.content.sectionOrder" v-model:visibility="model.content.sectionVisibility" />
+        </div>
+        <div v-else-if="activeSettingsCategory === 'appearance'" class="space-y-3">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Appearance</p>
+          <AppearancePanel v-model="model.content.appearance" />
+        </div>
+        <div v-else-if="activeSettingsCategory === 'export'" class="space-y-3">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Export Document</p>
+          <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm space-y-4">
+            <p class="text-xs text-slate-500 leading-normal">Ready to download? Your resume is prepared for instant export to a clean, professionally pagination-validated PDF.</p>
+            <button 
+              type="button" 
+              class="w-full rounded-xl bg-brand py-3 text-sm font-semibold text-white transition hover:bg-brand/90 active:scale-95 duration-200 shadow-md shadow-brand/10" 
+              @click="$emit('download')" 
+              :disabled="isDownloading"
+            >
+              {{ isDownloading ? 'Generating PDF...' : 'Download PDF' }}
+            </button>
+          </div>
+        </div>
+      </Transition>
+    </div>
+
+    <!-- ═══ MOBILE: Bottom Navigation ═══ -->
+    <nav v-if="isMobile" class="bottom-nav" role="tablist" aria-label="Editor navigation">
+      <button type="button" role="tab" class="bottom-nav-item" :class="{ active: activeTab === 'resume' }" :aria-selected="activeTab === 'resume'" @click="setTab('resume')">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        <span class="bottom-nav-label">Resume</span>
+      </button>
+      <button type="button" role="tab" class="bottom-nav-item" :class="{ active: activeTab === 'preview' }" :aria-selected="activeTab === 'preview'" @click="setTab('preview')">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="bottom-nav-label">Preview</span>
+      </button>
+      <button type="button" role="tab" class="bottom-nav-item" :class="{ active: activeTab === 'insights' }" :aria-selected="activeTab === 'insights'" @click="setTab('insights')">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6.2 4.5 2.4 7.3L12 17l-6.2 4 2.4-7.3L2 9.2h7.6z"/></svg>
+        <span class="bottom-nav-label">Insights</span>
+      </button>
+      <button type="button" role="tab" class="bottom-nav-item" :class="{ active: activeTab === 'more' }" :aria-selected="activeTab === 'more'" @click="setTab('more')">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        <span class="bottom-nav-label">More</span>
+      </button>
+    </nav>
+
+    <!-- ═══ Floating Draggable Health Score Widget ═══ -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <div
+          v-if="isMobile && activeTab === 'resume' && healthScore > 0"
+          ref="fabRef"
+          class="fixed select-none z-50 h-10 w-24"
+          :style="fabStyle"
+        >
+          <!-- Tooltip/Popover (Priority 5 Widget) -->
+          <Transition name="fade">
+            <div
+              v-if="isExpanded"
+              class="absolute z-50 rounded-2xl border border-slate-200 bg-white/95 backdrop-blur-md p-4 shadow-[0_20px_50px_rgba(0,0,0,0.15)] w-56 overflow-exempt animate-fade-in text-ink flex flex-col gap-2.5"
+              :class="[
+                isOnTopHalf ? 'top-[calc(100%+8px)]' : 'bottom-[calc(100%+8px)]',
+                isOnLeftHalf ? 'left-0' : 'right-0'
+              ]"
+              @click.stop
+            >
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                  <span class="text-emerald-500">✓</span> Resume Health
+                </span>
+                <button 
+                  type="button" 
+                  class="shrink-0 rounded-full p-1 hover:bg-slate-100 text-slate-400 transition-colors"
+                  @click.stop="isExpanded = false"
+                >
+                  <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ healthScore }}%</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" :class="[
+                  healthScore >= 80 ? 'bg-emerald-50 text-emerald-700' :
+                  healthScore >= 50 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
+                ]">{{ healthLabel }}</span>
+              </div>
+              <div class="text-[10px] text-slate-500 flex items-center justify-between border-t border-slate-100 pt-2">
+                <span>Percentile Rating</span>
+                <span class="font-semibold text-slate-800" v-if="healthScore >= 80">Top 10%</span>
+                <span class="font-semibold text-slate-800" v-else-if="healthScore >= 50">Top 40%</span>
+                <span class="font-semibold text-slate-800" v-else>Top 80%</span>
+              </div>
+            </div>
+          </Transition>
+
+          <!-- Glassmorphism Premium Pill FAB button -->
+          <button
+            type="button"
+            class="flex size-full items-center justify-between gap-1.5 rounded-full bg-white/90 backdrop-blur-md shadow-lg border border-slate-200/80 px-3 py-2 transition hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing hover:border-brand/40"
+            @mousedown="startDrag"
+            @touchstart="startDrag"
+            @click="handleFabClick"
+          >
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-[10px] font-bold" :class="scoreColorClass">✓</span>
+            <div class="flex flex-col items-start leading-none text-left flex-1 min-w-0">
+              <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Health</span>
+              <span class="text-xs font-extrabold text-slate-800">{{ healthScore }}%</span>
+            </div>
+          </button>
         </div>
       </Transition>
     </Teleport>
@@ -361,9 +663,13 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref, onBeforeUnmount } from 'vue'
+import { computed, reactive, ref, onBeforeUnmount, onMounted, nextTick, toRef } from 'vue'
+import { useStore } from 'vuex'
 import AppButton from '../../components/ui/AppButton.vue'
 import ResumePreview from './ResumePreview.vue'
+import IntelligencePanel from './IntelligencePanel.vue'
+import TargetRoleSelector from './TargetRoleSelector.vue'
+import CommandPalette from './CommandPalette.vue'
 import TemplatePicker from './TemplatePicker.vue'
 import AppearancePanel from './AppearancePanel.vue'
 import CustomizePanel from './CustomizePanel.vue'
@@ -381,9 +687,137 @@ import MinimalTemplate from './templates/MinimalTemplate.vue'
 import ExecutiveTemplate from './templates/ExecutiveTemplate.vue'
 import FresherTemplate from './templates/FresherTemplate.vue'
 import { RESUME_STATUS } from '../../constants/resume'
-import { ZOOM_LEVELS } from '../../constants/resume'
 import { calculateCompletion } from '../../utils/profileToResume'
+import { useResumeIntelligence } from '../../composables/useResumeIntelligence'
+import { useEditorTabs, EDITOR_TABS } from '../../composables/useEditorTabs'
 import { t } from '../../utils/i18n'
+
+// ─── Mobile Tab Navigation ───
+const { activeTab, isMobile, setTab, showResumeEditor, showPreview, showInsights, showMore } = useEditorTabs()
+
+const leftSidebarCollapsed = ref(false)
+const activeSettingsCategory = ref('templates')
+
+// ─── Floating Draggable Health Score Widget ───
+const fabRef = ref(null)
+const isExpanded = ref(false)
+const position = ref({ x: null, y: null })
+
+const scoreColorClass = computed(() => {
+  if (healthScore.value >= 80) return 'text-emerald-600'
+  if (healthScore.value >= 50) return 'text-amber-500'
+  return 'text-red-500'
+})
+
+const fabBorderClass = computed(() => {
+  if (healthScore.value >= 80) return 'border-emerald-500'
+  if (healthScore.value >= 50) return 'border-amber-500'
+  return 'border-red-500'
+})
+
+const isOnLeftHalf = computed(() => {
+  if (position.value.x === null) return false
+  return position.value.x < window.innerWidth / 2
+})
+
+const isOnTopHalf = computed(() => {
+  if (position.value.y === null) return false
+  return position.value.y < window.innerHeight / 2
+})
+
+const fabStyle = computed(() => {
+  if (position.value.x === null || position.value.y === null) {
+    return {
+      bottom: 'calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 16px)',
+      right: '16px'
+    }
+  }
+  return {
+    left: `${position.value.x}px`,
+    top: `${position.value.y}px`
+  }
+})
+
+let dragStartPos = { x: 0, y: 0 }
+let initialElementPos = { x: 0, y: 0 }
+let isDragging = false
+let dragMoved = false
+
+const startDrag = (e) => {
+  isDragging = true
+  dragMoved = false
+  
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY
+  
+  dragStartPos = { x: clientX, y: clientY }
+  
+  if (position.value.x === null || position.value.y === null) {
+    const rect = fabRef.value.getBoundingClientRect()
+    position.value = { x: rect.left, y: rect.top }
+  }
+  
+  initialElementPos = { x: position.value.x, y: position.value.y }
+  
+  if (e.touches) {
+    document.addEventListener('touchmove', onDrag, { passive: false })
+    document.addEventListener('touchend', endDrag)
+  } else {
+    document.addEventListener('mousemove', onDrag)
+    document.addEventListener('mouseup', endDrag)
+  }
+}
+
+const onDrag = (e) => {
+  if (!isDragging) return
+  if (e.cancelable) e.preventDefault()
+  
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY
+  
+  const dx = clientX - dragStartPos.x
+  const dy = clientY - dragStartPos.y
+  
+  if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+    dragMoved = true
+  }
+  
+  let newX = initialElementPos.x + dx
+  let newY = initialElementPos.y + dy
+  
+  const buttonSize = 48
+  const maxX = window.innerWidth - buttonSize - 8
+  const maxY = window.innerHeight - buttonSize - 70
+  
+  newX = Math.max(8, Math.min(newX, maxX))
+  newY = Math.max(8, Math.min(newY, maxY))
+  
+  position.value = { x: newX, y: newY }
+}
+
+const endDrag = () => {
+  isDragging = false
+  document.removeEventListener('touchmove', onDrag)
+  document.removeEventListener('touchend', endDrag)
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', endDrag)
+}
+
+const handleFabClick = () => {
+  if (!dragMoved) {
+    isExpanded.value = !isExpanded.value
+  }
+}
+
+// ─── Time-aware Greeting ───
+const store = useStore()
+const userName = computed(() => store.state.auth.user?.name?.split(' ')[0] || '')
+const greeting = computed(() => {
+  const h = new Date().getHours()
+  if (h < 12) return 'Good Morning'
+  if (h < 17) return 'Good Afternoon'
+  return 'Good Evening'
+})
 
 // Icon render helpers (inline SVG functional components for section headers)
 const IconPerson = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
@@ -398,16 +832,16 @@ const IconHeart = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const IconLink = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>`
 
 const ALL_SECTIONS = [
-  { key: 'personal',      label: 'Personal Information', icon: IconPerson },
-  { key: 'experience',    label: 'Experience',           icon: IconBriefcase },
-  { key: 'education',     label: 'Education',            icon: IconGrad },
-  { key: 'projects',      label: 'Projects',             icon: IconCode },
-  { key: 'skills',        label: 'Skills',               icon: IconSparkle },
-  { key: 'certifications',label: 'Certifications',       icon: IconCert },
-  { key: 'languages',     label: 'Languages',            icon: IconGlobe },
-  { key: 'achievements',  label: 'Achievements',         icon: IconTrophy },
-  { key: 'interests',     label: 'Interests',            icon: IconHeart },
-  { key: 'socialLinks',   label: 'Social Links',         icon: IconLink }
+  { key: 'personal',      label: 'Personal Information', icon: IconPerson, hint: 'Recruiters look here first. Ensure contact info is accurate.' },
+  { key: 'experience',    label: 'Experience',           icon: IconBriefcase, hint: 'Use bullet points with action verbs and quantifiable results.' },
+  { key: 'education',     label: 'Education',            icon: IconGrad, hint: 'Include degrees, relevant coursework, or academic honors.' },
+  { key: 'projects',      label: 'Projects',             icon: IconCode, hint: 'Highlight your impact, technologies used, and outcomes.' },
+  { key: 'skills',        label: 'Skills',               icon: IconSparkle, hint: 'List hard and soft skills relevant to the target role.' },
+  { key: 'certifications',label: 'Certifications',       icon: IconCert, hint: 'Add industry-recognized credentials to boost credibility.' },
+  { key: 'languages',     label: 'Languages',            icon: IconGlobe, hint: 'List languages and your proficiency level.' },
+  { key: 'achievements',  label: 'Achievements',         icon: IconTrophy, hint: 'Include awards, publications, or special recognitions.' },
+  { key: 'interests',     label: 'Interests',            icon: IconHeart, hint: 'Show your personality through relevant hobbies or groups.' },
+  { key: 'socialLinks',   label: 'Social Links',         icon: IconLink, hint: 'Add LinkedIn, GitHub, or personal portfolio.' }
 ]
 
 const TEMPLATE_MAP = {
@@ -429,12 +863,50 @@ defineEmits(['submit', 'fill-from-profile', 'download'])
 
 const completionScore = computed(() => calculateCompletion(props.model.content))
 
+// Target Role state
+const targetRole = ref('')
+const actualPageCount = ref(1)
+const intelligenceOptions = computed(() => ({
+  pageCount: actualPageCount.value
+}))
+
+// Intelligence Engine
+const contentRef = computed(() => props.model.content)
+const {
+  healthScore, healthLabel, healthColor,
+  sectionHealth, atsAnalysis, keywordAnalysis,
+  checklist, statistics, tips, experienceLevel
+} = useResumeIntelligence(contentRef, targetRole, intelligenceOptions)
+
 const statuses = Object.values(RESUME_STATUS)
 const update = (key, value) => { props.model[key] = value }
 
 // Collapsible section open state — personal open by default
 const openSections = reactive(Object.fromEntries(ALL_SECTIONS.map((s, i) => [s.key, i === 0])))
-const toggleSection = (key) => { openSections[key] = !openSections[key] }
+const toggleSection = (key) => {
+  if (isMobile.value) {
+    // Single-accordion on mobile: close all others
+    const wasOpen = openSections[key]
+    ALL_SECTIONS.forEach(s => { openSections[s.key] = false })
+    openSections[key] = !wasOpen
+    // Auto-scroll expanded section into view
+    if (!wasOpen) {
+      nextTick(() => {
+        const el = document.getElementById(`section-${key}`)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+  } else {
+    openSections[key] = !openSections[key]
+  }
+}
+
+// Left Sidebar state
+const sidebarState = reactive({
+  template: true,
+  appearance: false,
+  customize: false
+})
 
 // Resizing logic (20% left, 45% middle, 35% right ideally)
 const leftWidth = ref(window.innerWidth > 1024 ? window.innerWidth * 0.20 : 280)
@@ -621,6 +1093,35 @@ onBeforeUnmount(() => {
 // Preview zoom & fullscreen
 const previewZoom     = ref(100)
 const showFullPreview = ref(false)
+const showCommandPalette = ref(false)
+
+const zoomIn = () => previewZoom.value = Math.min(200, Math.floor(previewZoom.value / 10) * 10 + 10)
+const zoomOut = () => previewZoom.value = Math.max(25, Math.ceil(previewZoom.value / 10) * 10 - 10)
+
+const handleCommandAction = (action) => {
+  if (action.type === 'download') emit('download')
+  else if (action.type === 'toggle-preview') showFullPreview.value = !showFullPreview.value
+  else if (action.type === 'set-template') update('template_id', action.payload)
+  else if (action.type === 'add-section') {
+    // Open the accordion
+    openSections[action.payload] = true
+    nextTick(() => {
+      const el = document.getElementById(`section-${action.payload}`)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+}
+
+const fitToWidth = () => {
+  // A4 width is 794px. Right aside width minus padding (~64px).
+  previewZoom.value = Math.min(150, Math.round(((rightWidth.value - 64) / 794) * 100))
+}
+
+const fitToPage = () => {
+  // A4 height is 1122.5px. Viewer area height approx innerHeight - 120px.
+  previewZoom.value = Math.min(150, Math.round(((window.innerHeight - 120) / 1122.5) * 100))
+}
+
 const activeTemplateComponent = computed(() => TEMPLATE_MAP[props.model.template_id] || ModernTemplate)
 </script>
 

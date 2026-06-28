@@ -1,7 +1,8 @@
 module Api
   module V1
     class InterviewPrepController < ApplicationController
-      before_action :authenticate_user!
+      before_action :authenticate_api_user!
+      before_action -> { authorize_feature!(:interview_prep) }, only: %i[show question]
 
       def index
         subjects = InterviewQuestionLoader.available_subjects

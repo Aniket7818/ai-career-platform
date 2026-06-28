@@ -9,6 +9,7 @@ module Api
       def show
         render json: {
           analytics: analytics,
+          billing_analytics: billing_analytics,
           users: users_payload,
           resume_analytics: resume_analytics,
           feature_interest_analytics: feature_interest_analytics,
@@ -107,11 +108,30 @@ module Api
         render json: { users: users_payload, analytics: analytics, audit_logs: audit_logs_payload }
       end
 
+      def get_settings
+        render json: { settings: settings_payload }
+      end
+
       def update_settings
         setting = AdminSetting.find_or_initialize_by(key: params.require(:key))
-        setting.value = params.fetch(:value, {})
+        old_value = setting.value || {}
+        new_value = params.fetch(:value, {})
+        setting.value = new_value
         setting.save!
-        log!("admin_updated_settings", current_user, "Updated #{setting.key}")
+
+        details = if setting.key == "developer_settings"
+                    changed_keys = []
+                    new_value.each do |k, v|
+                      if old_value[k] != v
+                        changed_keys << "#{k} changed from #{old_value[k].inspect} to #{v.inspect}"
+                      end
+                    end
+                    "Updated Developer Settings: #{changed_keys.join(', ')}"
+                  else
+                    "Updated setting key '#{setting.key}'"
+                  end
+
+        log!("admin_updated_settings", current_user, details)
         render json: { settings: settings_payload, audit_logs: audit_logs_payload }
       end
 
@@ -175,6 +195,65 @@ module Api
           revenue: PaymentOrder.where(status: "paid").sum(:amount_paise) / 100,
           monthly_revenue: PaymentOrder.where(status: "paid", activated_at: Time.current.beginning_of_month..).sum(:amount_paise) / 100,
           cancelled_plans: AuditLog.where(action: "cancelled_subscription").count
+        }
+      end
+
+      def billing_analytics
+        today_start = Time.current.beginning_of_day
+        month_start = Time.current.beginning_of_month
+        
+        # Payment Orders that are successful
+        successful_payments = PaymentOrder.where(status: ["paid", "completed", "active"])
+        revenue_today = successful_payments.where("created_at >= ?", today_start).sum(:amount_paise) / 100.0
+        revenue_this_month = successful_payments.where("created_at >= ?", month_start).sum(:amount_paise) / 100.0
+        
+        # Current active paid users
+        active_subscriptions = User.where.not(subscription_plan: "free").where("subscription_expires_at > ?", Time.current).count
+        
+        # MRR / ARR calculation
+        plus_users = User.where(subscription_plan: "plus").count
+        pro_users = User.where(subscription_plan: "pro").count
+        team_users = User.where(subscription_plan: "team").count
+        mrr = (plus_users * 99) + (pro_users * 199) + (team_users * 299)
+        arr = mrr * 12
+        
+        # Most popular plan
+        plan_counts = User.where.not(subscription_plan: ["free", nil, ""]).group(:subscription_plan).count
+        most_popular_plan = plan_counts.sort_by { |_, v| -v }.first&.first&.titleize || "None"
+        
+        # Recent payments
+        recent_payments = BillingHistory.order(created_at: :desc).limit(5).map do |bh|
+          { id: bh.id, user: bh.user.email, amount: bh.amount, plan: bh.plan_name, status: bh.payment_status, created_at: bh.created_at }
+        end
+        
+        # Failed payments
+        failed_payments = PaymentOrder.where(status: "failed").order(created_at: :desc).limit(5).map do |po|
+          { id: po.id, user: po.user.email, amount: po.amount_paise / 100.0, plan: po.plan, created_at: po.created_at }
+        end
+        
+        # Top Credit Consumers
+        top_consumers = User.order(used_credits: :desc).limit(5).map do |u|
+          { email: u.email, used_credits: u.used_credits.to_i, total_credits: u.monthly_credit_limit.to_i }
+        end
+        
+        # Revenue Graph (last 7 days)
+        revenue_graph = (6.downto(0)).map do |i|
+          date = i.days.ago.to_date
+          amount = successful_payments.where(created_at: date.beginning_of_day..date.end_of_day).sum(:amount_paise) / 100.0
+          { label: date.strftime("%b %d"), value: amount }
+        end
+
+        {
+          revenue_today: revenue_today,
+          revenue_this_month: revenue_this_month,
+          active_subscriptions: active_subscriptions,
+          mrr: mrr,
+          arr: arr,
+          most_popular_plan: most_popular_plan,
+          recent_payments: recent_payments,
+          failed_payments: failed_payments,
+          top_consumers: top_consumers,
+          revenue_graph: revenue_graph
         }
       end
 
