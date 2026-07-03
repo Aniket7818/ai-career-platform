@@ -1,7 +1,19 @@
+# rack-attack configuration.
+# Registration into the middleware stack is handled automatically by
+# the gem's built-in Railtie — no manual insert needed here.
+
 class Rack::Attack
-  # ── Safelist: never throttle health-check or localhost in dev ───────────────
+  # ── Safelist ────────────────────────────────────────────────────────────────
+  # Health-check is always exempt.
   safelist("allow-health-check") { |req| req.path == "/up" }
-  safelist("allow-localhost") { |req| ["127.0.0.1", "::1"].include?(req.ip) && !Rails.env.production? }
+
+  # Localhost is exempt in development UNLESS you set RACK_ATTACK_DEV_TEST=true
+  # in your .env to verify throttling locally (flip it back off when done).
+  safelist("allow-localhost") do |req|
+    is_localhost = ["127.0.0.1", "::1"].include?(req.ip)
+    dev_test_mode = ENV["RACK_ATTACK_DEV_TEST"] == "true"
+    is_localhost && !Rails.env.production? && !dev_test_mode
+  end
 
   # ════════════════════════════════════════════════════════════════════════════
   # PASSWORD RESET  — POST /api/v1/auth/forgot_password
@@ -54,8 +66,8 @@ class Rack::Attack
   end
 
   # ── Throttled response: always return JSON, never HTML ───────────────────────
-  self.throttled_responder = lambda do |env|
-    match_data = env["rack.attack.match_data"]
+  self.throttled_responder = lambda do |request|
+    match_data = request.env["rack.attack.match_data"]
     retry_after = (match_data[:period] - match_data[:count].to_i).clamp(1, match_data[:period]).to_s
     [
       429,
@@ -68,7 +80,7 @@ class Rack::Attack
   end
 
   # ── Blocklisted response (for future use) ────────────────────────────────────
-  self.blocklisted_responder = lambda do |_env|
+  self.blocklisted_responder = lambda do |request|
     [403, { "Content-Type" => "application/json" }, ['{"error":"Forbidden."}']]
   end
 end
