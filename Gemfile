@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 7.2.3"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "rack-cors"
 gem "rack-attack"
 # Use the Puma web server [https://github.com/puma/puma]
