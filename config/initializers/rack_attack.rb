@@ -15,17 +15,28 @@ class Rack::Attack
     is_localhost && !Rails.env.production? && !dev_test_mode
   end
 
+  # ── Helpers ─────────────────────────────────────────────────────────────────
+  # Render load balancers can change IPs, which breaks standard req.ip if not
+  # trusted. We use ActionDispatch to reliably get the real client IP.
+  def self.client_ip(req)
+    # The first IP in X-Forwarded-For is the true client IP in most setups.
+    forwarded = req.env["HTTP_X_FORWARDED_FOR"]
+    return forwarded.split(',').first.strip if forwarded.present?
+    
+    req.ip
+  end
+
   # ════════════════════════════════════════════════════════════════════════════
   # PASSWORD RESET  — POST /api/v1/auth/forgot_password
   #   • 5 requests per IP per 60 s  (catches rapid-fire bot loops)
   #   • 20 requests per IP per 1 h  (catches slow enumeration)
   # ════════════════════════════════════════════════════════════════════════════
   throttle("forgot_password/ip/burst", limit: 5, period: 60.seconds) do |req|
-    req.ip if req.path == "/api/v1/auth/forgot_password" && req.post?
+    client_ip(req) if req.path == "/api/v1/auth/forgot_password" && req.post?
   end
 
   throttle("forgot_password/ip/hourly", limit: 20, period: 1.hour) do |req|
-    req.ip if req.path == "/api/v1/auth/forgot_password" && req.post?
+    client_ip(req) if req.path == "/api/v1/auth/forgot_password" && req.post?
   end
 
   # ════════════════════════════════════════════════════════════════════════════
@@ -34,11 +45,11 @@ class Rack::Attack
   #   • 50 attempts per IP per 10 min  (slow-drip brute force)
   # ════════════════════════════════════════════════════════════════════════════
   throttle("login/ip/burst", limit: 10, period: 60.seconds) do |req|
-    req.ip if req.path == "/api/v1/auth/login" && req.post?
+    client_ip(req) if req.path == "/api/v1/auth/login" && req.post?
   end
 
   throttle("login/ip/slow", limit: 50, period: 10.minutes) do |req|
-    req.ip if req.path == "/api/v1/auth/login" && req.post?
+    client_ip(req) if req.path == "/api/v1/auth/login" && req.post?
   end
 
   # ════════════════════════════════════════════════════════════════════════════
@@ -46,7 +57,7 @@ class Rack::Attack
   #   • 5 signups per IP per 10 min  (stops mass account creation)
   # ════════════════════════════════════════════════════════════════════════════
   throttle("signup/ip", limit: 5, period: 10.minutes) do |req|
-    req.ip if req.path == "/api/v1/auth/signup" && req.post?
+    client_ip(req) if req.path == "/api/v1/auth/signup" && req.post?
   end
 
   # ════════════════════════════════════════════════════════════════════════════
@@ -54,7 +65,7 @@ class Rack::Attack
   #   • 5 requests per IP per 5 min  (already has per-user DB limit too)
   # ════════════════════════════════════════════════════════════════════════════
   throttle("verification/ip", limit: 5, period: 5.minutes) do |req|
-    req.ip if req.path == "/api/v1/verifications" && req.post?
+    client_ip(req) if req.path == "/api/v1/verifications" && req.post?
   end
 
   # ════════════════════════════════════════════════════════════════════════════
@@ -62,7 +73,7 @@ class Rack::Attack
   #   • 300 requests per IP per 5 min
   # ════════════════════════════════════════════════════════════════════════════
   throttle("api/ip/general", limit: 300, period: 5.minutes) do |req|
-    req.ip if req.path.start_with?("/api/")
+    client_ip(req) if req.path.start_with?("/api/")
   end
 
   # ── Throttled response: always return JSON, never HTML ───────────────────────
