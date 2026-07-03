@@ -2,7 +2,11 @@ module Api
   module V1
     module Auth
       class PasswordsController < Devise::PasswordsController
+        include TurnstileVerifiable
         respond_to :json
+
+        # Verify CAPTCHA before attempting password reset to stop bots.
+        before_action :verify_turnstile!, only: [:create]
 
         def create
           email = params[:email] || params.dig(:user, :email)
@@ -17,6 +21,7 @@ module Api
           
           render json: { message: "If an account exists, a reset email has been sent." }, status: :ok
         end
+
 
         def update
           token = params[:token] || params.dig(:user, :reset_password_token)

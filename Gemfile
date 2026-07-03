@@ -6,6 +6,7 @@ gem "rails", "~> 7.2.3"
 gem "pg", "~> 1.1"
 gem "devise", "~> 4.9"
 gem "rack-cors"
+gem "rack-attack"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

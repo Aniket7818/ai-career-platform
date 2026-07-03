@@ -89,7 +89,21 @@
                 </button>
               </div>
             </div>
-            <AppButton class="w-full" :loading="loading && isSignup">{{ t('auth.submitSignup') }}</AppButton>
+
+            <!-- Cloudflare Turnstile CAPTCHA (signup only) -->
+            <div>
+              <div
+                id="signup-turnstile"
+                class="cf-turnstile"
+                :data-sitekey="turnstileSiteKey"
+                data-callback="onSignupTurnstileSuccess"
+                data-expired-callback="onSignupTurnstileExpired"
+                data-theme="light"
+              />
+              <p v-if="signupCaptchaError" class="mt-1 text-xs text-red-500">{{ signupCaptchaError }}</p>
+            </div>
+
+            <AppButton class="w-full" :loading="loading && isSignup" :disabled="!signupTurnstileToken">{{ t('auth.submitSignup') }}</AppButton>
             <button type="button" class="text-sm font-semibold text-brand" @click="goLogin">{{ t('auth.hasAccount') }}</button>
           </form>
         </div>
@@ -99,7 +113,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import AppButton from '../../components/ui/AppButton.vue'
@@ -123,7 +137,38 @@ const loading = computed(() => store.state.auth.loading)
 const error = computed(() => store.state.auth.error)
 const currentUser = computed(() => store.state.auth.user)
 
-onMounted(() => store.dispatch('auth/fetchMe'))
+// ── Cloudflare Turnstile (signup form) ───────────────────────────────────────
+const turnstileSiteKey      = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
+const signupTurnstileToken  = ref('')
+const signupCaptchaError    = ref('')
+
+window.onSignupTurnstileSuccess = (token) => {
+  signupTurnstileToken.value = token
+  signupCaptchaError.value   = ''
+}
+window.onSignupTurnstileExpired = () => {
+  signupTurnstileToken.value = ''
+  signupCaptchaError.value   = 'CAPTCHA expired — please solve it again.'
+}
+
+onMounted(() => {
+  store.dispatch('auth/fetchMe')
+  // Inject Turnstile script once
+  if (!document.getElementById('cf-turnstile-script')) {
+    const script = document.createElement('script')
+    script.id    = 'cf-turnstile-script'
+    script.src   = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.async = true
+    script.defer = true
+    document.head.appendChild(script)
+  }
+})
+
+onBeforeUnmount(() => {
+  delete window.onSignupTurnstileSuccess
+  delete window.onSignupTurnstileExpired
+})
+// ─────────────────────────────────────────────────────────────────────────────
 
 const highlights = [
   { stat: '10+', title: t('auth.highlightFeatures'), body: t('auth.highlightFeaturesBody') },
@@ -137,7 +182,7 @@ const stats = [
 ]
 
 const goSignup = () => router.push('/signup')
-const goLogin = () => router.push('/login')
+const goLogin  = () => router.push('/login')
 
 watch(() => route.path, () => store.commit('auth/setError', null))
 
@@ -150,10 +195,23 @@ const submitLogin = async () => {
 }
 
 const submitSignup = async () => {
-  const user = await store.dispatch('auth/signup', signupForm)
+  if (!signupTurnstileToken.value && turnstileSiteKey) {
+    signupCaptchaError.value = 'Please complete the CAPTCHA first.'
+    return
+  }
+
+  const user = await store.dispatch('auth/signup', {
+    ...signupForm,
+    turnstileToken: signupTurnstileToken.value,
+  })
+
   if (user) {
     toast.success(t('toast.signupSuccess'), t('toast.signupSuccessBody'))
     router.push('/dashboard')
   }
+
+  // Reset CAPTCHA after every attempt
+  signupTurnstileToken.value = ''
+  if (window.turnstile) window.turnstile.reset('#signup-turnstile')
 }
 </script>
