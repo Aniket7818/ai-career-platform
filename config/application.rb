@@ -45,10 +45,6 @@ module AiCareerPlatform
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
 
-    # IP-level rate limiting (rack-attack). Mounted after CORS so OPTIONS
-    # pre-flight requests are never throttled by mistake.
-    config.middleware.use Rack::Attack
-
     # Dynamic session cookie config for cross-origin auth (Vercel frontend → Render backend)
     # In production, set COOKIE_SAME_SITE=none and COOKIE_SECURE=true in Render env vars.
     # For local dev, default is same_site=lax, secure=false.
