@@ -207,8 +207,6 @@ The application requires specific environment variables to function correctly. *
 
 ## 📸 Screenshots
 
-*(Placeholders - replace with actual screenshots in `/docs/screenshots/`)*
-
 <details>
 <summary><b>View Screenshots</b></summary>
 <br>
