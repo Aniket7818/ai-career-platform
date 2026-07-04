@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_27_211548) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_04_182643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,31 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_27_211548) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_admin_settings_on_key", unique: true
+  end
+
+  create_table "ai_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "resume_id", null: false
+    t.string "feature"
+    t.string "prompt_version"
+    t.string "fingerprint"
+    t.integer "credits_used"
+    t.integer "tokens_in"
+    t.integer "tokens_out"
+    t.decimal "estimated_cost", precision: 10, scale: 6
+    t.string "model"
+    t.integer "response_time"
+    t.string "status"
+    t.text "error_message"
+    t.text "request_prompt"
+    t.text "response_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "cache_hit"
+    t.integer "retry_count"
+    t.string "failure_reason"
+    t.index ["resume_id"], name: "index_ai_logs_on_resume_id"
+    t.index ["user_id"], name: "index_ai_logs_on_user_id"
   end
 
   create_table "audit_logs", force: :cascade do |t|
@@ -327,6 +352,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_27_211548) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "ai_logs", "resumes"
+  add_foreign_key "ai_logs", "users"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "audit_logs", "users", column: "actor_id"
   add_foreign_key "billing_histories", "users"

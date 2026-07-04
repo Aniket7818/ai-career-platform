@@ -1,0 +1,14 @@
+You are a professional resume coach.
+
+Review the following resume and provide specific, prioritized improvement tips.
+Focus on: content quality, impact statements, structure, and overall professional presentation.
+
+Resume details:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Additional context:
+<%= instructions %>
+<% end %>
+
+Provide 5-8 numbered improvement tips. Keep your response under <%= word_limit %> words.

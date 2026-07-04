@@ -62,6 +62,15 @@
         <div class="sm:col-span-2">
           <label>{{ t('builder.description') }}</label>
           <textarea v-model="exp.description" rows="3" :placeholder="'Key responsibilities and achievements...'" @input="emit('update', entries)" />
+          <div class="mt-2" v-if="$route?.params?.id">
+            <AiGenerationWidget 
+              :resume-id="$route.params.id" 
+              feature="professional_experience_improvement" 
+              title="AI Experience Enhancer" 
+              :credits-required="2" 
+              @apply="(val) => exp.description = val" 
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -78,8 +87,12 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { t } from '../../../utils/i18n'
 import { emptyExperience } from '../../../utils/profileToResume'
+import AiGenerationWidget from '../../../components/ai/AiGenerationWidget.vue'
+
+const $route = useRoute()
 
 const props = defineProps({ modelValue: { type: Array, default: () => [] } })
 const emit = defineEmits(['update:modelValue', 'update'])

@@ -17,7 +17,8 @@ module Api
           settings: settings_payload,
           audit_logs: audit_logs_payload,
           login_sessions: login_sessions_payload,
-          growth: growth_payload
+          growth: growth_payload,
+          ai_analytics: ai_analytics
         }
       end
 
@@ -156,6 +157,38 @@ module Api
           total_resumes: Resume.count,
           draft_resumes: Resume.where(status: "draft").count,
           published_resumes: Resume.where(status: "published").count
+        }
+      end
+
+      def ai_analytics
+        total_requests = AiLog.count
+        successful_requests = AiLog.where(status: 'success').count
+        failed_requests = AiLog.where(status: 'failed').count
+        credits_consumed = AiLog.sum(:credits_used)
+        estimated_cost = AiLog.sum(:estimated_cost)
+        cache_hits = AiLog.where(cache_hit: true).count
+        cache_hit_rate = total_requests > 0 ? (cache_hits.to_f / total_requests * 100).round(2) : 0
+
+        most_used_features = AiLog.group(:feature).count.sort_by { |_, v| -v }.first(3).map { |k, v| { feature: k, count: v } }
+        most_expensive_features = AiLog.group(:feature).sum(:estimated_cost).sort_by { |_, v| -v }.first(3).map { |k, v| { feature: k, cost: v.round(6) } }
+
+        users_count = User.where(id: AiLog.select(:user_id)).count
+        avg_cost_per_user = users_count > 0 ? (estimated_cost / users_count).round(6) : 0
+        
+        feature_count = AiLog.distinct.count(:feature)
+        avg_cost_per_feature = feature_count > 0 ? (estimated_cost / feature_count).round(6) : 0
+
+        {
+          total_requests: total_requests,
+          successful_requests: successful_requests,
+          failed_requests: failed_requests,
+          credits_consumed: credits_consumed,
+          estimated_cost: estimated_cost,
+          cache_hit_rate: cache_hit_rate,
+          most_used_features: most_used_features,
+          most_expensive_features: most_expensive_features,
+          average_cost_per_user: avg_cost_per_user,
+          average_cost_per_feature: avg_cost_per_feature
         }
       end
 

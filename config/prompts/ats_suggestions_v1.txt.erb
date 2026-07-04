@@ -1,0 +1,14 @@
+You are an ATS (Applicant Tracking System) expert.
+
+Analyze the resume below and provide specific, actionable suggestions to improve ATS compatibility.
+Focus on: missing keywords, formatting issues, section improvements, and industry-standard terms.
+
+Resume details:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Target role or focus area:
+<%= instructions %>
+<% end %>
+
+Provide numbered suggestions. Keep your response under <%= word_limit %> words.

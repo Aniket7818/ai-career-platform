@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :credit_transactions, dependent: :destroy
   has_many :login_sessions, dependent: :destroy
   has_many :email_verification_logs, dependent: :destroy
+  has_many :ai_logs, dependent: :destroy
 
   validates :role, inclusion: { in: ROLES }
   validates :status, inclusion: { in: STATUSES }
@@ -73,11 +74,20 @@ class User < ApplicationRecord
 
   before_create :initialize_welcome_credits
 
+  # Safe credit accessors that treat nil as 0
+  def safe_remaining_credits
+    remaining_credits.to_i
+  end
+
+  def safe_used_credits
+    used_credits.to_i
+  end
+
   private
 
   def initialize_welcome_credits
-    self.monthly_credit_limit ||= 10
-    self.remaining_credits ||= 10
-    self.used_credits ||= 0
+    self.monthly_credit_limit ||= 50
+    self.remaining_credits    ||= 50
+    self.used_credits         ||= 0
   end
 end

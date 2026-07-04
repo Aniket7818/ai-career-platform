@@ -236,6 +236,18 @@
                   <div class="md:col-span-2">
                     <label>{{ t('builder.summaryLabel') }}</label>
                     <textarea v-model="model.content.personal.summary" rows="4" />
+                    <div class="mt-2" v-if="model.id">
+                      <AiGenerationWidget 
+                        :resume-id="model.id" 
+                        feature="resume_summary" 
+                        title="AI Summary Writer" 
+                        :credits-required="3" 
+                        @apply="(val) => model.content.personal.summary = val" 
+                      />
+                    </div>
+                    <div class="mt-2 text-xs text-slate-500 italic" v-else>
+                      Save your resume first to unlock AI features.
+                    </div>
                   </div>
                   <div>
                     <label>{{ t('profile.email') }}</label>
@@ -670,6 +682,7 @@ import ResumePreview from './ResumePreview.vue'
 import IntelligencePanel from './IntelligencePanel.vue'
 import TargetRoleSelector from './TargetRoleSelector.vue'
 import CommandPalette from './CommandPalette.vue'
+import AiGenerationWidget from '../../components/ai/AiGenerationWidget.vue'
 import TemplatePicker from './TemplatePicker.vue'
 import AppearancePanel from './AppearancePanel.vue'
 import CustomizePanel from './CustomizePanel.vue'

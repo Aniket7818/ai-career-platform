@@ -1,0 +1,41 @@
+default:
+  model: "gemini-1.5-flash"
+  temperature: 0.7
+  max_output_tokens: 1000
+
+features:
+  resume_summary:
+    credits: 3
+    word_limit: 300
+    prompt_version: "v1"
+    cache_enabled: false
+  resume_rewrite:
+    credits: 5
+    word_limit: 500
+    prompt_version: "v1"
+    cache_enabled: false
+  ats_suggestions:
+    credits: 2
+    word_limit: 1000
+    prompt_version: "v1"
+    cache_enabled: true
+  resume_improvement_tips:
+    credits: 2
+    word_limit: 1000
+    prompt_version: "v1"
+    cache_enabled: true
+  professional_experience_improvement:
+    credits: 2
+    word_limit: 300
+    prompt_version: "v1"
+    cache_enabled: false
+  project_description_improvement:
+    credits: 2
+    word_limit: 250
+    prompt_version: "v1"
+    cache_enabled: false
+  skill_suggestions:
+    credits: 1
+    word_limit: 50 # Note: this refers to number of entries or max words for instructions
+    prompt_version: "v1"
+    cache_enabled: true

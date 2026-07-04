@@ -45,6 +45,12 @@ Rails.application.routes.draw do
       delete "feature_interests", to: "feature_interests#destroy"
       get "auth/me", to: "current_user#show"
       
+      post "ai/generate", to: "ai#generate"
+      get "ai/history", to: "ai#history"
+      get "ai/versions", to: "ai#versions"
+      get "ai/versions/:id", to: "ai#show_version"
+      post "ai/versions/:id/restore", to: "ai#restore_version"
+      
       resources :verifications, only: [:create] do
         collection do
           post :verify
