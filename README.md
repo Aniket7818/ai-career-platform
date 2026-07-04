@@ -207,17 +207,38 @@ The application requires specific environment variables to function correctly. *
 
 ## 📸 Screenshots
 
-<details>
-<summary><b>View Screenshots</b></summary>
-<br>
+<table>
+<tr>
+<td align="center">
+<b>Dashboard</b><br>
+<img src="docs/screenshots/dashboard.png" width="450">
+</td>
 
-- **Dashboard:** `![Dashboard](/docs/screenshots/dashboard.png)`
-- **Resume Builder:** `![Resume Builder](/docs/screenshots/resume-builder.png)`
-- **Interview Prep:** `![Interview Prep](/docs/screenshots/interview.png)`
-- **Settings & Billing:** `![Settings](/docs/screenshots/settings.png)`
-- **Admin Panel:** `![Admin Panel](/docs/screenshots/admin.png)`
+<td align="center">
+<b>Resume Builder</b><br>
+<img src="docs/screenshots/resume-builder.png" width="450">
+</td>
+</tr>
 
-</details>
+<tr>
+<td align="center">
+<b>Interview Preparation</b><br>
+<img src="docs/screenshots/interview.png" width="450">
+</td>
+
+<td align="center">
+<b>Settings</b><br>
+<img src="docs/screenshots/settings.png" width="450">
+</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+<b>Admin Panel</b><br>
+<img src="docs/screenshots/admin.png" width="700">
+</td>
+</tr>
+</table>
 
 ---
 
