@@ -299,7 +299,7 @@ Contributions are welcome! Please read the `CONTRIBUTING.md` (if available) or f
 *Full Stack Developer*
 
 - [GitHub](https://github.com/Aniket7818)
-- [LinkedIn](#) *(Add link here)*
+- [LinkedIn](https://www.linkedin.com/in/aniket-yadav05/)
 
 <hr/>
 <div align="center">
