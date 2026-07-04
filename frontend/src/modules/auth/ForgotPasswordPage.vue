@@ -9,14 +9,7 @@
 
       <!-- Cloudflare Turnstile CAPTCHA -->
       <div>
-        <div
-          id="forgot-turnstile"
-          class="cf-turnstile"
-          :data-sitekey="turnstileSiteKey"
-          data-callback="onForgotTurnstileSuccess"
-          data-expired-callback="onForgotTurnstileExpired"
-          data-theme="light"
-        />
+        <div id="forgot-turnstile"></div>
         <p v-if="captchaError" class="mt-1 text-xs text-red-500">{{ captchaError }}</p>
       </div>
 
@@ -46,32 +39,44 @@ const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
 const turnstileToken   = ref('')
 const captchaError     = ref('')
 
-// Expose callbacks on window so Turnstile script can call them.
-window.onForgotTurnstileSuccess = (token) => {
-  turnstileToken.value = token
-  captchaError.value   = ''
-}
-window.onForgotTurnstileExpired = () => {
-  turnstileToken.value = ''
-  captchaError.value   = 'CAPTCHA expired — please solve it again.'
-}
+let turnstileInterval = null
 
 // Inject the Turnstile script once if it isn't already present.
 onMounted(() => {
   if (!document.getElementById('cf-turnstile-script')) {
     const script = document.createElement('script')
     script.id  = 'cf-turnstile-script'
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
     script.async = true
     script.defer = true
     document.head.appendChild(script)
   }
+
+  // Explicitly render widget
+  turnstileInterval = setInterval(() => {
+    if (window.turnstile && document.getElementById('forgot-turnstile')) {
+      clearInterval(turnstileInterval)
+      if (document.getElementById('forgot-turnstile').childElementCount === 0) {
+        window.turnstile.render('#forgot-turnstile', {
+          sitekey: turnstileSiteKey,
+          callback: (token) => {
+            turnstileToken.value = token
+            captchaError.value   = ''
+          },
+          'expired-callback': () => {
+            turnstileToken.value = ''
+            captchaError.value   = 'CAPTCHA expired — please solve it again.'
+          },
+          theme: 'light'
+        })
+      }
+    }
+  }, 100)
 })
 
-// Clean up window callbacks when component unmounts.
+// Clean up interval when component unmounts.
 onBeforeUnmount(() => {
-  delete window.onForgotTurnstileSuccess
-  delete window.onForgotTurnstileExpired
+  if (turnstileInterval) clearInterval(turnstileInterval)
 })
 
 // ── Submit ───────────────────────────────────────────────────────────────────

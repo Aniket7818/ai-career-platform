@@ -32,9 +32,9 @@
       </div>
     </section>
 
-    <section class="relative flex items-center justify-center overflow-hidden p-6 sm:p-10">
-      <div class="absolute right-6 top-6 lg:hidden">
-        <RouterLink class="text-sm font-semibold text-brand" to="/">{{ t('brand') }}</RouterLink>
+    <section class="relative flex items-center justify-center overflow-hidden p-6 pt-20 sm:p-10 lg:pt-10">
+      <div class="absolute left-6 top-6 lg:hidden">
+        <RouterLink class="text-lg font-bold text-brand" to="/">{{ t('brand') }}</RouterLink>
       </div>
 
       <div class="w-full max-w-md overflow-hidden">
@@ -63,9 +63,9 @@
               <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               Super Admin Dashboard
             </RouterLink>
-            <div class="flex items-center justify-between text-sm">
-              <RouterLink class="text-brand" to="/forgot-password">{{ t('auth.forgot') }}</RouterLink>
-              <button type="button" class="font-semibold text-brand" @click="goSignup">{{ t('auth.noAccount') }}</button>
+            <div class="flex flex-wrap items-center justify-between gap-4 text-sm mt-2">
+              <RouterLink class="text-brand hover:underline" to="/forgot-password">{{ t('auth.forgot') }}</RouterLink>
+              <button type="button" class="font-semibold text-brand hover:underline" @click="goSignup">{{ t('auth.noAccount') }}</button>
             </div>
           </form>
 
@@ -92,14 +92,7 @@
 
             <!-- Cloudflare Turnstile CAPTCHA (signup only) -->
             <div>
-              <div
-                id="signup-turnstile"
-                class="cf-turnstile"
-                :data-sitekey="turnstileSiteKey"
-                data-callback="onSignupTurnstileSuccess"
-                data-expired-callback="onSignupTurnstileExpired"
-                data-theme="light"
-              />
+              <div id="signup-turnstile"></div>
               <p v-if="signupCaptchaError" class="mt-1 text-xs text-red-500">{{ signupCaptchaError }}</p>
             </div>
 
@@ -142,31 +135,46 @@ const turnstileSiteKey      = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
 const signupTurnstileToken  = ref('')
 const signupCaptchaError    = ref('')
 
-window.onSignupTurnstileSuccess = (token) => {
-  signupTurnstileToken.value = token
-  signupCaptchaError.value   = ''
-}
-window.onSignupTurnstileExpired = () => {
-  signupTurnstileToken.value = ''
-  signupCaptchaError.value   = 'CAPTCHA expired — please solve it again.'
-}
+let turnstileInterval = null
 
 onMounted(() => {
   store.dispatch('auth/fetchMe')
+  
   // Inject Turnstile script once
   if (!document.getElementById('cf-turnstile-script')) {
     const script = document.createElement('script')
     script.id    = 'cf-turnstile-script'
-    script.src   = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.src   = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
     script.async = true
     script.defer = true
     document.head.appendChild(script)
   }
+
+  // Explicitly render widget
+  turnstileInterval = setInterval(() => {
+    if (window.turnstile && document.getElementById('signup-turnstile')) {
+      clearInterval(turnstileInterval)
+      // Check if it's already rendered to avoid errors
+      if (document.getElementById('signup-turnstile').childElementCount === 0) {
+        window.turnstile.render('#signup-turnstile', {
+          sitekey: turnstileSiteKey,
+          callback: (token) => {
+            signupTurnstileToken.value = token
+            signupCaptchaError.value   = ''
+          },
+          'expired-callback': () => {
+            signupTurnstileToken.value = ''
+            signupCaptchaError.value   = 'CAPTCHA expired — please solve it again.'
+          },
+          theme: 'light'
+        })
+      }
+    }
+  }, 100)
 })
 
 onBeforeUnmount(() => {
-  delete window.onSignupTurnstileSuccess
-  delete window.onSignupTurnstileExpired
+  if (turnstileInterval) clearInterval(turnstileInterval)
 })
 // ─────────────────────────────────────────────────────────────────────────────
 
