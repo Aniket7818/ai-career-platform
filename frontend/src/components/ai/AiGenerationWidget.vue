@@ -222,7 +222,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import axios from 'axios'
+import http from '../../services/http'
 import { useStore } from 'vuex'
 
 const props = defineProps({
@@ -310,7 +310,7 @@ const startCountdown = (seconds) => {
 
 const loadHistory = async () => {
  try {
- const res = await axios.get('/api/v1/ai/history', {
+ const res = await http.get('/ai/history', {
  params: { resume_id: props.resumeId, feature: props.feature }
  })
  if (res.data.success) {
@@ -371,7 +371,7 @@ const generate = async (forceNew = false) => {
  }
 
  try {
- const res = await axios.post('/api/v1/ai/generate', payload, {
+ const res = await http.post('/ai/generate', payload, {
  signal: abortController.signal
  // No 'timeout' here — we manage it via AbortController above
  })
@@ -389,7 +389,7 @@ const generate = async (forceNew = false) => {
  } catch (err) {
  // Aborted by our own timeout timer — error already set above
  if (err?.name === 'AbortError' || err?.name === 'CanceledError') return
- if (axios.isCancel(err)) return
+ if (http.isCancel && http.isCancel(err) || err.code === 'ERR_CANCELED') return
 
  const status = err.response?.status
  const data = err.response?.data || {}
@@ -443,7 +443,7 @@ const restoreVersion = async (versionId) => {
  error.value = ''
  previewItem.value = null
  try {
- const res = await axios.post(`/api/v1/ai/versions/${versionId}/restore`)
+ const res = await http.post(`/ai/versions/${versionId}/restore`)
  if (res.data.success) {
  result.value = res.data.response
  // find metadata

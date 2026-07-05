@@ -202,7 +202,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import http from '../../services/http'
 
 const data = ref(null)
 const loading = ref(true)
@@ -217,7 +217,7 @@ const selectedRequest = ref(null)
 const loadData = async () => {
  loading.value = true
  try {
- const res = await axios.get('/api/v1/admin/ai_analytics')
+ const res = await http.get('/admin/ai_analytics')
  if (res.data.success) {
  data.value = res.data.analytics
  }
@@ -231,7 +231,7 @@ const loadData = async () => {
 const loadRequests = async () => {
  loadingRequests.value = true
  try {
- const res = await axios.get('/api/v1/admin/ai_analytics/requests', {
+ const res = await http.get('/admin/ai_analytics/requests', {
  params: { page: currentPage.value, search: searchQuery.value }
  })
  if (res.data.success) {
@@ -254,7 +254,7 @@ const changePage = (page) => {
 
 const viewDetails = async (id) => {
  try {
- const res = await axios.get(`/api/v1/admin/ai_analytics/requests/${id}`)
+ const res = await http.get(`/admin/ai_analytics/requests/${id}`)
  if (res.data.success) {
  selectedRequest.value = res.data.request
  }
