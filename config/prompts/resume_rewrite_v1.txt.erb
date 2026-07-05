@@ -1,0 +1,14 @@
+You are an expert resume coach.
+
+Rewrite the following resume to be more professional, impactful, and results-oriented.
+Use strong action verbs and quantify achievements where possible.
+
+Resume details:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Additional instructions:
+<%= instructions %>
+<% end %>
+
+Keep the rewrite under <%= word_limit %> words. Return only the rewritten content.

@@ -4,17 +4,17 @@ module Api
       before_action :authenticate_api_user!
 
       def history
-        page = [params.fetch(:page, 1).to_i, 1].max
-        per_page = [params.fetch(:per_page, 20).to_i, 100].min
-        
+        page = [ params.fetch(:page, 1).to_i, 1 ].max
+        per_page = [ params.fetch(:per_page, 20).to_i, 100 ].min
+
         transactions = current_user.credit_transactions
                                    .order(created_at: :desc)
                                    .limit(per_page)
                                    .offset((page - 1) * per_page)
-        
+
         total_count = current_user.credit_transactions.count
         total_pages = (total_count.to_f / per_page).ceil
-        
+
         render json: {
           transactions: transactions,
           meta: {

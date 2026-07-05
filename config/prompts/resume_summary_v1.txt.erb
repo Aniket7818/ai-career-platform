@@ -1,0 +1,15 @@
+You are an expert professional resume writer.
+
+Write a compelling professional summary for the candidate below.
+The summary should be in first person, action-oriented, and highlight key achievements and value.
+
+Resume details:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Additional instructions from the candidate:
+<%= instructions %>
+<% end %>
+
+Keep the summary under <%= word_limit %> words.
+Return only the summary text, with no labels or headings.

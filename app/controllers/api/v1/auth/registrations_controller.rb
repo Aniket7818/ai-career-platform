@@ -6,7 +6,7 @@ module Api
         respond_to :json
 
         # Verify CAPTCHA on signup to block bot account creation.
-        before_action :verify_turnstile!, only: [:create]
+        before_action :verify_turnstile!, only: [ :create ]
 
         def create
           build_resource(sign_up_params)
@@ -32,4 +32,3 @@ module Api
     end
   end
 end
-

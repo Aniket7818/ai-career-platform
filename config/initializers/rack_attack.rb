@@ -10,7 +10,7 @@ class Rack::Attack
   # Localhost is exempt in development UNLESS you set RACK_ATTACK_DEV_TEST=true
   # in your .env to verify throttling locally (flip it back off when done).
   safelist("allow-localhost") do |req|
-    is_localhost = ["127.0.0.1", "::1"].include?(req.ip)
+    is_localhost = [ "127.0.0.1", "::1" ].include?(req.ip)
     dev_test_mode = ENV["RACK_ATTACK_DEV_TEST"] == "true"
     is_localhost && !Rails.env.production? && !dev_test_mode
   end
@@ -21,8 +21,8 @@ class Rack::Attack
   def self.client_ip(req)
     # The first IP in X-Forwarded-For is the true client IP in most setups.
     forwarded = req.env["HTTP_X_FORWARDED_FOR"]
-    return forwarded.split(',').first.strip if forwarded.present?
-    
+    return forwarded.split(",").first.strip if forwarded.present?
+
     req.ip
   end
 
@@ -69,6 +69,48 @@ class Rack::Attack
   end
 
   # ════════════════════════════════════════════════════════════════════════════
+  # AI ENDPOINTS
+  #
+  #   Generate (Expensive) — POST /api/v1/ai/generate
+  #     • Burst: 3 requests per 10s per user
+  #     • Sustained: 5 requests per 60s per user
+  #     • IP ceiling: 20 requests per 60s
+  #
+  #   Read/Restore (Cheap) — GET /api/v1/ai/history, GET /versions, POST /restore
+  #     • History/Preview: 60 requests per 60s per user
+  #     • Restore: 20 requests per 60s per user
+  # ════════════════════════════════════════════════════════════════════════════
+  # Helper: cheaply extract user_id from Warden without full controller stack.
+  def self.ai_user_key(req)
+    uid = req.env.dig("warden", :user, :id) ||
+          req.session&.dig("warden.user.user.key", 0, 0) rescue nil
+    uid ? "user:#{uid}" : "ip:#{client_ip(req)}"
+  end
+
+  # -- Generate --
+  throttle("ai/generate/user/burst", limit: 3, period: 10.seconds) do |req|
+    Rack::Attack.ai_user_key(req) if req.path == "/api/v1/ai/generate" && req.post?
+  end
+
+  throttle("ai/generate/user/minute", limit: 5, period: 60.seconds) do |req|
+    Rack::Attack.ai_user_key(req) if req.path == "/api/v1/ai/generate" && req.post?
+  end
+
+  throttle("ai/generate/ip/minute", limit: 20, period: 60.seconds) do |req|
+    client_ip(req) if req.path == "/api/v1/ai/generate" && req.post?
+  end
+
+  # -- History & Preview --
+  throttle("ai/history/user/minute", limit: 60, period: 60.seconds) do |req|
+    Rack::Attack.ai_user_key(req) if (req.path == "/api/v1/ai/history" || req.path == "/api/v1/ai/versions") && req.get?
+  end
+
+  # -- Restore --
+  throttle("ai/restore/user/minute", limit: 20, period: 60.seconds) do |req|
+    Rack::Attack.ai_user_key(req) if req.path.match?(%r{^/api/v1/ai/versions/\d+/restore$}) && req.post?
+  end
+
+  # ════════════════════════════════════════════════════════════════════════════
   # GENERAL API  — catch any endpoint not covered above
   #   • 300 requests per IP per 5 min
   # ════════════════════════════════════════════════════════════════════════════
@@ -78,20 +120,22 @@ class Rack::Attack
 
   # ── Throttled response: always return JSON, never HTML ───────────────────────
   self.throttled_responder = lambda do |request|
-    match_data = request.env["rack.attack.match_data"]
-    retry_after = (match_data[:period] - match_data[:count].to_i).clamp(1, match_data[:period]).to_s
+    match_data = request.env["rack.attack.match_data"] || {}
+    now = match_data[:epoch_time] || Time.now.to_i
+
+    retry_after = match_data[:period] ? (match_data[:period] - (now % match_data[:period])).to_s : "60"
     [
       429,
       {
         "Content-Type"  => "application/json",
         "Retry-After"   => retry_after
       },
-      ['{"error":"Too many requests. Please slow down and try again later.","retry_after":' + retry_after + '}']
+      [ '{"error":"Too many requests. Please slow down and try again later.","retry_after":' + retry_after + "}" ]
     ]
   end
 
   # ── Blocklisted response (for future use) ────────────────────────────────────
   self.blocklisted_responder = lambda do |request|
-    [403, { "Content-Type" => "application/json" }, ['{"error":"Forbidden."}']]
+    [ 403, { "Content-Type" => "application/json" }, [ '{"error":"Forbidden."}' ] ]
   end
 end

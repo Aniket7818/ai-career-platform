@@ -16,10 +16,10 @@ module Api
             inactive_reason = resource.inactive_message
             sign_out(resource_name)
             error_message = case inactive_reason
-                            when :suspended then "Your account has been suspended. Please contact support."
-                            when :unconfirmed then "Please verify your email address before logging in."
-                            else I18n.t("devise.failure.#{inactive_reason}", default: "Your account is not active.")
-                            end
+            when :suspended then "Your account has been suspended. Please contact support."
+            when :unconfirmed then "Please verify your email address before logging in."
+            else I18n.t("devise.failure.#{inactive_reason}", default: "Your account is not active.")
+            end
             return render json: { error: error_message }, status: :forbidden
           end
 

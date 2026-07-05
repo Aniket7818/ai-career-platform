@@ -5,7 +5,7 @@ class InterviewQuestionLoader
 
     file_content = File.read(file_path)
     parsed = JSON.parse(file_content)
-    
+
     if parsed.is_a?(Hash) && parsed["questions"]
       parsed["questions"]
     elsif parsed.is_a?(Array)

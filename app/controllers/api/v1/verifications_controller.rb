@@ -1,7 +1,7 @@
 module Api
   module V1
     class VerificationsController < ApplicationController
-      before_action :authenticate_user!, only: [:create]
+      before_action :authenticate_user!, only: [ :create ]
 
       # POST /api/v1/verifications
       def create
@@ -24,7 +24,7 @@ module Api
         last_log = current_user.email_verification_logs.order(sent_at: :desc).first
         if last_log && last_log.sent_at >= 5.minutes.ago
           time_left = (last_log.sent_at + 5.minutes - now).to_i
-          return render json: { 
+          return render json: {
             error: "Verification email has already been sent. Please retry after #{time_left / 60}m #{time_left % 60}s.",
             retry_after: time_left
           }, status: :too_many_requests

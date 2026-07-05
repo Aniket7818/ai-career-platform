@@ -12,7 +12,7 @@ module Api
       def show
         questions = InterviewQuestionLoader.load_subject(params[:subject])
         if questions.any?
-          render json: { 
+          render json: {
             subject: params[:subject].capitalize,
             questions: questions.map { |q| q.slice("id", "title", "difficulty", "topic") }
           }

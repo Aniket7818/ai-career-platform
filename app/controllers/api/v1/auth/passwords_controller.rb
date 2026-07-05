@@ -6,19 +6,19 @@ module Api
         respond_to :json
 
         # Verify CAPTCHA before attempting password reset to stop bots.
-        before_action :verify_turnstile!, only: [:create]
+        before_action :verify_turnstile!, only: [ :create ]
 
         def create
           email = params[:email] || params.dig(:user, :email)
           user = User.find_by(email: email.to_s.downcase)
-          
+
           if user
             result = handle_user_reset_request(user)
             if result == :limit_exceeded
               return render json: { error: "You have reached the daily password reset limit. Please try again tomorrow." }, status: :too_many_requests
             end
           end
-          
+
           render json: { message: "If an account exists, a reset email has been sent." }, status: :ok
         end
 
@@ -67,13 +67,13 @@ module Api
 
           user.increment!(:reset_emails_sent_count)
           user.update!(last_reset_request_at: Time.current)
-          
+
           raw_token, hashed_token = Devise.token_generator.generate(User, :reset_password_token)
           user.update!(
             reset_password_token: hashed_token,
             reset_password_sent_at: Time.now.utc
           )
-          
+
           ResendService.send_password_reset_email(user, raw_token)
         end
       end

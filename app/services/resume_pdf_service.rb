@@ -5,23 +5,23 @@ class ResumePdfService
   end
 
   def generate_pdf
-    require 'ferrum'
+    require "ferrum"
 
     # The frontend URL for the print view
-    frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:5173')
+    frontend_url = ENV.fetch("FRONTEND_URL", "http://localhost:5173")
     target_url = "#{frontend_url}/resumes/#{@resume_id}/print"
 
     # Start Ferrum browser
     browser = Ferrum::Browser.new(
       headless: true,
-      window_size: [1024, 768],
+      window_size: [ 1024, 768 ],
       browser_options: {
         'no-sandbox': nil,
         'disable-setuid-sandbox': nil,
         'disable-dev-shm-usage': nil
       }
     )
-    
+
     # Force the browser to send the user's session cookie for all requests
     browser.headers.add({ "Cookie" => @cookie_header }) if @cookie_header
 

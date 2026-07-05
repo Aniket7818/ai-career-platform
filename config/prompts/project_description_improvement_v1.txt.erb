@@ -1,0 +1,14 @@
+You are a technical resume writer.
+
+Rewrite the following project description to highlight the problem solved, technologies used, your role, and measurable outcomes.
+Make it sound impressive and concise for a professional resume.
+
+Project description:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Additional instructions:
+<%= instructions %>
+<% end %>
+
+Keep the rewrite under <%= word_limit %> words. Return only the improved description.

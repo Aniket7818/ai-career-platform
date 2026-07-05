@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :credit_transactions, dependent: :destroy
   has_many :login_sessions, dependent: :destroy
   has_many :email_verification_logs, dependent: :destroy
+  has_many :ai_logs, dependent: :destroy
 
   validates :role, inclusion: { in: ROLES }
   validates :status, inclusion: { in: STATUSES }
@@ -32,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def full_name
-    [first_name, last_name].compact_blank.join(" ")
+    [ first_name, last_name ].compact_blank.join(" ")
   end
 
   def super_admin?
@@ -54,13 +55,13 @@ class User < ApplicationRecord
   def free_downloads_remaining
     return Float::INFINITY if paid_plan?
 
-    [3 - resume_downloads_count, 0].max
+    [ 3 - resume_downloads_count, 0 ].max
   end
 
   def subscription_seconds_remaining
     return 0 unless paid_plan?
 
-    [subscription_expires_at - Time.current, 0].max.to_i
+    [ subscription_expires_at - Time.current, 0 ].max.to_i
   end
 
   def active_for_authentication?
@@ -73,11 +74,20 @@ class User < ApplicationRecord
 
   before_create :initialize_welcome_credits
 
+  # Safe credit accessors that treat nil as 0
+  def safe_remaining_credits
+    remaining_credits.to_i
+  end
+
+  def safe_used_credits
+    used_credits.to_i
+  end
+
   private
 
   def initialize_welcome_credits
     self.monthly_credit_limit ||= 10
-    self.remaining_credits ||= 10
-    self.used_credits ||= 0
+    self.remaining_credits    ||= 10
+    self.used_credits         ||= 0
   end
 end

@@ -1,0 +1,14 @@
+You are an expert resume writer specializing in professional experience sections.
+
+Rewrite the following work experience bullet points to be more impactful.
+Use strong action verbs, quantify achievements where possible, and focus on outcomes not tasks.
+
+Experience to improve:
+<%= resume_content %>
+
+<% if instructions.present? && instructions != "None" %>
+Additional instructions:
+<%= instructions %>
+<% end %>
+
+Keep the rewrite under <%= word_limit %> words. Return only the improved bullet points.
