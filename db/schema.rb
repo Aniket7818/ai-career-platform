@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_04_182643) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_04_213206) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_04_182643) do
     t.boolean "cache_hit"
     t.integer "retry_count"
     t.string "failure_reason"
+    t.string "ip_address"
+    t.string "user_agent"
+    t.string "request_id"
+    t.string "provider"
     t.index ["resume_id"], name: "index_ai_logs_on_resume_id"
     t.index ["user_id"], name: "index_ai_logs_on_user_id"
   end

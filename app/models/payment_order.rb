@@ -22,8 +22,8 @@ class PaymentOrder < ApplicationRecord
       update!(status: "paid", activated_at: Time.current)
       cycle = metadata["billing_cycle"] || "monthly"
       expires_in = cycle == "yearly" ? 1.year : 1.month
-      
-      credits = plan == "pro" ? 500 : 150
+
+      credits = { "plus" => 150, "pro" => 500, "team" => 1000 }.fetch(plan, 150)
 
       user.update!(
         subscription_plan: plan,

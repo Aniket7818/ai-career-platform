@@ -2,7 +2,7 @@ module Api
   module V1
     class AiController < ApplicationController
       before_action :authenticate_user!
-      before_action :find_resume, only: [:generate, :history, :versions]
+      before_action :find_resume, only: [ :generate, :history, :versions ]
 
       ALLOWED_FEATURES = %w[
         resume_summary
@@ -18,7 +18,9 @@ module Api
       def generate
         feature      = params[:feature].to_s
         instructions = params[:instructions].to_s
-        force_new    = params[:force_new].in?([true, 'true', '1'])
+        force_new    = params[:force_new].in?([ true, "true", "1" ])
+
+        previous_output = params[:previous_output].to_s
 
         unless ALLOWED_FEATURES.include?(feature)
           return render json: { success: false, error: "Unknown feature: #{feature}" }, status: :unprocessable_entity
@@ -26,7 +28,14 @@ module Api
 
         # Build context: the resume content is the "document" the AI works on
         context = {
-          resume_content: build_resume_text(@resume)
+          resume_content: build_resume_text(@resume),
+          previous_output: previous_output
+        }
+
+        request_meta = {
+          ip:         request.remote_ip,
+          user_agent: request.user_agent,
+          request_id: request.request_id
         }
 
         response_text = AiService.generate(
@@ -35,21 +44,30 @@ module Api
           feature:      feature,
           context:      context,
           instructions: instructions,
-          force_new:    force_new
+          force_new:    force_new,
+          request_meta: request_meta
         )
+
+        # Fetch the latest AiLog to get the metadata
+        latest_log = AiLog.where(user: current_user, resume: @resume, feature: feature, status: "success").order(created_at: :desc).first
 
         # Refresh user credits in response so frontend can update immediately
         current_user.reload
         render json: {
           success:           true,
           response:          response_text,
-          remaining_credits: current_user.remaining_credits.to_i
+          remaining_credits: current_user.remaining_credits.to_i,
+          metadata:          latest_log&.as_json(only: [ :provider, :model, :prompt_version, :tokens_in, :tokens_out, :estimated_cost, :response_time, :fingerprint, :created_at ])
         }
 
+      rescue AiService::DuplicateRequestError => e
+        render json: { success: false, error: e.message, code: "duplicate_request" }, status: :conflict
+      rescue AiService::RequestTooLargeError => e
+        render json: { success: false, error: e.message, code: "request_too_large" }, status: :payload_too_large
       rescue AiService::ConfigurationError, AiService::InvalidInputError => e
         render json: { success: false, error: e.message }, status: :unprocessable_entity
       rescue AiService::InsufficientCreditsError => e
-        render json: { success: false, error: e.message, remaining_credits: current_user.remaining_credits.to_i }, status: :payment_required
+        render json: { success: false, error: e.message, remaining_credits: current_user.remaining_credits.to_i }, status: :forbidden
       rescue AiService::ApiError => e
         render json: { success: false, error: e.message }, status: :bad_gateway
       rescue => e
@@ -60,20 +78,20 @@ module Api
       # GET /api/v1/ai/history?resume_id=X&feature=Y
       def history
         feature = params[:feature].to_s
-        logs    = AiLog.where(resume: @resume, feature: feature, status: 'success').order(created_at: :desc)
+        logs    = AiLog.where(resume: @resume, feature: feature, status: "success").order(created_at: :desc)
         render json: {
           success: true,
-          history: logs.as_json(only: [:id, :created_at, :credits_used, :response_content, :prompt_version])
+          history: logs.as_json(only: [ :id, :created_at, :credits_used, :response_content, :prompt_version ])
         }
       end
 
       # GET /api/v1/ai/versions?resume_id=X&feature=Y
       def versions
         feature = params[:feature].to_s
-        logs    = AiLog.where(resume: @resume, feature: feature, status: 'success').order(created_at: :desc)
+        logs    = AiLog.where(resume: @resume, feature: feature, status: "success").order(created_at: :desc)
         render json: {
           success:  true,
-          versions: logs.as_json(only: [:id, :created_at, :credits_used, :prompt_version, :response_time])
+          versions: logs.as_json(only: [ :id, :created_at, :credits_used, :prompt_version, :response_time ])
         }
       end
 
@@ -82,7 +100,7 @@ module Api
         log = AiLog.find_by!(id: params[:id], user: current_user)
         render json: {
           success: true,
-          version: log.as_json(only: [:id, :created_at, :response_content, :request_prompt, :feature])
+          version: log.as_json(only: [ :id, :created_at, :response_content, :request_prompt, :feature ])
         }
       end
 
@@ -117,28 +135,28 @@ module Api
         c = resume.content || {}
         lines = []
 
-        p = c['personal'] || {}
-        lines << "Name: #{p['fullName']}" if p['fullName'].present?
-        lines << "Headline: #{p['headline']}" if p['headline'].present?
-        lines << "Summary: #{p['summary']}" if p['summary'].present?
+        p = c["personal"] || {}
+        lines << "Name: #{p['fullName']}" if p["fullName"].present?
+        lines << "Headline: #{p['headline']}" if p["headline"].present?
+        lines << "Summary: #{p['summary']}" if p["summary"].present?
 
-        (c['experiences'] || []).each do |e|
+        (c["experiences"] || []).each do |e|
           lines << "Experience: #{e['role']} at #{e['company']} (#{e['startDate']}–#{e['endDate']})"
-          lines << e['description'] if e['description'].present?
+          lines << e["description"] if e["description"].present?
         end
 
-        (c['educations'] || []).each do |e|
+        (c["educations"] || []).each do |e|
           lines << "Education: #{e['degree']} at #{e['institution']} (#{e['year']})"
         end
 
-        (c['projects'] || []).each do |pr|
+        (c["projects"] || []).each do |pr|
           lines << "Project: #{pr['name']} – #{pr['description']}"
         end
 
-        skills = c.dig('skills', 'skillList')
+        skills = c.dig("skills", "skillList")
         lines << "Skills: #{skills}" if skills.present?
 
-        (c['certifications'] || []).each do |cert|
+        (c["certifications"] || []).each do |cert|
           lines << "Certification: #{cert['name']} – #{cert['issuer']}"
         end
 

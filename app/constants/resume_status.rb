@@ -3,5 +3,5 @@ module ResumeStatus
   PUBLISHED = "published"
   ARCHIVED = "archived"
 
-  ALL = [DRAFT, PUBLISHED, ARCHIVED].freeze
+  ALL = [ DRAFT, PUBLISHED, ARCHIVED ].freeze
 end

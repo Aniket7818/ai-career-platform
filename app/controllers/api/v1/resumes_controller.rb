@@ -66,7 +66,7 @@ module Api
         end
 
         # We pass the user's raw Cookie header to Ferrum so the headless browser is authenticated
-        service = ResumePdfService.new(@resume.id, request.headers['Cookie'])
+        service = ResumePdfService.new(@resume.id, request.headers["Cookie"])
         pdf_data = service.generate_pdf
 
         # Update download counts
@@ -76,7 +76,7 @@ module Api
           current_user.increment!(:resume_downloads_count)
         end
 
-        send_data pdf_data, filename: "resume_#{@resume.id}.pdf", type: 'application/pdf', disposition: 'attachment'
+        send_data pdf_data, filename: "resume_#{@resume.id}.pdf", type: "application/pdf", disposition: "attachment"
       rescue StandardError => e
         render json: { error: "Failed to generate PDF: #{e.message}" }, status: :internal_server_error
       end

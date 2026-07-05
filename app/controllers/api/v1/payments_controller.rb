@@ -36,7 +36,7 @@ module Api
         end
 
         order.activate!
-        
+
         # Create billing history record
         billing_history = current_user.billing_histories.create!(
           plan_name: order.plan,
@@ -67,7 +67,15 @@ module Api
           action: "cancelled_subscription",
           details: "User cancelled their #{current_user.subscription_plan} plan"
         )
-        current_user.update!(subscription_plan: 'free', subscription_expires_at: nil, razorpay_subscription_id: nil)
+        current_user.update!(
+          subscription_plan:       "free",
+          subscription_expires_at: nil,
+          razorpay_subscription_id: nil,
+          monthly_credit_limit:    10,
+          remaining_credits:       10,
+          used_credits:            0,
+          credit_reset_date:       nil
+        )
         render json: { user: UserSerializer.new(current_user).as_json, message: "Subscription cancelled." }
       end
 

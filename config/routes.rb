@@ -40,18 +40,21 @@ Rails.application.routes.draw do
       delete "admin/users/:id", to: "admin#destroy_user"
       patch "admin/settings", to: "admin#update_settings"
       get "admin/export/:kind", to: "admin#export"
+      get "admin/ai_analytics", to: "admin_ai_analytics#show"
+      get "admin/ai_analytics/requests", to: "admin_ai_analytics#requests"
+      get "admin/ai_analytics/requests/:id", to: "admin_ai_analytics#request_details"
       get "coming_soon", to: "coming_soon#show"
-      resources :feature_interests, only: [:create]
+      resources :feature_interests, only: [ :create ]
       delete "feature_interests", to: "feature_interests#destroy"
       get "auth/me", to: "current_user#show"
-      
+
       post "ai/generate", to: "ai#generate"
       get "ai/history", to: "ai#history"
       get "ai/versions", to: "ai#versions"
       get "ai/versions/:id", to: "ai#show_version"
       post "ai/versions/:id/restore", to: "ai#restore_version"
-      
-      resources :verifications, only: [:create] do
+
+      resources :verifications, only: [ :create ] do
         collection do
           post :verify
         end

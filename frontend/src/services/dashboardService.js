@@ -1,5 +1,5 @@
 import http from './http'
 
 export const dashboardService = {
-  show: () => http.get('/dashboard')
+ show: () => http.get('/dashboard')
 }

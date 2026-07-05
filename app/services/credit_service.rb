@@ -23,7 +23,7 @@ class CreditService
     User.transaction do
       balance_before = user.remaining_credits.to_i
       balance_after = balance_before - cost
-      
+
       user.update!(
         remaining_credits: balance_after,
         used_credits: user.used_credits.to_i + cost
@@ -34,20 +34,20 @@ class CreditService
         credits_used: cost,
         balance_before: balance_before,
         balance_after: balance_after,
-        action: 'deduct',
+        action: "deduct",
         reference_id: reference_id
       )
     end
   end
 
-  def self.add_credits!(user, amount, feature_name: 'Manual Adjustment', reference_id: nil)
+  def self.add_credits!(user, amount, feature_name: "Manual Adjustment", reference_id: nil)
     User.transaction do
       balance_before = user.remaining_credits.to_i
       balance_after = balance_before + amount
 
       user.update!(
         remaining_credits: balance_after,
-        monthly_credit_limit: [user.monthly_credit_limit.to_i, balance_after].max
+        monthly_credit_limit: [ user.monthly_credit_limit.to_i, balance_after ].max
       )
 
       user.credit_transactions.create!(
@@ -55,7 +55,7 @@ class CreditService
         credits_used: amount,
         balance_before: balance_before,
         balance_after: balance_after,
-        action: 'add',
+        action: "add",
         reference_id: reference_id
       )
     end

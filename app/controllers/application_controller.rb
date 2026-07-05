@@ -28,34 +28,34 @@ class ApplicationController < ActionController::API
     # Bypass for admin / super_admin
     return if current_user.role.in?(%w[admin super_admin])
 
-    plan = current_user.subscription_plan || 'free'
+    plan = current_user.subscription_plan || "free"
     is_paid = current_user.paid_plan?
-    active_plan = is_paid ? plan : 'free'
+    active_plan = is_paid ? plan : "free"
 
     allowed = case feature_key.to_s.underscore.to_sym
-              when :ats, :can_use_ats, :ai_ats_checker
+    when :ats, :can_use_ats, :ai_ats_checker
                 active_plan.in?(%w[plus pro team])
-              when :resume_coach, :can_use_resume_coach, :ai_resume_assistant
+    when :resume_coach, :can_use_resume_coach, :ai_resume_assistant
                 active_plan.in?(%w[plus pro team])
-              when :keywords, :can_use_keywords
+    when :keywords, :can_use_keywords
                 active_plan.in?(%w[plus pro team])
-              when :resume_rewrite, :can_use_resume_rewrite
+    when :resume_rewrite, :can_use_resume_rewrite
                 active_plan.in?(%w[plus pro team])
-              when :cover_letter, :can_use_cover_letter, :ai_cover_letter
+    when :cover_letter, :can_use_cover_letter, :ai_cover_letter
                 active_plan.in?(%w[plus pro team])
-              when :linkedin_review, :can_use_linkedin_review, :linkedin_review
+    when :linkedin_review, :can_use_linkedin_review, :linkedin_review
                 active_plan.in?(%w[plus pro team])
-              when :interview_prep, :can_use_interview_prep, :ai_mock_interviews
+    when :interview_prep, :can_use_interview_prep, :ai_mock_interviews
                 active_plan.in?(%w[pro team])
-              when :career_roadmap, :can_use_career_roadmap, :career_roadmap
+    when :career_roadmap, :can_use_career_roadmap, :career_roadmap
                 active_plan.in?(%w[pro team])
-              when :job_match, :can_use_job_match
+    when :job_match, :can_use_job_match
                 active_plan.in?(%w[pro team])
-              when :advanced_ats, :can_use_advanced_ats
+    when :advanced_ats, :can_use_advanced_ats
                 active_plan.in?(%w[pro team])
-              else
+    else
                 false
-              end
+    end
 
     unless allowed
       render json: { error: "Upgrade required. This feature is not available on your current plan." }, status: :forbidden
@@ -69,12 +69,12 @@ class ApplicationController < ActionController::API
   def render_duplicate_error(exception)
     message = if exception.message.include?("email")
                 I18n.t("api.errors.email_taken")
-              elsif exception.message.include?("username")
+    elsif exception.message.include?("username")
                 I18n.t("api.errors.username_taken")
-              else
+    else
                 I18n.t("api.errors.duplicate_record")
-              end
-    render json: { errors: [message] }, status: :unprocessable_entity
+    end
+    render json: { errors: [ message ] }, status: :unprocessable_entity
   end
 
   def friendly_validation_errors(record)

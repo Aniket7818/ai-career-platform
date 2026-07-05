@@ -41,14 +41,24 @@ module Api
         cycle = params.dig(:user, :billing_cycle)
 
         if attrs["subscription_plan"].present? && attrs["subscription_plan"] != user.subscription_plan
-          if attrs["subscription_plan"] == "free"
+          new_plan = attrs["subscription_plan"]
+          if new_plan == "free"
             attrs["subscription_started_at"] = nil
             attrs["subscription_expires_at"] = nil
             attrs["razorpay_subscription_id"] = nil
+            # Downgrading to free: reset credits to free tier
+            attrs["monthly_credit_limit"] = 10
+            attrs["remaining_credits"]    = 10
+            attrs["used_credits"]         = 0
           else
             attrs["subscription_started_at"] = Time.current
             cycle_val = cycle || "monthly"
             attrs["subscription_expires_at"] = (cycle_val == "yearly" ? 1.year.from_now : 1.month.from_now)
+            # Grant the new plan's full credit allocation immediately
+            new_limit = plan_credit_limit(new_plan)
+            attrs["monthly_credit_limit"] = new_limit
+            attrs["remaining_credits"]    = new_limit
+            attrs["used_credits"]         = 0
           end
         elsif cycle.present? && user.subscription_plan != "free"
           start_date = user.subscription_started_at || Time.current
@@ -58,7 +68,7 @@ module Api
 
         user.assign_attributes(attrs)
         changes = user.changes.except("updated_at")
-        
+
         change_details = changes.map do |k, v|
           if k == "verified_at" && v[0].nil? && v[1].present?
             "verified their account"
@@ -74,7 +84,7 @@ module Api
         end.join(", ")
 
         user.save!
-        
+
         detail_msg = change_details.present? ? "Updated #{user.email}: #{change_details}" : "Updated #{user.email}"
         log!("admin_updated_user", user, detail_msg)
         render json: { user: admin_user_payload(user), audit_logs: audit_logs_payload }
@@ -94,7 +104,7 @@ module Api
         user = User.find(params[:id])
         return render json: { error: "You cannot promote yourself." }, status: :forbidden if user == current_user
         return render json: { error: "Only super admins can promote to super admin." }, status: :forbidden if current_user.role == "admin"
-        
+
         user.update!(role: "super_admin")
         log!("admin_promoted_user", user, "Promoted #{user.email} to super admin")
         render json: { user: admin_user_payload(user), audit_logs: audit_logs_payload }
@@ -128,9 +138,9 @@ module Api
                       end
                     end
                     "Updated Developer Settings: #{changed_keys.join(', ')}"
-                  else
+        else
                     "Updated setting key '#{setting.key}'"
-                  end
+        end
 
         log!("admin_updated_settings", current_user, details)
         render json: { settings: settings_payload, audit_logs: audit_logs_payload }
@@ -162,8 +172,8 @@ module Api
 
       def ai_analytics
         total_requests = AiLog.count
-        successful_requests = AiLog.where(status: 'success').count
-        failed_requests = AiLog.where(status: 'failed').count
+        successful_requests = AiLog.where(status: "success").count
+        failed_requests = AiLog.where(status: "failed").count
         credits_consumed = AiLog.sum(:credits_used)
         estimated_cost = AiLog.sum(:estimated_cost)
         cache_hits = AiLog.where(cache_hit: true).count
@@ -174,7 +184,7 @@ module Api
 
         users_count = User.where(id: AiLog.select(:user_id)).count
         avg_cost_per_user = users_count > 0 ? (estimated_cost / users_count).round(6) : 0
-        
+
         feature_count = AiLog.distinct.count(:feature)
         avg_cost_per_feature = feature_count > 0 ? (estimated_cost / feature_count).round(6) : 0
 
@@ -234,41 +244,41 @@ module Api
       def billing_analytics
         today_start = Time.current.beginning_of_day
         month_start = Time.current.beginning_of_month
-        
+
         # Payment Orders that are successful
-        successful_payments = PaymentOrder.where(status: ["paid", "completed", "active"])
+        successful_payments = PaymentOrder.where(status: [ "paid", "completed", "active" ])
         revenue_today = successful_payments.where("created_at >= ?", today_start).sum(:amount_paise) / 100.0
         revenue_this_month = successful_payments.where("created_at >= ?", month_start).sum(:amount_paise) / 100.0
-        
+
         # Current active paid users
         active_subscriptions = User.where.not(subscription_plan: "free").where("subscription_expires_at > ?", Time.current).count
-        
+
         # MRR / ARR calculation
         plus_users = User.where(subscription_plan: "plus").count
         pro_users = User.where(subscription_plan: "pro").count
         team_users = User.where(subscription_plan: "team").count
         mrr = (plus_users * 99) + (pro_users * 199) + (team_users * 299)
         arr = mrr * 12
-        
+
         # Most popular plan
-        plan_counts = User.where.not(subscription_plan: ["free", nil, ""]).group(:subscription_plan).count
+        plan_counts = User.where.not(subscription_plan: [ "free", nil, "" ]).group(:subscription_plan).count
         most_popular_plan = plan_counts.sort_by { |_, v| -v }.first&.first&.titleize || "None"
-        
+
         # Recent payments
         recent_payments = BillingHistory.order(created_at: :desc).limit(5).map do |bh|
           { id: bh.id, user: bh.user.email, amount: bh.amount, plan: bh.plan_name, status: bh.payment_status, created_at: bh.created_at }
         end
-        
+
         # Failed payments
         failed_payments = PaymentOrder.where(status: "failed").order(created_at: :desc).limit(5).map do |po|
           { id: po.id, user: po.user.email, amount: po.amount_paise / 100.0, plan: po.plan, created_at: po.created_at }
         end
-        
+
         # Top Credit Consumers
         top_consumers = User.order(used_credits: :desc).limit(5).map do |u|
           { email: u.email, used_credits: u.used_credits.to_i, total_credits: u.monthly_credit_limit.to_i }
         end
-        
+
         # Revenue Graph (last 7 days)
         revenue_graph = (6.downto(0)).map do |i|
           date = i.days.ago.to_date
@@ -389,14 +399,25 @@ module Api
         params.require(:user).permit(:first_name, :last_name, :role, :status, :subscription_plan, :verified_at)
       end
 
+      # Returns the correct monthly AI credit limit for a given plan name.
+      # Single source of truth — keep in sync with CreditResetService#plan_limit and PricingController.
+      def plan_credit_limit(plan)
+        case plan.to_s
+        when "plus" then 150
+        when "pro"  then 500
+        when "team" then 1000
+        else 10
+        end
+      end
+
       def paginated_payload(scope, page_param)
-        page = [page_param.to_i, 1].max
+        page = [ page_param.to_i, 1 ].max
         total = scope.count
-        { page: page, per_page: 10, total: total, total_pages: [(total / 10.0).ceil, 1].max }
+        { page: page, per_page: 10, total: total, total_pages: [ (total / 10.0).ceil, 1 ].max }
       end
 
       def page_offset(page_param)
-        ([page_param.to_i, 1].max - 1) * 10
+        ([ page_param.to_i, 1 ].max - 1) * 10
       end
 
       def export_rows(kind)

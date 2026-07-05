@@ -1,32 +1,32 @@
 <template>
-  <div class="pointer-events-none fixed left-4 right-4 top-4 z-[100] flex flex-col gap-3 sm:left-auto sm:right-5 sm:top-5 sm:max-w-sm">
-    <TransitionGroup name="toast">
-      <div
-        v-for="toast in toasts"
-        :key="toast.id"
-        class="pointer-events-auto overflow-hidden rounded-2xl border bg-white shadow-panel"
-        :class="borderClass(toast.type)"
-      >
-        <div class="flex items-start gap-3 p-4">
-          <span class="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl" :class="iconWrapClass(toast.type)">
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path v-if="toast.type === 'success'" d="M20 6L9 17l-5-5" />
-              <path v-else-if="toast.type === 'error'" d="M18 6L6 18M6 6l12 12" />
-              <path v-else d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <div class="min-w-0 flex-1">
-            <p class="text-sm font-semibold text-ink">{{ toast.title }}</p>
-            <p v-if="toast.message" class="mt-0.5 text-sm text-slate-500">{{ toast.message }}</p>
-          </div>
-          <button class="text-slate-400 hover:text-ink" @click="remove(toast.id)">×</button>
-        </div>
-        <div class="h-1 bg-slate-100">
-          <div class="h-full origin-left" :class="barClass(toast.type)" :style="barStyle(toast)" />
-        </div>
-      </div>
-    </TransitionGroup>
-  </div>
+ <div class="pointer-events-none fixed left-4 right-4 top-4 z-[100] flex flex-col gap-3 sm:left-auto sm:right-5 sm:top-5 sm:max-w-sm">
+ <TransitionGroup name="toast">
+ <div
+ v-for="toast in toasts"
+ :key="toast.id"
+ class="pointer-events-auto overflow-hidden rounded-2xl border bg-surface shadow-panel"
+ :class="borderClass(toast.type)"
+ >
+ <div class="flex items-start gap-3 p-4">
+ <span class="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl" :class="iconWrapClass(toast.type)">
+ <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+ <path v-if="toast.type === 'success'" d="M20 6L9 17l-5-5" />
+ <path v-else-if="toast.type === 'error'" d="M18 6L6 18M6 6l12 12" />
+ <path v-else d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+ </svg>
+ </span>
+ <div class="min-w-0 flex-1">
+ <p class="text-sm font-semibold text-txt-primary">{{ toast.title }}</p>
+ <p v-if="toast.message" class="mt-0.5 text-sm text-txt-muted">{{ toast.message }}</p>
+ </div>
+ <button class="text-txt-disabled hover:text-txt-primary" @click="remove(toast.id)">×</button>
+ </div>
+ <div class="h-1 bg-surface-hover">
+ <div class="h-full origin-left" :class="barClass(toast.type)" :style="barStyle(toast)" />
+ </div>
+ </div>
+ </TransitionGroup>
+ </div>
 </template>
 
 <script setup>
@@ -44,36 +44,36 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
 const remove = (id) => store.commit('toast/remove', id)
 
 const borderClass = (type) => ({
-  success: 'border-emerald-200',
-  error: 'border-red-200',
-  info: 'border-brand/30'
-}[type] || 'border-slate-200')
+ success: 'border-emerald-200',
+ error: 'border-red-200',
+ info: 'border-brand/30'
+}[type] || 'border-border')
 
 const iconWrapClass = (type) => ({
-  success: 'bg-emerald-500/15 text-emerald-600',
-  error: 'bg-red-500/15 text-red-600',
-  info: 'bg-brand/15 text-brand'
-}[type] || 'bg-slate-100 text-slate-600')
+ success: 'bg-emerald-500/15 text-emerald-600',
+ error: 'bg-red-500/15 text-red-600',
+ info: 'bg-brand/15 text-brand'
+}[type] || 'bg-surface-hover text-txt-secondary')
 
 const barClass = (type) => ({
-  success: 'bg-emerald-500',
-  error: 'bg-red-500',
-  info: 'bg-brand'
+ success: 'bg-emerald-500',
+ error: 'bg-red-500',
+ info: 'bg-brand'
 }[type] || 'bg-brand')
 
 const barStyle = (toast) => {
-  const elapsed = now.value - toast.startedAt
-  const remaining = Math.max(0, 1 - elapsed / toast.duration)
-  return { transform: `scaleX(${remaining})`, transition: 'transform 50ms linear' }
+ const elapsed = now.value - toast.startedAt
+ const remaining = Math.max(0, 1 - elapsed / toast.duration)
+ return { transform: `scaleX(${remaining})`, transition: 'transform 50ms linear' }
 }
 
 watch(toasts, (items) => {
-  items.forEach((toast) => {
-    if (!toast._scheduled) {
-      toast._scheduled = true
-      setTimeout(() => store.commit('toast/remove', toast.id), toast.duration)
-    }
-  })
+ items.forEach((toast) => {
+ if (!toast._scheduled) {
+ toast._scheduled = true
+ setTimeout(() => store.commit('toast/remove', toast.id), toast.duration)
+ }
+ })
 }, { deep: true })
 </script>
 

@@ -33,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def full_name
-    [first_name, last_name].compact_blank.join(" ")
+    [ first_name, last_name ].compact_blank.join(" ")
   end
 
   def super_admin?
@@ -55,13 +55,13 @@ class User < ApplicationRecord
   def free_downloads_remaining
     return Float::INFINITY if paid_plan?
 
-    [3 - resume_downloads_count, 0].max
+    [ 3 - resume_downloads_count, 0 ].max
   end
 
   def subscription_seconds_remaining
     return 0 unless paid_plan?
 
-    [subscription_expires_at - Time.current, 0].max.to_i
+    [ subscription_expires_at - Time.current, 0 ].max.to_i
   end
 
   def active_for_authentication?
@@ -86,8 +86,8 @@ class User < ApplicationRecord
   private
 
   def initialize_welcome_credits
-    self.monthly_credit_limit ||= 50
-    self.remaining_credits    ||= 50
+    self.monthly_credit_limit ||= 10
+    self.remaining_credits    ||= 10
     self.used_credits         ||= 0
   end
 end

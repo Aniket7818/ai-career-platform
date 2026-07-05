@@ -1,0 +1,33 @@
+development:
+  provider: <%= ENV['GROQ_API_KEY'].present? ? 'groq' : (ENV['GEMINI_API_KEY'].present? ? 'gemini' : 'stub') %>
+  providers:
+    gemini:
+      api_key: <%= ENV["GEMINI_API_KEY"] %>
+      model: gemini-2.5-flash
+    groq:
+      api_key: <%= ENV["GROQ_API_KEY"] %>
+      model: llama-3.3-70b-versatile
+    openrouter:
+      api_key: <%= ENV["OPENROUTER_API_KEY"] %>
+      model: google/gemma-3-27b-it
+    stub:
+      model: stub-model
+
+test:
+  provider: stub
+  providers:
+    stub:
+      model: stub-model
+
+production:
+  provider: <%= ENV['AI_PROVIDER'] || 'gemini' %>
+  providers:
+    gemini:
+      api_key: <%= ENV["GEMINI_API_KEY"] %>
+      model: gemini-2.5-flash
+    groq:
+      api_key: <%= ENV["GROQ_API_KEY"] %>
+      model: llama-3.3-70b-versatile
+    openrouter:
+      api_key: <%= ENV["OPENROUTER_API_KEY"] %>
+      model: google/gemma-3-27b-it

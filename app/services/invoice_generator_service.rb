@@ -22,7 +22,7 @@ class InvoiceGeneratorService
   def generate_invoice(dir)
     filename = "invoice_#{@billing_history.invoice_number}.pdf"
     path = dir.join(filename)
-    
+
     Prawn::Document.generate(path) do |pdf|
       pdf.font_size 20
       pdf.text "CareerAI", style: :bold, color: "6D4AFF"
@@ -42,8 +42,8 @@ class InvoiceGeneratorService
       pdf.move_down 20
 
       table_data = [
-        ["Description", "Amount"],
-        ["CareerAI #{@billing_history.plan_name.titleize} Plan (#{@billing_history.billing_cycle})", "#{@billing_history.currency} #{@billing_history.amount}"]
+        [ "Description", "Amount" ],
+        [ "CareerAI #{@billing_history.plan_name.titleize} Plan (#{@billing_history.billing_cycle})", "#{@billing_history.currency} #{@billing_history.amount}" ]
       ]
       pdf.table(table_data, width: pdf.bounds.width, header: true) do |t|
         t.row(0).font_style = :bold
@@ -55,22 +55,22 @@ class InvoiceGeneratorService
       pdf.move_down 20
       pdf.text "Total Paid: #{@billing_history.currency} #{@billing_history.amount}", style: :bold, size: 14, align: :right
       pdf.move_down 10
-      
+
       pdf.text "Payment Method: #{@billing_history.payment_provider}"
       pdf.text "Transaction ID: #{@billing_history.payment_id}"
       pdf.text "Order ID: #{@billing_history.order_id}"
-      
+
       pdf.move_down 30
       pdf.text "Thank you for subscribing to CareerAI!", align: :center, color: "64748B"
     end
-    
+
     path.to_s
   end
 
   def generate_receipt(dir)
     filename = "receipt_#{@billing_history.invoice_number}.pdf"
     path = dir.join(filename)
-    
+
     Prawn::Document.generate(path) do |pdf|
       pdf.font_size 20
       pdf.text "CareerAI", style: :bold, color: "6D4AFF"
@@ -95,7 +95,7 @@ class InvoiceGeneratorService
       pdf.move_down 30
       pdf.text "Thank you for your business!", align: :center, color: "64748B"
     end
-    
+
     path.to_s
   end
 end
