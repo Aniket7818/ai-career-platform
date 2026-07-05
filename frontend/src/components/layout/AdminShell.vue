@@ -39,17 +39,19 @@
  </div>
 
  <nav class="flex-1 space-y-1 overflow-y-auto p-4">
- <a
+ <component
+ :is="item.route ? 'router-link' : 'a'"
  v-for="item in navItems"
  :key="item.id"
- :href="item.href"
+ :to="item.route"
+ :href="!item.route ? (item.href.startsWith('#') && $route.path !== '/admin' ? '/admin' + item.href : item.href) : undefined"
  class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition"
- :class="activeSection === item.id ? 'bg-brand/20 text-white ring-1 ring-brand/40' : 'text-txt-disabled hover:bg-surface/5 hover:text-white'"
- @click.prevent="scrollTo(item.id)"
+ :class="(item.route && $route.path === item.route) || (!item.route && activeSection === item.id) ? 'bg-brand/20 text-white ring-1 ring-brand/40' : 'text-txt-disabled hover:bg-surface/5 hover:text-white'"
+ @click="item.route ? close() : handleHashClick($event, item)"
  >
  <component :is="item.icon" class="size-4 shrink-0" />
  {{ item.label }}
- </a>
+ </component>
  <RouterLink class="mt-4 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-txt-disabled transition hover:bg-surface/5 hover:text-white" to="/dashboard" @click="close">
  <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
  Back to App
@@ -105,6 +107,7 @@
 <script setup>
 import { computed, h } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import { t } from '../../utils/i18n'
 import { useMobileNav } from '../../composables/useMobileNav'
 
@@ -115,6 +118,8 @@ defineProps({
 defineEmits(['search'])
 
 const store = useStore()
+const route = useRoute()
+const router = useRouter()
 const user = computed(() => store.state.auth.user)
 const { isOpen, open, close } = useMobileNav()
 
@@ -127,7 +132,7 @@ const navItems = [
  { id: 'users', label: 'User Management', href: '#users', icon: icon(['M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2', 'M9 11a4 4 0 100-8 4 4 0 000 8z', 'M23 21v-2a4 4 0 00-3-3.87', 'M16 3.13a4 4 0 010 7.75']) },
  { id: 'analytics', label: 'Analytics', href: '#analytics', icon: icon(['M3 3v18h18', 'M7 16l4-8 4 5 5-7']) },
  { id: 'settings', label: 'Settings', href: '#settings', icon: icon(['M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z', 'M12 8a4 4 0 100 8 4 4 0 000-8z']) },
- { id: 'ai-analytics', label: 'AI Analytics', href: '#ai-analytics', icon: icon(['M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83']) },
+ { id: 'ai-analytics', label: 'AI Analytics', route: '/admin/ai-analytics', icon: icon(['M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83']) },
  { id: 'audit', label: 'Audit Logs', href: '#audit', icon: icon(['M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z', 'M14 2v6h6', 'M16 13H8', 'M16 17H8']) }
 ]
 
@@ -135,6 +140,17 @@ const initials = computed(() => {
  const name = user.value?.full_name || user.value?.username || 'A'
  return name.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase()
 })
+
+const handleHashClick = (e, item) => {
+  if (route.path !== '/admin') {
+    e.preventDefault()
+    close()
+    router.push({ path: '/admin', hash: item.href })
+  } else {
+    e.preventDefault()
+    scrollTo(item.id)
+  }
+}
 
 const scrollTo = (id) => {
  close()

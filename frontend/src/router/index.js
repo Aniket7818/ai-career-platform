@@ -47,6 +47,7 @@ const routes = [
  { path: '/verify-email', name: 'verify-email', component: () => import('../modules/auth/VerifyEmailPage.vue') },
  { path: '/dashboard', name: ROUTE_NAMES.DASHBOARD, component: DashboardPage, meta: { requiresAuth: true } },
  { path: '/admin', name: ROUTE_NAMES.ADMIN, component: AdminDashboardPage, meta: { requiresAuth: true, requiresAdmin: true } },
+ { path: '/admin/ai-analytics', name: 'admin-ai-analytics', component: () => import('../modules/admin/AdminAiAnalyticsWrapper.vue'), meta: { requiresAuth: true, requiresAdmin: true } },
  { path: '/profile', name: ROUTE_NAMES.PROFILE, component: ProfilePage, meta: { requiresAuth: true } },
  { path: '/settings', name: ROUTE_NAMES.SETTINGS, component: SettingsPage, meta: { requiresAuth: true } },
  { path: '/resumes', name: ROUTE_NAMES.RESUMES, component: ResumeListPage, meta: { requiresAuth: true } },

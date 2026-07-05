@@ -43,10 +43,16 @@ module Ai
           cost = compute_cost(input_tokens, output_tokens, 0.075, 0.3)
 
           {
-            content: response_text,
-            input_tokens: input_tokens,
-            output_tokens: output_tokens,
-            estimated_cost: cost
+            content:             response_text,
+            input_tokens:        input_tokens,
+            output_tokens:       output_tokens,
+            estimated_cost:      cost,
+            raw_request:         body,
+            raw_response:        result,
+            provider_headers:    response.each_header.to_h,
+            provider_request_id: response["x-request-id"] || result["id"],
+            finish_reason:       result.dig("candidates", 0, "finishReason"),
+            http_status:         response.code.to_i
           }
         rescue Net::ReadTimeout, Net::OpenTimeout
           raise AiService::TimeoutError, "Gemini request timed out"

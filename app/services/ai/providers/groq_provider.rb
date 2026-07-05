@@ -66,10 +66,16 @@ module Ai
           Rails.logger.info "[GroqProvider] SUCCESS tokens_in=#{input_tokens} tokens_out=#{output_tokens} cost=$#{cost.round(6)}"
 
           {
-            content:        response_text,
-            input_tokens:   input_tokens,
-            output_tokens:  output_tokens,
-            estimated_cost: cost
+            content:             response_text,
+            input_tokens:        input_tokens,
+            output_tokens:       output_tokens,
+            estimated_cost:      cost,
+            raw_request:         body,
+            raw_response:        result,
+            provider_headers:    response.each_header.to_h,
+            provider_request_id: response["x-request-id"] || result["id"],
+            finish_reason:       result.dig("choices", 0, "finish_reason"),
+            http_status:         response.code.to_i
           }
 
         rescue Net::ReadTimeout, Net::OpenTimeout => e
