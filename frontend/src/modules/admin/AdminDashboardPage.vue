@@ -291,7 +291,6 @@
  </div>
  </section>
 
- <AdminAiAnalytics />
 
  <section id="audit" class="scroll-mt-24 rounded-2xl border border-white/5 bg-[#121826]">
  <div class="border-b border-white/5 p-6">
@@ -383,7 +382,6 @@
 import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import AdminShell from '../../components/layout/AdminShell.vue'
-import AdminAiAnalytics from './AdminAiAnalytics.vue'
 import { adminService } from '../../services/adminService'
 import { PRICING_PLANS } from '../../constants/pricing'
 import { toast } from '../../utils/toast'

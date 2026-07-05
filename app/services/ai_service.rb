@@ -78,15 +78,20 @@ class AiService
     temperature      = CONFIG.dig("default", "temperature")
     max_tokens       = CONFIG.dig("default", "max_output_tokens")
 
+    perf_events = []
+    perf_events << { name: "Received", timestamp: Time.current.iso8601 }
+
     # ── 1. Sanitize + validate instructions ───────────────────────────────
     instructions = sanitize_instructions(instructions)
     validate_request_size!(instructions, context[:resume_content])
+    perf_events << { name: "Validation", timestamp: Time.current.iso8601 }
 
     # ── 2. Credit check ───────────────────────────────────────────────────
     remaining = user.remaining_credits.to_i
     raise InsufficientCreditsError,
       "Not enough AI credits. You need #{credits_required} credit(s) but have #{remaining}." \
       if remaining < credits_required
+    perf_events << { name: "Credits Checked", timestamp: Time.current.iso8601 }
 
     # ── 2.5. Inject previous_output for iterative improvement ─────────────
     if context[:previous_output].present?
@@ -97,6 +102,7 @@ class AiService
     fingerprint = compute_fingerprint(resume, instructions, context[:previous_output])
 
     # ── 4. Cache hit ──────────────────────────────────────────────────────
+    perf_events << { name: "Cache Lookup", timestamp: Time.current.iso8601 }
     if !force_new && cache_enabled
       cached = AiLog.find_by(resume: resume, feature: feature.to_s, fingerprint: fingerprint, status: "success")
       if cached
@@ -134,6 +140,7 @@ class AiService
     start_time  = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     retry_count = 0
     response_text = input_tokens = output_tokens = estimated_cost = nil
+    raw_request = raw_response = provider_headers = provider_request_id = finish_reason = http_status = nil
     last_error    = nil
     prompt        = nil
 
@@ -155,18 +162,26 @@ class AiService
         Timeout.timeout(GENERATION_TIMEOUT) do
           MAX_RETRIES.times do |attempt|
             begin
+              perf_events << { name: "Provider Started", timestamp: Time.current.iso8601 }
               result = provider_instance.generate(
                 prompt:            prompt,
                 model:             model,
                 temperature:       temperature,
                 max_output_tokens: max_tokens
               )
+              perf_events << { name: "Provider Finished", timestamp: Time.current.iso8601 }
 
-              response_text  = result[:content]
-              input_tokens   = result[:input_tokens]
-              output_tokens  = result[:output_tokens]
-              estimated_cost = result[:estimated_cost]
-              last_error     = nil
+              response_text       = result[:content]
+              input_tokens        = result[:input_tokens]
+              output_tokens       = result[:output_tokens]
+              estimated_cost      = result[:estimated_cost]
+              raw_request         = result[:raw_request]
+              raw_response        = result[:raw_response]
+              provider_headers    = result[:provider_headers]
+              provider_request_id = result[:provider_request_id]
+              finish_reason       = result[:finish_reason]
+              http_status         = result[:http_status]
+              last_error          = nil
               break # success — exit retry loop
 
             rescue TimeoutError, ProviderUnavailableError => e
@@ -225,28 +240,40 @@ class AiService
           reference_id:   nil
         )
 
-        AiLog.create!(
-          user:             user,
-          resume:           resume,
-          feature:          feature.to_s,
-          prompt_version:   prompt_version,
-          fingerprint:      fingerprint,
-          credits_used:     credits_required,
-          tokens_in:        input_tokens,
-          tokens_out:       output_tokens,
-          estimated_cost:   estimated_cost,
-          model:            model,
-          response_time:    elapsed,
-          status:           "success",
-          request_prompt:   prompt,
-          response_content: response_text,
-          cache_hit:        false,
-          retry_count:      retry_count,
-          ip_address:       request_meta[:ip],
-          user_agent:       request_meta[:user_agent],
-          request_id:       request_meta[:request_id],
-          provider:         provider_name
-        )
+        perf_events << { name: "Database Saved", timestamp: Time.current.iso8601 }
+        perf_events << { name: "Completed", timestamp: Time.current.iso8601 }
+
+        log_attrs = {
+          user:                user,
+          resume:              resume,
+          feature:             feature.to_s,
+          prompt_version:      prompt_version,
+          fingerprint:         fingerprint,
+          credits_used:        credits_required,
+          tokens_in:           input_tokens,
+          tokens_out:          output_tokens,
+          estimated_cost:      estimated_cost,
+          model:               model,
+          response_time:       elapsed,
+          status:              "success",
+          request_prompt:      prompt,
+          response_content:    response_text,
+          cache_hit:           false,
+          retry_count:         retry_count,
+          ip_address:          request_meta[:ip],
+          user_agent:          request_meta[:user_agent],
+          request_id:          request_meta[:request_id],
+          provider:            provider_name,
+          raw_request_json:    raw_request,
+          raw_response_json:   raw_response,
+          performance_events:  perf_events,
+          provider_headers:    provider_headers,
+          provider_request_id: provider_request_id,
+          finish_reason:       finish_reason,
+          http_status:         http_status
+        }
+        
+        AiLog.create!(log_attrs.select { |k, _| AiLog.column_names.include?(k.to_s) || AiLog.reflect_on_association(k) })
       end
 
       Rails.logger.info "[AiService] COMPLETED user=#{user.id} feature=#{feature} credits_deducted=#{credits_required}"
@@ -257,6 +284,7 @@ class AiService
       failure_reason = api_err.is_a?(TimeoutError) ? "timeout" : api_err.class.name
       Rails.logger.error "[AiService] FAILED user=#{user.id} feature=#{feature} error=#{api_err.class} msg=#{api_err.message}"
 
+      perf_events << { name: "Failed", timestamp: Time.current.iso8601 }
       log_failed(
         user:           user,
         resume:         resume,
@@ -270,7 +298,8 @@ class AiService
         retry_count:    retry_count,
         failure_reason: failure_reason,
         request_meta:   request_meta,
-        provider:       provider_name
+        provider:       provider_name,
+        performance_events: perf_events
       )
       raise
 
@@ -338,8 +367,8 @@ class AiService
   end
 
   # ─── Audit logging ───────────────────────────────────────────────────────
-  def self.log_rejected(user:, resume:, feature:, prompt_version:, fingerprint:, model:, reason:, message:, request_meta: {}, cache_hit: false, provider: nil)
-    AiLog.create!(
+  def self.log_rejected(user:, resume:, feature:, prompt_version:, fingerprint:, model:, reason:, message:, request_meta: {}, cache_hit: false, provider: nil, performance_events: nil)
+    log_attrs = {
       user:            user,
       resume:          resume,
       feature:         feature,
@@ -360,15 +389,17 @@ class AiService
       ip_address:      request_meta[:ip],
       user_agent:      request_meta[:user_agent],
       request_id:      request_meta[:request_id],
-      provider:        provider
-    )
+      provider:        provider,
+      performance_events: performance_events
+    }
+    AiLog.create!(log_attrs.select { |k, _| AiLog.column_names.include?(k.to_s) || AiLog.reflect_on_association(k) })
   rescue => e
     Rails.logger.error "[AiService] Failed to write rejected log: #{e.message}"
   end
 
   def self.log_failed(user:, resume:, feature:, prompt_version:, fingerprint:, model:,
-                      response_time:, error_message:, request_prompt:, retry_count: 0, failure_reason: nil, request_meta: {}, provider: nil)
-    AiLog.create!(
+                      response_time:, error_message:, request_prompt:, retry_count: 0, failure_reason: nil, request_meta: {}, provider: nil, performance_events: nil)
+    log_attrs = {
       user:            user,
       resume:          resume,
       feature:         feature,
@@ -389,8 +420,10 @@ class AiService
       ip_address:      request_meta[:ip],
       user_agent:      request_meta[:user_agent],
       request_id:      request_meta[:request_id],
-      provider:        provider
-    )
+      provider:        provider,
+      performance_events: performance_events
+    }
+    AiLog.create!(log_attrs.select { |k, _| AiLog.column_names.include?(k.to_s) || AiLog.reflect_on_association(k) })
   rescue => e
     Rails.logger.error "[AiService] Failed to write error log: #{e.message}"
   end

@@ -41,8 +41,10 @@ Rails.application.routes.draw do
       patch "admin/settings", to: "admin#update_settings"
       get "admin/export/:kind", to: "admin#export"
       get "admin/ai_analytics", to: "admin_ai_analytics#show"
+      get "admin/ai_analytics/users", to: "admin_ai_analytics#users"
       get "admin/ai_analytics/requests", to: "admin_ai_analytics#requests"
       get "admin/ai_analytics/requests/:id", to: "admin_ai_analytics#request_details"
+      get "admin/ai_analytics/export", to: "admin_ai_analytics#export"
       get "coming_soon", to: "coming_soon#show"
       resources :feature_interests, only: [ :create ]
       delete "feature_interests", to: "feature_interests#destroy"
