@@ -3,6 +3,7 @@ module Api
     class ResumesController < ApplicationController
       before_action :authenticate_api_user!
       before_action :set_resume, only: %i[show update destroy download download_pdf]
+      before_action :ensure_versioning_initialized, only: %i[show update]
 
       def index
         resumes = current_user.resumes.order(updated_at: :desc)
@@ -17,6 +18,8 @@ module Api
         resume = current_user.resumes.new(resume_params)
 
         if resume.save
+          # Phase 3.1: Create the initial "Original" version snapshot
+          ResumeVersionService.create_initial(resume)
           render json: { resume: ResumeSerializer.new(resume).as_json }, status: :created
         else
           render json: { errors: resume.errors.full_messages }, status: :unprocessable_entity
@@ -25,6 +28,19 @@ module Api
 
       def update
         if @resume.update(resume_params)
+          # Phase 3.1: Create a snapshot on explicit user saves (not autosave spam).
+          # NothingChangedError is silently swallowed — it's not an error, just a skip.
+          begin
+            next_num = @resume.latest_version_number + 1
+            ResumeVersionService.snapshot(
+              @resume,
+              label:          "Version #{next_num}",
+              source:         "manual",
+              change_summary: nil
+            )
+          rescue ResumeVersionService::NothingChangedError
+            # Content hasn't changed — skip snapshot silently
+          end
           render json: { resume: ResumeSerializer.new(@resume).as_json }
         else
           render json: { errors: @resume.errors.full_messages }, status: :unprocessable_entity
@@ -87,8 +103,16 @@ module Api
         @resume = current_user.resumes.find(params[:id])
       end
 
+      # Phase 3.1: Ensure every existing resume (created before versioning was
+      # introduced) has at least an "Original" version on record. Called lazily
+      # on show and update so legacy resumes are quietly backfilled.
+      def ensure_versioning_initialized
+        return unless @resume
+        ResumeVersionService.create_initial(@resume) unless @resume.resume_versions.exists?
+      end
+
       def resume_params
-        params.require(:resume).permit(:title, :status, :template_id, content: {})
+        params.require(:resume).permit(:title, :status, :template_id, :target_role, content: {})
       end
     end
   end

@@ -9,6 +9,7 @@ import DashboardPage from '../modules/dashboard/DashboardPage.vue'
 import AdminDashboardPage from '../modules/admin/AdminDashboardPage.vue'
 import ResumeListPage from '../modules/resumes/ResumeListPage.vue'
 import ResumeEditorPage from '../modules/resumes/ResumeEditorPage.vue'
+import ResumeOptimizePage from '../modules/resumes/ResumeOptimizePage.vue'
 import ComingSoonPage from '../modules/coming-soon/ComingSoonPage.vue'
 import ProfilePage from '../modules/profile/ProfilePage.vue'
 import SettingsPage from '../modules/settings/SettingsPage.vue'
@@ -53,6 +54,7 @@ const routes = [
  { path: '/resumes', name: ROUTE_NAMES.RESUMES, component: ResumeListPage, meta: { requiresAuth: true } },
  { path: '/resumes/new', name: ROUTE_NAMES.RESUME_NEW, component: ResumeEditorPage, meta: { requiresAuth: true } },
  { path: '/resumes/:id/edit', name: ROUTE_NAMES.RESUME_EDIT, component: ResumeEditorPage, meta: { requiresAuth: true } },
+ { path: '/resumes/:id/optimize', name: ROUTE_NAMES.RESUME_OPTIMIZE, component: ResumeOptimizePage, meta: { requiresAuth: true } },
  { path: '/resumes/:id/print', name: 'resume-print', component: ResumePrintView, meta: { requiresAuth: true } },
  { path: '/interview-prep', name: ROUTE_NAMES.INTERVIEW_PREP, component: InterviewPrepList, meta: { requiresAuth: true } },
  { path: '/interview-prep/bookmarks', name: 'interview-prep-bookmarks', component: () => import('../modules/interview-prep/InterviewPrepFilteredList.vue'), meta: { requiresAuth: true, listType: 'bookmarks' } },

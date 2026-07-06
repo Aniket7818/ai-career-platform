@@ -19,7 +19,17 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :profile, only: %i[show update destroy]
       put "profile/change_password", to: "profiles#change_password"
-      resources :resumes
+      resources :resumes do
+        # ── Resume Version History (Phase 3.1) ────────────────────────────────
+        resources :versions, controller: "resume_versions", only: %i[index show] do
+          member do
+            post :restore
+          end
+          collection do
+            get :diff
+          end
+        end
+      end
       post "resumes/:id/download", to: "resumes#download"
       post "resumes/:id/download_pdf", to: "resumes#download_pdf"
       post "payments", to: "payments#create"
