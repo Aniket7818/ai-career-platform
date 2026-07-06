@@ -35,6 +35,11 @@ class AiOptimizationService
       request_meta: request_meta
     )
 
+    quality = AiQualityService.evaluate(response_text, action)
+    unless quality[:passed]
+      raise OptimizationError, "AI generated low quality output: #{quality[:reasons].join(', ')}"
+    end
+
     # Parse response (assuming JSON for updates, or raw text for cover letters)
     parsed = parse_response(response_text, action)
     

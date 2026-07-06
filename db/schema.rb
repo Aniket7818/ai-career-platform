@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_06_130258) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_06_135200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,21 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_06_130258) do
     t.integer "http_status"
     t.index ["resume_id"], name: "index_ai_logs_on_resume_id"
     t.index ["user_id"], name: "index_ai_logs_on_user_id"
+  end
+
+  create_table "ai_optimization_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "resume_id", null: false
+    t.string "action"
+    t.string "status"
+    t.jsonb "result"
+    t.text "error_message"
+    t.jsonb "payload"
+    t.jsonb "request_meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resume_id"], name: "index_ai_optimization_requests_on_resume_id"
+    t.index ["user_id"], name: "index_ai_optimization_requests_on_user_id"
   end
 
   create_table "audit_logs", force: :cascade do |t|
@@ -394,6 +409,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_06_130258) do
 
   add_foreign_key "ai_logs", "resumes", on_delete: :cascade
   add_foreign_key "ai_logs", "users"
+  add_foreign_key "ai_optimization_requests", "resumes"
+  add_foreign_key "ai_optimization_requests", "users"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "audit_logs", "users", column: "actor_id"
   add_foreign_key "billing_histories", "users"
