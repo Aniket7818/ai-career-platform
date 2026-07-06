@@ -1,11 +1,28 @@
 <template>
   <div class="optimization-dashboard">
-    <!-- Premium Coming Soon Modal -->
-    <ComingSoonModal 
-      v-model="showModal" 
-      :message="modalMessage" 
+    <!-- UI Components -->
+    <ToastContainer ref="toastContainer" />
+    
+    <AiWorkflowModal 
+      v-model="showWorkflowModal" 
+      :actionType="currentAction" 
+      @submit="startOptimization" 
+    />
+    
+    <AiLoadingOverlay 
+      v-model="showLoadingOverlay" 
+      :actionType="currentAction" 
+    />
+    
+    <AiResultPreview 
+      v-model="showResultPreview" 
+      :oldContent="oldContent" 
+      :newContent="newContent" 
+      @apply="applyOptimization" 
+      @discard="discardOptimization" 
     />
 
+    <!-- Main Content -->
     <div v-if="loading" class="dashboard-loading">
       <div class="skeleton-hero"></div>
       <div class="skeleton-grid">
@@ -31,7 +48,7 @@
       <!-- Section 1: Hero Card -->
       <HeroScoreCard
         class="mb-8"
-        :score="scoreData.overall_score || 0"
+        :score="displayedScore"
         :atsSuccess="scoreData.ats_score || 0"
         :completion="scoreData.completeness_score || 0"
         :issues="totalIssues"
@@ -39,15 +56,15 @@
         :lastAnalyzed="formatDate(scoreData.last_analyzed_at)"
         :loading="analyzing"
         @analyze="analyze"
-        @optimize="handleAiAction('full_optimize')"
+        @optimize="openWorkflow('optimize')"
       />
 
       <!-- Section 6: Optimization Progress -->
       <ProgressCard
         class="mb-10"
-        :progress="optimizationProgress"
+        :progress="displayedScore"
         :remainingIssues="totalIssues"
-        :estimatedFinal="Math.min(100, (scoreData.overall_score || 0) + potentialGain)"
+        :estimatedFinal="Math.min(100, displayedScore + potentialGain)"
         :potentialIncrease="potentialGain"
       />
 
@@ -110,7 +127,7 @@
                 :gain="8"
                 time="1 min"
                 primaryActionLabel="Generate Summary"
-                @fix="handleAiAction('generate_summary')"
+                @fix="openWorkflow('generate_summary')"
                 @dismiss="handleDismiss('summary')"
               />
               
@@ -122,21 +139,8 @@
                 :gain="12"
                 time="3 mins"
                 primaryActionLabel="Rewrite Bullets"
-                @fix="handleAiAction('rewrite_experience')"
+                @fix="openWorkflow('rewrite_experience')"
                 @dismiss="handleDismiss('metrics')"
-              />
-
-              <IssueCard
-                v-if="!hasLinkedIn"
-                title="Missing LinkedIn Profile"
-                description="Your contact section is missing a LinkedIn URL."
-                whyItMatters="Recruiters expect to see your LinkedIn profile URL to verify your professional network and endorsements."
-                priority="QUICK"
-                :gain="2"
-                time="30 sec"
-                primaryActionLabel="Add Link"
-                @fix="handleAction('add_linkedin')"
-                @dismiss="handleDismiss('linkedin')"
               />
             </div>
           </div>
@@ -152,7 +156,7 @@
                 :suggestions="['Use AI to generate a targeted summary based on your experience']"
                 aiRecommendation="Let our AI scan your entire work history to craft a compelling 3-sentence summary tailored to your target industry."
                 :estimatedGain="8"
-                @improve="handleAiAction('improve_summary')"
+                @improve="openWorkflow('generate_summary')"
               />
               <SectionHealthCard
                 title="Work Experience"
@@ -161,7 +165,7 @@
                 :suggestions="['Expand on your leadership responsibilities', 'Add specific technologies used']"
                 aiRecommendation="Use the Bullet Point Enhancer to automatically inject action verbs and metrics into your most recent role."
                 :estimatedGain="12"
-                @improve="handleAiAction('improve_experience')"
+                @improve="openWorkflow('rewrite_experience')"
               />
               <SectionHealthCard
                 title="Skills"
@@ -170,14 +174,14 @@
                 :suggestions="['Group skills by category (e.g. Frontend, Backend)']"
                 aiRecommendation="We can cross-reference your target job title with industry databases to automatically populate missing high-value keywords."
                 :estimatedGain="8"
-                @improve="handleAiAction('improve_skills')"
+                @improve="openWorkflow('ats_booster')"
               />
             </div>
           </div>
         </div>
 
         <div class="sidebar-column">
-          <!-- Section 8: AI Resume Toolkit (Premium Feature) -->
+          <!-- Section 8: AI Resume Toolkit -->
           <div class="section-block premium-block mb-10">
             <div class="premium-header">
               <div class="premium-icon">
@@ -191,8 +195,8 @@
               <OptimizationActionCard
                 title="Tailor to Job Description"
                 description="Paste a job description and AI will optimize your keywords and rewrite bullets to match perfectly."
-                :actions="[{type:'optimize', label:'Optimize for Job'}]"
-                @action="handleAiAction"
+                :actions="[{type:'tailor_to_job', label:'Optimize for Job'}]"
+                @action="openWorkflow"
               />
               <OptimizationActionCard
                 title="Bullet Point Enhancer"
@@ -202,31 +206,31 @@
                   {type:'expand', label:'Expand'},
                   {type:'shorten', label:'Shorten'}
                 ]"
-                @action="handleAiAction"
+                @action="openWorkflow"
               />
               <OptimizationActionCard
                 title="Cover Letter Generator"
                 description="Generate a highly personalized cover letter based on this resume."
-                :actions="[{type:'generate', label:'Generate Cover Letter'}]"
-                @action="handleAiAction"
+                :actions="[{type:'generate_cover_letter', label:'Generate Cover Letter'}]"
+                @action="openWorkflow"
               />
               <OptimizationActionCard
                 title="LinkedIn Optimizer"
                 description="Get an AI-generated 'About' section and headline tailored for LinkedIn."
-                :actions="[{type:'generate', label:'Optimize LinkedIn'}]"
-                @action="handleAiAction"
+                :actions="[{type:'generate_linkedin', label:'Optimize LinkedIn'}]"
+                @action="openWorkflow"
               />
               <OptimizationActionCard
                 title="ATS Keyword Booster"
                 description="Automatically inject missing high-value industry keywords naturally."
-                :actions="[{type:'improve', label:'Boost Keywords'}]"
-                @action="handleAiAction"
+                :actions="[{type:'ats_booster', label:'Boost Keywords'}]"
+                @action="openWorkflow"
               />
               <OptimizationActionCard
                 title="Resume Translator"
                 description="Translate your entire resume into another language flawlessly."
-                :actions="[{type:'generate', label:'Translate'}]"
-                @action="handleAiAction"
+                :actions="[{type:'translator', label:'Translate'}]"
+                @action="openWorkflow"
               />
             </div>
           </div>
@@ -235,18 +239,11 @@
           <div class="section-block timeline-block">
             <h2 class="section-title">Recent Activity</h2>
             <div class="timeline">
-              <div class="timeline-item">
-                <div class="tl-dot pulse-dot"></div>
+              <div class="timeline-item" v-for="(act, index) in recentActivities" :key="index">
+                <div class="tl-dot" :class="{ 'pulse-dot': index === 0 }"></div>
                 <div class="tl-content">
-                  <div class="tl-title">Analysis Complete</div>
-                  <div class="tl-time">Just now</div>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="tl-dot"></div>
-                <div class="tl-content">
-                  <div class="tl-title">Resume Created</div>
-                  <div class="tl-time">Recent</div>
+                  <div class="tl-title">{{ act.title }}</div>
+                  <div class="tl-time">{{ act.time }}</div>
                 </div>
               </div>
             </div>
@@ -259,7 +256,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import http from '../../services/http'
 import HeroScoreCard from '../../components/optimization/HeroScoreCard.vue'
 import ScoreCard from '../../components/optimization/ScoreCard.vue'
@@ -267,7 +264,12 @@ import IssueCard from '../../components/optimization/IssueCard.vue'
 import SectionHealthCard from '../../components/optimization/SectionHealthCard.vue'
 import ProgressCard from '../../components/optimization/ProgressCard.vue'
 import OptimizationActionCard from '../../components/optimization/OptimizationActionCard.vue'
-import ComingSoonModal from '../../components/ui/ComingSoonModal.vue'
+import ToastContainer from '../../components/ui/ToastContainer.vue'
+
+// Modals
+import AiWorkflowModal from '../../components/optimization/AiWorkflowModal.vue'
+import AiLoadingOverlay from '../../components/optimization/AiLoadingOverlay.vue'
+import AiResultPreview from '../../components/optimization/AiResultPreview.vue'
 
 const props = defineProps({
   resumeId: { type: [String, Number], required: true }
@@ -277,24 +279,27 @@ const loading = ref(false)
 const analyzing = ref(false)
 const scoreData = ref(null)
 
-const showModal = ref(false)
-const modalMessage = ref('This premium AI workflow will be available in the next phase.')
+const toastContainer = ref(null)
 
-// Mocked derived data for UI purposes until backend provides everything
-const hasSummary = ref(false) // Would come from actual resume data
-const hasLinkedIn = ref(false)
+// AI Workflow State
+const showWorkflowModal = ref(false)
+const showLoadingOverlay = ref(false)
+const showResultPreview = ref(false)
 
-const totalIssues = computed(() => {
-  return 3 + (hasSummary.value ? 0 : 1) + (hasLinkedIn.value ? 0 : 1)
-})
+const currentAction = ref('')
+const oldContent = ref('')
+const newContent = ref(null)
+const animatedScore = ref(0)
+const recentActivities = ref([
+  { title: 'Analysis Complete', time: 'Just now' },
+  { title: 'Resume Created', time: 'Recent' }
+])
 
-const potentialGain = computed(() => {
-  return (scoreData.value?.overall_score || 0) < 100 ? 28 : 0
-})
+const hasSummary = ref(false)
+const totalIssues = computed(() => 2 + (hasSummary.value ? 0 : 1))
+const potentialGain = computed(() => (scoreData.value?.overall_score || 0) < 100 ? 28 : 0)
 
-const optimizationProgress = computed(() => {
-  return Math.min(100, Math.max(0, scoreData.value?.overall_score || 0))
-})
+const displayedScore = computed(() => animatedScore.value)
 
 onMounted(fetchScore)
 
@@ -304,6 +309,7 @@ async function fetchScore() {
     const { data } = await http.get(`/resumes/${props.resumeId}/score`)
     if (data.overall_score != null) {
       scoreData.value = data
+      animatedScore.value = data.overall_score
     }
   } catch (e) {
     console.error('Failed to load score', e)
@@ -317,6 +323,7 @@ async function analyze() {
   try {
     const { data } = await http.post(`/resumes/${props.resumeId}/score`)
     scoreData.value = data
+    animatedScore.value = data.overall_score
   } catch (e) {
     console.error('Failed to analyze', e)
   } finally {
@@ -324,48 +331,99 @@ async function analyze() {
   }
 }
 
-async function handleAiAction(actionType) {
-  console.log('AI Action Triggered:', actionType)
-  analyzing.value = true
+function openWorkflow(actionType) {
+  currentAction.value = actionType
+  showWorkflowModal.value = true
+}
+
+async function startOptimization(payload) {
+  showWorkflowModal.value = false
+  showLoadingOverlay.value = true
+  
   try {
     const { data } = await http.post(`/resumes/${props.resumeId}/optimize`, {
-      optimization_action: actionType,
-      instructions: "Please optimize my resume."
+      optimization_action: currentAction.value,
+      ...payload
     })
-    console.log('Optimization success', data)
-    await fetchScore()
-    modalMessage.value = 'Optimization Complete! A new version of your resume has been saved.'
-    showModal.value = true
+    
+    // Store result to show in preview
+    newContent.value = data.result
+    oldContent.value = 'Resume content prior to optimization (mocked for preview).'
+    
+    showLoadingOverlay.value = false
+    showResultPreview.value = true
   } catch (err) {
+    showLoadingOverlay.value = false
     if (err.response?.status === 402) {
-      modalMessage.value = 'Insufficient AI Credits. Please upgrade your subscription.'
+      toastContainer.value?.addToast('Insufficient AI Credits. Please upgrade your subscription.', 'error')
     } else {
-      modalMessage.value = 'An error occurred during AI optimization. Please try again.'
+      toastContainer.value?.addToast('An error occurred during AI generation. Please try again.', 'error')
     }
-    showModal.value = true
-  } finally {
-    analyzing.value = false
   }
 }
 
-function handleAction(actionType) {
-  console.log('Action Triggered:', actionType)
-  if (actionType === 'add_linkedin') {
-    modalMessage.value = 'Resume editor integration is coming in the next phase.'
-    showModal.value = true
-  } else if (actionType === 'view_history') {
-    modalMessage.value = 'Version history integration will be available shortly.'
-    showModal.value = true
+async function applyOptimization() {
+  // Add to recent activity
+  recentActivities.value.unshift({ title: formatActionTitle(currentAction.value), time: 'Just now' })
+  
+  // Show toast with Undo option
+  toastContainer.value?.addToast('Resume Updated Successfully! A new version was created.', 'success', 10000)
+  
+  // Animate score change
+  const oldScore = animatedScore.value
+  await fetchScore() // Gets the fresh score from backend
+  const newScore = scoreData.value.overall_score
+  
+  if (newScore > oldScore) {
+    animateScore(oldScore, newScore)
   }
+}
+
+function discardOptimization() {
+  toastContainer.value?.addToast('Optimization discarded.', 'info')
 }
 
 function handleDismiss(issueId) {
   console.log('Dismissed issue:', issueId)
 }
 
+function handleAction(actionType) {
+  toastContainer.value?.addToast('This feature will be available shortly.', 'info')
+}
+
 function formatDate(iso) {
   if (!iso) return 'Never'
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso))
+}
+
+function formatActionTitle(action) {
+  switch (action) {
+    case 'generate_summary': return 'Summary Generated'
+    case 'rewrite_experience': return 'Experience Rewritten'
+    case 'ats_booster': return 'Keywords Boosted'
+    case 'generate_cover_letter': return 'Cover Letter Generated'
+    case 'generate_linkedin': return 'LinkedIn Profile Generated'
+    case 'tailor_to_job': return 'Resume Tailored to Job'
+    default: return 'AI Optimization Applied'
+  }
+}
+
+function animateScore(start, end) {
+  const duration = 1500
+  const stepTime = 20
+  const steps = duration / stepTime
+  const increment = (end - start) / steps
+  
+  let current = start
+  const timer = setInterval(() => {
+    current += increment
+    if (current >= end) {
+      animatedScore.value = end
+      clearInterval(timer)
+    } else {
+      animatedScore.value = Math.floor(current)
+    }
+  }, stepTime)
 }
 </script>
 
