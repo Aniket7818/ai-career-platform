@@ -324,10 +324,28 @@ async function analyze() {
   }
 }
 
-function handleAiAction(actionType) {
+async function handleAiAction(actionType) {
   console.log('AI Action Triggered:', actionType)
-  modalMessage.value = 'This advanced AI workflow is currently in development and will be available in the next phase.'
-  showModal.value = true
+  analyzing.value = true
+  try {
+    const { data } = await http.post(`/resumes/${props.resumeId}/optimize`, {
+      optimization_action: actionType,
+      instructions: "Please optimize my resume."
+    })
+    console.log('Optimization success', data)
+    await fetchScore()
+    modalMessage.value = 'Optimization Complete! A new version of your resume has been saved.'
+    showModal.value = true
+  } catch (err) {
+    if (err.response?.status === 402) {
+      modalMessage.value = 'Insufficient AI Credits. Please upgrade your subscription.'
+    } else {
+      modalMessage.value = 'An error occurred during AI optimization. Please try again.'
+    }
+    showModal.value = true
+  } finally {
+    analyzing.value = false
+  }
 }
 
 function handleAction(actionType) {

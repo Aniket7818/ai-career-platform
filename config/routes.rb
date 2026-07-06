@@ -29,6 +29,11 @@ Rails.application.routes.draw do
             get :diff
           end
         end
+        member do
+          get :score
+          post :score, to: "resumes#analyze"
+          post :optimize, to: "resume_optimizations#create"
+        end
       end
       post "resumes/:id/download", to: "resumes#download"
       post "resumes/:id/download_pdf", to: "resumes#download_pdf"

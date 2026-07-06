@@ -2,8 +2,8 @@ module Api
   module V1
     class ResumesController < ApplicationController
       before_action :authenticate_api_user!
-      before_action :set_resume, only: %i[show update destroy download download_pdf]
-      before_action :ensure_versioning_initialized, only: %i[show update]
+      before_action :set_resume, only: %i[show update destroy download download_pdf score analyze]
+      before_action :ensure_versioning_initialized, only: %i[show update score analyze]
 
       def index
         resumes = current_user.resumes.order(updated_at: :desc)
@@ -95,6 +95,39 @@ module Api
         send_data pdf_data, filename: "resume_#{@resume.id}.pdf", type: "application/pdf", disposition: "attachment"
       rescue StandardError => e
         render json: { error: "Failed to generate PDF: #{e.message}" }, status: :internal_server_error
+      end
+
+      # GET /api/v1/resumes/:id/score
+      def score
+        render json: {
+          success: true,
+          overall_score: @resume.last_analysis_score,
+          ats_score: @resume.ats_score,
+          keyword_score: @resume.keyword_score,
+          content_score: @resume.content_score,
+          completeness_score: @resume.completeness_score,
+          last_analyzed_at: @resume.last_analyzed_at,
+          analysis_data: @resume.analysis_data || {}
+        }
+      end
+
+      # POST /api/v1/resumes/:id/score
+      def analyze
+        analysis = ResumeScoreService.analyze(@resume)
+        
+        render json: {
+          success: true,
+          overall_score: @resume.last_analysis_score,
+          ats_score: @resume.ats_score,
+          keyword_score: @resume.keyword_score,
+          content_score: @resume.content_score,
+          completeness_score: @resume.completeness_score,
+          last_analyzed_at: @resume.last_analyzed_at,
+          analysis_data: analysis
+        }
+      rescue => e
+        Rails.logger.error "[ResumesController#analyze] Error: #{e.message}\n#{e.backtrace.first(5).join("\n")}"
+        render json: { success: false, error: "Failed to analyze resume." }, status: :internal_server_error
       end
 
       private

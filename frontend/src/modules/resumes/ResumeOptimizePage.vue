@@ -73,17 +73,11 @@
 
       <!-- Content area -->
       <main class="optimize-content">
-        <!-- Overview (coming in Phase 3.3) -->
-        <div v-if="activeSection === 'overview'" class="section-placeholder">
-          <div class="placeholder-icon">✨</div>
-          <h2>Optimization Dashboard</h2>
-          <p>The full optimization workspace — including ATS scoring, content analysis, and AI-powered suggestions — is coming in Phase 3.3.</p>
-          <div class="placeholder-chips">
-            <span>Phase 3.2: Score Engine</span>
-            <span>Phase 3.3: AI Analysis</span>
-            <span>Phase 3.4: Apply Suggestions</span>
-          </div>
-        </div>
+        <!-- Overview (fully functional in Phase 3.2) -->
+        <ResumeScoreOverview
+          v-if="activeSection === 'overview'"
+          :resumeId="resumeId"
+        />
 
         <!-- Version History (fully functional in Phase 3.1) -->
         <ResumeVersionHistoryPage
@@ -112,6 +106,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ROUTE_NAMES } from '../../constants/routes'
 import ResumeVersionHistoryPage from './ResumeVersionHistoryPage.vue'
+import ResumeScoreOverview from './ResumeScoreOverview.vue'
 
 const route = useRoute()
 const router = useRouter()

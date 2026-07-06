@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_06_125133) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_06_130258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -275,6 +275,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_06_125133) do
     t.string "target_role"
     t.integer "last_analysis_score"
     t.datetime "last_analyzed_at"
+    t.integer "ats_score"
+    t.integer "keyword_score"
+    t.integer "content_score"
+    t.integer "completeness_score"
+    t.integer "analysis_version"
+    t.jsonb "analysis_data", default: {}
     t.index ["status"], name: "index_resumes_on_status"
     t.index ["user_id", "updated_at"], name: "index_resumes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_resumes_on_user_id"

@@ -36,6 +36,36 @@ features:
     cache_enabled: false
   skill_suggestions:
     credits: 1
-    word_limit: 50 # Note: this refers to number of entries or max words for instructions
+    word_limit: 50
     prompt_version: "v1"
     cache_enabled: true
+  tailor_resume:
+    credits: 10
+    word_limit: 2000
+    prompt_version: "v1"
+    cache_enabled: false
+  cover_letter:
+    credits: 5
+    word_limit: 1000
+    prompt_version: "v1"
+    cache_enabled: false
+  linkedin_optimizer:
+    credits: 5
+    word_limit: 1000
+    prompt_version: "v1"
+    cache_enabled: false
+  ats_booster:
+    credits: 3
+    word_limit: 500
+    prompt_version: "v1"
+    cache_enabled: false
+  translator:
+    credits: 10
+    word_limit: 2000
+    prompt_version: "v1"
+    cache_enabled: false
+  achievement_generator:
+    credits: 3
+    word_limit: 500
+    prompt_version: "v1"
+    cache_enabled: false
