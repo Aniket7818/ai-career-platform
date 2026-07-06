@@ -39,9 +39,9 @@ defineEmits(['action'])
 .optimization-action-card {
   background: linear-gradient(135deg, var(--color-surface), var(--color-surface-2));
   border: 1px solid var(--color-border);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   padding: 1.5rem;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -52,39 +52,45 @@ defineEmits(['action'])
 .optimization-action-card::after {
   content: '';
   position: absolute;
-  top: 0; right: 0; width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%);
+  top: 0; right: 0; width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  transition: transform 0.3s ease;
 }
 
 .optimization-action-card:hover {
   border-color: var(--color-primary);
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+  transform: translateY(-4px);
+}
+.optimization-action-card:hover::after {
+  transform: scale(1.2);
 }
 
 .oac-content {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: flex-start;
 }
 
 .oac-icon {
   background: rgba(99, 102, 241, 0.1);
   color: var(--color-primary);
-  padding: 0.75rem;
-  border-radius: 0.75rem;
+  padding: 0.875rem;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 .oac-icon svg { width: 1.5rem; height: 1.5rem; }
 
 .oac-details h4 {
   margin: 0 0 0.5rem 0;
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text-primary);
 }
 
@@ -92,7 +98,7 @@ defineEmits(['action'])
   margin: 0;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .oac-actions {
@@ -105,17 +111,25 @@ defineEmits(['action'])
   background: var(--color-surface);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 2rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-action:hover {
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
   color: white;
-  border-color: var(--color-primary);
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-action:active {
+  transform: translateY(0);
 }
 </style>
