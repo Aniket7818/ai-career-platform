@@ -101,7 +101,7 @@ function copy() {
 }
 
 .result-modal {
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
   border-radius: 1.5rem;
   width: 95%;
   max-width: 900px;
@@ -111,7 +111,7 @@ function copy() {
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   overflow: hidden;
   animation: slideUp 0.3s ease;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
 }
 
 @keyframes slideUp {
@@ -121,7 +121,7 @@ function copy() {
 
 .modal-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgb(var(--color-border));
   display: flex;
   align-items: center;
   gap: 1.25rem;
@@ -145,12 +145,12 @@ function copy() {
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 .subtitle {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
 }
 
 .btn-close {
@@ -160,11 +160,11 @@ function copy() {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   cursor: pointer;
   transition: color 0.2s;
 }
-.btn-close:hover { color: var(--color-text-primary); }
+.btn-close:hover { color: rgb(var(--color-text-primary)); }
 
 .modal-body {
   padding: 2rem;
@@ -190,18 +190,18 @@ function copy() {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   font-weight: 600;
 }
 
 .content-box {
   flex: 1;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface-hover));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1rem;
   padding: 1.25rem;
   font-size: 0.95rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   line-height: 1.6;
   white-space: pre-wrap;
   overflow-y: auto;
@@ -227,8 +227,8 @@ pre {
 
 .modal-footer {
   padding: 1.5rem 2rem;
-  background: var(--color-surface-2);
-  border-top: 1px solid var(--color-border);
+  background: rgb(var(--color-surface-hover));
+  border-top: 1px solid rgb(var(--color-border));
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -238,31 +238,31 @@ pre {
 
 .btn-secondary {
   padding: 0.75rem 1.5rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 0.75rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   cursor: pointer;
 }
-.btn-secondary:hover { background: var(--color-surface-3); }
+.btn-secondary:hover { background: rgb(var(--color-surface-elevated)); }
 
 .btn-outline {
   padding: 0.75rem 1.5rem;
   background: transparent;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
   border-radius: 0.75rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   cursor: pointer;
   display: inline-flex;
   align-items: center;
 }
-.btn-outline:hover { background: var(--color-surface-3); }
+.btn-outline:hover { background: rgb(var(--color-surface-elevated)); }
 
 .btn-primary {
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   border: none;
   border-radius: 0.75rem;
   font-weight: 600;

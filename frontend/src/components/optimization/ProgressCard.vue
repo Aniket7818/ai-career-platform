@@ -49,8 +49,8 @@ const props = defineProps({
 
 <style scoped>
 .progress-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1.5rem;
   padding: 2rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.02);
@@ -67,18 +67,18 @@ const props = defineProps({
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .pc-subtitle {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
 }
 
 .pc-percent-badge {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   font-size: 1.5rem;
   font-weight: 800;
   padding: 0.5rem 1rem;
@@ -93,7 +93,7 @@ const props = defineProps({
 
 .pc-bar {
   height: 16px;
-  background: var(--color-surface-3);
+  background: rgb(var(--color-surface-elevated));
   border-radius: 8px;
   overflow: hidden;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
@@ -101,7 +101,7 @@ const props = defineProps({
 
 .pc-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(90deg, rgb(var(--color-primary)), #8b5cf6);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -125,7 +125,7 @@ const props = defineProps({
   justify-content: space-between;
   margin-top: 0.5rem;
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   font-weight: 600;
 }
 
@@ -140,8 +140,8 @@ const props = defineProps({
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface-hover));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1rem;
   align-items: center;
   text-align: center;
@@ -149,12 +149,12 @@ const props = defineProps({
 }
 .stat-card:hover {
   transform: translateY(-2px);
-  border-color: var(--color-border-hover);
+  border-color: rgb(var(--color-border-hover));
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -163,11 +163,11 @@ const props = defineProps({
 .stat-value {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .text-success { color: #10b981; }
-.text-primary { color: var(--color-primary); }
+.text-primary { color: rgb(var(--color-primary)); }
 
 @media (max-width: 640px) {
   .pc-stats-grid { grid-template-columns: 1fr; gap: 1rem; }

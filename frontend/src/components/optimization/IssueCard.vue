@@ -54,9 +54,9 @@ const priorityClass = computed(() => {
 
 <style scoped>
 .issue-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-left: 4px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
+  border-left: 4px solid rgb(var(--color-border));
   border-radius: 1rem;
   padding: 1.5rem;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,13 +103,13 @@ const priorityClass = computed(() => {
 }
 
 .gain { color: #10b981; }
-.time { color: var(--color-text-muted); }
+.time { color: rgb(var(--color-text-muted)); }
 
 .issue-title {
   margin: 0 0 0.75rem 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .issue-body {
@@ -119,33 +119,33 @@ const priorityClass = computed(() => {
 
 .issue-desc {
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   margin: 0 0 1rem 0;
   line-height: 1.6;
 }
 
 .educational-block {
-  background: var(--color-surface-2);
+  background: rgb(var(--color-surface-hover));
   border-radius: 0.75rem;
   padding: 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
 }
 
 .edu-header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   font-weight: 600;
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
 }
-.edu-header svg { color: var(--color-primary); }
+.edu-header svg { color: rgb(var(--color-primary)); }
 
 .educational-block p {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   line-height: 1.5;
 }
 
@@ -167,7 +167,7 @@ const priorityClass = computed(() => {
 }
 
 .btn-primary {
-  background: var(--color-primary);
+  background: rgb(var(--color-primary));
   color: white;
   border: none;
   flex: 1;
@@ -180,12 +180,12 @@ const priorityClass = computed(() => {
 
 .btn-secondary {
   background: transparent;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
+  color: rgb(var(--color-text-secondary));
+  border: 1px solid rgb(var(--color-border));
 }
 .btn-secondary:hover { 
-  background: var(--color-surface-2); 
-  color: var(--color-text-primary); 
+  background: rgb(var(--color-surface-hover)); 
+  color: rgb(var(--color-text-primary)); 
 }
 
 .size-4 { width: 1rem; height: 1rem; }

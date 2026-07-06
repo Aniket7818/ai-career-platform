@@ -37,8 +37,8 @@ defineEmits(['action'])
 
 <style scoped>
 .optimization-action-card {
-  background: linear-gradient(135deg, var(--color-surface), var(--color-surface-2));
-  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, rgb(var(--color-surface)), rgb(var(--color-surface-hover)));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1.25rem;
   padding: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -60,7 +60,7 @@ defineEmits(['action'])
 }
 
 .optimization-action-card:hover {
-  border-color: var(--color-primary);
+  border-color: rgb(var(--color-primary));
   box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
   transform: translateY(-4px);
 }
@@ -76,7 +76,7 @@ defineEmits(['action'])
 
 .oac-icon {
   background: rgba(99, 102, 241, 0.1);
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   padding: 0.875rem;
   border-radius: 1rem;
   display: flex;
@@ -91,13 +91,13 @@ defineEmits(['action'])
   margin: 0 0 0.5rem 0;
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .oac-details p {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   line-height: 1.6;
 }
 
@@ -108,9 +108,9 @@ defineEmits(['action'])
 }
 
 .btn-action {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  color: rgb(var(--color-text-primary));
+  border: 1px solid rgb(var(--color-border));
   padding: 0.5rem 1.25rem;
   border-radius: 2rem;
   font-size: 0.875rem;
@@ -122,7 +122,7 @@ defineEmits(['action'])
 }
 
 .btn-action:hover {
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   color: white;
   border-color: transparent;
   transform: translateY(-1px);

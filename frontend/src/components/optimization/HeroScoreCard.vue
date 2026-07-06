@@ -123,8 +123,8 @@ const gradientColor = computed(() => {
 
 <style scoped>
 .hero-score-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1.5rem;
   padding: 2.5rem;
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
@@ -159,7 +159,7 @@ const gradientColor = computed(() => {
   height: 180px;
 }
 .circular-chart { display: block; width: 100%; height: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-.circle-bg { fill: none; stroke: var(--color-surface-3); stroke-width: 2.5; }
+.circle-bg { fill: none; stroke: rgb(var(--color-surface-hover)); stroke-width: 2.5; }
 .circle { fill: none; stroke-width: 2.5; stroke-linecap: round; transition: stroke-dasharray 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
 .score-text {
@@ -175,12 +175,12 @@ const gradientColor = computed(() => {
   font-size: 3rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .score-label {
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-top: 0.25rem;
@@ -217,7 +217,7 @@ const gradientColor = computed(() => {
 .status-desc {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
 }
 
 .stats-grid {
@@ -229,8 +229,8 @@ const gradientColor = computed(() => {
 }
 
 .stat-box {
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface-hover));
+  border: 1px solid rgb(var(--color-border));
   padding: 1rem 1.5rem;
   border-radius: 1rem;
   display: flex;
@@ -242,7 +242,7 @@ const gradientColor = computed(() => {
 }
 .stat-box:hover {
   transform: translateY(-2px);
-  border-color: var(--color-border-hover);
+  border-color: rgb(var(--color-border-hover));
 }
 
 .highlight-box {
@@ -252,7 +252,7 @@ const gradientColor = computed(() => {
 
 .stat-label {
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -261,7 +261,7 @@ const gradientColor = computed(() => {
 .stat-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .error-text { color: #ef4444; }
@@ -281,8 +281,8 @@ const gradientColor = computed(() => {
   justify-content: center;
   gap: 0.5rem;
   background: transparent;
-  color: var(--color-text-primary);
-  border: 2px solid var(--color-border);
+  color: rgb(var(--color-text-primary));
+  border: 2px solid rgb(var(--color-border));
   padding: 0.75rem 2rem;
   border-radius: 1rem;
   font-weight: 600;
@@ -292,8 +292,8 @@ const gradientColor = computed(() => {
 }
 
 .btn-outline:hover:not(:disabled) {
-  background: var(--color-surface-2);
-  border-color: var(--color-text-muted);
+  background: rgb(var(--color-surface-hover));
+  border-color: rgb(var(--color-text-muted));
 }
 
 .btn-premium {
@@ -301,7 +301,7 @@ const gradientColor = computed(() => {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   color: white;
   border: none;
   padding: 0.75rem 2rem;

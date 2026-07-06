@@ -72,8 +72,8 @@ const scoreClass = computed(() => {
 
 <style scoped>
 .score-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1.25rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -95,7 +95,7 @@ const scoreClass = computed(() => {
 .score-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
-  border-color: var(--color-border-hover);
+  border-color: rgb(var(--color-border-hover));
 }
 
 .card-header {
@@ -114,7 +114,7 @@ const scoreClass = computed(() => {
 .card-title {
   font-weight: 700;
   font-size: 1.25rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .card-score {
@@ -128,7 +128,7 @@ const scoreClass = computed(() => {
 
 .card-description {
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   margin: 0 0 1rem 0;
   line-height: 1.5;
 }
@@ -137,14 +137,14 @@ const scoreClass = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   font-size: 0.875rem;
   font-weight: 600;
 }
 
 .card-content {
   padding: 0 1.5rem 1.5rem 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgb(var(--color-border));
   padding-top: 1.5rem;
   animation: slideDown 0.3s ease-out;
 }
@@ -176,14 +176,14 @@ const scoreClass = computed(() => {
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
 .strength-box .detail-header { color: #10b981; }
-.strength-box p { margin: 0; color: var(--color-text-primary); }
+.strength-box p { margin: 0; color: rgb(var(--color-text-primary)); }
 
 .weakness-box {
   background: rgba(239, 68, 68, 0.05);
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 .weakness-box .detail-header { color: #ef4444; }
-.weakness-box p { margin: 0; color: var(--color-text-primary); }
+.weakness-box p { margin: 0; color: rgb(var(--color-text-primary)); }
 
 .recommendation-box {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
@@ -197,7 +197,7 @@ const scoreClass = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   font-weight: 600;
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -206,7 +206,7 @@ const scoreClass = computed(() => {
 .recommendation-box p {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   line-height: 1.5;
 }
 
@@ -215,12 +215,12 @@ const scoreClass = computed(() => {
   align-items: center;
   justify-content: flex-end;
   padding-top: 1rem;
-  border-top: 1px dashed var(--color-border);
+  border-top: 1px dashed rgb(var(--color-border));
 }
 
 .potential-gain {
   font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   font-weight: 500;
 }
 .gain-value {

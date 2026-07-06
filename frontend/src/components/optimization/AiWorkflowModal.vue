@@ -208,14 +208,14 @@ function submit() {
 }
 
 .modal-content {
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
   border-radius: 1.5rem;
   width: 90%;
   max-width: 600px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   overflow: hidden;
   animation: slideUp 0.3s ease;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
 }
 
 @keyframes slideUp {
@@ -225,7 +225,7 @@ function submit() {
 
 .modal-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgb(var(--color-border));
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -241,13 +241,13 @@ function submit() {
   justify-content: center;
 }
 .size-6 { width: 1.5rem; height: 1.5rem; }
-.text-primary { color: var(--color-primary); }
+.text-primary { color: rgb(var(--color-primary)); }
 
 .modal-header h2 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .btn-close {
@@ -257,11 +257,11 @@ function submit() {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   cursor: pointer;
   transition: color 0.2s;
 }
-.btn-close:hover { color: var(--color-text-primary); }
+.btn-close:hover { color: rgb(var(--color-text-primary)); }
 
 .modal-body {
   padding: 2rem;
@@ -269,7 +269,7 @@ function submit() {
 
 .description {
   margin: 0 0 1.5rem 0;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -293,15 +293,15 @@ function submit() {
 label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 input, textarea, select {
   padding: 0.75rem 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
   border-radius: 0.75rem;
-  background: var(--color-surface-2);
-  color: var(--color-text-primary);
+  background: rgb(var(--color-surface-hover));
+  color: rgb(var(--color-text-primary));
   font-family: inherit;
   font-size: 0.95rem;
   transition: all 0.2s;
@@ -309,17 +309,17 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: rgb(var(--color-primary));
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
 }
 
 textarea { resize: vertical; }
 
 .modal-footer {
   padding: 1.5rem 2rem;
-  background: var(--color-surface-2);
-  border-top: 1px solid var(--color-border);
+  background: rgb(var(--color-surface-hover));
+  border-top: 1px solid rgb(var(--color-border));
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
@@ -327,18 +327,18 @@ textarea { resize: vertical; }
 
 .btn-secondary {
   padding: 0.75rem 1.5rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 0.75rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   cursor: pointer;
 }
-.btn-secondary:hover { background: var(--color-surface-3); }
+.btn-secondary:hover { background: rgb(var(--color-surface-elevated)); }
 
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   border: none;
   border-radius: 0.75rem;
   font-weight: 600;

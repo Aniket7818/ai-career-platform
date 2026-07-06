@@ -174,7 +174,7 @@ onUnmounted(() => {
 
 .premium-spinner .path {
   stroke: url(#gradient);
-  stroke: var(--color-primary);
+  stroke: rgb(var(--color-primary));
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
 }
@@ -194,7 +194,7 @@ onUnmounted(() => {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 100%; height: 100%;
-  background: var(--color-primary);
+  background: rgb(var(--color-primary));
   border-radius: 50%;
   filter: blur(20px);
   opacity: 0.3;
@@ -244,7 +244,7 @@ onUnmounted(() => {
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(90deg, rgb(var(--color-primary)), #8b5cf6);
   border-radius: 4px;
   transition: width 0.1s linear;
   position: relative;

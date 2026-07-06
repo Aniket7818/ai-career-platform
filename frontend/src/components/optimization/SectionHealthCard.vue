@@ -97,8 +97,8 @@ const healthColor = computed(() => {
 
 <style scoped>
 .section-health-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
   border-radius: 1rem;
   transition: all 0.3s;
   display: flex;
@@ -106,7 +106,7 @@ const healthColor = computed(() => {
   overflow: hidden;
 }
 .section-health-card:hover {
-  border-color: var(--color-border-hover);
+  border-color: rgb(var(--color-border-hover));
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
@@ -117,11 +117,11 @@ const healthColor = computed(() => {
   padding: 1.25rem 1.5rem;
   cursor: pointer;
   user-select: none;
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
   transition: background 0.2s;
 }
 .shc-header:hover {
-  background: var(--color-surface-2);
+  background: rgb(var(--color-surface-hover));
 }
 
 .shc-title-group {
@@ -134,7 +134,7 @@ const healthColor = computed(() => {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
 }
 
 .health-badge {
@@ -165,7 +165,7 @@ const healthColor = computed(() => {
 .progress-bar {
   flex: 1;
   height: 6px;
-  background: var(--color-surface-3);
+  background: rgb(var(--color-surface-elevated));
   border-radius: 3px;
   overflow: hidden;
 }
@@ -179,13 +179,13 @@ const healthColor = computed(() => {
 .progress-text {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   min-width: 2.5rem;
   text-align: right;
 }
 
 .expand-icon {
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   transition: transform 0.3s;
 }
 
@@ -193,7 +193,7 @@ const healthColor = computed(() => {
 
 .shc-content {
   padding: 0 1.5rem 1.5rem 1.5rem;
-  border-top: 1px dashed var(--color-border);
+  border-top: 1px dashed rgb(var(--color-border));
   animation: slideDown 0.3s ease-out;
   margin-top: 0.5rem;
 }
@@ -213,7 +213,7 @@ const healthColor = computed(() => {
 .shc-grid h4 {
   margin: 0 0 1rem 0;
   font-size: 0.875rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -234,7 +234,7 @@ const healthColor = computed(() => {
   gap: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
 }
 
 .bullet {
@@ -256,13 +256,13 @@ const healthColor = computed(() => {
 .rec-header {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   margin-bottom: 0.5rem;
 }
 .ai-recommendation p {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   line-height: 1.5;
 }
 
@@ -277,7 +277,7 @@ const healthColor = computed(() => {
 
 .gain-meta {
   font-size: 0.875rem;
-  color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
   font-weight: 500;
 }
 .gain-value {
@@ -288,9 +288,9 @@ const healthColor = computed(() => {
 .btn-ai {
   display: inline-flex;
   align-items: center;
-  background: var(--color-surface);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background: rgb(var(--color-surface));
+  color: rgb(var(--color-primary));
+  border: 1px solid rgb(var(--color-primary));
   padding: 0.5rem 1.25rem;
   border-radius: 0.75rem;
   font-weight: 600;
@@ -299,7 +299,7 @@ const healthColor = computed(() => {
   transition: all 0.2s;
 }
 .btn-ai:hover { 
-  background: var(--color-primary); 
+  background: rgb(var(--color-primary)); 
   color: white;
   transform: translateY(-1px); 
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); 

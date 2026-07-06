@@ -459,10 +459,10 @@ function animateScore(start, end) {
   justify-content: center;
   margin-bottom: 1rem;
 }
-.placeholder-icon { width: 40px; height: 40px; color: var(--color-primary); }
+.placeholder-icon { width: 40px; height: 40px; color: rgb(var(--color-primary)); }
 
-.dashboard-empty h2 { font-size: 2.25rem; color: var(--color-text-primary); margin: 0; font-weight: 800; letter-spacing: -0.02em; }
-.dashboard-empty p { max-width: 550px; margin: 0; line-height: 1.7; color: var(--color-text-secondary); font-size: 1.125rem; }
+.dashboard-empty h2 { font-size: 2.25rem; color: rgb(var(--color-text-primary)); margin: 0; font-weight: 800; letter-spacing: -0.02em; }
+.dashboard-empty p { max-width: 550px; margin: 0; line-height: 1.7; color: rgb(var(--color-text-secondary)); font-size: 1.125rem; }
 
 .btn-large {
   padding: 1rem 2.5rem;
@@ -474,7 +474,7 @@ function animateScore(start, end) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   color: #fff;
   border: none;
   font-weight: 600;
@@ -496,12 +496,12 @@ function animateScore(start, end) {
 .w-full { width: 100%; text-align: center; justify-content: center; display: inline-flex; }
 .size-5 { width: 1.25rem; height: 1.25rem; }
 .size-6 { width: 1.5rem; height: 1.5rem; }
-.text-primary { color: var(--color-primary); }
+.text-primary { color: rgb(var(--color-primary)); }
 
 .section-title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--color-text-primary);
+  color: rgb(var(--color-text-primary));
   margin: 0 0 1.5rem 0;
   letter-spacing: -0.01em;
 }
@@ -525,10 +525,10 @@ function animateScore(start, end) {
 }
 
 .premium-block {
-  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-2));
+  background: linear-gradient(145deg, rgb(var(--color-surface)), rgb(var(--color-surface-hover)));
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
   box-shadow: 0 10px 30px rgba(0,0,0,0.02);
   position: relative;
   overflow: hidden;
@@ -538,7 +538,7 @@ function animateScore(start, end) {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, #8b5cf6, var(--color-primary));
+  background: linear-gradient(90deg, #8b5cf6, rgb(var(--color-primary)));
 }
 
 .premium-header {
@@ -559,16 +559,16 @@ function animateScore(start, end) {
 
 .toolkit-desc {
   margin: 0 0 2rem 0;
-  color: var(--color-text-secondary);
+  color: rgb(var(--color-text-secondary));
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .timeline-block {
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgb(var(--color-border));
   box-shadow: 0 4px 20px rgba(0,0,0,0.02);
 }
 
@@ -585,7 +585,7 @@ function animateScore(start, end) {
   position: absolute;
   top: 0; left: 1.5rem; bottom: 0;
   width: 2px;
-  background: var(--color-surface-3);
+  background: rgb(var(--color-surface-hover));
   border-radius: 2px;
 }
 
@@ -598,11 +598,11 @@ function animateScore(start, end) {
 .tl-dot {
   width: 14px; height: 14px;
   border-radius: 50%;
-  background: var(--color-surface);
-  border: 3px solid var(--color-primary);
+  background: rgb(var(--color-surface));
+  border: 3px solid rgb(var(--color-primary));
   z-index: 1;
   margin-top: 0.125rem;
-  box-shadow: 0 0 0 4px var(--color-surface);
+  box-shadow: 0 0 0 4px rgb(var(--color-surface));
 }
 
 .pulse-dot {
@@ -615,13 +615,13 @@ function animateScore(start, end) {
   100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
 }
 
-.tl-title { font-weight: 600; font-size: 0.95rem; color: var(--color-text-primary); }
-.tl-time { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem; font-weight: 500; }
+.tl-title { font-weight: 600; font-size: 0.95rem; color: rgb(var(--color-text-primary)); }
+.tl-time { font-size: 0.8rem; color: rgb(var(--color-text-muted)); margin-top: 0.25rem; font-weight: 500; }
 
 .btn-text {
-  background: var(--color-surface-2);
+  background: rgb(var(--color-surface-hover));
   border: 1px solid transparent;
-  color: var(--color-primary);
+  color: rgb(var(--color-primary));
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.75rem;
@@ -635,10 +635,10 @@ function animateScore(start, end) {
 }
 
 /* Skeletons */
-.skeleton-hero { height: 280px; background: var(--color-surface-2); border-radius: 1.5rem; margin-bottom: 2.5rem; width: 100%; animation: pulse 1.5s infinite ease-in-out; }
+.skeleton-hero { height: 280px; background: rgb(var(--color-surface-hover)); border-radius: 1.5rem; margin-bottom: 2.5rem; width: 100%; animation: pulse 1.5s infinite ease-in-out; }
 .skeleton-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; width: 100%; margin-bottom: 2rem; }
-.skeleton-card { height: 200px; background: var(--color-surface-2); border-radius: 1.25rem; animation: pulse 1.5s infinite ease-in-out; animation-delay: 0.2s; }
-.loading-text { font-size: 1.125rem; color: var(--color-text-muted); font-weight: 500; animation: pulse 1.5s infinite; }
+.skeleton-card { height: 200px; background: rgb(var(--color-surface-hover)); border-radius: 1.25rem; animation: pulse 1.5s infinite ease-in-out; animation-delay: 0.2s; }
+.loading-text { font-size: 1.125rem; color: rgb(var(--color-text-muted)); font-weight: 500; animation: pulse 1.5s infinite; }
 
 @keyframes pulse {
   0% { opacity: 1; }
