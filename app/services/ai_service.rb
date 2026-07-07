@@ -274,6 +274,10 @@ class AiService
         }
         
         AiLog.create!(log_attrs.select { |k, _| AiLog.column_names.include?(k.to_s) || AiLog.reflect_on_association(k) })
+        
+        # Yield to caller inside the transaction so they can perform validation and updates.
+        # If the caller raises an exception, the transaction (and credit deduction) will rollback.
+        yield(response_text) if block_given?
       end
 
       Rails.logger.info "[AiService] COMPLETED user=#{user.id} feature=#{feature} credits_deducted=#{credits_required}"

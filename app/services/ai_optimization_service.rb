@@ -22,6 +22,7 @@ class AiOptimizationService
       instructions += "\n\nTarget Job Description:\n#{payload[:job_description]}"
     end
 
+    parsed = nil
     response_text = AiService.generate(
       user: resume.user,
       resume: resume,
@@ -33,31 +34,31 @@ class AiOptimizationService
       instructions: instructions,
       force_new: true,
       request_meta: request_meta
-    )
+    ) do |text|
+      quality = AiQualityService.evaluate(text, action)
+      unless quality[:passed]
+        raise OptimizationError, "AI generated low quality output: #{quality[:reasons].join(', ')}"
+      end
 
-    quality = AiQualityService.evaluate(response_text, action)
-    unless quality[:passed]
-      raise OptimizationError, "AI generated low quality output: #{quality[:reasons].join(', ')}"
+      # Parse response (assuming JSON for updates, or raw text for cover letters)
+      parsed = parse_response(text, action)
+
+      apply_update(resume, action, parsed, payload)
+
+      version_label = generate_label(action)
+
+      # Save the new version
+      ResumeVersionService.snapshot(
+        resume,
+        label: version_label,
+        source: "optimization",
+        change_summary: "AI optimization applied: #{action}",
+        force: true
+      )
+
+      # Re-calculate score
+      ResumeScoreService.analyze(resume)
     end
-
-    # Parse response (assuming JSON for updates, or raw text for cover letters)
-    parsed = parse_response(response_text, action)
-
-    apply_update(resume, action, parsed, payload)
-
-    version_label = generate_label(action)
-
-    # Save the new version
-    ResumeVersionService.snapshot(
-      resume,
-      label: version_label,
-      source: "optimization",
-      change_summary: "AI optimization applied: #{action}",
-      force: true
-    )
-
-    # Re-calculate score
-    ResumeScoreService.analyze(resume)
 
     { success: true, message: "Optimization applied successfully", resume: resume.as_json, result: parsed }
   rescue => e
