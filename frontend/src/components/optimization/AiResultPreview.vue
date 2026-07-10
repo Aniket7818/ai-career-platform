@@ -2007,10 +2007,10 @@ pre {
   }
   .modal-footer button {
     width: 100% !important;
-    height: 40px;
+    height: 36px;
     padding: 0;
-    border-radius: 10px;
-    font-size: 0.8125rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2169,6 +2169,27 @@ pre {
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .btn-copy-all {
+    width: 100%;
+    height: 36px;
+    padding: 0;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .linkedin-mock-footer-actions {
+    padding: 0.75rem 1rem;
+  }
+
+  .btn-copy-tiny, .btn-copy-tiny-compact, .btn-copy-small {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 6px !important;
   }
 }
 
