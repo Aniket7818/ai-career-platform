@@ -1,14 +1,6 @@
 <template>
   <div v-if="modelValue" class="modal-backdrop">
     <div class="modal-content result-modal">
-      <!-- Premium local success toast notification -->
-      <div class="local-toast" :class="{ visible: showLocalToast }">
-        <svg class="size-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span class="local-toast-text">{{ localToastText }}</span>
-      </div>
-
       <div class="modal-header">
         <div class="icon-wrap bg-success">
           <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
@@ -219,19 +211,19 @@
               <div class="about-card">
                 <div class="card-title-row">
                   <h3 class="card-title-main">LinkedIn About</h3>
-                  <div class="character-counter-badge" :class="getAboutCounterClass(aboutText.length)">
-                    {{ aboutText.length }} / 2600 chars ({{ 2600 - aboutText.length }} remaining)
+                  <div class="about-header-actions">
+                    <div class="character-counter-badge" :class="getAboutCounterClass(aboutText.length)">
+                      {{ aboutText.length }} / 2600 chars ({{ 2600 - aboutText.length }} remaining)
+                    </div>
+                    <button class="btn-copy-tiny-compact" @click="copyAbout" :disabled="isCopyingAbout">
+                      <span v-if="isCopiedAbout">✓ Copied</span>
+                      <span v-else>Copy About</span>
+                    </button>
                   </div>
                 </div>
                 <div class="about-textarea-container">
                   <div class="linkedin-text-container about-text scrollable-about">
                     {{ aboutText || 'No About section generated.' }}
-                  </div>
-                  <div class="about-actions-row">
-                    <button class="btn-copy-small-alt" @click="copyAbout" :disabled="isCopyingAbout">
-                      <span v-if="isCopiedAbout">✓ About Section Copied</span>
-                      <span v-else>Copy About Section</span>
-                    </button>
                   </div>
                 </div>
               </div>
@@ -404,7 +396,8 @@
 
             <!-- Standard Preview Box -->
             <div v-else class="content-box ai-box">
-              <div class="formatted-response-view" v-html="formattedResponse"></div>
+              <pre v-if="isJson(newContent)">{{ formatJson(newContent) }}</pre>
+              <div v-else class="text-content">{{ newContent }}</div>
             </div>
           </div>
         </div>
@@ -417,21 +410,19 @@
         <button v-if="actionType === 'generate_linkedin'" class="btn-primary" @click="discard('done')">
           Done
         </button>
-        <button v-else-if="actionType !== 'generate_linkedin'" class="btn-outline btn-copy-main" @click="copy" :disabled="isCopying">
-          <span class="btn-content-transition">
-            <template v-if="isCopying">
-              <svg class="animate-spin size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
-              Copying...
-            </template>
-            <template v-else-if="isCopied">
-              <svg class="size-4 mr-2 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
-              Copied
-            </template>
-            <template v-else>
-              <svg class="size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              Copy to Clipboard
-            </template>
-          </span>
+        <button v-else-if="actionType !== 'generate_linkedin'" class="btn-outline" @click="copy" :disabled="isCopying">
+          <template v-if="isCopying">
+            <svg class="animate-spin size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
+            Copying...
+          </template>
+          <template v-else-if="isCopied">
+            <svg class="size-4 mr-2 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+            ✓ Copied
+          </template>
+          <template v-else>
+            <svg class="size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Copy to Clipboard
+          </template>
         </button>
         <button v-if="actionType !== 'generate_cover_letter' && actionType !== 'generate_linkedin'" class="btn-primary" @click="apply">
           Apply to Resume
@@ -480,155 +471,6 @@ const copiedTopics = ref(false)
 const copiedSkills = ref(false)
 const copiedIndustries = ref(false)
 const copiedRoles = ref(false)
-
-const showLocalToast = ref(false)
-const localToastText = ref('')
-let localToastTimer = null
-
-function triggerLocalToast(message) {
-  localToastText.value = message
-  showLocalToast.value = true
-  if (localToastTimer) clearTimeout(localToastTimer)
-  localToastTimer = setTimeout(() => {
-    showLocalToast.value = false
-  }, 2000)
-}
-
-const formattedResponse = computed(() => {
-  if (!props.newContent) return ''
-  
-  // If it's JSON, let's try to extract and format it beautifully
-  let data = props.newContent
-  if (typeof data === 'string') {
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      // Not JSON, treat as text
-    }
-  }
-  
-  if (typeof data === 'object' && data !== null) {
-    let html = ''
-    
-    // 1. Professional Summary / Executive Summary
-    if (data.professionalSummary || data.summary) {
-      const summaryText = data.professionalSummary || data.summary
-      html += `<div class="formatted-section">
-        <h5 class="section-subtitle-compact">Professional Summary</h5>
-        <p class="paragraph-compact">${summaryText}</p>
-      </div>`
-    }
-    
-    // 2. Work Experience
-    if (data.workExperience && Array.isArray(data.workExperience)) {
-      html += `<div class="formatted-section">
-        <h5 class="section-subtitle-compact">Work Experience</h5>
-        <ul class="bullet-list-compact">`
-      data.workExperience.forEach(exp => {
-        if (exp.description) {
-          // If description is a string with bullets, split them
-          const bullets = exp.description.split(/\\n+/).map(b => b.trim().replace(/^[-*•]\\s*/, '')).filter(Boolean)
-          bullets.forEach(bullet => {
-            html += `<li>${bullet}</li>`
-          })
-        } else if (typeof exp === 'string') {
-          html += `<li>${exp}</li>`
-        }
-      })
-      html += `</ul></div>`
-    }
-    
-    // 3. Skills
-    if (data.skills) {
-      let skillsList = []
-      if (typeof data.skills === 'string') {
-        skillsList = data.skills.split(',').map(s => s.trim()).filter(Boolean)
-      } else if (data.skills.skillList) {
-        skillsList = data.skills.skillList.split(',').map(s => s.trim()).filter(Boolean)
-      } else if (Array.isArray(data.skills)) {
-        skillsList = data.skills.map(s => typeof s === 'object' ? s.name : s).filter(Boolean)
-      }
-      
-      if (skillsList.length > 0) {
-        html += `<div class="formatted-section">
-          <h5 class="section-subtitle-compact">Skills & Keywords</h5>
-          <div class="skills-tags-compact">`
-        skillsList.forEach(skill => {
-          html += `<span class="skill-tag-compact">${skill}</span>`
-        })
-        html += `</div></div>`
-      }
-    }
-
-    if (html) {
-      return html
-    }
-  }
-  
-  // Default text/markdown-like formatting for string content
-  const textContent = typeof props.newContent === 'string' ? props.newContent : JSON.stringify(props.newContent, null, 2)
-  const lines = textContent.split('\n')
-  let html = ''
-  let inList = false
-  let listType = '' // 'ul' or 'ol'
-  
-  lines.forEach(line => {
-    const trimmed = line.trim()
-    if (!trimmed) {
-      if (inList) {
-        html += '</' + listType + '>'
-        inList = false
-      }
-      return
-    }
-    
-    // Check for headings
-    if (trimmed.startsWith('###')) {
-      if (inList) { html += '</' + listType + '>'; inList = false; }
-      html += '<h5 class="section-subtitle-compact">' + trimmed.replace(/^###\s*/, '') + '</h5>'
-    } else if (trimmed.startsWith('##')) {
-      if (inList) { html += '</' + listType + '>'; inList = false; }
-      html += '<h4 class="section-title-compact">' + trimmed.replace(/^##\s*/, '') + '</h4>'
-    } else if (trimmed.startsWith('#')) {
-      if (inList) { html += '</' + listType + '>'; inList = false; }
-      html += '<h3 class="section-header-compact">' + trimmed.replace(/^#\s*/, '') + '</h3>'
-    }
-    // Check for bullet lists
-    else if (trimmed.startsWith('-') || trimmed.startsWith('*') || trimmed.startsWith('•')) {
-      if (!inList || listType !== 'ul') {
-        if (inList) html += '</' + listType + '>'
-        html += '<ul class="bullet-list-compact">'
-        inList = true
-        listType = 'ul'
-      }
-      html += '<li>' + trimmed.replace(/^[-*•]\s*/, '') + '</li>'
-    }
-    // Check for numbered lists
-    else if (/^\d+\.\s+/.test(trimmed)) {
-      if (!inList || listType !== 'ol') {
-        if (inList) html += '</' + listType + '>'
-        html += '<ol class="numbered-list-compact">'
-        inList = true
-        listType = 'ol'
-      }
-      html += '<li>' + trimmed.replace(/^\d+\.\s+/, '') + '</li>'
-    }
-    // Normal paragraph
-    else {
-      if (inList) {
-        html += '</' + listType + '>'
-        inList = false
-      }
-      html += '<p class="paragraph-compact">' + trimmed + '</p>'
-    }
-  })
-  
-  if (inList) {
-    html += '</' + listType + '>'
-  }
-  
-  return html
-})
 
 watch(() => props.newContent, () => {
   selectedHeadlineIndex.value = 0
@@ -855,10 +697,9 @@ async function copy() {
   await new Promise(resolve => setTimeout(resolve, 150))
   isCopying.value = false
   
-  const success = await ClipboardService.copy(text, { silent: true })
+  const success = await ClipboardService.copy(text)
   if (success) {
     isCopied.value = true
-    triggerLocalToast('Content copied to clipboard')
     setTimeout(() => {
       isCopied.value = false
     }, 2000)
@@ -873,13 +714,11 @@ async function copyHeadline() {
   isCopyingHeadline.value = false
   
   const success = await ClipboardService.copy(text, {
-    silent: true,
     successTitle: 'LinkedIn headline copied.',
     successMessage: 'The selected LinkedIn headline was copied to your clipboard.'
   })
   if (success) {
     isCopiedHeadline.value = true
-    triggerLocalToast('Headline copied to clipboard')
     setTimeout(() => {
       isCopiedHeadline.value = false
     }, 2000)
@@ -889,13 +728,11 @@ async function copyHeadline() {
 async function copyHeadlineOption(text, idx) {
   hasCopied.value = true
   const success = await ClipboardService.copy(text, {
-    silent: true,
     successTitle: 'Headline copied.',
     successMessage: `Copied headline suggestion (${linkedinData.value?.headlineOptions[idx]?.type || 'Option'}).`
   })
   if (success) {
     copiedHeadlineOptionIndex.value = idx
-    triggerLocalToast('Headline suggestion copied')
     setTimeout(() => {
       if (copiedHeadlineOptionIndex.value === idx) {
         copiedHeadlineOptionIndex.value = -1
@@ -912,13 +749,11 @@ async function copyAbout() {
   isCopyingAbout.value = false
   
   const success = await ClipboardService.copy(text, {
-    silent: true,
     successTitle: 'LinkedIn About copied.',
     successMessage: 'The generated LinkedIn About section was copied to your clipboard.'
   })
   if (success) {
     isCopiedAbout.value = true
-    triggerLocalToast('About section copied')
     setTimeout(() => {
       isCopiedAbout.value = false
     }, 2000)
@@ -928,14 +763,12 @@ async function copyAbout() {
 async function copyText(text, type) {
   hasCopied.value = true
   const success = await ClipboardService.copy(text, {
-    silent: true,
     successTitle: 'Content copied.',
     successMessage: 'Copied personal brand statement.'
   })
   if (success) {
     if (type === 'brand') {
       copiedBrand.value = true
-      triggerLocalToast('Personal brand statement copied')
       setTimeout(() => { copiedBrand.value = false }, 2000)
     }
   }
@@ -945,12 +778,10 @@ async function copyTags(tags, type) {
   hasCopied.value = true
   const text = tags.join(', ')
   const success = await ClipboardService.copy(text, {
-    silent: true,
     successTitle: 'Tags copied.',
     successMessage: `Copied ${tags.length} items to clipboard.`
   })
   if (success) {
-    triggerLocalToast('Tags copied to clipboard')
     if (type === 'technologies') {
       copiedTechnologies.value = true
       setTimeout(() => { copiedTechnologies.value = false }, 2000)
@@ -1003,17 +834,13 @@ async function copyAll() {
   ].join('\n')
 
   isCopyingAll.value = true
-  await new Promise(resolve => setTimeout(resolve, 150))
-  isCopyingAll.value = false
-
   const success = await ClipboardService.copy(formattedText, {
-    silent: true,
-    successTitle: 'LinkedIn profile data copied.',
-    successMessage: 'All optimized LinkedIn sections were copied to your clipboard.'
+    successTitle: 'LinkedIn content copied.',
+    successMessage: 'All optimized LinkedIn content was copied to your clipboard.'
   })
+  isCopyingAll.value = false
   if (success) {
     isCopiedAll.value = true
-    triggerLocalToast('All content copied')
     setTimeout(() => {
       isCopiedAll.value = false
     }, 2000)
@@ -1180,125 +1007,27 @@ function getScoreBadgeClass(score) {
 
 .content-box {
   flex: 1;
-  background: rgb(var(--color-surface));
+  background: rgb(var(--color-surface-hover));
   border: 1px solid rgb(var(--color-border));
-  border-radius: 12px;
+  border-radius: 1rem;
   padding: 1.25rem;
   font-size: 0.95rem;
   color: rgb(var(--color-text-primary));
   line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-y: auto;
 }
 
 .ai-box {
-  background: rgba(var(--color-primary-rgb, 99, 102, 241), 0.02);
-  border: 1px solid rgba(var(--color-primary-rgb, 99, 102, 241), 0.12);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+  border-color: rgba(99, 102, 241, 0.2);
   position: relative;
 }
 .ai-box::after {
   content: '✨';
   position: absolute;
   top: 1rem; right: 1rem;
-  opacity: 0.2;
-}
-
-/* Formatted Response Viewer Styles */
-.formatted-response-view {
-  font-family: inherit;
-  color: rgb(var(--color-text-primary));
-  font-size: 0.9375rem;
-  line-height: 1.6;
-}
-
-.formatted-response-view .formatted-section {
-  margin-bottom: 1.25rem;
-}
-.formatted-response-view .formatted-section:last-child {
-  margin-bottom: 0;
-}
-
-.formatted-response-view .section-subtitle-compact {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgb(var(--color-primary));
-  margin: 0 0 0.5rem 0;
-}
-
-.formatted-response-view .paragraph-compact {
-  margin: 0 0 0.75rem 0;
-  color: rgb(var(--color-text-primary));
-}
-.formatted-response-view .paragraph-compact:last-child {
-  margin-bottom: 0;
-}
-
-.formatted-response-view .bullet-list-compact,
-.formatted-response-view .numbered-list-compact {
-  margin: 0 0 0.75rem 0;
-  padding-left: 1.25rem;
-  color: rgb(var(--color-text-primary));
-}
-.formatted-response-view .bullet-list-compact li,
-.formatted-response-view .numbered-list-compact li {
-  margin-bottom: 0.375rem;
-}
-.formatted-response-view .bullet-list-compact li:last-child,
-.formatted-response-view .numbered-list-compact li:last-child {
-  margin-bottom: 0;
-}
-
-.formatted-response-view .skills-tags-compact {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin-top: 0.5rem;
-}
-
-.formatted-response-view .skill-tag-compact {
-  background: rgba(var(--color-primary-rgb, 99, 102, 241), 0.06);
-  border: 1px solid rgba(var(--color-primary-rgb, 99, 102, 241), 0.15);
-  color: rgb(var(--color-primary));
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
-}
-
-/* Local Success Toast */
-.local-toast {
-  position: absolute;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  z-index: 999;
-  min-width: 220px;
-  max-width: 90%;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(22, 101, 52, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
-  padding: 0.5rem 0.875rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.local-toast.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-.local-toast-text {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  white-space: nowrap;
+  opacity: 0.5;
 }
 
 pre {
@@ -1325,21 +1054,19 @@ pre {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 40px;
-  padding: 0 1.25rem;
+  padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
   border: none;
-  border-radius: 10px;
+  border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 0.875rem;
   color: white;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 3px 8px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
 }
 .btn-primary:disabled {
   opacity: 0.5;
@@ -1352,13 +1079,11 @@ pre {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 40px;
-  padding: 0 1.25rem;
+  padding: 0.75rem 1.5rem;
   background: rgb(var(--color-surface));
   border: 1px solid rgb(var(--color-border));
-  border-radius: 10px;
+  border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 0.875rem;
   color: rgb(var(--color-text-primary));
   cursor: pointer;
   transition: all 0.2s;
@@ -1372,13 +1097,11 @@ pre {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 40px;
-  padding: 0 1.25rem;
+  padding: 0.75rem 1.5rem;
   background: transparent;
   border: 1px solid rgb(var(--color-border));
-  border-radius: 10px;
+  border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 0.875rem;
   color: rgb(var(--color-text-secondary));
   cursor: pointer;
   transition: all 0.2s;
@@ -1391,17 +1114,6 @@ pre {
 .btn-outline:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.btn-copy-main {
-  min-width: 175px;
-}
-.btn-content-transition {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
-  width: 100%;
 }
 
 .ai-stats-panel {
@@ -1598,7 +1310,7 @@ pre {
   background: linear-gradient(135deg, #a0b2d6 0%, #6e8bbd 100%);
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: flex-end;
   padding: 0.75rem;
 }
@@ -2119,26 +1831,28 @@ pre {
   overflow-y: auto;
 }
 
-.about-actions-row {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.btn-copy-small-alt {
+.about-header-actions {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1.25rem;
+  gap: 0.5rem;
+}
+
+.btn-copy-tiny-compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: rgb(var(--color-surface));
   border: 1px solid rgb(var(--color-border));
-  border-radius: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 600;
   color: rgb(var(--color-text-secondary));
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.btn-copy-small-alt:hover {
+.btn-copy-tiny-compact:hover {
   background: rgb(var(--color-surface-hover));
   border-color: rgb(var(--color-primary));
   color: rgb(var(--color-primary));
@@ -2418,6 +2132,43 @@ pre {
   .metric-suggestion-box {
     padding: 0.375rem;
     font-size: 0.75rem;
+  }
+  
+  .section-label-row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .suggestion-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .suggestion-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .suggestion-radio-row {
+    width: 100%;
+  }
+
+  .card-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .about-header-actions {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
   }
 }
 
