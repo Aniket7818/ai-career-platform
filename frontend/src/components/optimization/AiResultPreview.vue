@@ -1203,22 +1203,25 @@ pre {
   height: 100%;
   border-radius: 50%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  line-height: 1.1;
 }
 
 .score-number {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: rgb(var(--color-text-primary));
+  line-height: 1;
 }
 
 .score-total {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: rgb(var(--color-text-secondary));
   font-weight: 600;
-  margin-top: 4px;
+  margin-top: 1px;
+  line-height: 1;
 }
 
 .score-meta h4 {
@@ -2034,11 +2037,14 @@ pre {
     gap: 0.75rem;
   }
   .score-circle {
-    width: 56px;
-    height: 56px;
+    width: 58px;
+    height: 58px;
   }
   .score-number {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+  }
+  .score-total {
+    font-size: 0.65rem;
   }
   .score-meta h4 {
     font-size: 0.95rem;
