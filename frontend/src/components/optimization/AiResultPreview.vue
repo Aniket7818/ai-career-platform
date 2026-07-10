@@ -1195,6 +1195,7 @@ pre {
   align-items: center;
   justify-content: center;
   padding: 4px;
+  flex-shrink: 0;
 }
 
 .score-inner {
