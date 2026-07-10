@@ -200,12 +200,6 @@
       </main>
     </div>
 
-    <!-- Sticky Optimize Button (Mobile Only) -->
-    <div class="mobile-sticky-actions" v-if="isMobile">
-      <button class="btn-sticky-optimize" @click="triggerWorkflow('optimize')">
-        ⭐ AI Optimize Resume
-      </button>
-    </div>
 
     <!-- Sticky Bottom Navigation (Mobile Only) -->
     <nav class="mobile-bottom-nav" v-if="isMobile">
@@ -774,45 +768,6 @@ function onResumeRestored(updatedResume) {
 }
 .btn-go-versions:hover { opacity: 0.9; }
 
-/* ── Mobile Sticky Optimize Action ─────────────────────────────────────────── */
-.mobile-sticky-actions {
-  position: fixed;
-  bottom: 76px;
-  left: 0;
-  right: 0;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(to top, rgb(var(--color-background)) 70%, transparent);
-  z-index: 45;
-  display: flex;
-  justify-content: center;
-}
-
-.btn-sticky-optimize {
-  width: 100%;
-  max-width: 480px;
-  height: 46px;
-  border-radius: 0.75rem;
-  border: none;
-  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
-  color: white;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-sticky-optimize:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
-}
-.btn-sticky-optimize:active {
-  transform: translateY(1px);
-}
-
 /* ── Mobile Bottom Navigation Bar ──────────────────────────────────────────── */
 .mobile-bottom-nav {
   position: fixed;
@@ -879,7 +834,7 @@ function onResumeRestored(updatedResume) {
   .resume-context-title { max-width: 110px; font-size: 0.8rem; }
   
   .optimize-page {
-    padding-bottom: 130px; /* Space for bottom navigation & sticky action button */
+    padding-bottom: 80px; /* Space for bottom navigation only */
   }
   .mobile-bottom-nav {
     display: grid;
