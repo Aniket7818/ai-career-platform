@@ -55,14 +55,105 @@ export default createStore({
  }
  }
  },
- actions: {
- async login({ commit }, payload) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.login(payload); commit('setUser', data.user); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
- async signup({ commit }, { turnstileToken, ...formData }) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.signup(formData, turnstileToken); commit('setUser', data.user); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
- async forgotPassword({ commit }, { email, turnstileToken }) { commit('setLoading', true); commit('setError', null); try { await authService.forgotPassword(email, turnstileToken); return true } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
- async resetPassword({ commit }, payload) { commit('setLoading', true); commit('setError', null); try { await authService.resetPassword(payload); return true } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
- async validateResetToken({ commit }, token) { commit('setLoading', true); commit('setError', null); try { const { data } = await authService.validateResetToken(token); return data.valid } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
- async fetchMe({ commit }) { try { const { data } = await authService.me(); commit('setUser', data.user); return data.user } catch { commit('setUser', null); return null } },
- async logout({ commit }) { commit('setLoading', true); try { await authService.logout() } finally { commit('setUser', null); commit('setLoading', false) } },
+  actions: {
+    async login({ commit }, payload) {
+      commit('setLoading', true)
+      commit('setError', null)
+      commit('setUser', null)
+      try {
+        const { data } = await authService.login(payload)
+        if (data.token) {
+          localStorage.setItem('auth_token', data.token)
+        }
+        commit('setUser', data.user)
+        return data.user
+      } catch (e) {
+        commit('setError', errorText(e))
+        return null
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+    async signup({ commit }, { turnstileToken, ...formData }) {
+      commit('setLoading', true)
+      commit('setError', null)
+      commit('setUser', null)
+      try {
+        const { data } = await authService.signup(formData, turnstileToken)
+        if (data.token) {
+          localStorage.setItem('auth_token', data.token)
+        }
+        commit('setUser', data.user)
+        return data.user
+      } catch (e) {
+        commit('setError', errorText(e))
+        return null
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+    async forgotPassword({ commit }, { email, turnstileToken }) {
+      commit('setLoading', true)
+      commit('setError', null)
+      try {
+        await authService.forgotPassword(email, turnstileToken)
+        return true
+      } catch (e) {
+        commit('setError', errorText(e))
+        return false
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+    async resetPassword({ commit }, payload) {
+      commit('setLoading', true)
+      commit('setError', null)
+      try {
+        await authService.resetPassword(payload)
+        return true
+      } catch (e) {
+        commit('setError', errorText(e))
+        return false
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+    async validateResetToken({ commit }, token) {
+      commit('setLoading', true)
+      commit('setError', null)
+      try {
+        const { data } = await authService.validateResetToken(token)
+        return data.valid
+      } catch (e) {
+        commit('setError', errorText(e))
+        return false
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+    async fetchMe({ commit }) {
+      try {
+        const { data } = await authService.me()
+        commit('setUser', data.user)
+        return data.user
+      } catch (e) {
+        commit('setUser', null)
+        if (e.response && e.response.status === 401) {
+          localStorage.removeItem('auth_token')
+        }
+        return null
+      }
+    },
+    async logout({ commit }) {
+      commit('setLoading', true)
+      try {
+        await authService.logout()
+      } finally {
+        localStorage.removeItem('auth_token')
+        commit('setUser', null)
+        commit('setLoading', false)
+      }
+    },
  async updateProfile({ commit }, payload) {
  commit('setLoading', true)
  commit('setError', null)
