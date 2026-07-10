@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_10_223500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,21 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
     t.integer "http_status"
     t.index ["resume_id"], name: "index_ai_logs_on_resume_id"
     t.index ["user_id"], name: "index_ai_logs_on_user_id"
+  end
+
+  create_table "ai_optimization_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "resume_id", null: false
+    t.string "action"
+    t.string "status"
+    t.jsonb "result"
+    t.text "error_message"
+    t.jsonb "payload"
+    t.jsonb "request_meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resume_id"], name: "index_ai_optimization_requests_on_resume_id"
+    t.index ["user_id"], name: "index_ai_optimization_requests_on_user_id"
   end
 
   create_table "audit_logs", force: :cascade do |t|
@@ -242,6 +257,26 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "resume_versions", force: :cascade do |t|
+    t.bigint "resume_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "version_number", default: 1, null: false
+    t.string "label", default: "Original", null: false
+    t.jsonb "content_snapshot", default: {}, null: false
+    t.text "change_summary"
+    t.boolean "is_current", default: false, null: false
+    t.string "source", default: "manual", null: false
+    t.integer "score_at_creation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resume_id", "created_at"], name: "index_resume_versions_on_resume_id_and_created_at"
+    t.index ["resume_id", "is_current"], name: "index_resume_versions_on_resume_id_and_is_current"
+    t.index ["resume_id", "version_number"], name: "index_resume_versions_on_resume_id_and_version_number", unique: true
+    t.index ["resume_id"], name: "index_resume_versions_on_resume_id"
+    t.index ["source"], name: "index_resume_versions_on_source"
+    t.index ["user_id"], name: "index_resume_versions_on_user_id"
+  end
+
   create_table "resumes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
@@ -252,6 +287,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
     t.string "template_id", default: "modern", null: false
     t.datetime "downloaded_at"
     t.integer "download_count", default: 0, null: false
+    t.string "target_role"
+    t.integer "last_analysis_score"
+    t.datetime "last_analyzed_at"
+    t.integer "ats_score"
+    t.integer "keyword_score"
+    t.integer "content_score"
+    t.integer "completeness_score"
+    t.integer "analysis_version"
+    t.jsonb "analysis_data", default: {}
     t.index ["status"], name: "index_resumes_on_status"
     t.index ["user_id", "updated_at"], name: "index_resumes_on_user_id_and_updated_at"
     t.index ["user_id"], name: "index_resumes_on_user_id"
@@ -363,8 +407,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "ai_logs", "resumes"
+  add_foreign_key "ai_logs", "resumes", on_delete: :cascade
   add_foreign_key "ai_logs", "users"
+  add_foreign_key "ai_optimization_requests", "resumes"
+  add_foreign_key "ai_optimization_requests", "users"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "audit_logs", "users", column: "actor_id"
   add_foreign_key "billing_histories", "users"
@@ -385,6 +431,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_05_214338) do
   add_foreign_key "quiz_attempts", "users"
   add_foreign_key "quiz_questions", "questions"
   add_foreign_key "quiz_questions", "quizzes"
+  add_foreign_key "resume_versions", "resumes"
+  add_foreign_key "resume_versions", "users"
   add_foreign_key "resumes", "users"
   add_foreign_key "study_plan_items", "study_plans"
   add_foreign_key "study_plan_items", "subjects"

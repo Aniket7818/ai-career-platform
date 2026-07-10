@@ -16,3 +16,20 @@ end
 AdminSetting.find_or_create_by!(key: "maintenance_mode") { |setting| setting.value = { enabled: false } }
 AdminSetting.find_or_create_by!(key: "announcements") { |setting| setting.value = { message: "Build resumes faster with polished templates." } }
 AdminSetting.find_or_create_by!(key: "pricing_plans") { |setting| setting.value = { free: 0, pro: 499 } }
+
+# Create default admin user if they don't exist
+email = 'ajitaniket956556@gmail.com'
+unless User.exists?(email: email)
+  User.create!(
+    email: email,
+    password: 'Aniket0987',
+    password_confirmation: 'Aniket0987',
+    first_name: 'Aniket',
+    last_name: 'Ajit',
+    username: 'aniket_admin',
+    role: 'admin',
+    status: 'active',
+    confirmed_at: Time.current
+  )
+end
+
