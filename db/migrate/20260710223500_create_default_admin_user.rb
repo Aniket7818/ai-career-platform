@@ -1,11 +1,12 @@
 class CreateDefaultAdminUser < ActiveRecord::Migration[7.2]
   def up
-    email = 'ajitaniket956556@gmail.com'
+    email = ENV['ADMIN_EMAIL'] || 'ajitaniket956556@gmail.com'
+    password = ENV['ADMIN_PASSWORD'] || 'Aniket0987'
     unless User.exists?(email: email)
       User.create!(
         email: email,
-        password: 'Aniket0987',
-        password_confirmation: 'Aniket0987',
+        password: password,
+        password_confirmation: password,
         first_name: 'Aniket',
         last_name: 'Ajit',
         username: 'aniket_admin',
