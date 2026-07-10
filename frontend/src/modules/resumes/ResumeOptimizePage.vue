@@ -3,10 +3,15 @@
     <!-- Workspace Tab Bar -->
     <div class="workspace-tabs-bar">
       <div class="workspace-tabs-inner">
+        <!-- Mobile hamburger menu button -->
+        <button class="mobile-menu-toggle" @click="isDrawerOpen = true" aria-label="Open Optimize Menu">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+
         <!-- Back to resume list -->
         <RouterLink :to="{ name: ROUTE_NAMES.RESUMES }" class="back-link">
           <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Resumes
+          <span class="back-text">Resumes</span>
         </RouterLink>
 
         <div class="tabs-divider"></div>
@@ -24,14 +29,14 @@
             :class="{ active: false }"
           >
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Edit
+            <span class="tab-label">Edit</span>
           </RouterLink>
           <RouterLink
             :to="{ name: 'resume-print', params: { id: resumeId } }"
             class="workspace-tab"
           >
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            Preview
+            <span class="tab-label">Preview</span>
           </RouterLink>
           <RouterLink
             :to="{ name: ROUTE_NAMES.RESUME_OPTIMIZE, params: { id: resumeId } }"
@@ -39,11 +44,105 @@
             active-class="active"
           >
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            Optimize
+            <span class="tab-label">Optimize</span>
           </RouterLink>
         </nav>
       </div>
     </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <Transition name="drawer-fade">
+      <div v-if="isDrawerOpen" class="drawer-overlay" @click="isDrawerOpen = false">
+        <div class="drawer-content" @click.stop>
+          <!-- Drawer Header -->
+          <div class="drawer-header">
+            <div class="drawer-user-info">
+              <span class="avatar-circle">
+                <template v-if="user?.avatar">
+                  <img :src="user.avatar" class="size-full object-cover" />
+                </template>
+                <template v-else>{{ initials }}</template>
+              </span>
+              <div class="drawer-user-details">
+                <div class="drawer-username">{{ user?.full_name || user?.username || 'User' }}</div>
+                <div class="drawer-plan">Premium Plan</div>
+              </div>
+            </div>
+            <button class="btn-close-drawer" @click="isDrawerOpen = false">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Drawer Navigation -->
+          <div class="drawer-nav-container">
+            <!-- Group 1: Resume Optimization -->
+            <div class="drawer-nav-group">
+              <div class="drawer-group-label">Resume Optimization</div>
+              <button
+                v-for="section in sidebarSections"
+                :key="section.id"
+                class="drawer-nav-item"
+                :class="{ active: isMobile ? (activeMobileTab === getSectionMobileTab(section.id)) : (activeSection === section.id) }"
+                @click="selectSection(section.id)"
+              >
+                <component :is="section.icon" class="size-4" />
+                <span>{{ section.label }}</span>
+                <span v-if="section.badge" class="sidebar-badge">{{ section.badge }}</span>
+                <span v-if="section.soon" class="sidebar-soon">Soon</span>
+              </button>
+            </div>
+
+            <!-- Group 2: AI Toolkit -->
+            <div class="drawer-nav-group">
+              <div class="drawer-group-label">AI Toolkit</div>
+              <button class="drawer-nav-item" @click="triggerWorkflow('generate_linkedin')">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                <span>LinkedIn Optimizer</span>
+              </button>
+              <button class="drawer-nav-item" @click="triggerWorkflow('generate_cover_letter')">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6"/></svg>
+                <span>Cover Letter</span>
+              </button>
+              <button class="drawer-nav-item" @click="triggerWorkflow('tailor_to_job')">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <span>Tailor Resume</span>
+              </button>
+              <button class="drawer-nav-item" @click="navigateToRoute('/interview-prep')">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>Interview Preparation</span>
+              </button>
+              <button class="drawer-nav-item" disabled>
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V9l7 4-7 4z"/></svg>
+                <span>Portfolio Builder <span class="sidebar-soon">Soon</span></span>
+              </button>
+            </div>
+
+            <!-- Group 3: Account & Billing -->
+            <div class="drawer-nav-group">
+              <div class="drawer-group-label">Credits & Billing</div>
+              <div class="drawer-credits-card">
+                <div class="credits-label">AI Credits Remaining</div>
+                <div class="credits-count">{{ creditsRemaining }}</div>
+                <div class="credits-bar">
+                  <div class="credits-bar-fill" :style="{ width: `${creditsPercentage}%` }"></div>
+                </div>
+                <button class="btn-buy-credits" @click="navigateToRoute('/settings')">
+                  Buy More Credits
+                </button>
+              </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="drawer-nav-group">
+              <button class="drawer-nav-item" @click="navigateToRoute('/settings')">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Settings</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
     <!-- Loading state -->
     <div v-if="loading" class="optimize-loading">
@@ -53,7 +152,7 @@
 
     <!-- Main content: sidebar + body -->
     <div v-else class="optimize-layout">
-      <!-- Sidebar navigation -->
+      <!-- Sidebar navigation (desktop only) -->
       <aside class="optimize-sidebar">
         <nav class="sidebar-nav">
           <button
@@ -73,20 +172,23 @@
 
       <!-- Content area -->
       <main class="optimize-content">
-        <!-- Overview (fully functional in Phase 3.2) -->
         <ResumeScoreOverview
-          v-if="activeSection === 'overview'"
+          v-if="isMobile ? (activeMobileTab === 'overview' || activeMobileTab === 'review' || activeMobileTab === 'insights') : (activeSection === 'overview')"
           :resumeId="resumeId"
+          :resume="resume"
+          :mobileTab="isMobile ? activeMobileTab : null"
+          @update-resume="resume = $event"
+          ref="scoreOverviewRef"
         />
 
-        <!-- Version History (fully functional in Phase 3.1) -->
+        <!-- Version History -->
         <ResumeVersionHistoryPage
-          v-else-if="activeSection === 'versions'"
+          v-else-if="isMobile ? (activeMobileTab === 'history') : (activeSection === 'versions')"
           :resumeId="resumeId"
           @restored="onResumeRestored"
         />
 
-        <!-- Coming Soon sections -->
+        <!-- Coming Soon sections (desktop only, since mobile drawer maps to tabs) -->
         <div v-else class="section-placeholder">
           <div class="placeholder-icon">🔒</div>
           <h2>{{ currentSectionLabel }} — Coming Soon</h2>
@@ -97,12 +199,86 @@
         </div>
       </main>
     </div>
+
+    <!-- Sticky Optimize Button (Mobile Only) -->
+    <div class="mobile-sticky-actions" v-if="isMobile">
+      <button class="btn-sticky-optimize" @click="triggerWorkflow('optimize')">
+        ⭐ AI Optimize Resume
+      </button>
+    </div>
+
+    <!-- Sticky Bottom Navigation (Mobile Only) -->
+    <nav class="mobile-bottom-nav" v-if="isMobile">
+      <button 
+        class="bottom-nav-item" 
+        :class="{ active: activeMobileTab === 'overview' }"
+        @click="selectMobileTab('overview')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Overview</span>
+      </button>
+
+      <button 
+        class="bottom-nav-item" 
+        :class="{ active: activeMobileTab === 'review' }"
+        @click="selectMobileTab('review')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <path d="M14 2v6h6" />
+          <path d="M16 13H8M16 17H8" />
+        </svg>
+        <span>Review</span>
+      </button>
+
+      <button 
+        class="bottom-nav-item" 
+        :class="{ active: activeMobileTab === 'insights' }"
+        @click="selectMobileTab('insights')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        <span>Insights</span>
+      </button>
+
+      <button 
+        class="bottom-nav-item" 
+        :class="{ active: activeMobileTab === 'history' }"
+        @click="selectMobileTab('history')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+        <span>History</span>
+      </button>
+
+      <button 
+        class="bottom-nav-item" 
+        @click="isDrawerOpen = true"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <span>Menu</span>
+      </button>
+    </nav>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, defineAsyncComponent, h } from 'vue'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { ref, computed, onMounted, onBeforeUnmount, h, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ROUTE_NAMES } from '../../constants/routes'
 import ResumeVersionHistoryPage from './ResumeVersionHistoryPage.vue'
@@ -113,20 +289,150 @@ const router = useRouter()
 const store = useStore()
 
 const resumeId = computed(() => route.params.id)
-const resume = ref(null)
+const resume = computed({
+  get: () => store.state.resumes.currentResume,
+  set: (val) => {
+    if (val) store.commit('resumes/updateOne', val)
+  }
+})
 const loading = ref(false)
 const activeSection = ref('overview')
+const activeMobileTab = ref('overview')
+const isDrawerOpen = ref(false)
+const scoreOverviewRef = ref(null)
+
+const user = computed(() => store.state.auth.user)
+const initials = computed(() => {
+  const name = user.value?.full_name || user.value?.username || user.value?.email || 'U'
+  return name.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase()
+})
+
+const creditsRemaining = computed(() => store.state.auth.user?.ai_credits_remaining || 0)
+const totalCredits = ref(100)
+const creditsPercentage = computed(() => Math.min(100, (creditsRemaining.value / totalCredits.value) * 100))
+
+const isMobile = ref(false)
+let mediaQuery = null
+
+const listener = (e) => {
+  isMobile.value = e.matches
+  if (e.matches) {
+    if (activeSection.value === 'versions') {
+      activeMobileTab.value = 'history'
+    } else if (activeSection.value === 'content') {
+      activeMobileTab.value = 'review'
+    } else if (activeSection.value === 'ats' || activeSection.value === 'keywords') {
+      activeMobileTab.value = 'insights'
+    } else {
+      activeMobileTab.value = 'overview'
+    }
+  } else {
+    if (activeMobileTab.value === 'history') {
+      activeSection.value = 'versions'
+    } else if (activeMobileTab.value === 'review') {
+      activeSection.value = 'content'
+    } else if (activeMobileTab.value === 'insights') {
+      activeSection.value = 'ats'
+    } else {
+      activeSection.value = 'overview'
+    }
+  }
+}
 
 onMounted(async () => {
+  if (typeof window !== 'undefined') {
+    mediaQuery = window.matchMedia('(max-width: 768px)')
+    isMobile.value = mediaQuery.matches
+    mediaQuery.addEventListener('change', listener)
+    
+    // Initial sync
+    if (isMobile.value) {
+      if (activeSection.value === 'versions') {
+        activeMobileTab.value = 'history'
+      } else if (activeSection.value === 'content') {
+        activeMobileTab.value = 'review'
+      } else if (activeSection.value === 'ats' || activeSection.value === 'keywords') {
+        activeMobileTab.value = 'insights'
+      } else {
+        activeMobileTab.value = 'overview'
+      }
+    }
+  }
+
   loading.value = true
   try {
     const loaded = await store.dispatch('resumes/loadOne', resumeId.value)
-    if (loaded) resume.value = loaded
-    else router.replace({ name: ROUTE_NAMES.RESUMES })
+    if (!loaded) router.replace({ name: ROUTE_NAMES.RESUMES })
   } finally {
     loading.value = false
   }
 })
+
+onBeforeUnmount(() => {
+  if (mediaQuery) {
+    mediaQuery.removeEventListener('change', listener)
+  }
+})
+
+function getSectionMobileTab(sectionId) {
+  if (sectionId === 'overview') return 'overview'
+  if (sectionId === 'content') return 'review'
+  if (sectionId === 'ats' || sectionId === 'keywords') return 'insights'
+  if (sectionId === 'versions') return 'history'
+  return 'overview'
+}
+
+function selectSection(sectionId) {
+  isDrawerOpen.value = false
+  activeSection.value = sectionId
+  
+  if (isMobile.value) {
+    if (sectionId === 'overview') {
+      activeMobileTab.value = 'overview'
+    } else if (sectionId === 'content') {
+      activeMobileTab.value = 'review'
+      activeSection.value = 'overview'
+    } else if (sectionId === 'ats' || sectionId === 'keywords') {
+      activeMobileTab.value = 'insights'
+      activeSection.value = 'overview'
+    } else if (sectionId === 'versions') {
+      activeMobileTab.value = 'history'
+    }
+  }
+}
+
+function selectMobileTab(tab) {
+  activeMobileTab.value = tab
+  if (tab === 'history') {
+    activeSection.value = 'versions'
+  } else if (tab === 'review') {
+    activeSection.value = 'overview'
+  } else if (tab === 'insights') {
+    activeSection.value = 'overview'
+  } else {
+    activeSection.value = 'overview'
+  }
+}
+
+async function triggerWorkflow(type) {
+  isDrawerOpen.value = false
+  if (isMobile.value) {
+    activeMobileTab.value = 'overview'
+    activeSection.value = 'overview'
+    await nextTick()
+  } else if (activeSection.value !== 'overview') {
+    activeSection.value = 'overview'
+    await nextTick()
+  }
+  if (scoreOverviewRef.value) {
+    scoreOverviewRef.value.openWorkflow(type)
+  }
+}
+
+function navigateToRoute(path) {
+  isDrawerOpen.value = false
+  router.push(path)
+}
 
 // Simple icon components (inline SVGs as render functions)
 const IconDashboard = { render: () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2 }, [h('rect', { x: 3, y: 3, width: 7, height: 7 }), h('rect', { x: 14, y: 3, width: 7, height: 7 }), h('rect', { x: 14, y: 14, width: 7, height: 7 }), h('rect', { x: 3, y: 14, width: 7, height: 7 })]) }
@@ -188,22 +494,250 @@ function onResumeRestored(updatedResume) {
   font-weight: 600;
 }
 
+/* ── Mobile Drawer Toggle & Style ────────────────────────────────────────── */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: rgb(var(--color-text-primary));
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-menu-toggle:hover {
+  background: rgb(var(--color-surface-hover));
+}
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.drawer-content {
+  width: 290px;
+  max-width: 85vw;
+  height: 100%;
+  background: rgb(var(--color-surface));
+  border-right: 1px solid rgb(var(--color-border));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.drawer-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgb(var(--color-border));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.drawer-user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-username {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--color-text-primary));
+}
+
+.drawer-plan {
+  font-size: 0.75rem;
+  color: rgb(var(--color-primary));
+  font-weight: 500;
+}
+
+.btn-close-drawer {
+  background: transparent;
+  border: none;
+  color: rgb(var(--color-text-muted));
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-close-drawer:hover {
+  color: rgb(var(--color-text-primary));
+  background: rgb(var(--color-surface-hover));
+}
+
+.drawer-nav-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.drawer-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.drawer-group-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(var(--color-text-muted));
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.drawer-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: transparent;
+  color: rgb(var(--color-text-secondary));
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+}
+.drawer-nav-item:hover:not(:disabled) {
+  color: rgb(var(--color-text-primary));
+  background: rgb(var(--color-surface-hover));
+}
+.drawer-nav-item.active {
+  color: rgb(var(--color-primary));
+  background: color-mix(in srgb, rgb(var(--color-primary)) 10%, transparent);
+  font-weight: 600;
+}
+.drawer-nav-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Credits card inside drawer */
+.drawer-credits-card {
+  background: rgb(var(--color-surface-hover));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.credits-label {
+  font-size: 0.75rem;
+  color: rgb(var(--color-text-secondary));
+  font-weight: 500;
+}
+
+.credits-count {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: rgb(var(--color-text-primary));
+}
+
+.credits-bar {
+  height: 6px;
+  background: rgb(var(--color-border));
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.credits-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgb(var(--color-primary)), #8b5cf6);
+  border-radius: 3px;
+}
+
+.btn-buy-credits {
+  margin-top: 0.25rem;
+  background: transparent;
+  border: 1px solid rgb(var(--color-primary));
+  color: rgb(var(--color-primary));
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.btn-buy-credits:hover {
+  background: rgb(var(--color-primary));
+  color: white;
+}
+
+/* Drawer Transitions */
+.drawer-fade-enter-active,
+.drawer-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.drawer-fade-enter-active .drawer-content,
+.drawer-fade-leave-active .drawer-content {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-fade-enter-from {
+  opacity: 0;
+}
+.drawer-fade-enter-from .drawer-content {
+  transform: translateX(-100%);
+}
+
+.drawer-fade-leave-to {
+  opacity: 0;
+}
+.drawer-fade-leave-to .drawer-content {
+  transform: translateX(-100%);
+}
+
 /* ── Loading ───────────────────────────────────────────────────────────────── */
 .optimize-loading { display: flex; align-items: center; gap: 0.75rem; justify-content: center; padding: 4rem; color: rgb(var(--color-text-muted)); }
 
 /* ── Layout ────────────────────────────────────────────────────────────────── */
 .optimize-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 52px); }
-@media (max-width: 768px) { .optimize-layout { grid-template-columns: 1fr; } }
 
 /* ── Sidebar ───────────────────────────────────────────────────────────────── */
 .optimize-sidebar {
   border-right: 1px solid rgb(var(--color-border)); background: rgb(var(--color-surface));
   padding: 1.25rem 0.75rem; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto;
 }
-@media (max-width: 768px) { .optimize-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid rgb(var(--color-border)); padding: 0.75rem; } }
 
 .sidebar-nav { display: flex; flex-direction: column; gap: 0.25rem; }
-@media (max-width: 768px) { .sidebar-nav { flex-direction: row; overflow-x: auto; gap: 0.375rem; } }
 
 .sidebar-item {
   display: flex; align-items: center; gap: 0.625rem;
@@ -240,9 +774,122 @@ function onResumeRestored(updatedResume) {
 }
 .btn-go-versions:hover { opacity: 0.9; }
 
+/* ── Mobile Sticky Optimize Action ─────────────────────────────────────────── */
+.mobile-sticky-actions {
+  position: fixed;
+  bottom: 76px;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to top, rgb(var(--color-background)) 70%, transparent);
+  z-index: 45;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-sticky-optimize {
+  width: 100%;
+  max-width: 480px;
+  height: 46px;
+  border-radius: 0.75rem;
+  border: none;
+  background: linear-gradient(135deg, rgb(var(--color-primary)), #8b5cf6);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-sticky-optimize:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+}
+.btn-sticky-optimize:active {
+  transform: translateY(1px);
+}
+
+/* ── Mobile Bottom Navigation Bar ──────────────────────────────────────────── */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(var(--color-surface), 0.85);
+  backdrop-filter: blur(16px);
+  border-top: 1.5px solid rgb(var(--color-border));
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  z-index: 50;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background: transparent;
+  border: none;
+  color: rgb(var(--color-text-muted));
+  font-size: 0.6875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.25rem 0;
+}
+
+.bottom-nav-item:hover {
+  color: rgb(var(--color-text-primary));
+}
+
+.bottom-nav-item.active {
+  color: rgb(var(--color-primary));
+}
+
+.bottom-nav-item svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-nav-item.active svg {
+  transform: scale(1.1);
+}
+
 /* ── Utilities ─────────────────────────────────────────────────────────────── */
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .size-4 { width: 1rem; height: 1rem; }
-.size-6 { width: 1.5rem; height: 1.5rem; }
+.size-5 { width: 1.25rem; height: 1.25rem; }
+
+/* ── Responsive media queries ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .optimize-layout { grid-template-columns: 1fr; }
+  .optimize-sidebar { display: none; }
+  .mobile-menu-toggle { display: flex; }
+  .back-text { display: none; }
+  .resume-context-title { max-width: 110px; font-size: 0.8rem; }
+  
+  .optimize-page {
+    padding-bottom: 130px; /* Space for bottom navigation & sticky action button */
+  }
+  .mobile-bottom-nav {
+    display: grid;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspace-tab .tab-label { display: none; }
+  .workspace-tab { padding: 0.5rem; }
+  .workspace-tabs-inner { padding: 0 0.75rem; gap: 0.5rem; }
+  .resume-context-title { max-width: 70px; }
+}
 </style>

@@ -8,7 +8,7 @@
       
       <div class="header-right">
         <div class="progress-container">
-          <div class="progress-bar">
+          <div class="progress-bar" v-if="!isMobile">
             <div class="progress-fill" :style="{ width: `${progress}%`, backgroundColor: healthColor }"></div>
           </div>
           <span class="progress-text">{{ progress }}%</span>
@@ -18,50 +18,81 @@
       </div>
     </div>
 
-    <div class="shc-content" v-show="expanded">
-      <div class="shc-grid">
-        <div class="shc-issues" v-if="issues.length">
-          <h4><svg class="size-4 mr-1 text-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Problems Found</h4>
-          <ul>
-            <li v-for="(issue, i) in issues" :key="i">
-              <div class="bullet error-bullet"></div>
-              <span>{{ issue }}</span>
-            </li>
-          </ul>
+    <Transition name="expand">
+      <div class="shc-content" v-show="expanded">
+        <div class="shc-grid">
+          <div class="shc-issues" v-if="issues.length">
+            <h4><svg class="size-4 mr-1 text-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Problems Found</h4>
+            <ul>
+              <li v-for="(issue, i) in issues" :key="i">
+                <div class="bullet error-bullet"></div>
+                <span>{{ issue }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="shc-stats" v-if="!isMobile && stats && Object.keys(stats).length > 0">
+            <h4 style="margin-bottom: 0.5rem; color: rgb(var(--color-text-primary)); font-weight: 600;">Current Status</h4>
+            <div style="font-size: 0.875rem; color: rgb(var(--color-text-secondary)); margin-bottom: 0.25rem;">
+              <strong>Current:</strong> {{ stats.current }}
+            </div>
+            <div v-if="stats.quality != null" style="font-size: 0.875rem; color: rgb(var(--color-text-secondary)); margin-bottom: 0.25rem;">
+              <strong>Quality Score:</strong> {{ stats.quality }}
+            </div>
+            <div v-if="stats.target" style="font-size: 0.875rem; color: rgb(var(--color-text-secondary)); margin-bottom: 0.25rem; white-space: pre-line;">
+              <strong>Target:</strong> {{ stats.target }}
+            </div>
+            <div v-if="stats.recommended && !stats.quality" style="font-size: 0.875rem; color: rgb(var(--color-text-secondary)); margin-bottom: 0.25rem;">
+              <strong>Recommended:</strong> {{ stats.recommended }}
+            </div>
+            <div v-if="stats.missing && !stats.quality" style="font-size: 0.875rem; color: rgb(var(--color-text-secondary)); margin-bottom: 0.25rem;">
+              <strong>Missing:</strong> {{ stats.missing }}
+            </div>
+          </div>
+          
+          <div class="shc-suggestions" v-if="suggestions.length">
+            <h4><svg class="size-4 mr-1 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Suggestions</h4>
+            <ul>
+              <li v-for="(sug, i) in suggestions" :key="i">
+                <div class="bullet success-bullet"></div>
+                <span>{{ sug }}</span>
+              </li>
+            </ul>
+          </div>
         </div>
         
-        <div class="shc-suggestions" v-if="suggestions.length">
-          <h4><svg class="size-4 mr-1 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Suggestions</h4>
-          <ul>
-            <li v-for="(sug, i) in suggestions" :key="i">
-              <div class="bullet success-bullet"></div>
-              <span>{{ sug }}</span>
-            </li>
-          </ul>
+        <div class="ai-recommendation" v-if="aiRecommendation && !validationOnly">
+          <div class="rec-header">⭐ AI Recommendation</div>
+          <p>{{ aiRecommendation }}</p>
         </div>
-      </div>
-      
-      <div class="ai-recommendation" v-if="aiRecommendation">
-        <div class="rec-header">⭐ AI Recommendation</div>
-        <p>{{ aiRecommendation }}</p>
-      </div>
 
-      <div class="shc-footer">
-        <div class="gain-meta" v-if="estimatedGain">
-          Potential Gain: <span class="gain-value">+{{ estimatedGain }} pts</span>
+        <div class="shc-footer" v-if="!validationOnly || isOptimized">
+          <div class="gain-meta" v-if="!validationOnly && isOptimized && issues.length === 0" style="color: rgb(var(--color-success));">
+            <svg class="size-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline;"><path d="M20 6L9 17l-5-5"/></svg>
+            {{ validationOnly ? (title === 'Education' ? 'Education section complete' : 'Meets professional standards') : 'Meets professional standards' }}
+          </div>
+          <div class="gain-meta" v-else-if="!validationOnly && estimatedGain">
+            Potential Gain: <span class="gain-value">+{{ estimatedGain }} pts</span>
+          </div>
+          <div class="flex-spacer" v-if="!validationOnly"></div>
+          
+          <div class="actions-group" v-if="!validationOnly">
+            <button class="btn-ai" @click="$emit('improve')">
+              <svg class="size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              {{ buttonText }}
+            </button>
+            <button v-if="isMobile" class="btn-view-details" @click="expanded = false">
+              Collapse
+            </button>
+          </div>
         </div>
-        <div class="flex-spacer"></div>
-        <button class="btn-ai" @click="$emit('improve')">
-          <svg class="size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          Improve with AI
-        </button>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -69,12 +100,36 @@ const props = defineProps({
   issues: { type: Array, default: () => [] },
   suggestions: { type: Array, default: () => [] },
   aiRecommendation: { type: String, default: '' },
-  estimatedGain: { type: Number, default: 0 }
+  estimatedGain: { type: Number, default: 0 },
+  stats: { type: Object, default: () => ({}) },
+  isOptimized: { type: Boolean, default: false },
+  buttonText: { type: String, default: 'Improve with AI' },
+  validationOnly: { type: Boolean, default: false }
 })
 
 defineEmits(['improve'])
 
 const expanded = ref(false)
+const isMobile = ref(false)
+let mediaQuery = null
+
+const listener = (e) => {
+  isMobile.value = e.matches
+}
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    mediaQuery = window.matchMedia('(max-width: 768px)')
+    isMobile.value = mediaQuery.matches
+    mediaQuery.addEventListener('change', listener)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (mediaQuery) {
+    mediaQuery.removeEventListener('change', listener)
+  }
+})
 
 const healthClass = computed(() => {
   if (props.progress >= 80) return 'health-good'
@@ -111,76 +166,70 @@ const healthColor = computed(() => {
 }
 
 .shc-header {
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
   cursor: pointer;
   user-select: none;
-  background: rgb(var(--color-surface));
-  transition: background 0.2s;
-}
-.shc-header:hover {
-  background: rgb(var(--color-surface-hover));
 }
 
 .shc-title-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .shc-title {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.0625rem;
+  font-weight: 700;
   color: rgb(var(--color-text-primary));
 }
 
 .health-badge {
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 .health-good { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-.health-fair { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.health-fair { background: rgba(245, 158, 11, 0.1); color: #d97706; }
 .health-poor { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .progress-container {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  min-width: 150px;
 }
 
 .progress-bar {
-  flex: 1;
+  width: 80px;
   height: 6px;
-  background: rgb(var(--color-surface-elevated));
-  border-radius: 3px;
+  background: rgb(var(--color-border));
+  border-radius: 9999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 3px;
-  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 9999px;
+  transition: width 0.4s ease;
 }
 
 .progress-text {
   font-size: 0.875rem;
   font-weight: 700;
   color: rgb(var(--color-text-secondary));
-  min-width: 2.5rem;
+  min-width: 2.25rem;
   text-align: right;
 }
 
@@ -189,56 +238,49 @@ const healthColor = computed(() => {
   transition: transform 0.3s;
 }
 
-.rotate-180 { transform: rotate(180deg); }
-
 .shc-content {
-  padding: 0 1.5rem 1.5rem 1.5rem;
-  border-top: 1px dashed rgb(var(--color-border));
-  animation: slideDown 0.3s ease-out;
-  margin-top: 0.5rem;
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  border-top: 1.5px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface));
+  padding: 1.5rem;
 }
 
 .shc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.shc-grid h4 {
-  margin: 0 0 1rem 0;
+.shc-issues h4, .shc-suggestions h4 {
+  margin: 0 0 0.75rem 0;
   font-size: 0.875rem;
-  color: rgb(var(--color-text-primary));
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
+  color: rgb(var(--color-text-primary));
 }
 
-.shc-grid ul {
+.shc-issues ul, .shc-suggestions ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
-.shc-grid li {
+.shc-issues li, .shc-suggestions li {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-size: 0.875rem;
-  line-height: 1.5;
   color: rgb(var(--color-text-secondary));
+  line-height: 1.4;
 }
 
 .bullet {
-  width: 6px; height: 6px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   margin-top: 0.4rem;
   flex-shrink: 0;
@@ -247,30 +289,35 @@ const healthColor = computed(() => {
 .success-bullet { background: #10b981; }
 
 .ai-recommendation {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  padding: 1rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(139, 92, 246, 0.03));
+  border: 1px solid rgba(99, 102, 241, 0.15);
   border-radius: 0.75rem;
-  margin-top: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
 }
+
 .rec-header {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: rgb(var(--color-primary));
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.375rem;
 }
+
 .ai-recommendation p {
   margin: 0;
   font-size: 0.875rem;
-  color: rgb(var(--color-text-primary));
+  color: rgb(var(--color-text-secondary));
   line-height: 1.5;
 }
 
 .shc-footer {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid rgb(var(--color-border));
+  padding-top: 1.25rem;
 }
 
 .flex-spacer { flex: 1; }
@@ -305,15 +352,98 @@ const healthColor = computed(() => {
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); 
 }
 
+.actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-view-details {
+  background: transparent;
+  border: 1.5px solid rgb(var(--color-border));
+  color: rgb(var(--color-text-secondary));
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-view-details:hover {
+  background: rgb(var(--color-surface-hover));
+  color: rgb(var(--color-text-primary));
+}
+
 .text-error { color: #ef4444; }
 .text-success { color: #10b981; }
 .size-4 { width: 1rem; height: 1rem; }
 .mr-1 { margin-right: 0.25rem; }
 .mr-2 { margin-right: 0.5rem; }
 
+/* Transitions */
+.expand-enter-active,
+.expand-leave-active {
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease;
+  max-height: 1000px;
+  overflow: hidden;
+}
+.expand-enter-from,
+.expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top-color: transparent !important;
+}
+
 @media (max-width: 768px) {
-  .shc-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .header-right { width: 100%; justify-content: space-between; }
-  .progress-container { flex: 1; }
+  .shc-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    gap: 0.5rem;
+  }
+  .shc-title-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .shc-title {
+    font-size: 0.9375rem;
+  }
+  .header-right {
+    width: auto;
+    gap: 0.5rem;
+  }
+  .progress-container {
+    width: auto;
+  }
+  .shc-content {
+    padding: 1rem 1.25rem;
+  }
+  .shc-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .shc-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .actions-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .btn-ai, .btn-view-details {
+    width: 100%;
+    justify-content: center;
+    padding: 0.6rem;
+  }
+  .gain-meta {
+    text-align: center;
+  }
 }
 </style>
