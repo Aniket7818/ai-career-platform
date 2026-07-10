@@ -148,6 +148,8 @@ export default createStore({
       commit('setLoading', true)
       try {
         await authService.logout()
+      } catch (e) {
+        console.warn('Backend logout failed or was unauthorized:', e)
       } finally {
         localStorage.removeItem('auth_token')
         commit('setUser', null)
