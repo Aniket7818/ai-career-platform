@@ -27,7 +27,43 @@ module Api
       end
 
       def update
+        # Temporary debug logging: DB state before update
+        content_before = @resume.content || {}
+        Rails.logger.info "[AI_PIPELINE_DEBUG] --- START RESUMES_CONTROLLER#UPDATE (ID: #{@resume.id}) ---"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Incoming Params: #{params.dig(:resume, :content).inspect}"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Headline: #{content_before.dig('personal', 'headline').inspect}"
+        if content_before["experiences"].is_a?(Array)
+          content_before["experiences"].each_with_index do |exp, idx|
+            Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Experience[#{idx}] Role: #{exp['role'].inspect} (ID: #{exp['id']})"
+          end
+        end
+        if content_before["projects"].is_a?(Array)
+          content_before["projects"].each_with_index do |proj, idx|
+            Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Project[#{idx}] Name: #{proj['projectName'].inspect} (ID: #{proj['id']})"
+          end
+        end
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Education: #{content_before['educations'].inspect}"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Certifications: #{content_before['certifications'].inspect}"
+
         if @resume.update(resume_params)
+          # Temporary debug logging: DB state after update
+          @resume.reload
+          content_after = @resume.content || {}
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Headline: #{content_after.dig('personal', 'headline').inspect}"
+          if content_after["experiences"].is_a?(Array)
+            content_after["experiences"].each_with_index do |exp, idx|
+              Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Experience[#{idx}] Role: #{exp['role'].inspect} (ID: #{exp['id']})"
+            end
+          end
+          if content_after["projects"].is_a?(Array)
+            content_after["projects"].each_with_index do |proj, idx|
+              Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Project[#{idx}] Name: #{proj['projectName'].inspect} (ID: #{proj['id']})"
+            end
+          end
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Education: #{content_after['educations'].inspect}"
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Certifications: #{content_after['certifications'].inspect}"
+          Rails.logger.info "[AI_PIPELINE_DEBUG] --- END RESUMES_CONTROLLER#UPDATE ---"
+
           # Phase 3.1: Create a snapshot on explicit user saves (not autosave spam).
           # NothingChangedError is silently swallowed — it's not an error, just a skip.
           begin
@@ -41,6 +77,10 @@ module Api
           rescue ResumeVersionService::NothingChangedError
             # Content hasn't changed — skip snapshot silently
           end
+
+          # Issue 2: Automatically recalculate score after save
+          ResumeScoreService.analyze(@resume)
+          
           render json: { resume: ResumeSerializer.new(@resume).as_json }
         else
           render json: { errors: @resume.errors.full_messages }, status: :unprocessable_entity
@@ -145,7 +185,13 @@ module Api
       end
 
       def resume_params
-        params.require(:resume).permit(:title, :status, :template_id, :target_role, content: {})
+        # We allow the full content blob (including nested arrays like experiences,
+        # educations, projects, certifications) by merging raw content directly.
+        base = params.require(:resume).permit(:title, :status, :template_id, :target_role)
+        if params[:resume][:content].present?
+          base[:content] = params[:resume][:content].to_unsafe_h
+        end
+        base
       end
     end
   end

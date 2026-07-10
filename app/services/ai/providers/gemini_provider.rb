@@ -54,8 +54,8 @@ module Ai
             finish_reason:       result.dig("candidates", 0, "finishReason"),
             http_status:         response.code.to_i
           }
-        rescue Net::ReadTimeout, Net::OpenTimeout
-          raise AiService::TimeoutError, "Gemini request timed out"
+        rescue Net::ReadTimeout, Net::OpenTimeout, SocketError, Errno::ECONNREFUSED => e
+          raise AiService::ProviderUnavailableError, "Gemini network error (#{e.class})"
         rescue JSON::ParserError
           raise AiService::ApiError, "Invalid response from Gemini API"
         end

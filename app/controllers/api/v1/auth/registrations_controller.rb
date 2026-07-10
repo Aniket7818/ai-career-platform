@@ -22,8 +22,10 @@ module Api
               session_id: session.id,
               logged_in_at: Time.current
             )
-            render json: { user: UserSerializer.new(resource).as_json }, status: :created
-          else
+            render json: { 
+              user: UserSerializer.new(resource).as_json,
+              ai_features: AiService::CONFIG["features"]
+            }, status: :created
             sign_out(resource_name)
             render json: { errors: friendly_validation_errors(resource) }, status: :unprocessable_entity
           end

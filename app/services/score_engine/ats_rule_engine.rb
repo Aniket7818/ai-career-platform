@@ -2,7 +2,7 @@ module ScoreEngine
   class AtsRuleEngine
     def initialize(resume)
       @resume = resume
-      @content = resume.content || {}
+      @content = ResumeContentNormalizer.normalize(resume.content)
     end
 
     def evaluate
@@ -85,7 +85,7 @@ module ScoreEngine
 
     def check_empty_sections
       empty = []
-      %w[personal experiences education skills projects certifications].each do |sec|
+      %w[personal experiences educations skills projects certifications].each do |sec|
         val = @content[sec]
         empty << sec if val.blank? || (val.is_a?(Array) && val.empty?)
       end

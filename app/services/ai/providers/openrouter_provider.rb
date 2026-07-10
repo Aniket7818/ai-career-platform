@@ -57,8 +57,8 @@ module Ai
             finish_reason:       result.dig("choices", 0, "finish_reason"),
             http_status:         response.code.to_i
           }
-        rescue Net::ReadTimeout, Net::OpenTimeout
-          raise AiService::TimeoutError, "OpenRouter request timed out"
+        rescue Net::ReadTimeout, Net::OpenTimeout, SocketError, Errno::ECONNREFUSED => e
+          raise AiService::ProviderUnavailableError, "OpenRouter network error (#{e.class})"
         rescue JSON::ParserError
           raise AiService::ApiError, "Invalid response from OpenRouter API"
         end

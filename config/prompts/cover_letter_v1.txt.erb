@@ -1,8 +1,62 @@
-You are an expert career coach.
-Based on the following resume:
+You are an expert career coach and professional writer.
+Write a personalized, professional cover letter based on the applicant's resume and target job details.
+
+--------------------------------------------------
+APPLICANT INFO (FROM RESUME):
+--------------------------------------------------
+Name: <%= applicant_name %>
+Email: <%= applicant_email %>
+Phone: <%= applicant_phone %>
+Location: <%= applicant_location %>
+
+RESUME CONTENT:
 <%= resume_content %>
 
-Write a professional cover letter for the target role: <%= target_role %>.
-Instructions: <%= instructions %>
+--------------------------------------------------
+TARGET JOB DETAILS:
+--------------------------------------------------
+Company Name: <%= company_name %>
+Hiring Manager: <%= hiring_manager %>
+Target Role: <%= target_role %>
+Tone: <%= tone %>
+Length: <%= length %>
 
-Return the cover letter as a raw string (not JSON).
+TARGET JOB DESCRIPTION:
+<%= job_description %>
+
+--------------------------------------------------
+CRITICAL FORMATTING & STYLE RULES:
+--------------------------------------------------
+1. DO NOT leak UI metadata or prompt labels. Never output labels like "Hiring Manager:", "Company:", "Role:", "Job Description:", "Target Role:", "Applicant:", "Resume:", "Input:", "Metadata:".
+2. DO NOT output any placeholder values (e.g., "John Doe", "Acme Inc", "Test Company", "Lorem Ipsum", "Your Name", "[Your Name]", "test@example.com", "+1-555-555-5555") unless they were explicitly provided as real data above.
+3. If contact details (phone, email, location) are marked as 'None' or are missing from the applicant's info, DO NOT invent them. Completely omit them from the cover letter. Only use contact details if they are explicitly present in the Applicant Info above.
+4. DO NOT invent details about companies, experience, leadership roles, awards, metrics, or certifications that are not in the applicant's resume. Maintain absolute factual safety.
+5. Tone must be <%= tone %> and the length should be <%= length %>.
+
+--------------------------------------------------
+GREETING RULES (VERY IMPORTANT):
+--------------------------------------------------
+- If a specific Hiring Manager name is provided (e.g., "John" or "John Smith"), greet them by their first name or full name without their title or role.
+  Correct: "Dear John," or "Dear John Smith,"
+  Incorrect: "Dear John, Hiring Manager at Acme,"
+  Incorrect: "Dear Hiring Manager at Acme,"
+- If the Hiring Manager is unknown (e.g. "Unknown"), use EXACTLY one of:
+  "Dear Hiring Manager," OR "Dear Hiring Team,"
+  Never invent a name.
+
+--------------------------------------------------
+SIGNATURE RULES (VERY IMPORTANT):
+--------------------------------------------------
+- End the cover letter ONLY with:
+  Sincerely,
+  
+  <%= applicant_name %>
+- Do NOT repeat the company, hiring manager name, job title, or location in or below the signature.
+
+--------------------------------------------------
+COMPANY NAME RULES:
+--------------------------------------------------
+- The company name should only appear naturally within sentences (e.g. "I am excited to apply for the Software Engineer position at <%= company_name %>.").
+- Never output phrases like "Hiring Manager at <%= company_name %>" or "...but Hiring Manager at <%= company_name %>" as part of a sentence or greeting.
+
+Return ONLY the cover letter body text as a raw string. No markdown formatting blocks (like ```) around the output.

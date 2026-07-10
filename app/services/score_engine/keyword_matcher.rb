@@ -2,7 +2,7 @@ module ScoreEngine
   class KeywordMatcher
     def initialize(resume)
       @resume = resume
-      @content = resume.content || {}
+      @content = ResumeContentNormalizer.normalize(resume.content)
     end
 
     def evaluate

@@ -33,7 +33,10 @@ module Api
             logged_in_at: Time.current
           )
           sign_in(resource_name, resource)
-          render json: { user: UserSerializer.new(resource).as_json }, status: :ok
+          render json: { 
+            user: UserSerializer.new(resource).as_json,
+            ai_features: AiService::CONFIG["features"]
+          }, status: :ok
         end
 
         def destroy
