@@ -1995,13 +1995,16 @@ pre {
     padding: 0.75rem 1rem;
     flex-shrink: 0;
     gap: 0.5rem;
-    display: flex;
-    flex-direction: row !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
     background: rgb(var(--color-surface-hover));
     border-top: 1px solid rgb(var(--color-border));
   }
+  .modal-footer .flex-spacer {
+    display: none;
+  }
   .modal-footer button {
-    flex: 1;
+    width: 100% !important;
     height: 40px;
     padding: 0;
     border-radius: 10px;
@@ -2010,6 +2013,10 @@ pre {
     align-items: center;
     justify-content: center;
     margin: 0;
+  }
+  .modal-footer button.btn-outline ~ button.btn-primary {
+    grid-column: span 2;
+    order: -1;
   }
 
   /* Compact spacing for preview details */
