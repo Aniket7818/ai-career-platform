@@ -146,10 +146,11 @@
  <span class="text-[10px] font-bold tracking-wider text-txt-disabled uppercase bg-surface/10 px-2 py-0.5 rounded">{{ languageBadge }}</span>
  </div>
  <div class="flex items-center gap-3">
- <button @click="copyCode" class="flex items-center gap-1.5 text-xs font-bold text-txt-disabled hover:text-white transition-colors focus:outline-none" aria-label="Copy code to clipboard">
- <svg v-if="copied" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
- <svg v-else class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
- {{ copied ? 'Copied!' : 'Copy Code' }}
+ <button @click="copyCode" :disabled="isCopyingCode" class="flex items-center gap-1.5 text-xs font-bold text-txt-disabled hover:text-white transition-colors focus:outline-none" aria-label="Copy code to clipboard">
+  <svg v-if="isCopyingCode" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
+  <svg v-else-if="copied" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+  <svg v-else class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+  {{ isCopyingCode ? 'Copying...' : copied ? 'Copied!' : 'Copy Code' }}
  </button>
  </div>
  </div>
@@ -323,6 +324,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppShell from '../../components/layout/AppShell.vue'
 import interviewPrepService from '../../services/interviewPrepService'
 import { useInterviewState } from './composables/useInterviewState'
+import ClipboardService from '../../services/clipboard'
 
 const route = useRoute()
 const router = useRouter()
@@ -332,6 +334,7 @@ const loading = ref(true)
 
 const isCodeExpanded = ref(false)
 const copied = ref(false)
+const isCopyingCode = ref(false)
 const toastMsg = ref('')
 let toastTimer = null
 
@@ -397,12 +400,9 @@ const shareQuestion = async () => {
 }
 
 const copyToClipboard = async (text, msg) => {
- try {
- await navigator.clipboard.writeText(text)
- showToast(msg)
- } catch (e) {
- console.error('Copy failed')
- }
+ await ClipboardService.copy(text, {
+  successMessage: msg || 'Content copied successfully.'
+ })
 }
 
 const loadData = async () => {
@@ -463,11 +463,18 @@ onMounted(() => {
  loadData()
 })
 
-const copyCode = () => {
+const copyCode = async () => {
  if (!question.value?.code_example) return
- copyToClipboard(question.value.code_example, 'Code copied to clipboard')
- copied.value = true
- setTimeout(() => { copied.value = false }, 2000)
+ isCopyingCode.value = true
+ await new Promise(resolve => setTimeout(resolve, 150))
+ isCopyingCode.value = false
+ const success = await ClipboardService.copy(question.value.code_example, {
+  successMessage: 'Code copied successfully.'
+ })
+ if (success) {
+  copied.value = true
+  setTimeout(() => { copied.value = false }, 2000)
+ }
 }
 
 const currentIndex = computed(() => {

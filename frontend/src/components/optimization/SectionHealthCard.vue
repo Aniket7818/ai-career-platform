@@ -1,5 +1,5 @@
 <template>
-  <div class="section-health-card">
+  <div class="section-health-card" :class="[healthClass, { 'expanded': expanded }]">
     <div class="shc-header" @click="expanded = !expanded">
       <div class="shc-title-group">
         <h3 class="shc-title">{{ title }}</h3>
@@ -154,15 +154,33 @@ const healthColor = computed(() => {
 .section-health-card {
   background: rgb(var(--color-surface));
   border: 1px solid rgb(var(--color-border));
+  border-left: 4px solid transparent;
   border-radius: 1rem;
-  transition: all 0.3s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 .section-health-card:hover {
   border-color: rgb(var(--color-border-hover));
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* Expanded Accent Left Strip */
+.section-health-card.expanded.health-good {
+  border-left: 4px solid #10b981;
+  border-color: rgba(16, 185, 129, 0.25);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.04);
+}
+.section-health-card.expanded.health-fair {
+  border-left: 4px solid #f59e0b;
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.04);
+}
+.section-health-card.expanded.health-poor {
+  border-left: 4px solid #ef4444;
+  border-color: rgba(239, 68, 68, 0.25);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.04);
 }
 
 .shc-header {
@@ -182,22 +200,22 @@ const healthColor = computed(() => {
 
 .shc-title {
   margin: 0;
-  font-size: 1.0625rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 750;
   color: rgb(var(--color-text-primary));
 }
 
 .health-badge {
-  font-size: 0.6875rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
-.health-good { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-.health-fair { background: rgba(245, 158, 11, 0.1); color: #d97706; }
-.health-poor { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.health-good { background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.15); color: #10b981; }
+.health-fair { background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.15); color: #d97706; }
+.health-poor { background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.15); color: #ef4444; }
 
 .header-right {
   display: flex;
@@ -235,11 +253,11 @@ const healthColor = computed(() => {
 
 .expand-icon {
   color: rgb(var(--color-text-muted));
-  transition: transform 0.3s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .shc-content {
-  border-top: 1.5px solid rgb(var(--color-border));
+  border-top: 1px solid rgb(var(--color-border));
   background: rgb(var(--color-surface));
   padding: 1.5rem;
 }
@@ -289,18 +307,18 @@ const healthColor = computed(() => {
 .success-bullet { background: #10b981; }
 
 .ai-recommendation {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), rgba(139, 92, 246, 0.03));
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  background: linear-gradient(135deg, rgba(var(--color-primary), 0.03) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid rgba(var(--color-primary), 0.15);
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 1.125rem;
   margin-bottom: 1.25rem;
 }
 
 .rec-header {
-  font-size: 0.75rem;
+  font-size: 0.725rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: rgb(var(--color-primary));
   margin-bottom: 0.375rem;
 }
@@ -325,31 +343,34 @@ const healthColor = computed(() => {
 .gain-meta {
   font-size: 0.875rem;
   color: rgb(var(--color-text-muted));
-  font-weight: 500;
+  font-weight: 600;
 }
 .gain-value {
   color: #10b981;
-  font-weight: 700;
+  font-weight: 750;
 }
 
 .btn-ai {
   display: inline-flex;
   align-items: center;
-  background: rgb(var(--color-surface));
-  color: rgb(var(--color-primary));
-  border: 1px solid rgb(var(--color-primary));
-  padding: 0.5rem 1.25rem;
+  justify-content: center;
+  background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  padding: 0.55rem 1.5rem;
   border-radius: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
-.btn-ai:hover { 
-  background: rgb(var(--color-primary)); 
-  color: white;
-  transform: translateY(-1px); 
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); 
+.btn-ai:hover:not(:disabled) { 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35); 
+}
+.btn-ai:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .actions-group {
@@ -359,19 +380,22 @@ const healthColor = computed(() => {
 }
 
 .btn-view-details {
-  background: transparent;
-  border: 1.5px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface-hover));
+  border: 1px solid rgb(var(--color-border));
   color: rgb(var(--color-text-secondary));
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 .btn-view-details:hover {
-  background: rgb(var(--color-surface-hover));
+  background: rgb(var(--color-border));
   color: rgb(var(--color-text-primary));
+}
+.btn-view-details:active {
+  transform: scale(0.98);
 }
 
 .text-error { color: #ef4444; }
@@ -401,7 +425,7 @@ const healthColor = computed(() => {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.15rem;
     gap: 0.5rem;
   }
   .shc-title-group {
@@ -420,7 +444,7 @@ const healthColor = computed(() => {
     width: auto;
   }
   .shc-content {
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.15rem;
   }
   .shc-grid {
     grid-template-columns: 1fr;
@@ -440,7 +464,9 @@ const healthColor = computed(() => {
   .btn-ai, .btn-view-details {
     width: 100%;
     justify-content: center;
-    padding: 0.6rem;
+    padding: 0.65rem;
+    font-size: 0.85rem;
+    height: 40px;
   }
   .gain-meta {
     text-align: center;

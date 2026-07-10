@@ -734,6 +734,7 @@
 <script setup>
 import { ref, onMounted, defineComponent, h } from 'vue'
 import http from '../../services/http'
+import ClipboardService from '../../services/clipboard'
 import StatCard from './components/StatCard.vue'
 import ChartCard from './components/ChartCard.vue'
 import JsonViewer from './components/JsonViewer.vue'
@@ -921,10 +922,18 @@ const getPerformanceStages = (req) => {
   ]
 }
 
-const copyToClipboard = (text, type = null) => {
+const isCopying = ref(false)
+
+const copyToClipboard = async (text, type = null) => {
   if (!text) return
-  navigator.clipboard.writeText(text)
-  if (type) {
+  isCopying.value = true
+  await new Promise(resolve => setTimeout(resolve, 150))
+  isCopying.value = false
+  
+  const success = await ClipboardService.copy(text, {
+    successMessage: `${type ? type.toUpperCase() : 'Content'} copied successfully.`
+  })
+  if (success && type) {
     copiedText.value = type
     setTimeout(() => copiedText.value = null, 2000)
   }

@@ -51,6 +51,7 @@ const routes = [
  { path: '/admin/ai-analytics', name: 'admin-ai-analytics', component: () => import('../modules/admin/AdminAiAnalyticsWrapper.vue'), meta: { requiresAuth: true, requiresAdmin: true } },
  { path: '/profile', name: ROUTE_NAMES.PROFILE, component: ProfilePage, meta: { requiresAuth: true } },
  { path: '/settings', name: ROUTE_NAMES.SETTINGS, component: SettingsPage, meta: { requiresAuth: true } },
+ { path: '/settings/billing', name: ROUTE_NAMES.SETTINGS_BILLING, component: SettingsPage, meta: { requiresAuth: true } },
  { path: '/resumes', name: ROUTE_NAMES.RESUMES, component: ResumeListPage, meta: { requiresAuth: true } },
  { path: '/resumes/new', name: ROUTE_NAMES.RESUME_NEW, component: ResumeEditorPage, meta: { requiresAuth: true } },
  { path: '/resumes/:id/edit', name: ROUTE_NAMES.RESUME_EDIT, component: ResumeEditorPage, meta: { requiresAuth: true } },

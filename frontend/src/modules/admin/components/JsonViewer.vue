@@ -3,9 +3,10 @@
     <div class="flex justify-between items-center bg-surface/[0.05] px-4 py-2 border-b border-white/5">
       <h4 class="text-[10px] font-bold text-txt-muted uppercase tracking-wider">{{ title || 'JSON Viewer' }}</h4>
       <div class="flex gap-2">
-        <button @click="copyToClipboard" class="text-[10px] bg-brand/10 text-brand px-2 py-1 rounded hover:bg-brand/20 transition-colors flex items-center gap-1">
-          <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          {{ copied ? 'Copied!' : 'Copy' }}
+        <button @click="copyToClipboard" :disabled="isCopying" class="text-[10px] bg-brand/10 text-brand px-2 py-1 rounded hover:bg-brand/20 transition-colors flex items-center gap-1">
+          <svg v-if="isCopying" class="size-3 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
+          <svg v-else class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          {{ isCopying ? 'Copying...' : copied ? '✓ Copied!' : 'Copy' }}
         </button>
         <button v-if="downloadable" @click="downloadJson" class="text-[10px] bg-white/5 text-white px-2 py-1 rounded hover:bg-white/10 transition-colors flex items-center gap-1">
           <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -29,6 +30,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import ClipboardService from '../../../services/clipboard'
 
 const props = defineProps({
   data: {
@@ -43,6 +45,7 @@ const props = defineProps({
 })
 
 const copied = ref(false)
+const isCopying = ref(false)
 
 const formattedJson = computed(() => {
   if (!props.data) return ''
@@ -76,10 +79,17 @@ const highlightedJson = computed(() => {
   })
 })
 
-const copyToClipboard = () => {
-  navigator.clipboard.writeText(formattedJson.value)
-  copied.value = true
-  setTimeout(() => copied.value = false, 2000)
+const copyToClipboard = async () => {
+  isCopying.value = true
+  await new Promise(resolve => setTimeout(resolve, 150))
+  isCopying.value = false
+  const success = await ClipboardService.copy(formattedJson.value, {
+    successMessage: 'JSON payload copied successfully.'
+  })
+  if (success) {
+    copied.value = true
+    setTimeout(() => copied.value = false, 2000)
+  }
 }
 
 const downloadJson = () => {

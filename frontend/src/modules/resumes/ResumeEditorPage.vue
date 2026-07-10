@@ -99,6 +99,37 @@ const triggerInlineFeedback = (message) => {
  }, 2500)
 }
 
+// ── Same-tab live update: watch Vuex currentResume instead of localStorage ──
+// The localStorage 'storage' event only fires in OTHER tabs. To handle
+// same-tab updates (e.g. Apply from Optimize page), we watch the Vuex store.
+watch(
+ () => store.state.resumes.currentResume,
+ (updated) => {
+  if (!updated || isNew.value) return
+  if (String(updated.id) !== String(route.params.id)) return
+
+  // Prevent redundant overwriting when the editor itself triggers the update
+  const currentSnapshot = getContentSnapshot()
+  const incomingSnapshot = JSON.stringify({
+   title: updated.title,
+   status: updated.status,
+   template_id: updated.template_id || DEFAULT_TEMPLATE_ID,
+   content: migrateContent(updated.content)
+  })
+  if (currentSnapshot === incomingSnapshot) return
+
+  Object.assign(resume, updated, {
+   template_id: updated.template_id || DEFAULT_TEMPLATE_ID,
+   content: migrateContent(updated.content)
+  })
+  hasUnsavedChanges = false
+  saveStatus.value = 'saved'
+  lastSavedSnapshot = getContentSnapshot()
+  triggerInlineFeedback('Resume updated from AI optimization')
+ },
+ { deep: false }
+)
+
 const getContentSnapshot = () => {
  try {
  return JSON.stringify({

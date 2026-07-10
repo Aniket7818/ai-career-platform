@@ -22,17 +22,17 @@
     </div>
 
     <div class="pc-stats-grid">
-      <div class="stat-card">
+      <div class="stat-card issues-card">
         <span class="stat-label">Remaining Issues</span>
         <span class="stat-value">{{ remainingIssues }}</span>
       </div>
-      <div class="stat-card">
+      <div class="stat-card final-card">
         <span class="stat-label">Estimated Final</span>
-        <span class="stat-value text-success">{{ estimatedFinal }}</span>
+        <span class="stat-value">{{ estimatedFinal }}</span>
       </div>
-      <div class="stat-card">
+      <div class="stat-card increase-card">
         <span class="stat-label">Potential Increase</span>
-        <span class="stat-value text-primary">+{{ potentialIncrease }} pts</span>
+        <span class="stat-value">+{{ potentialIncrease }} pts</span>
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ const props = defineProps({
 .pc-title {
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 750;
   color: rgb(var(--color-text-primary));
 }
 
@@ -77,13 +77,14 @@ const props = defineProps({
 }
 
 .pc-percent-badge {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  background: linear-gradient(135deg, rgba(var(--color-primary), 0.08) 0%, rgba(139, 92, 246, 0.12) 100%);
   color: rgb(var(--color-primary));
   font-size: 1.5rem;
-  font-weight: 800;
-  padding: 0.5rem 1rem;
+  font-weight: 900;
+  padding: 0.5rem 1.25rem;
   border-radius: 1rem;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(var(--color-primary), 0.25);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);
 }
 
 .pc-bar-container {
@@ -101,7 +102,7 @@ const props = defineProps({
 
 .pc-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgb(var(--color-primary)), #8b5cf6);
+  background: linear-gradient(90deg, rgb(var(--color-primary)) 0%, #8b5cf6 50%, #d946ef 100%);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -139,17 +140,13 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 1.25rem 1rem;
   background: rgb(var(--color-surface-hover));
   border: 1px solid rgb(var(--color-border));
   border-radius: 1rem;
   align-items: center;
   text-align: center;
-  transition: transform 0.2s;
-}
-.stat-card:hover {
-  transform: translateY(-2px);
-  border-color: rgb(var(--color-border-hover));
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-label {
@@ -162,14 +159,68 @@ const props = defineProps({
 
 .stat-value {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 850;
   color: rgb(var(--color-text-primary));
 }
 
-.text-success { color: #10b981; }
-.text-primary { color: rgb(var(--color-primary)); }
+/* Individual Stat Cards Styling */
+.issues-card {
+  background: linear-gradient(135deg, rgb(var(--color-surface)) 0%, rgb(var(--color-surface-hover)) 100%);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+.issues-card .stat-value {
+  color: #ef4444;
+}
+.issues-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.08);
+}
+
+.final-card {
+  background: linear-gradient(135deg, rgb(var(--color-surface)) 0%, rgb(var(--color-surface-hover)) 100%);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+.final-card .stat-value {
+  color: #10b981;
+}
+.final-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
+}
+
+.increase-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.02) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border-color: rgba(99, 102, 241, 0.25);
+}
+.increase-card .stat-value {
+  color: rgb(var(--color-primary));
+}
+.increase-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.08);
+}
 
 @media (max-width: 640px) {
-  .pc-stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .progress-card {
+    padding: 1.25rem 1rem;
+    border-radius: 1.25rem;
+  }
+  .pc-header {
+    margin-bottom: 1.25rem;
+  }
+  .pc-percent-badge {
+    font-size: 1.25rem;
+    padding: 0.4rem 0.85rem;
+  }
+  .pc-bar-container {
+    margin-bottom: 1.75rem;
+  }
+  .pc-stats-grid { 
+    grid-template-columns: 1fr; 
+    gap: 1rem; 
+  }
 }
 </style>

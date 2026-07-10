@@ -12,7 +12,7 @@
     
     <div class="oac-actions">
       <button class="btn-action" v-for="action in actions" :key="action.type" @click="$emit('action', action.type)">
-        {{ action.label }}
+        {{ action.label }} <span v-if="action.credits" class="action-credits">({{ action.credits }} Credits)</span>
       </button>
     </div>
   </div>
@@ -131,5 +131,11 @@ defineEmits(['action'])
 
 .btn-action:active {
   transform: translateY(0);
+}
+
+.action-credits {
+  opacity: 0.8;
+  font-weight: normal;
+  margin-left: 2px;
 }
 </style>

@@ -28,14 +28,20 @@
             class="workspace-tab"
             :class="{ active: false }"
           >
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+            </svg>
             <span class="tab-label">Edit</span>
           </RouterLink>
           <RouterLink
             :to="{ name: 'resume-print', params: { id: resumeId } }"
             class="workspace-tab"
           >
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
             <span class="tab-label">Preview</span>
           </RouterLink>
           <RouterLink
@@ -43,7 +49,11 @@
             class="workspace-tab"
             active-class="active"
           >
-            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+              <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z"/>
+              <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/>
+            </svg>
             <span class="tab-label">Optimize</span>
           </RouterLink>
         </nav>
@@ -65,7 +75,7 @@
               </span>
               <div class="drawer-user-details">
                 <div class="drawer-username">{{ user?.full_name || user?.username || 'User' }}</div>
-                <div class="drawer-plan">Premium Plan</div>
+                <div class="drawer-plan">{{ subscriptionPlan }} Plan</div>
               </div>
             </div>
             <button class="btn-close-drawer" @click="isDrawerOpen = false">
@@ -121,13 +131,25 @@
             <div class="drawer-nav-group">
               <div class="drawer-group-label">Credits & Billing</div>
               <div class="drawer-credits-card">
-                <div class="credits-label">AI Credits Remaining</div>
-                <div class="credits-count">{{ creditsRemaining }}</div>
+                <div class="credits-header-row">
+                  <span class="credits-label">AI Credits Remaining</span>
+                  <span class="credits-plan-badge">{{ subscriptionPlan }}</span>
+                </div>
+                <div class="credits-number-row">
+                  <span class="credits-remaining-bold">{{ creditsRemaining }}</span>
+                  <span class="credits-total-muted">/ {{ totalCredits }}</span>
+                </div>
                 <div class="credits-bar">
                   <div class="credits-bar-fill" :style="{ width: `${creditsPercentage}%` }"></div>
                 </div>
+                <div class="credits-footer-info">
+                  <svg class="credits-icon size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                  </svg>
+                  <span>Resets in {{ resetsInDays }} days</span>
+                </div>
                 <button class="btn-buy-credits" @click="navigateToRoute('/settings')">
-                  Buy More Credits
+                  Upgrade & Buy Credits
                 </button>
               </div>
             </div>
@@ -193,7 +215,7 @@
           <div class="placeholder-icon">🔒</div>
           <h2>{{ currentSectionLabel }} — Coming Soon</h2>
           <p>This feature is being built as part of Phase 3. Check the Version History tab which is already live!</p>
-          <button class="btn-go-versions" @click="activeSection = 'versions'">
+          <button class="btn-go-versions" @click="selectSection('versions')">
             View Version History →
           </button>
         </div>
@@ -302,7 +324,12 @@ const initials = computed(() => {
 })
 
 const creditsRemaining = computed(() => store.state.auth.user?.ai_credits_remaining || 0)
-const totalCredits = ref(100)
+const totalCredits = computed(() => store.state.auth.user?.ai_credits_total || 100)
+const resetsInDays = computed(() => store.state.auth.user?.credits_resets_in_days || 12)
+const subscriptionPlan = computed(() => {
+  const plan = store.state.auth.user?.subscription_plan || 'free'
+  return plan.charAt(0).toUpperCase() + plan.slice(1)
+})
 const creditsPercentage = computed(() => Math.min(100, (creditsRemaining.value / totalCredits.value) * 100))
 
 const isMobile = ref(false)
@@ -313,22 +340,18 @@ const listener = (e) => {
   if (e.matches) {
     if (activeSection.value === 'versions') {
       activeMobileTab.value = 'history'
-    } else if (activeSection.value === 'content') {
-      activeMobileTab.value = 'review'
-    } else if (activeSection.value === 'ats' || activeSection.value === 'keywords') {
-      activeMobileTab.value = 'insights'
-    } else {
+    } else if (activeSection.value === 'overview') {
       activeMobileTab.value = 'overview'
+    } else {
+      activeMobileTab.value = activeSection.value + '-soon'
     }
   } else {
     if (activeMobileTab.value === 'history') {
       activeSection.value = 'versions'
-    } else if (activeMobileTab.value === 'review') {
-      activeSection.value = 'content'
-    } else if (activeMobileTab.value === 'insights') {
-      activeSection.value = 'ats'
-    } else {
+    } else if (activeMobileTab.value === 'overview' || activeMobileTab.value === 'review' || activeMobileTab.value === 'insights') {
       activeSection.value = 'overview'
+    } else {
+      activeSection.value = activeMobileTab.value.replace('-soon', '')
     }
   }
 }
@@ -343,12 +366,10 @@ onMounted(async () => {
     if (isMobile.value) {
       if (activeSection.value === 'versions') {
         activeMobileTab.value = 'history'
-      } else if (activeSection.value === 'content') {
-        activeMobileTab.value = 'review'
-      } else if (activeSection.value === 'ats' || activeSection.value === 'keywords') {
-        activeMobileTab.value = 'insights'
-      } else {
+      } else if (activeSection.value === 'overview') {
         activeMobileTab.value = 'overview'
+      } else {
+        activeMobileTab.value = activeSection.value + '-soon'
       }
     }
   }
@@ -370,10 +391,8 @@ onBeforeUnmount(() => {
 
 function getSectionMobileTab(sectionId) {
   if (sectionId === 'overview') return 'overview'
-  if (sectionId === 'content') return 'review'
-  if (sectionId === 'ats' || sectionId === 'keywords') return 'insights'
   if (sectionId === 'versions') return 'history'
-  return 'overview'
+  return sectionId + '-soon'
 }
 
 function selectSection(sectionId) {
@@ -383,14 +402,10 @@ function selectSection(sectionId) {
   if (isMobile.value) {
     if (sectionId === 'overview') {
       activeMobileTab.value = 'overview'
-    } else if (sectionId === 'content') {
-      activeMobileTab.value = 'review'
-      activeSection.value = 'overview'
-    } else if (sectionId === 'ats' || sectionId === 'keywords') {
-      activeMobileTab.value = 'insights'
-      activeSection.value = 'overview'
     } else if (sectionId === 'versions') {
       activeMobileTab.value = 'history'
+    } else {
+      activeMobileTab.value = sectionId + '-soon'
     }
   }
 }
@@ -399,10 +414,6 @@ function selectMobileTab(tab) {
   activeMobileTab.value = tab
   if (tab === 'history') {
     activeSection.value = 'versions'
-  } else if (tab === 'review') {
-    activeSection.value = 'overview'
-  } else if (tab === 'insights') {
-    activeSection.value = 'overview'
   } else {
     activeSection.value = 'overview'
   }
@@ -478,14 +489,17 @@ function onResumeRestored(updatedResume) {
 .workspace-tabs { display: flex; gap: 0.25rem; }
 .workspace-tab {
   display: flex; align-items: center; gap: 0.375rem;
-  padding: 0.375rem 0.875rem; border-radius: 0.5rem;
+  padding: 0.375rem 0.875rem; border-radius: 0.75rem;
   font-size: 0.875rem; font-weight: 500; color: rgb(var(--color-text-muted));
-  text-decoration: none; transition: color 0.15s, background 0.15s;
+  text-decoration: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
 }
 .workspace-tab:hover { color: rgb(var(--color-text-primary)); background: rgb(var(--color-surface-hover)); }
 .workspace-tab.active, .workspace-tab.router-link-active {
-  color: rgb(var(--color-primary)); background: color-mix(in srgb, rgb(var(--color-primary)) 10%, transparent);
-  font-weight: 600;
+  color: rgb(var(--color-primary)); 
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.15);
+  font-weight: 650;
 }
 
 /* ── Mobile Drawer Toggle & Style ────────────────────────────────────────── */
@@ -652,16 +666,62 @@ function onResumeRestored(updatedResume) {
   gap: 0.5rem;
 }
 
+.credits-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .credits-label {
   font-size: 0.75rem;
   color: rgb(var(--color-text-secondary));
   font-weight: 500;
 }
 
-.credits-count {
-  font-size: 1.125rem;
+.credits-plan-badge {
+  font-size: 0.65rem;
   font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 9999px;
+  background: rgba(99, 102, 241, 0.12);
+  color: rgb(var(--color-primary));
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.credits-number-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+.credits-remaining-bold {
+  font-size: 1.5rem;
+  font-weight: 800;
   color: rgb(var(--color-text-primary));
+  line-height: 1;
+}
+
+.credits-total-muted {
+  font-size: 0.8125rem;
+  color: rgb(var(--color-text-muted));
+}
+
+.credits-footer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.725rem;
+  color: rgb(var(--color-text-muted));
+  margin-top: 0.15rem;
+}
+
+.credits-icon {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  stroke-width: 2.2;
 }
 
 .credits-bar {
@@ -775,8 +835,7 @@ function onResumeRestored(updatedResume) {
   left: 0;
   right: 0;
   height: 64px;
-  background: rgba(var(--color-surface), 0.85);
-  backdrop-filter: blur(16px);
+  background: rgb(var(--color-surface));
   border-top: 1.5px solid rgb(var(--color-border));
   display: none;
   grid-template-columns: repeat(5, 1fr);
@@ -843,7 +902,14 @@ function onResumeRestored(updatedResume) {
 
 @media (max-width: 480px) {
   .workspace-tab .tab-label { display: none; }
-  .workspace-tab { padding: 0.5rem; }
+  .workspace-tab {
+    padding: 0.55rem;
+    border-radius: 9999px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .workspace-tabs-inner { padding: 0 0.75rem; gap: 0.5rem; }
   .resume-context-title { max-width: 70px; }
 }

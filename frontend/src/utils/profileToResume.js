@@ -66,41 +66,59 @@ export const migrateContent = (raw = {}) => {
  achievements: Array.isArray(raw.achievements) ? raw.achievements : []
  }
 
- // Migrate v1 experience → v2 experiences
- if (Array.isArray(raw.experiences) && raw.experiences.length) {
- c.experiences = raw.experiences.map((e) => ({ ...emptyExperience(), ...e }))
- } else if (raw.experience && (raw.experience.role || raw.experience.company)) {
- c.experiences = [{ ...emptyExperience(), ...raw.experience }]
- } else {
- c.experiences = [emptyExperience()]
- }
+  // Migrate v1 experience → v2 experiences
+  if (Array.isArray(raw.experiences) && raw.experiences.length) {
+   c.experiences = raw.experiences.map((e) => ({ ...emptyExperience(), ...e }))
+  } else if (Array.isArray(raw.experiences) && raw.experiences.length === 0) {
+   // User explicitly deleted all experiences — keep it empty
+   c.experiences = []
+  } else if (raw.experience && (raw.experience.role || raw.experience.company)) {
+   c.experiences = [{ ...emptyExperience(), ...raw.experience }]
+  } else if (!('experiences' in raw) && !('experience' in raw)) {
+   // Brand new resume with no experience data at all
+   c.experiences = [emptyExperience()]
+  } else {
+   c.experiences = []
+  }
 
- // Migrate v1 education → v2 educations
- if (Array.isArray(raw.educations) && raw.educations.length) {
- c.educations = raw.educations.map((e) => ({ ...emptyEducation(), ...e }))
- } else if (raw.education && raw.education.school) {
- c.educations = [{ ...emptyEducation(), ...raw.education }]
- } else {
- c.educations = [emptyEducation()]
- }
+  // Migrate v1 education → v2 educations
+  if (Array.isArray(raw.educations) && raw.educations.length) {
+    c.educations = raw.educations.map((e) => ({ ...emptyEducation(), ...e }))
+  } else if (Array.isArray(raw.educations) && raw.educations.length === 0) {
+    c.educations = []
+  } else if (raw.education && raw.education.school) {
+    c.educations = [{ ...emptyEducation(), ...raw.education }]
+  } else if (!('educations' in raw) && !('education' in raw)) {
+    c.educations = [emptyEducation()]
+  } else {
+    c.educations = []
+  }
 
- // Migrate v1 projects → v2 projects
- if (Array.isArray(raw.projects) && raw.projects.length) {
- c.projects = raw.projects.map((p) => ({ ...emptyProject(), ...p }))
- } else if (raw.projects && !Array.isArray(raw.projects) && raw.projects.projectName) {
- c.projects = [{ ...emptyProject(), ...raw.projects }]
- } else {
- c.projects = [emptyProject()]
- }
+  // Migrate v1 projects → v2 projects
+  if (Array.isArray(raw.projects) && raw.projects.length) {
+    c.projects = raw.projects.map((p) => ({ ...emptyProject(), ...p }))
+  } else if (Array.isArray(raw.projects) && raw.projects.length === 0) {
+    c.projects = []
+  } else if (raw.projects && !Array.isArray(raw.projects) && raw.projects.projectName) {
+    c.projects = [{ ...emptyProject(), ...raw.projects }]
+  } else if (!('projects' in raw)) {
+    c.projects = [emptyProject()]
+  } else {
+    c.projects = []
+  }
 
- // Migrate v1 certifications → v2 certifications
- if (Array.isArray(raw.certifications) && raw.certifications.length) {
- c.certifications = raw.certifications.map((cert) => ({ ...emptyCertification(), ...cert }))
- } else if (raw.certifications && !Array.isArray(raw.certifications) && raw.certifications.certName) {
- c.certifications = [{ ...emptyCertification(), ...raw.certifications }]
- } else {
- c.certifications = [emptyCertification()]
- }
+  // Migrate v1 certifications → v2 certifications
+  if (Array.isArray(raw.certifications) && raw.certifications.length) {
+    c.certifications = raw.certifications.map((cert) => ({ ...emptyCertification(), ...cert }))
+  } else if (Array.isArray(raw.certifications) && raw.certifications.length === 0) {
+    c.certifications = []
+  } else if (raw.certifications && !Array.isArray(raw.certifications) && raw.certifications.certName) {
+    c.certifications = [{ ...emptyCertification(), ...raw.certifications }]
+  } else if (!('certifications' in raw)) {
+    c.certifications = [emptyCertification()]
+  } else {
+    c.certifications = []
+  }
 
  // Ensure all entries have IDs
  c.experiences = c.experiences.map((e) => ({ ...emptyExperience(), ...e, id: e.id || crypto.randomUUID() }))

@@ -19,6 +19,24 @@
         </transition>
       </div>
 
+      <div class="info-messages mt-4">
+        <p class="desc-subtitle">Generating professional content...</p>
+        
+        <div class="info-badge-box">
+          <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Credits will only be deducted after successful completion.</span>
+        </div>
+        
+        <p class="warning-alert-text">
+          <span class="warning-pulse"></span>
+          Do NOT close this page.
+        </p>
+      </div>
+
       <!-- Progress Bar -->
       <div class="progress-bar-container">
         <div class="progress-bar-fill" :style="{ width: `${progress}%` }">
@@ -26,7 +44,7 @@
         </div>
       </div>
       
-      <p class="estimated-time">Estimated time: ~{{ estimatedTime }}s</p>
+      <p class="estimated-time">Estimated remaining time: <span>{{ Math.max(0, 15 - Math.floor(progress / 6.66)) }} sec</span></p>
     </div>
   </div>
 </template>
@@ -173,8 +191,7 @@ onUnmounted(() => {
 }
 
 .premium-spinner .path {
-  stroke: url(#gradient);
-  stroke: rgb(var(--color-primary));
+  stroke: #8b5cf6;
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
 }
@@ -194,7 +211,7 @@ onUnmounted(() => {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 100%; height: 100%;
-  background: rgb(var(--color-primary));
+  background: #8b5cf6;
   border-radius: 50%;
   filter: blur(20px);
   opacity: 0.3;
@@ -234,21 +251,23 @@ onUnmounted(() => {
 
 .progress-bar-container {
   width: 100%;
-  height: 6px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 4px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
   overflow: hidden;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
   position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgb(var(--color-primary)), #8b5cf6);
-  border-radius: 4px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+  border-radius: 9999px;
   transition: width 0.1s linear;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
 }
 
 .progress-shine {
@@ -265,8 +284,79 @@ onUnmounted(() => {
 
 .estimated-time {
   margin: 0;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.55);
   font-weight: 500;
+}
+.estimated-time span {
+  color: #a855f7;
+  font-weight: 700;
+}
+
+.info-messages {
+  text-align: center;
+  width: 100%;
+}
+.desc-subtitle {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+.info-badge-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  max-width: 90%;
+  line-height: 1.4;
+  text-align: left;
+}
+.info-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+.warning-alert-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 750;
+  color: #ef4444;
+  margin: 0 0 1.25rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.warning-pulse {
+  width: 6px;
+  height: 6px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: warningPulseAnim 1.6s infinite;
+}
+@keyframes warningPulseAnim {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
 }
 </style>

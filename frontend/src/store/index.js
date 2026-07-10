@@ -14,7 +14,29 @@ const errorText = (error) => {
  return error.message || 'Request failed.'
 }
 
+// ── BroadcastChannel Vuex Plugin for Cross-Tab Sync ──
+const resumeSyncPlugin = (store) => {
+ if (typeof window === 'undefined') return
+
+ const channel = new BroadcastChannel('careerai-resume-sync')
+
+ channel.onmessage = (event) => {
+  if (event.data && event.data.type === 'RESUME_UPDATED') {
+   const updatedResume = event.data.resume
+   store.commit('resumes/updateOneFromSync', updatedResume)
+  }
+ }
+
+ store.subscribe((mutation) => {
+  if (mutation.type === 'resumes/updateOne') {
+   const updatedResume = mutation.payload
+   channel.postMessage({ type: 'RESUME_UPDATED', resume: updatedResume })
+  }
+ })
+}
+
 export default createStore({
+ plugins: [resumeSyncPlugin],
  modules: {
  toast: {
  namespaced: true,
@@ -24,16 +46,24 @@ export default createStore({
  remove(state, id) { state.items = state.items.filter((item) => item.id !== id) }
  },
  actions: {
- show({ commit, state }, { type = 'success', title, message = '', duration = 4500 }) {
+ show({ commit, state }, payload) {
  const id = state.nextId++
- commit('push', { id, type, title, message, duration, startedAt: Date.now() })
+ commit('push', {
+  id,
+  type: payload.type || 'success',
+  title: payload.title,
+  message: payload.message || '',
+  duration: payload.duration || 3500,
+  onRetry: payload.onRetry || null,
+  startedAt: Date.now()
+ })
  return id
  }
  }
  },
  auth: {
  namespaced: true,
- state: () => ({ user: null, loading: false, error: null, errorTimeout: null }),
+ state: () => ({ user: null, aiFeatures: {}, loading: false, error: null, errorTimeout: null }),
  mutations: {
  setLoading: (s, v) => (s.loading = v),
  setError: (s, v) => {
@@ -44,6 +74,7 @@ export default createStore({
  }
  },
  setUser: (s, v) => (s.user = v),
+ setAiFeatures: (s, v) => (s.aiFeatures = v || {}),
  // Lightweight credit patch — avoids a full fetchMe round-trip after every AI call
  SET_USER_CREDITS: (s, remaining) => {
  if (s.user) {
@@ -56,12 +87,12 @@ export default createStore({
  }
  },
  actions: {
- async login({ commit }, payload) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.login(payload); commit('setUser', data.user); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
- async signup({ commit }, { turnstileToken, ...formData }) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.signup(formData, turnstileToken); commit('setUser', data.user); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
+ async login({ commit }, payload) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.login(payload); commit('setUser', data.user); commit('setAiFeatures', data.ai_features); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
+ async signup({ commit }, { turnstileToken, ...formData }) { commit('setLoading', true); commit('setError', null); commit('setUser', null); try { const { data } = await authService.signup(formData, turnstileToken); commit('setUser', data.user); commit('setAiFeatures', data.ai_features); return data.user } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
  async forgotPassword({ commit }, { email, turnstileToken }) { commit('setLoading', true); commit('setError', null); try { await authService.forgotPassword(email, turnstileToken); return true } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
  async resetPassword({ commit }, payload) { commit('setLoading', true); commit('setError', null); try { await authService.resetPassword(payload); return true } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
  async validateResetToken({ commit }, token) { commit('setLoading', true); commit('setError', null); try { const { data } = await authService.validateResetToken(token); return data.valid } catch (e) { commit('setError', errorText(e)); return false } finally { commit('setLoading', false) } },
- async fetchMe({ commit }) { try { const { data } = await authService.me(); commit('setUser', data.user); return data.user } catch { commit('setUser', null); return null } },
+ async fetchMe({ commit }) { try { const { data } = await authService.me(); commit('setUser', data.user); commit('setAiFeatures', data.ai_features); return data.user } catch { commit('setUser', null); return null } },
  async logout({ commit }) { commit('setLoading', true); try { await authService.logout() } finally { commit('setUser', null); commit('setLoading', false) } },
  async updateProfile({ commit }, payload) {
  commit('setLoading', true)
@@ -144,13 +175,36 @@ export default createStore({
  },
  resumes: {
  namespaced: true,
- state: () => ({ items: [], loading: false, error: null }),
- mutations: { setLoading: (s, v) => (s.loading = v), setError: (s, v) => (s.error = v), setItems: (s, v) => (s.items = v), remove: (s, id) => (s.items = s.items.filter((item) => item.id !== id)) },
+ state: () => ({ items: [], loading: false, error: null, currentResume: null }),
+ mutations: {
+  setLoading: (s, v) => (s.loading = v),
+  setError: (s, v) => (s.error = v),
+  setItems: (s, v) => (s.items = v),
+  remove: (s, id) => (s.items = s.items.filter((item) => item.id !== id)),
+  // Patch a single resume in-place — enables same-tab live updates after AI apply
+  updateOne: (s, updatedResume) => {
+   const idx = s.items.findIndex((r) => String(r.id) === String(updatedResume.id))
+   if (idx !== -1) {
+    s.items[idx] = { ...s.items[idx], ...updatedResume }
+   }
+   s.currentResume = { ...updatedResume }
+  },
+  updateOneFromSync: (s, updatedResume) => {
+   const idx = s.items.findIndex((r) => String(r.id) === String(updatedResume.id))
+   if (idx !== -1) {
+    s.items[idx] = { ...s.items[idx], ...updatedResume }
+   }
+   s.currentResume = { ...updatedResume }
+  },
+  setCurrentResume: (s, resume) => {
+   s.currentResume = resume
+  }
+ },
  actions: {
  async load({ commit }) { commit('setLoading', true); commit('setError', null); try { const { data } = await resumeService.list(); commit('setItems', data.resumes) } catch (e) { commit('setError', errorText(e)) } finally { commit('setLoading', false) } },
- async loadOne({ commit }, id) { commit('setLoading', true); commit('setError', null); try { const { data } = await resumeService.show(id); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
- async create({ commit }, resume) { commit('setLoading', true); commit('setError', null); try { const { data } = await resumeService.create(resume); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
- async update({ commit }, resume) { commit('setLoading', true); commit('setError', null); try { if (!resume.id) throw new Error('Missing resume id.'); const { data } = await resumeService.update(resume.id, resume); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
+ async loadOne({ commit }, id) { commit('setLoading', true); commit('setError', null); try { const { data } = await resumeService.show(id); commit('setCurrentResume', data.resume); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
+ async create({ commit }, resume) { commit('setLoading', true); commit('setError', null); try { const { data } = await resumeService.create(resume); commit('setCurrentResume', data.resume); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
+ async update({ commit }, resume) { commit('setLoading', true); commit('setError', null); try { if (!resume.id) throw new Error('Missing resume id.'); const { data } = await resumeService.update(resume.id, resume); commit('updateOne', data.resume); return data.resume } catch (e) { commit('setError', errorText(e)); return null } finally { commit('setLoading', false) } },
  async recordDownload({ commit }, id) { commit('setError', null); try { const { data } = await resumeService.download(id); commit('auth/setUser', data.user, { root: true }); return data } catch (e) { commit('setError', errorText(e)); return null } },
  async remove({ commit }, id) { try { await resumeService.destroy(id); commit('remove', id) } catch (e) { commit('setError', errorText(e)) } }
  }

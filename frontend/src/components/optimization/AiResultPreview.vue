@@ -417,15 +417,15 @@
           </template>
           <template v-else-if="isCopied">
             <svg class="size-4 mr-2 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
-            ✓ Copied
+            Copied
           </template>
           <template v-else>
             <svg class="size-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-            Copy to Clipboard
+            Copy
           </template>
         </button>
         <button v-if="actionType !== 'generate_cover_letter' && actionType !== 'generate_linkedin'" class="btn-primary" @click="apply">
-          Apply to Resume
+          Apply
         </button>
       </div>
     </div>
@@ -951,6 +951,10 @@ function getScoreBadgeClass(score) {
 .size-4 { width: 1rem; height: 1rem; }
 .mr-2 { margin-right: 0.5rem; }
 
+.header-titles {
+  flex: 1;
+  min-width: 0;
+}
 .header-titles h2 {
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
@@ -964,15 +968,19 @@ function getScoreBadgeClass(score) {
 }
 
 .btn-close {
-  position: absolute;
-  right: 1.5rem;
-  top: 1.5rem;
   background: none;
   border: none;
   font-size: 1.5rem;
   color: rgb(var(--color-text-muted));
   cursor: pointer;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 .btn-close:hover { color: rgb(var(--color-text-primary)); }
 
@@ -1938,10 +1946,52 @@ pre {
 }
 
 @media (max-width: 767px) {
-  .preview-container { flex-direction: column; }
-  .stats-grid { flex-direction: column; gap: 1rem; }
+  .preview-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
   .insights-grid { grid-template-columns: 1fr; }
   .metrics-dashboard-grid { grid-template-columns: 1fr; }
+
+  .ai-stats-panel {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .stats-grid {
+    flex-direction: row !important;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    gap: 0.15rem;
+  }
+  
+  .stat-item .label {
+    font-size: 0.65rem;
+  }
+  
+  .stat-item .value {
+    font-size: 0.8rem;
+  }
+
+  .preview-panel {
+    gap: 0.35rem;
+  }
+
+  .preview-panel h4 {
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .content-box {
+    padding: 0.75rem;
+    font-size: 0.825rem;
+    line-height: 1.5;
+    border-radius: 0.75rem;
+  }
 
   .modal-backdrop {
     padding: 16px;
@@ -1975,18 +2025,17 @@ pre {
   }
   
   .modal-header h2 {
-    font-size: 1.05rem; /* ~17px */
+    font-size: 0.95rem;
     font-weight: 700;
+  }
+
+  .modal-header .subtitle {
+    font-size: 0.75rem;
   }
   
   .btn-close {
-    right: 0.5rem;
-    top: 0.5rem;
     width: 36px;
     height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.25rem;
   }
 
@@ -2001,8 +2050,8 @@ pre {
     padding: 0.75rem 1rem;
     flex-shrink: 0;
     gap: 0.5rem;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
+    display: flex !important;
+    flex-direction: row;
     background: rgb(var(--color-surface-hover));
     border-top: 1px solid rgb(var(--color-border));
   }
@@ -2010,19 +2059,17 @@ pre {
     display: none;
   }
   .modal-footer button {
-    width: 100% !important;
+    flex: 1;
+    min-width: 0;
     height: 36px;
-    padding: 0;
+    padding: 0 0.5rem;
     border-radius: 8px;
     font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
-  }
-  .modal-footer button.btn-outline ~ button.btn-primary {
-    grid-column: span 2;
-    order: -1;
+    white-space: nowrap;
   }
 
   /* Compact spacing for preview details */
@@ -2197,6 +2244,64 @@ pre {
     font-size: 0.7rem !important;
     padding: 0.2rem 0.5rem !important;
     border-radius: 6px !important;
+  }
+
+  /* Compact typography & spacing overrides for suggestions, insights, checklists */
+  .recruiter-insights-section {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  .insights-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+  }
+  .insights-subtitle {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .metric-detail-card {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    gap: 0.5rem;
+  }
+  .metric-card-label {
+    font-size: 0.75rem;
+  }
+  .metric-card-header .metric-score-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+  }
+  .metric-reasoning, .suggestion-text {
+    font-size: 0.75rem;
+  }
+  
+  .suggestions-card {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  .card-title-main {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+  .card-subtitle-main {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .suggestion-item-card {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .tip-checkbox-item {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+  .tip-label strong {
+    font-size: 0.825rem;
+  }
+  .tip-label span {
+    font-size: 0.75rem;
   }
 }
 

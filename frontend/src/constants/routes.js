@@ -12,6 +12,7 @@ export const ROUTE_NAMES = Object.freeze({
  COMING_SOON: 'coming-soon',
  PROFILE: 'profile',
  SETTINGS: 'settings',
+ SETTINGS_BILLING: 'settings-billing',
  ABOUT: 'about',
  CAREERS: 'careers',
  BLOG: 'blog',

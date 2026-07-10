@@ -1,6 +1,7 @@
 <template>
-  <div v-if="modelValue" class="modal-backdrop" @click.self="close">
-    <div class="modal-content">
+  <Transition name="modal">
+    <div v-if="modelValue" class="modal-backdrop" @click.self="close">
+      <div class="modal-content">
       <div class="modal-header">
         <div class="icon-wrap">
           <svg class="size-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
@@ -12,11 +13,34 @@
       <div class="modal-body" v-if="creditCost > 0 && remainingCredits < creditCost">
         <div class="insufficient-credits-state">
           <div class="icon-wrap-error">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
           </div>
           <h3>Insufficient Credits</h3>
-          <p>You need <strong>{{ creditCost }} credits</strong> for this action.</p>
-          <p class="current-balance">Current balance: <strong>{{ remainingCredits }} Credits</strong></p>
+          <p class="error-subtitle">You don't have enough credits to run this AI action.</p>
+
+          <div class="insufficient-credits-card">
+            <div class="credits-stat-item">
+              <span class="credits-stat-label">Required</span>
+              <span class="credits-stat-val val-required">{{ creditCost }}</span>
+            </div>
+            <div class="credits-stat-divider"></div>
+            <div class="credits-stat-item">
+              <span class="credits-stat-label">Available</span>
+              <span class="credits-stat-val val-available">{{ remainingCredits }}</span>
+            </div>
+            <div class="credits-stat-divider"></div>
+            <div class="credits-stat-item">
+              <span class="credits-stat-label">Missing</span>
+              <span class="credits-stat-val val-missing">{{ creditCost - remainingCredits }}</span>
+            </div>
+          </div>
+
+          <p class="topup-instruction">Top up your balance to unlock this action and start generating.</p>
+
           <div class="error-actions mt-6">
             <button class="btn-primary" @click="$router.push('/settings/billing')">Buy Credits</button>
             <button class="btn-secondary" @click="close">Cancel</button>
@@ -436,6 +460,7 @@
 
     </div>
   </div>
+</Transition>
 </template>
 
 <script setup>
@@ -665,9 +690,7 @@ function submit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.3s ease;
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .modal-content {
   background: rgb(var(--color-surface));
@@ -677,12 +700,26 @@ function submit() {
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  animation: slideUp 0.3s ease;
   border: 1px solid rgb(var(--color-border));
 }
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Transition classes for smooth entry/exit */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.2s ease;
+}
+.modal-enter-active .modal-content,
+.modal-leave-active .modal-content {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+.modal-enter-from .modal-content,
+.modal-leave-to .modal-content {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
 }
 
 .modal-header {
@@ -743,8 +780,73 @@ textarea { resize: vertical; }
 .icon-wrap-error { width: 64px; height: 64px; background: rgba(239, 68, 68, 0.1); color: rgb(var(--color-danger, 239, 68, 68)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; }
 .icon-wrap-error svg { width: 32px; height: 32px; }
 .insufficient-credits-state h3 { margin: 0 0 1rem 0; font-size: 1.5rem; color: rgb(var(--color-text-primary)); }
-.insufficient-credits-state p { color: rgb(var(--color-text-secondary)); margin-bottom: 0.5rem; }
-.current-balance { font-size: 1.1rem; }
+
+.error-subtitle {
+  font-size: 0.9rem;
+  color: rgb(var(--color-text-secondary));
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.insufficient-credits-card {
+  display: flex;
+  background: rgba(239, 68, 68, 0.03);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 1rem;
+  padding: 1.25rem 1rem;
+  margin: 1.5rem 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.credits-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.credits-stat-label {
+  font-size: 0.725rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgb(var(--color-text-secondary));
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.credits-stat-val {
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.val-required {
+  color: rgb(var(--color-text-primary));
+}
+
+.val-available {
+  color: rgb(var(--color-success, 16, 185, 129));
+}
+
+.val-missing {
+  color: rgb(var(--color-danger, 239, 68, 68));
+}
+
+.credits-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.topup-instruction {
+  font-size: 0.85rem;
+  color: rgb(var(--color-text-secondary));
+  opacity: 0.8;
+  margin: 1rem 0;
+}
+
 .error-actions { display: flex; justify-content: center; gap: 1rem; }
 
 /* Project selector */
@@ -1015,7 +1117,7 @@ textarea { resize: vertical; }
   }
   
   .detail-item {
-    background: rgba(var(--color-surface-hover), 0.5);
+    background: rgb(var(--color-surface-hover) / 0.5);
     border: 1px solid rgb(var(--color-border));
     padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
@@ -1038,7 +1140,7 @@ textarea { resize: vertical; }
     font-size: 0.75rem;
     padding: 0.375rem 0.5rem;
     border-radius: 0.5rem;
-    background: rgba(var(--color-primary), 0.05);
+    background: rgb(var(--color-primary) / 0.05);
     border: 1px solid rgba(99, 102, 241, 0.1);
     color: rgb(var(--color-text-muted));
     text-align: left;

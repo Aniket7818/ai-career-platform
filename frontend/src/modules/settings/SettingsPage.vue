@@ -773,9 +773,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import AppShell from '../../components/layout/AppShell.vue'
 import { paymentService } from '../../services/paymentService'
 import { adminService } from '../../services/adminService'
@@ -785,8 +785,21 @@ import { PRICING_PLANS } from '../../constants/pricing'
 
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
-const currentSection = ref('subscription')
+const currentSection = ref(route.path.includes('billing') ? 'subscription' : 'account')
+
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath.includes('billing')) {
+      currentSection.value = 'subscription'
+    } else if (newPath === '/settings') {
+      currentSection.value = 'account'
+    }
+  }
+)
+
 const isYearly = ref(false)
 const showDetails = ref(false)
 const showCancelModal = ref(false)

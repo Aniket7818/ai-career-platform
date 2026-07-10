@@ -1466,7 +1466,10 @@ defineExpose({ openWorkflow })
   .skeleton-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .optimization-dashboard { padding: 0.75rem; }
+  .optimization-dashboard { 
+    padding: 0.75rem; 
+    padding-bottom: 120px; 
+  }
   .score-cards-grid { grid-template-columns: 1fr; gap: 1rem; }
   .skeleton-grid { grid-template-columns: 1fr; }
   .dashboard-main-grid { gap: 1.5rem; }

@@ -677,6 +677,7 @@
 <script setup>
 import { computed, reactive, ref, onBeforeUnmount, onMounted, nextTick, toRef } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import AppButton from '../../components/ui/AppButton.vue'
 import ResumePreview from './ResumePreview.vue'
 import IntelligencePanel from './IntelligencePanel.vue'
@@ -908,6 +909,17 @@ const toggleSection = (key) => {
  }
 }
 
+const route = useRoute()
+onMounted(() => {
+  if (route.hash === '#section-experience') {
+    ALL_SECTIONS.forEach(s => { openSections[s.key] = false })
+    openSections['experience'] = true
+    setTimeout(() => {
+      const el = document.getElementById('section-experience')
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 350)
+  }
+})
 // Left Sidebar state
 const sidebarState = reactive({
  template: true,
