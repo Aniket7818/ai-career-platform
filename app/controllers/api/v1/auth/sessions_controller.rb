@@ -32,8 +32,9 @@ module Api
             session_id: session.id,
             logged_in_at: Time.current
           )
+          token = TokenProvider.encode({ user_id: resource.id })
           sign_in(resource_name, resource)
-          render json: { user: UserSerializer.new(resource).as_json }, status: :ok
+          render json: { user: UserSerializer.new(resource).as_json, token: token }, status: :ok
         end
 
         def destroy

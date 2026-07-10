@@ -2,11 +2,49 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
   respond_to :json
 
+  before_action :authenticate_user_from_token
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActiveRecord::RecordNotUnique, with: :render_duplicate_error
 
   private
+
+  def authenticate_user_from_token
+    return if user_signed_in?
+
+    auth_header = request.headers["Authorization"]
+    x_session_token = request.headers["X-Session-Token"]
+
+    Rails.logger.info "[AuthToken] Auth Header: #{auth_header.inspect}, X-Session-Token: #{x_session_token.inspect}"
+
+    token = nil
+
+    if auth_header.present?
+      if auth_header.start_with?("Bearer ")
+        token = auth_header.split(" ").last
+      else
+        token = auth_header
+      end
+    end
+
+    token ||= x_session_token
+
+    if token.present?
+      payload = TokenProvider.decode(token)
+      Rails.logger.info "[AuthToken] Decoded Payload: #{payload.inspect}"
+
+      if payload && payload["user_id"]
+        user = User.find_by(id: payload["user_id"])
+        if user
+          Rails.logger.info "[AuthToken] Authenticated user: #{user.id}"
+          sign_in(user, store: false)
+        else
+          Rails.logger.info "[AuthToken] User not found for ID: #{payload["user_id"]}"
+        end
+      end
+    end
+  end
+
 
   def authenticate_api_user!
     return if user_signed_in?
