@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get "health", to: "health#show"
       resource :profile, only: %i[show update destroy]
       put "profile/change_password", to: "profiles#change_password"
       resources :resumes
