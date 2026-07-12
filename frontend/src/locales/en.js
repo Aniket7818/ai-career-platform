@@ -70,7 +70,19 @@ export default {
  lastUpdated: 'Last updated: {date}',
  comingSoonTitle: 'This page is on the way',
  comingSoonBody: 'We are building something great here. In the meantime, explore our upcoming AI features.',
- about: {
+  features: {
+    badge: 'Platform features',
+    title: 'Explore CareerAI Features',
+    subtitle: 'Everything you need to build, optimize, and organize your professional career documents in one modern workspace.',
+    sections: [
+      { heading: 'Interactive Resume Builder', body: 'Build and format professional resumes in real time with our live PDF preview. Adjust font styles, colors, and layout order dynamically.' },
+      { heading: 'Centralized Profile Hub', body: 'Maintain your core experience, education, projects, and skills. Auto-fill them directly into new resume drafts instantly.' },
+      { heading: 'ATS-Optimized PDF Export', body: 'Generate clean, standard-compliant PDF files that pass ATS screening filters without watermarks or formatting bugs.' },
+      { heading: 'Version History & Copying', body: 'Tailor drafts for different job descriptions. Copy existing resumes with a single click to create custom versions.' }
+    ],
+    cta: { title: 'Ready to build your resume?', body: 'Create a free account and experience the difference today.', label: 'Get started', to: '/signup' }
+  },
+  about: {
  badge: 'Our story',
  title: 'About CareerAI',
  subtitle: 'We are building the career platform we wished existed — focused, clear, and designed for real job seekers.',
@@ -88,7 +100,7 @@ export default {
  sections: [
  { heading: 'Why work with us', body: 'We are a small, product-focused team obsessed with clean design, thoughtful engineering, and tools that genuinely help people land their next role.' },
  { heading: 'Open roles', items: ['Frontend Engineer (Vue.js)', 'Backend Engineer (Ruby on Rails)', 'Product Designer', 'Developer Advocate'] },
- { heading: 'How to apply', body: 'Send your resume and a short note about why CareerAI resonates with you to careers@careerai.com. We review every application personally.' }
+ { heading: 'How to apply', body: 'Send your resume and a short note about why CareerAI resonates with you to ajitaniket956556@gmail.com. We review every application personally.' }
  ],
  cta: { title: 'Don\'t see your role?', body: 'We are always open to hearing from talented people. Reach out anyway.', label: 'Contact us', to: '/contact' }
  },
@@ -103,9 +115,9 @@ export default {
  title: 'Contact Us',
  subtitle: 'Questions, feedback, or partnership ideas — we would love to hear from you.',
  sections: [
- { heading: 'General inquiries', body: 'Email us at hello@careerai.com and we will respond within 1–2 business days.' },
- { heading: 'Customer support', body: 'For account or product help, visit our Customer Support page or email support@careerai.com.' },
- { heading: 'Press & partnerships', body: 'Media and partnership requests can be sent to press@careerai.com.' }
+ { heading: 'General inquiries', body: 'Email us at ajitaniket956556@gmail.com and we will respond within 1–2 business days.' },
+ { heading: 'Customer support', body: 'For account or product help, chat with us on WhatsApp or email ajitaniket956556@gmail.com.' },
+ { heading: 'Press & partnerships', body: 'Media and partnership requests can be sent to ajitaniket956556@gmail.com.' }
  ],
  cta: { title: 'Need help right away?', body: 'Browse our Help Center for quick answers to common questions.', label: 'Visit Help Center', to: '/help' }
  },
@@ -128,7 +140,7 @@ export default {
  { heading: 'Is CareerAI free to use?', body: 'Yes. The Starter plan is free forever and includes core resume building features. Pro and Team plans add advanced capabilities.' },
  { heading: 'Can I download my resume as a PDF?', body: 'Absolutely. Every resume can be exported as a professionally formatted PDF from your dashboard or the resume editor.' },
  { heading: 'Are AI features available now?', body: 'Core resume tools are live today. AI-powered features like ATS checking, cover letters, and mock interviews are on our roadmap — register interest on the Coming Soon page.' },
- { heading: 'How do I delete my account?', body: 'Contact support@careerai.com and we will process your request within 48 hours.' }
+ { heading: 'How do I delete my account?', body: 'Contact ajitaniket956556@gmail.com and we will process your request within 48 hours.' }
  ],
  cta: { title: 'Have another question?', body: 'Reach out and we will get back to you promptly.', label: 'Contact us', to: '/contact' }
  },
@@ -137,7 +149,7 @@ export default {
  title: 'We are here to help',
  subtitle: 'Get assistance with your account, resumes, or any product questions.',
  sections: [
- { heading: 'Email support', body: 'Email support@careerai.com with your account email and a description of the issue. We typically respond within 24 hours on business days.' },
+ { heading: 'Email support', body: 'Email ajitaniket956556@gmail.com with your account email and a description of the issue. We typically respond within 24 hours on business days.' },
  { heading: 'Before you write', items: ['Check the Help Center and FAQ for quick answers', 'Include your account email for faster resolution', 'Describe the steps that led to the issue'] },
  { heading: 'Response times', body: 'Starter users: 48 hours. Pro users: 24 hours. Team users: priority same-day response.' }
  ],
@@ -149,7 +161,7 @@ export default {
  subtitle: 'Current status of CareerAI services and infrastructure.',
  sections: [
  { heading: 'Service health', items: ['Web application — Operational', 'Authentication — Operational', 'Resume builder — Operational', 'PDF export — Operational'] },
- { heading: 'Incident history', body: 'No incidents reported in the last 90 days. Subscribe to updates at status@careerai.com.' }
+ { heading: 'Incident history', body: 'No incidents reported in the last 90 days. Get support or report an issue by contacting ajitaniket956556@gmail.com.' }
  ]
  },
  privacy: {
@@ -161,7 +173,7 @@ export default {
  { heading: 'Information we collect', body: 'We collect information you provide directly — such as your name, email, username, and resume content — as well as basic usage data to improve our services.' },
  { heading: 'How we use your data', items: ['Provide and maintain your CareerAI workspace', 'Authenticate your account securely', 'Improve product features and user experience', 'Send important service-related communications'] },
  { heading: 'Data security', body: 'We implement industry-standard security measures to protect your data. Resume content and account credentials are stored securely and never sold to third parties.' },
- { heading: 'Your rights', body: 'You may request access to, correction of, or deletion of your personal data at any time by contacting privacy@careerai.com.' }
+ { heading: 'Your rights', body: 'You may request access to, correction of, or deletion of your personal data at any time by contacting ajitaniket956556@gmail.com.' }
  ]
  },
  terms: {
@@ -196,7 +208,7 @@ export default {
  { heading: 'Subscription cancellation', body: 'You may cancel or change your paid plan from your account or by contacting support. Your current paid access remains active until the end of the billing period.' },
  { heading: 'Refunds', body: 'Because CareerAI provides instant access to digital resume tools, completed payments are generally non-refundable. If you were charged by mistake or cannot access paid features, contact support within 7 days and we will review the issue.' },
  { heading: 'Plan upgrades', body: 'When you upgrade, the new plan becomes active immediately and replaces the previous plan. The expiry timer is recalculated from the new activation date.' },
- { heading: 'Support contact', body: 'For billing help, email support@careerai.com with your account email and Razorpay payment ID.' }
+ { heading: 'Support contact', body: 'For billing help, email ajitaniket956556@gmail.com with your account email and Razorpay payment ID.' }
  ]
  },
  shipping: {
@@ -414,6 +426,12 @@ export default {
  short: 'Resume AI',
  description: 'Rewrite, enhance, and strengthen your resume with AI-powered achievement suggestions.',
  highlights: ['Resume rewriting', 'Content enhancement', 'Achievement suggestions']
+ },
+ general_waitlist: {
+ title: 'General Platform Waitlist',
+ short: 'Waitlist',
+ description: 'Be the first to know the moment new AI features go live.',
+ highlights: ['Product updates', 'Early access', 'Roadmap notifications']
  }
  }
  }

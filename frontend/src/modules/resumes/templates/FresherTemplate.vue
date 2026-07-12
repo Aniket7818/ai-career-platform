@@ -151,6 +151,7 @@ import { computed } from 'vue'
 import {
  contactItems, normalizeExperiences, normalizeEducations, normalizeProjects,
  normalizeCertifications, normalizeLanguages, normalizeAchievements, normalizeInterests,
+ normalizePersonal, normalizeSkills,
  dateRange, primaryColorHex, appearanceStyle
 } from './templateHelpers'
 import { t } from '../../../utils/i18n'
@@ -163,8 +164,8 @@ const props = defineProps({
  sectionVisibility: { type: Object, default: () => ({}) }
 })
 
-const personal = computed(() => props.content.personal || {})
-const skills = computed(() => props.content.skills || {})
+const personal = computed(() => normalizePersonal(props.content))
+const skills = computed(() => normalizeSkills(props.content))
 const contacts = computed(() => contactItems(personal.value))
 const experiences = computed(() => normalizeExperiences(props.content))
 const educations = computed(() => normalizeEducations(props.content))

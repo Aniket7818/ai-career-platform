@@ -76,7 +76,7 @@ class AiService
     provider_name    = AI_CONFIG["provider"] || "stub"
     model            = AI_CONFIG.dig("providers", provider_name, "model") || CONFIG.dig("default", "model")
     temperature      = CONFIG.dig("default", "temperature")
-    max_tokens       = CONFIG.dig("default", "max_output_tokens")
+    max_tokens       = feature_config["max_output_tokens"] || CONFIG.dig("default", "max_output_tokens")
 
     perf_events = []
     perf_events << { name: "Received", timestamp: Time.current.iso8601 }
@@ -188,8 +188,8 @@ class AiService
               last_error   = e
               retry_count += 1
               Rails.logger.warn "[AiService] RETRY attempt=#{attempt + 1} user=#{user.id} error=#{e.class} msg=#{e.message}"
-              # Small fixed delay between retries; don't use multiplier (wastes timeout budget)
-              sleep(1) if attempt < MAX_RETRIES - 1
+              # Exponential backoff: 1s, 2s, 4s...
+              sleep(2 ** attempt) if attempt < MAX_RETRIES - 1
 
             rescue RateLimitError, AuthenticationError, InvalidRequestError, ConfigurationError, ApiError => e
               last_error = e
@@ -200,7 +200,7 @@ class AiService
               last_error   = e
               retry_count += 1
               Rails.logger.warn "[AiService] GENERIC_ERROR attempt=#{attempt + 1} user=#{user.id} error=#{e.class}"
-              sleep(1) if attempt < MAX_RETRIES - 1
+              sleep(2 ** attempt) if attempt < MAX_RETRIES - 1
             end
           end
         end
@@ -274,6 +274,10 @@ class AiService
         }
         
         AiLog.create!(log_attrs.select { |k, _| AiLog.column_names.include?(k.to_s) || AiLog.reflect_on_association(k) })
+        
+        # Yield to caller inside the transaction so they can perform validation and updates.
+        # If the caller raises an exception, the transaction (and credit deduction) will rollback.
+        yield(response_text) if block_given?
       end
 
       Rails.logger.info "[AiService] COMPLETED user=#{user.id} feature=#{feature} credits_deducted=#{credits_required}"

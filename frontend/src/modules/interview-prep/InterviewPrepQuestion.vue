@@ -2,7 +2,7 @@
  <AppShell>
  <!-- Lightweight Toast -->
  <Transition name="fade">
- <div v-if="toastMsg" class="fixed top-4 right-4 z-[100] bg-surface text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+ <div v-if="toastMsg" class="fixed top-4 right-4 z-[100] bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
  <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
  <span class="text-sm font-bold">{{ toastMsg }}</span>
  </div>
@@ -13,7 +13,11 @@
  <div class="h-full bg-brand transition-all duration-500 ease-out" :style="{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }"></div>
  </div>
 
- <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-40 md:py-8 md:pb-12 animate-fade-in">
+ <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-40 md:py-8 md:pb-12 animate-fade-in relative">
+ <!-- Ambient Background Mesh Glows -->
+ <div class="absolute top-0 left-1/4 w-72 h-72 bg-brand/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+ <div class="absolute top-1/3 right-10 w-72 h-72 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+ <div class="absolute bottom-10 left-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
  
  <!-- Breadcrumbs -->
  <nav class="flex text-xs font-bold text-txt-disabled mb-4 md:mb-8 uppercase tracking-wider" aria-label="Breadcrumb">
@@ -28,7 +32,7 @@
  </li>
  <li class="flex items-center">
  <RouterLink :to="{ name: 'interview-prep-subject', params: { subject: route.params.subject } }" class="hover:text-brand transition-colors capitalize flex items-center">
- <span class="leading-none pt-0.5">{{ route.params.subject }}</span>
+ <span class="leading-none pt-0.5">{{ String(route.params.subject).replace(/_/g, ' ') }}</span>
  </RouterLink>
  </li>
  <li v-if="question && totalQuestions > 0" class="hidden sm:flex items-center text-txt-muted">
@@ -128,7 +132,7 @@
  <!-- Code Example -->
  <div v-if="question.code_example" class="mb-8 md:mb-10 mt-6 md:mt-0">
  <h2 class="text-xl md:text-2xl font-extrabold text-txt-primary mb-4 md:mb-6 flex items-center gap-3">
- <span class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-surface text-white flex items-center justify-center shadow-sm">
+ <span class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-surface-hover text-txt-secondary flex items-center justify-center shadow-sm">
  <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
  </span>
  Implementation
@@ -146,10 +150,11 @@
  <span class="text-[10px] font-bold tracking-wider text-txt-disabled uppercase bg-surface/10 px-2 py-0.5 rounded">{{ languageBadge }}</span>
  </div>
  <div class="flex items-center gap-3">
- <button @click="copyCode" class="flex items-center gap-1.5 text-xs font-bold text-txt-disabled hover:text-white transition-colors focus:outline-none" aria-label="Copy code to clipboard">
- <svg v-if="copied" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
- <svg v-else class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
- {{ copied ? 'Copied!' : 'Copy Code' }}
+ <button @click="copyCode" :disabled="isCopyingCode" class="flex items-center gap-1.5 text-xs font-bold text-txt-disabled hover:text-white transition-colors focus:outline-none" aria-label="Copy code to clipboard">
+  <svg v-if="isCopyingCode" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
+  <svg v-else-if="copied" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+  <svg v-else class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+  {{ isCopyingCode ? 'Copying...' : copied ? 'Copied!' : 'Copy Code' }}
  </button>
  </div>
  </div>
@@ -198,66 +203,115 @@
  <div v-else class="text-center py-32 bg-surface rounded-3xl border border-dashed border-border-hover shadow-sm">
  <h3 class="text-2xl font-extrabold text-txt-primary mb-2">Question Not Found</h3>
  <p class="text-txt-muted mb-8">This question may have been moved or removed.</p>
- <RouterLink :to="{ name: 'interview-prep' }" class="inline-flex rounded-xl bg-surface px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-brand transition-colors">
+ <RouterLink :to="{ name: 'interview-prep' }" class="inline-flex rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-brand/90 transition-colors">
  Return to Library
  </RouterLink>
  </div>
  </div>
 
  <!-- Mobile Sticky Floating Nav -->
- <div class="fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-xl border-t border-border p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:hidden z-40 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] rounded-t-3xl flex flex-col gap-3">
- <!-- Mini Progress bar -->
- <div class="w-full h-1.5 bg-surface-hover rounded-full overflow-hidden">
- <div class="h-full bg-brand transition-all duration-300" :style="{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }"></div>
- </div>
- <div class="flex items-center justify-between text-[11px] font-extrabold text-txt-disabled px-1 uppercase tracking-wider">
- <span>{{ completedCount }} Done</span>
- <span>{{ totalQuestions - currentIndex - 1 }} Left</span>
- </div>
+ <div class="fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-xl border-t border-border px-4 pt-3.5 pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:hidden z-40 shadow-[0_-10px_45px_-10px_rgba(0,0,0,0.08)] rounded-t-2xl">
+   <!-- Progress bar at the absolute top edge of the sticky container -->
+   <div class="absolute top-0 left-0 right-0 h-1 bg-surface-hover overflow-hidden rounded-t-2xl">
+     <div class="h-full bg-brand transition-all duration-300" :style="{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }"></div>
+   </div>
 
- <div class="flex items-center justify-between gap-3 mt-1">
- <RouterLink 
- v-if="hasPrev"
- :to="{ name: 'interview-prep-question', params: { subject: route.params.subject, question_id: prevQuestionId } }"
- class="flex-1 flex justify-center items-center h-12 bg-background text-txt-secondary rounded-xl font-bold text-sm border border-border active:bg-surface-hover transition-colors"
- >
- <svg class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
- Prev
- </RouterLink>
- <button v-else disabled class="flex-1 flex justify-center items-center h-12 bg-background text-txt-muted rounded-xl font-bold text-sm border border-border opacity-50">
- <svg class="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
- Prev
- </button>
- 
- <div class="flex-none w-16 flex justify-center items-center bg-background h-12 rounded-xl border border-border">
- <span class="text-sm font-black text-txt-primary">{{ currentIndex + 1 }}<span class="text-txt-disabled font-bold text-xs">/{{ totalQuestions }}</span></span>
- </div>
+   <div class="flex items-center justify-between w-full mt-1">
+     <!-- Left Slot: Quick Actions (Flex-1 to keep center aligned) -->
+     <div class="flex items-center gap-1.5 flex-1">
+       <!-- Share -->
+       <button 
+         @click="shareQuestion" 
+         class="w-10 h-10 flex items-center justify-center text-txt-disabled hover:text-brand hover:bg-brand/5 active:bg-brand/10 rounded-xl transition-all"
+         title="Share" 
+         aria-label="Share Question"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-5.368m0 5.368l5.662 3.397m-5.662-3.397l5.662-3.397m-.002-3.411a3 3 0 11-5.65 0 3 3 0 015.65 0z" />
+         </svg>
+       </button>
+       <!-- Bookmark -->
+       <button 
+         @click="toggleBookmark" 
+         class="w-10 h-10 flex items-center justify-center rounded-xl transition-all" 
+         :class="isBookmarked ? 'text-amber-500 bg-amber-50 active:bg-amber-100' : 'text-txt-disabled hover:text-amber-500 hover:bg-amber-50 active:bg-amber-100'"
+         title="Bookmark" 
+         aria-label="Bookmark Question"
+       >
+         <svg class="w-5 h-5" :fill="isBookmarked ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+         </svg>
+       </button>
+     </div>
 
- <RouterLink 
- v-if="hasNext"
- :to="{ name: 'interview-prep-question', params: { subject: route.params.subject, question_id: nextQuestionId } }"
- class="flex-1 flex justify-center items-center h-12 bg-surface text-white rounded-xl font-bold text-sm active:bg-brand transition-colors shadow-md"
- >
- Next
- <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
- </RouterLink>
- <button v-else disabled class="flex-1 flex justify-center items-center h-12 bg-background text-txt-muted rounded-xl font-bold text-sm border border-border opacity-50">
- Next
- <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg>
- </button>
- </div>
- <!-- Mobile Quick Actions -->
- <div class="flex items-center justify-between border-t border-border mt-2 pt-3 px-2">
- <button @click="shareQuestion" class="p-2 text-txt-disabled hover:text-brand rounded-lg transition-colors">
- <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-5.368m0 5.368l5.662 3.397m-5.662-3.397l5.662-3.397m-.002-3.411a3 3 0 11-5.65 0 3 3 0 015.65 0z" /></svg>
- </button>
- <button @click="toggleBookmark" class="p-2 rounded-lg transition-colors" :class="isBookmarked ? 'text-amber-500' : 'text-txt-disabled hover:text-amber-500'">
- <svg class="w-5 h-5" :fill="isBookmarked ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
- </button>
- <button @click="toggleComplete" class="p-2 rounded-lg transition-colors" :class="isCompleted ? 'text-emerald-500' : 'text-txt-disabled hover:text-emerald-500'">
- <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
- </button>
- </div>
+     <!-- Center Slot: Navigation (Fixed size slot for centering) -->
+     <div class="flex items-center gap-2 justify-center shrink-0">
+       <!-- Prev Button -->
+       <RouterLink 
+         v-if="hasPrev"
+         :to="{ name: 'interview-prep-question', params: { subject: route.params.subject, question_id: prevQuestionId } }"
+         class="w-10 h-10 flex items-center justify-center bg-background text-txt-secondary rounded-xl border border-border active:bg-surface-hover transition-colors"
+         aria-label="Previous question"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+         </svg>
+       </RouterLink>
+       <button 
+         v-else 
+         disabled 
+         class="w-10 h-10 flex items-center justify-center bg-background text-txt-muted rounded-xl border border-border opacity-40 cursor-not-allowed"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+         </svg>
+       </button>
+       
+       <!-- Question Counter -->
+       <div class="h-10 px-2.5 flex items-center justify-center bg-background rounded-xl border border-border/80 select-none">
+         <span class="text-sm font-bold text-txt-primary">
+           {{ currentIndex + 1 }}<span class="text-txt-disabled font-medium text-xs">/{{ totalQuestions }}</span>
+         </span>
+       </div>
+
+       <!-- Next Button -->
+       <RouterLink 
+         v-if="hasNext"
+         :to="{ name: 'interview-prep-question', params: { subject: route.params.subject, question_id: nextQuestionId } }"
+         class="w-10 h-10 flex items-center justify-center bg-brand text-white rounded-xl active:bg-brand/90 transition-colors shadow-sm"
+         aria-label="Next question"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+         </svg>
+       </RouterLink>
+       <button 
+         v-else 
+         disabled 
+         class="w-10 h-10 flex items-center justify-center bg-background text-txt-muted rounded-xl border border-border opacity-40 cursor-not-allowed"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+         </svg>
+       </button>
+     </div>
+
+     <!-- Right Slot: Completion Status (Flex-1 to keep center aligned) -->
+     <div class="flex items-center justify-end flex-1">
+       <!-- Mark Complete / Completed Toggle -->
+       <button 
+         @click="toggleComplete" 
+         class="w-10 h-10 flex items-center justify-center rounded-xl transition-all" 
+         :class="isCompleted ? 'bg-emerald-500 text-white shadow-sm active:bg-emerald-600' : 'bg-surface-hover text-txt-secondary hover:bg-surface-hover active:bg-border border border-border/50'"
+         :title="isCompleted ? 'Completed' : 'Mark Complete'"
+         aria-label="Mark Complete"
+       >
+         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+         </svg>
+       </button>
+     </div>
+   </div>
  </div>
 
  <!-- Desktop Footer Nav -->
@@ -323,6 +377,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppShell from '../../components/layout/AppShell.vue'
 import interviewPrepService from '../../services/interviewPrepService'
 import { useInterviewState } from './composables/useInterviewState'
+import ClipboardService from '../../services/clipboard'
 
 const route = useRoute()
 const router = useRouter()
@@ -332,6 +387,7 @@ const loading = ref(true)
 
 const isCodeExpanded = ref(false)
 const copied = ref(false)
+const isCopyingCode = ref(false)
 const toastMsg = ref('')
 let toastTimer = null
 
@@ -397,12 +453,9 @@ const shareQuestion = async () => {
 }
 
 const copyToClipboard = async (text, msg) => {
- try {
- await navigator.clipboard.writeText(text)
- showToast(msg)
- } catch (e) {
- console.error('Copy failed')
- }
+ await ClipboardService.copy(text, {
+  successMessage: msg || 'Content copied successfully.'
+ })
 }
 
 const loadData = async () => {
@@ -463,11 +516,18 @@ onMounted(() => {
  loadData()
 })
 
-const copyCode = () => {
+const copyCode = async () => {
  if (!question.value?.code_example) return
- copyToClipboard(question.value.code_example, 'Code copied to clipboard')
- copied.value = true
- setTimeout(() => { copied.value = false }, 2000)
+ isCopyingCode.value = true
+ await new Promise(resolve => setTimeout(resolve, 150))
+ isCopyingCode.value = false
+ const success = await ClipboardService.copy(question.value.code_example, {
+  successMessage: 'Code copied successfully.'
+ })
+ if (success) {
+  copied.value = true
+  setTimeout(() => { copied.value = false }, 2000)
+ }
 }
 
 const currentIndex = computed(() => {

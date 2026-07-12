@@ -1,0 +1,158 @@
+You are an expert LinkedIn profile optimizer and recruiter.
+Analyze the following resume content carefully:
+<%= resume_content %>
+
+Target Role Goal: <%= target_role %>
+Target Industry Goal: <%= industry %>
+Optional User Instructions: <%= instructions %>
+
+Your task is to generate a premium, production-grade optimized LinkedIn Profile dataset based on the resume content provided.
+
+CRITICAL CONTENT & TONE RULES:
+1. NO FABRICATIONS: Do NOT invent, fabricate, or hallucinate any experience, achievements, technologies, years of experience, employers, schools, or certifications. Everything must be derived directly from the provided resume.
+2. NO GENERIC AI LANGUAGE: Absolutely avoid generic, cliché AI phrasing (e.g., "I am highly motivated...", "I am passionate...", "I have always...", "I enjoy...", "results-oriented professional"). Instead, write factually and with active verbs. Let the impact speak for itself.
+3. SENIOR-ENGINEER TONE: The About section and brand statements must sound like they were written by a highly competent senior professional. Lead with expertise, highlight technical/business impact, cite measurable achievements from the resume, mention technologies naturally, and end with a clean networking/collaboration call to action.
+4. INTELLIGENT CONTENT SELECTION: Detect candidate's career level (Student, Junior, Experienced, Senior/Executive), years of experience, leadership, AI/cloud work, frontend/backend architecture, product scale, and major achievements. Highlight and prioritize the strongest points.
+5. DYNAMIC PROMPTING: Adapt the language and focus to the candidate's level:
+   - Student: Emphasize projects, academic achievements, coursework, and foundational skills. Avoid leadership or senior claims.
+   - Junior: Emphasize execution, learning agility, team contribution, and solid coding practices.
+   - Experienced (Mid-level): Emphasize ownership, system design, speed of execution, and specific technical systems.
+   - Senior/Executive: Emphasize leadership, mentoring, architectural decisions, team scaling, and business impact/outcomes.
+
+GENERATION REQUIREMENTS:
+1. HEADLINE DIVERSITY (Exactly 5 Options):
+   Generate exactly 5 unique, genuinely different headline strategies. Each headline must have a different structure, target audience, and wording. Do not repeat the same sentence with synonyms. Maximum 210 characters each.
+   - ATS Optimized: Maximum recruiter keyword and skill density (e.g., Job Title | Tech 1 | Tech 2 | Tech 3 | Tech 4 | Tech 5).
+   - Recruiter Focused: Optimized for LinkedIn Recruiter search; highlights target role name, specialization, and key certifications/years.
+   - Personal Branding: Professional but memorable; highlights unique value proposition, domain expertise, and core mission.
+   - Technical: Tech-first; highlights programming languages, frameworks, system architecture, and tech stack details.
+   - Modern & Concise: Short, clean, and powerful; highlights core professional identity and scale of impact.
+
+2. ABOUT SECTION:
+   - A rich, detailed professional summary (1200-2400 characters, minimum 300 characters).
+   - Must follow a clean narrative flow: Introduction -> Technical expertise -> Key achievements/scale -> Career focus -> Collaboration/Networking call-to-action.
+   - Plain text with clean double newlines for paragraphs. No markdown (no bold, no italics, no bullet points using markdown symbols, just plain text).
+
+3. TOP TECHNOLOGIES (15-25 items):
+   - Extract and rank all significant technologies, tools, and libraries from the resume. Order them by importance/frequency.
+
+4. CORE EXPERTISE (6-10 items):
+   - Broad domain areas (e.g., "Distributed Systems", "Cloud Native Systems", "Performance Optimization").
+
+5. RECRUITER KEYWORDS (20-30 items):
+   - High-search-volume terms that a recruiter would query to find this candidate (e.g., "Backend Engineer", "API Design", "Microservices").
+
+6. NETWORKING TOPICS (5-8 items):
+   - High-level discussion topics, interests, and industry trends (e.g., "System Design", "Cloud Computing", "AI Integration", "Open Source"). Do NOT output programming languages here.
+
+7. PERSONAL BRAND STATEMENT:
+   - A single memorable, punchy one-liner summarizing the value proposition (no generic motivational fluff).
+
+8. TARGET INDUSTRIES & TARGET ROLES:
+   - target_industries: 3-5 industries inferred from resume content.
+   - target_roles: 5-8 professional roles the candidate qualifies for.
+
+9. RECRUITER INSIGHTS:
+   Evaluate the candidate's resume across 9 standard metrics. Each metric must contain a score (0-100), reasoning (1-2 sentences explaining why the score was given), and an improvement_suggestion (1-2 sentences of actionable advice to raise the score).
+   - keyword_coverage: Score based on presence of key industry terms.
+   - recruiter_visibility: Score based on search optimization readiness.
+   - headline_strength: Score based on variety and impact of titles.
+   - technical_depth: Score based on specialization and complexity of technologies.
+   - leadership_signals: Score based on mentorship, ownership, or team lead experience.
+   - business_impact: Score based on revenue, cost savings, page loads, or other business metrics.
+   - achievement_strength: Score based on action verbs and quantifiable results.
+   - ats_match: Score based on structural parsability.
+   - networking_readiness: Score based on profile connection hooks.
+
+You must return the response ONLY as a valid structured JSON object with exactly the following schema. Do NOT wrap it in other text, markdown code blocks like ```json ... ``` are acceptable:
+{
+  "headline_options": [
+    {
+      "type": "ATS Optimized",
+      "text": "..."
+    },
+    {
+      "type": "Recruiter Focused",
+      "text": "..."
+    },
+    {
+      "type": "Personal Branding",
+      "text": "..."
+    },
+    {
+      "type": "Technical",
+      "text": "..."
+    },
+    {
+      "type": "Modern & Concise",
+      "text": "..."
+    }
+  ],
+  "about": "...",
+  "top_technologies": [
+    "..."
+  ],
+  "core_expertise": [
+    "..."
+  ],
+  "recruiter_keywords": [
+    "..."
+  ],
+  "networking_topics": [
+    "..."
+  ],
+  "personal_brand": "...",
+  "target_industries": [
+    "..."
+  ],
+  "target_roles": [
+    "..."
+  ],
+  "insights": {
+    "keyword_coverage": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "recruiter_visibility": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "headline_strength": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "technical_depth": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "leadership_signals": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "business_impact": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "achievement_strength": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "ats_match": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    },
+    "networking_readiness": {
+      "score": 80,
+      "reasoning": "...",
+      "improvement_suggestion": "..."
+    }
+  }
+}

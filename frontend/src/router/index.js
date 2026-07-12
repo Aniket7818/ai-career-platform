@@ -9,6 +9,7 @@ import DashboardPage from '../modules/dashboard/DashboardPage.vue'
 import AdminDashboardPage from '../modules/admin/AdminDashboardPage.vue'
 import ResumeListPage from '../modules/resumes/ResumeListPage.vue'
 import ResumeEditorPage from '../modules/resumes/ResumeEditorPage.vue'
+import ResumeOptimizePage from '../modules/resumes/ResumeOptimizePage.vue'
 import ComingSoonPage from '../modules/coming-soon/ComingSoonPage.vue'
 import ProfilePage from '../modules/profile/ProfilePage.vue'
 import SettingsPage from '../modules/settings/SettingsPage.vue'
@@ -21,9 +22,8 @@ import InterviewPrepSubject from '../modules/interview-prep/InterviewPrepSubject
 import InterviewPrepQuestion from '../modules/interview-prep/InterviewPrepQuestion.vue'
 
 const staticPages = [
+ { path: '/features', name: ROUTE_NAMES.FEATURES, pageKey: 'features' },
  { path: '/about', name: ROUTE_NAMES.ABOUT, pageKey: 'about' },
- { path: '/careers', name: ROUTE_NAMES.CAREERS, pageKey: 'careers' },
- { path: '/blog', name: ROUTE_NAMES.BLOG, pageKey: 'blog' },
  { path: '/contact', name: ROUTE_NAMES.CONTACT, pageKey: 'contact' },
  { path: '/help', name: ROUTE_NAMES.HELP, pageKey: 'help' },
  { path: '/faq', name: ROUTE_NAMES.FAQ, pageKey: 'faq' },
@@ -39,6 +39,8 @@ const staticPages = [
 const routes = [
  { path: '/', name: ROUTE_NAMES.LANDING, component: LandingPage },
  { path: '/coming-soon', name: ROUTE_NAMES.COMING_SOON, component: ComingSoonPage },
+ { path: '/careers', redirect: '/' },
+ { path: '/blog', redirect: '/' },
  ...staticPages.map(({ path, name, pageKey }) => ({ path, name, component: StaticPage, meta: { pageKey } })),
  { path: '/login', name: ROUTE_NAMES.LOGIN, component: AuthGateway, props: { mode: 'login' }, meta: { guestOnly: true } },
  { path: '/signup', name: ROUTE_NAMES.SIGNUP, component: AuthGateway, props: { mode: 'signup' }, meta: { guestOnly: true } },
@@ -50,9 +52,11 @@ const routes = [
  { path: '/admin/ai-analytics', name: 'admin-ai-analytics', component: () => import('../modules/admin/AdminAiAnalyticsWrapper.vue'), meta: { requiresAuth: true, requiresAdmin: true } },
  { path: '/profile', name: ROUTE_NAMES.PROFILE, component: ProfilePage, meta: { requiresAuth: true } },
  { path: '/settings', name: ROUTE_NAMES.SETTINGS, component: SettingsPage, meta: { requiresAuth: true } },
+ { path: '/settings/billing', name: ROUTE_NAMES.SETTINGS_BILLING, component: SettingsPage, meta: { requiresAuth: true } },
  { path: '/resumes', name: ROUTE_NAMES.RESUMES, component: ResumeListPage, meta: { requiresAuth: true } },
  { path: '/resumes/new', name: ROUTE_NAMES.RESUME_NEW, component: ResumeEditorPage, meta: { requiresAuth: true } },
  { path: '/resumes/:id/edit', name: ROUTE_NAMES.RESUME_EDIT, component: ResumeEditorPage, meta: { requiresAuth: true } },
+ { path: '/resumes/:id/optimize', name: ROUTE_NAMES.RESUME_OPTIMIZE, component: ResumeOptimizePage, meta: { requiresAuth: true } },
  { path: '/resumes/:id/print', name: 'resume-print', component: ResumePrintView, meta: { requiresAuth: true } },
  { path: '/interview-prep', name: ROUTE_NAMES.INTERVIEW_PREP, component: InterviewPrepList, meta: { requiresAuth: true } },
  { path: '/interview-prep/bookmarks', name: 'interview-prep-bookmarks', component: () => import('../modules/interview-prep/InterviewPrepFilteredList.vue'), meta: { requiresAuth: true, listType: 'bookmarks' } },

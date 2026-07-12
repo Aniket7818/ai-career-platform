@@ -2,204 +2,295 @@
  <AppShell>
  <div class="mx-auto max-w-6xl py-3 sm:py-4 lg:py-8 px-3 sm:px-4 lg:px-8 pb-safe pb-10 ">
  
- <!-- Hero Header — compact on mobile -->
- <header class="mb-4 sm:mb-6 lg:mb-8">
- <div class="inline-flex items-center gap-1.5 rounded-full bg-brand/10 px-2.5 py-0.5 text-[11px] font-semibold text-brand mb-1.5">
- <span>SaaS Console</span>
- </div>
- <h1 class="text-xl sm:text-2xl lg:text-4xl font-extrabold tracking-tight text-txt-primary leading-tight">
- Settings
- </h1>
- <p class="text-xs sm:text-sm text-txt-muted mt-0.5 sm:mt-1 hidden sm:block">
- Manage your account, subscription, notifications, security, and developer tools.
- </p>
- </header>
+  <!-- Hero Header & Horizontal Navigation (Top/Right-aligned) -->
+  <header class="mb-6 pb-4 border-b border-border flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-4">
+    <div class="min-w-0 md:min-w-[400px] flex-1">
+      <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-txt-primary leading-tight">
+        Settings
+      </h1>
+      <p class="text-xs sm:text-sm text-txt-muted mt-1 hidden sm:block">
+        Manage your account, subscription, notifications, security, and developer tools.
+      </p>
+    </div>
+    
+    <!-- Horizontal tabs nav -->
+    <nav class="flex gap-1.5 overflow-x-auto pb-1 hide-scrollbar snap-x snap-mandatory shrink-0 -mx-3 px-3 md:mx-0 md:px-0">
+      <button
+        @click="currentSection = 'account'"
+        :class="currentSection === 'account'
+          ? 'bg-brand text-white shadow-sm shadow-brand/20'
+          : 'bg-surface text-txt-secondary border border-border hover:bg-surface-hover'"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
+        style="min-height:36px"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+        Account
+      </button>
+      <button
+        @click="currentSection = 'subscription'"
+        :class="currentSection === 'subscription'
+          ? 'bg-brand text-white shadow-sm shadow-brand/20'
+          : 'bg-surface text-txt-secondary border border-border hover:bg-surface-hover'"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
+        style="min-height:36px"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+        Subscription
+      </button>
+      <button
+        @click="currentSection = 'notifications'"
+        :class="currentSection === 'notifications'
+          ? 'bg-brand text-white shadow-sm shadow-brand/20'
+          : 'bg-surface text-txt-secondary border border-border hover:bg-surface-hover'"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
+        style="min-height:36px"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+        Alerts
+      </button>
+      <button
+        @click="currentSection = 'security'"
+        :class="currentSection === 'security'
+          ? 'bg-brand text-white shadow-sm shadow-brand/20'
+          : 'bg-surface text-txt-secondary border border-border hover:bg-surface-hover'"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
+        style="min-height:36px"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+        Security
+      </button>
+      <button
+        v-if="isAdmin"
+        @click="currentSection = 'developer'"
+        :class="currentSection === 'developer'
+          ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+          : 'bg-amber-50 text-amber-600 border border-dashed border-amber-300 hover:bg-amber-100/50'"
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
+        style="min-height:36px"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        Dev Tools
+      </button>
+    </nav>
+  </header>
 
- <!-- Main Layout: Sidebar & Content -->
- <div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8 items-start">
- 
- <!-- Mobile: Horizontally scrollable pill tabs -->
- <aside class="lg:hidden mb-4 -mx-3 sm:-mx-4 px-3 sm:px-4">
- <div class="flex gap-2 overflow-x-auto pb-2 hide-scrollbar snap-x snap-mandatory">
- <button
- @click="currentSection = 'account'"
- :class="currentSection === 'account'
- ? 'bg-brand text-white shadow-sm shadow-brand/20'
- : 'bg-surface text-txt-secondary border border-border '"
- class="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
- style="min-height:36px"
- >
- <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
- Account
- </button>
- <button
- @click="currentSection = 'subscription'"
- :class="currentSection === 'subscription'
- ? 'bg-brand text-white shadow-sm shadow-brand/20'
- : 'bg-surface text-txt-secondary border border-border '"
- class="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
- style="min-height:36px"
- >
- <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
- Subscription
- </button>
- <button
- @click="currentSection = 'notifications'"
- :class="currentSection === 'notifications'
- ? 'bg-brand text-white shadow-sm shadow-brand/20'
- : 'bg-surface text-txt-secondary border border-border '"
- class="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
- style="min-height:36px"
- >
- <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
- Alerts
- </button>
- <button
- @click="currentSection = 'security'"
- :class="currentSection === 'security'
- ? 'bg-brand text-white shadow-sm shadow-brand/20'
- : 'bg-surface text-txt-secondary border border-border '"
- class="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
- style="min-height:36px"
- >
- <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
- Security
- </button>
- <button
- v-if="isAdmin"
- @click="currentSection = 'developer'"
- :class="currentSection === 'developer'
- ? 'bg-indigo-600 text-white'
- : 'bg-amber-50 text-amber-600 border border-dashed border-amber-300 '"
- class="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all duration-200 snap-start"
- style="min-height:36px"
- >
- <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
- Dev Tools
- </button>
- </div>
- </aside>
-
- <!-- Desktop: vertical sidebar nav -->
- <aside class="hidden lg:flex flex-col border-r border-border pr-6 gap-1 shrink-0">
- <button 
- @click="currentSection = 'account'" 
- :class="currentSection === 'account' ? 'bg-brand text-white shadow-md shadow-brand/10' : 'text-txt-secondary hover:bg-surface-hover '"
- class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition w-full text-left"
- >
- <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
- <span>Account</span>
- </button>
- <button 
- @click="currentSection = 'subscription'" 
- :class="currentSection === 'subscription' ? 'bg-brand text-white shadow-md shadow-brand/10' : 'text-txt-secondary hover:bg-surface-hover '"
- class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition w-full text-left"
- >
- <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
- <span>Subscription</span>
- </button>
- <button 
- @click="currentSection = 'notifications'" 
- :class="currentSection === 'notifications' ? 'bg-brand text-white shadow-md shadow-brand/10' : 'text-txt-secondary hover:bg-surface-hover '"
- class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition w-full text-left"
- >
- <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
- <span>Notifications</span>
- </button>
- <button 
- @click="currentSection = 'security'" 
- :class="currentSection === 'security' ? 'bg-brand text-white shadow-md shadow-brand/10' : 'text-txt-secondary hover:bg-surface-hover '"
- class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition w-full text-left"
- >
- <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
- <span>Security</span>
- </button>
- <button 
- v-if="isAdmin"
- @click="currentSection = 'developer'" 
- :class="currentSection === 'developer' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10' : 'text-amber-600 hover:bg-amber-50 border border-dashed border-amber-300 '"
- class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition w-full text-left mt-4"
- >
- <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
- <span>Developer Tools</span>
- </button>
- </aside>
-
- <!-- Right Content Area -->
- <main class="space-y-6">
+  <div>
+    <main class="space-y-6">
  
  <!-- 1. ACCOUNT SECTION -->
  <section v-if="currentSection === 'account'" class="space-y-6 animate-fade-in">
  <div class="rounded-2xl border border-border/80 bg-surface p-6 shadow-sm ">
  <h2 class="text-xl font-bold text-txt-primary mb-6">Profile Settings</h2>
  
- <form @submit.prevent="saveProfile" class="space-y-4">
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">First Name</label>
- <input v-model="profileForm.first_name" required type="text" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Last Name</label>
- <input v-model="profileForm.last_name" type="text" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- </div>
+  <form @submit.prevent="saveProfile" class="space-y-8">
+    <!-- 1. Personal Details -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-border">
+        <span class="grid size-8 place-items-center rounded-lg bg-brand/10 text-brand">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-sm font-bold text-txt-primary">Personal Details</h3>
+          <p class="text-xs text-txt-muted">Your public name and professional summary.</p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">First Name</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.first_name" required type="text" class="pl-10 block w-full" />
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Last Name</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.last_name" type="text" class="pl-10 block w-full" />
+          </div>
+        </div>
+      </div>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Username</label>
- <input :value="user?.username" disabled type="text" class="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-txt-muted " />
- </div>
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Email Address</label>
- <input :value="user?.email" disabled type="email" class="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-txt-muted " />
- </div>
- </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Job Title</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.title" type="text" placeholder="e.g. Senior Software Engineer" class="pl-10 block w-full" />
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Professional Summary / Bio</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.bio" type="text" placeholder="Brief summary of your professional background..." class="pl-10 block w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Job Title</label>
- <input v-model="profileForm.title" type="text" placeholder="e.g. Senior Software Engineer" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Location</label>
- <input v-model="profileForm.location" type="text" placeholder="e.g. Bangalore, India" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- </div>
+    <!-- 2. Contact Information -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-border">
+        <span class="grid size-8 place-items-center rounded-lg bg-brand/10 text-brand">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-sm font-bold text-txt-primary">Contact Information</h3>
+          <p class="text-xs text-txt-muted">Your contact channels and location details.</p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Username</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/>
+              </svg>
+            </div>
+            <input :value="user?.username" disabled type="text" class="pl-10 block w-full bg-background text-txt-muted cursor-not-allowed" />
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Email Address</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <input :value="user?.email" disabled type="email" class="pl-10 block w-full bg-background text-txt-muted cursor-not-allowed" />
+          </div>
+        </div>
+      </div>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Phone</label>
- <input v-model="profileForm.phone" type="text" placeholder="e.g. +91 99887 76655" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Website</label>
- <input v-model="profileForm.website" type="text" placeholder="e.g. https://portfolio.dev" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Phone</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.phone" type="text" placeholder="e.g. +91 99887 76655" class="pl-10 block w-full" />
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Location</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.location" type="text" placeholder="e.g. Bangalore, India" class="pl-10 block w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
 
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">LinkedIn Profile URL</label>
- <input v-model="profileForm.linkedin" type="text" placeholder="e.g. linkedin.com/in/username" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">GitHub Profile URL</label>
- <input v-model="profileForm.github" type="text" placeholder="e.g. github.com/username" class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none" />
- </div>
- </div>
+    <!-- 3. Professional Links -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2.5 pb-2 border-b border-border">
+        <span class="grid size-8 place-items-center rounded-lg bg-brand/10 text-brand">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-sm font-bold text-txt-primary">Professional Links</h3>
+          <p class="text-xs text-txt-muted">Your portfolio, GitHub, and LinkedIn profiles.</p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Website</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.website" type="text" placeholder="e.g. https://portfolio.dev" class="pl-10 block w-full" />
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">LinkedIn Profile URL</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <!-- Inline LinkedIn Icon (standard path matching other layouts) -->
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.linkedin" type="text" placeholder="e.g. linkedin.com/in/username" class="pl-10 block w-full" />
+          </div>
+        </div>
+      </div>
 
- <div>
- <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">Professional Summary / Bio</label>
- <textarea v-model="profileForm.bio" rows="4" placeholder="Brief summary of your professional background..." class="w-full rounded-xl border border-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand focus:outline-none"></textarea>
- </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-txt-muted uppercase tracking-wider mb-2">GitHub Profile URL</label>
+          <div class="relative rounded-xl shadow-xs">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 z-10">
+              <!-- Inline GitHub Icon -->
+              <svg class="size-5 text-txt-muted" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </div>
+            <input v-model="profileForm.github" type="text" placeholder="e.g. github.com/username" class="pl-10 block w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
 
- <div class="pt-4 border-t border-border flex sm:justify-end">
- <button type="submit" :disabled="savingProfile" class="w-full sm:w-auto rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand/20 hover:bg-brand/90 transition-all disabled:opacity-50" style="min-height:44px">
- {{ savingProfile ? 'Saving Changes...' : 'Save Profile' }}
- </button>
- </div>
- </form>
+    <div class="pt-4 border-t border-border flex sm:justify-end">
+      <button type="submit" :disabled="savingProfile" class="w-full sm:w-auto rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand/20 hover:bg-brand/90 transition-all disabled:opacity-50" style="min-height:44px">
+        {{ savingProfile ? 'Saving Changes...' : 'Save Profile' }}
+      </button>
+    </div>
+  </form>
  </div>
  </section>
 
@@ -401,31 +492,56 @@
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
  
  <!-- Left: Credit history -->
- <div class="rounded-2xl border border-border/80 bg-surface p-4 sm:p-6 shadow-sm ">
- <h3 class="text-sm font-bold text-txt-primary mb-3">Credit Transactions</h3>
- <!-- Skeleton loader -->
- <div v-if="loadingCredits" class="space-y-2">
- <div v-for="i in 3" :key="i" class="h-12 bg-surface-hover rounded-xl animate-pulse" />
- </div>
- <div v-else-if="creditHistory && creditHistory.length > 0" class="space-y-2 max-h-72 overflow-y-auto pr-1 custom-scrollbar">
- <div v-for="tx in creditHistory" :key="tx.id" class="flex justify-between items-center p-3 rounded-xl bg-surface-elevated/40 border border-border/50 text-xs animate-card-enter">
- <div class="min-w-0">
- <p class="font-bold text-txt-primary truncate">{{ tx.feature_name }}</p>
- <p class="text-[10px] text-txt-disabled mt-0.5">{{ formatDate(tx.created_at) }}</p>
- </div>
- <span :class="tx.action === 'add' ? 'text-emerald-600 bg-emerald-50 ' : 'text-rose-600 bg-rose-50 '" class="ml-2 shrink-0 px-2 py-1 rounded-lg font-extrabold uppercase text-[10px]">
- {{ tx.action === 'add' ? '+' : '-' }}{{ tx.credits_used }}
- </span>
- </div>
- </div>
- <!-- Premium empty state -->
- <div v-else class="flex flex-col items-center justify-center py-8 text-center">
- <div class="grid size-12 place-items-center rounded-2xl bg-surface-hover mb-3">
- <svg class="size-6 text-txt-muted " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
- </div>
- <p class="text-xs font-semibold text-txt-muted">No credit transactions yet</p>
- <p class="text-[10px] text-txt-disabled mt-1">Your AI usage will appear here.</p>
- </div>
+ <div class="rounded-2xl border border-border/80 bg-surface p-4 sm:p-6 shadow-sm flex flex-col justify-between">
+  <div>
+   <h3 class="text-sm font-bold text-txt-primary mb-3">Credit Transactions</h3>
+   <!-- Skeleton loader -->
+   <div v-if="loadingCredits" class="space-y-2">
+   <div v-for="i in 3" :key="i" class="h-12 bg-surface-hover rounded-xl animate-pulse" />
+   </div>
+   <div v-else-if="creditHistory && creditHistory.length > 0" class="space-y-2 max-h-72 overflow-y-auto pr-1 custom-scrollbar">
+   <div v-for="tx in creditHistory" :key="tx.id" class="flex justify-between items-center p-3 rounded-xl bg-surface-elevated/40 border border-border/50 text-xs animate-card-enter">
+   <div class="min-w-0">
+   <p class="font-bold text-txt-primary truncate">{{ tx.feature_name }}</p>
+   <p class="text-[10px] text-txt-disabled mt-0.5">{{ formatDate(tx.created_at) }}</p>
+   </div>
+   <span :class="tx.action === 'add' ? 'text-emerald-600 bg-emerald-50 ' : 'text-rose-600 bg-rose-50 '" class="ml-2 shrink-0 px-2 py-1 rounded-lg font-extrabold uppercase text-[10px]">
+   {{ tx.action === 'add' ? '+' : '-' }}{{ tx.credits_used }}
+   </span>
+   </div>
+   </div>
+   <!-- Premium empty state -->
+   <div v-else class="flex flex-col items-center justify-center py-8 text-center">
+   <div class="grid size-12 place-items-center rounded-2xl bg-surface-hover mb-3">
+   <svg class="size-6 text-txt-muted " fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+   </div>
+   <p class="text-xs font-semibold text-txt-muted">No credit transactions yet</p>
+   <p class="text-[10px] text-txt-disabled mt-1">Your AI usage will appear here.</p>
+   </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div v-if="totalCreditPages > 1" class="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs">
+    <button
+      @click="changeCreditPage(currentCreditPage - 1)"
+      :disabled="currentCreditPage <= 1 || loadingCredits"
+      type="button"
+      class="px-3 py-1.5 rounded-lg border border-border bg-surface hover:bg-background text-txt-secondary disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition"
+    >
+      Prev
+    </button>
+    <span class="text-txt-muted font-medium">
+      Page {{ currentCreditPage }} of {{ totalCreditPages }}
+    </span>
+    <button
+      @click="changeCreditPage(currentCreditPage + 1)"
+      :disabled="currentCreditPage >= totalCreditPages || loadingCredits"
+      type="button"
+      class="px-3 py-1.5 rounded-lg border border-border bg-surface hover:bg-background text-txt-secondary disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition"
+    >
+      Next
+    </button>
+  </div>
  </div>
 
  <!-- Right: Billing invoice history -->
@@ -773,9 +889,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import AppShell from '../../components/layout/AppShell.vue'
 import { paymentService } from '../../services/paymentService'
 import { adminService } from '../../services/adminService'
@@ -785,8 +901,21 @@ import { PRICING_PLANS } from '../../constants/pricing'
 
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
-const currentSection = ref('subscription')
+const currentSection = ref(route.path.includes('billing') ? 'subscription' : 'account')
+
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath.includes('billing')) {
+      currentSection.value = 'subscription'
+    } else if (newPath === '/settings') {
+      currentSection.value = 'account'
+    }
+  }
+)
+
 const isYearly = ref(false)
 const showDetails = ref(false)
 const showCancelModal = ref(false)
@@ -799,6 +928,8 @@ const purchasing = ref(false)
 
 const billingHistory = ref([])
 const creditHistory = ref([])
+const currentCreditPage = ref(1)
+const totalCreditPages = ref(1)
 const loadingCredits = ref(false)
 
 const user = computed(() => store.state.auth.user)
@@ -929,13 +1060,21 @@ const loadCreditHistory = async () => {
  if (loadingCredits.value) return
  loadingCredits.value = true
  try {
- const { data } = await paymentService.getCreditHistory(1)
- creditHistory.value = data.transactions || []
+  const { data } = await paymentService.getCreditHistory(currentCreditPage.value)
+  creditHistory.value = data.transactions || []
+  totalCreditPages.value = data.meta?.total_pages || 1
+  currentCreditPage.value = data.meta?.current_page || 1
  } catch (error) {
- console.error('Failed to load credit history logs', error)
+  console.error('Failed to load credit history logs', error)
  } finally {
- loadingCredits.value = false
+  loadingCredits.value = false
  }
+}
+
+const changeCreditPage = async (newPage) => {
+ if (newPage < 1 || newPage > totalCreditPages.value) return
+ currentCreditPage.value = newPage
+ await loadCreditHistory()
 }
 
 // Load Developer settings (Admin only)

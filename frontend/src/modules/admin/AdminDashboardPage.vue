@@ -223,7 +223,7 @@
  <button class="admin-btn" :disabled="user.verified" @click="saveUser(user.id, { verified_at: new Date().toISOString() })">{{ user.verified ? 'Verified' : 'Verify' }}</button>
  <button v-if="user.status === 'active'" class="admin-btn warn" @click="suspend(user.id)">Suspend</button>
  <button v-else class="admin-btn ok" @click="activate(user.id)">Activate</button>
- <button class="admin-btn danger" @click="deleteUser(user.id)">Delete</button>
+ <button class="admin-btn danger" @click="triggerDeleteUser(user.id)">Delete</button>
  </div>
  </td>
  </tr>
@@ -376,6 +376,29 @@
  </div>
  </Teleport>
  </AdminShell>
+
+  <!-- Delete User Confirm Modal -->
+  <Teleport to="body">
+    <div v-if="showDeleteUserModal" class="fixed inset-0 z-50 grid place-items-center bg-black/70 p-5 backdrop-blur-sm" @click.self="showDeleteUserModal = false">
+      <div class="w-full max-w-sm rounded-2xl bg-[#121826] p-6 shadow-2xl border border-white/10 text-center animate-card-enter">
+        <div class="mx-auto grid size-12 place-items-center rounded-full bg-rose-500/15 text-rose-400 mb-4">
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold text-white">Delete User?</h2>
+        <p class="mt-2 text-sm text-txt-disabled">
+          Are you sure you want to delete this user and all their dependent records? This action cannot be undone.
+        </p>
+        <div class="mt-6 flex gap-3">
+          <button class="flex-1 rounded-xl border border-white/10 bg-transparent px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-white/5 transition-colors" @click="showDeleteUserModal = false">Cancel</button>
+          <button class="flex-1 rounded-xl bg-rose-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-rose-600/20 hover:bg-rose-700 transition-colors" @click="confirmDeleteUser">
+            Permanently Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
@@ -420,6 +443,8 @@ const usersPage = ref(1)
 const logsPage = ref(1)
 const sessionsPage = ref(1)
 const selectedUser = ref(null)
+const showDeleteUserModal = ref(false)
+const deletingUserId = ref(null)
 const data = ref({
  analytics: {}, users: { records: [] }, resume_analytics: {}, feature_interest_analytics: [],
  subscription_analytics: {}, settings: {}, audit_logs: { records: [] }, login_sessions: { records: [] }, growth: { labels: [], values: [] }
@@ -541,12 +566,25 @@ const saveUser = async (id, payload) => {
 const suspend = async (id) => { const r = await adminService.suspendUser(id); replaceUser(r.data.user); data.value.audit_logs = r.data.audit_logs }
 const activate = async (id) => { const r = await adminService.activateUser(id); replaceUser(r.data.user); data.value.audit_logs = r.data.audit_logs }
 
-const deleteUser = async (id) => {
- if (!confirm('Delete this user and all dependent records?')) return
- const response = await adminService.deleteUser(id)
- data.value.users = response.data.users
- data.value.analytics = response.data.analytics
- data.value.audit_logs = response.data.audit_logs
+const triggerDeleteUser = (id) => {
+ deletingUserId.value = id
+ showDeleteUserModal.value = true
+}
+
+const confirmDeleteUser = async () => {
+ if (!deletingUserId.value) return
+ try {
+  const response = await adminService.deleteUser(deletingUserId.value)
+  data.value.users = response.data.users
+  data.value.analytics = response.data.analytics
+  data.value.audit_logs = response.data.audit_logs
+  toast.success('User Deleted', 'The user and all related records have been deleted.')
+ } catch (error) {
+  toast.error('Failed to delete user')
+ } finally {
+  deletingUserId.value = null
+  showDeleteUserModal.value = false
+ }
 }
 
 const saveSetting = async (key, value) => {

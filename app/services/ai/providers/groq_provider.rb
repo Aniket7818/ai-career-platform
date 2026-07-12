@@ -78,9 +78,9 @@ module Ai
             http_status:         response.code.to_i
           }
 
-        rescue Net::ReadTimeout, Net::OpenTimeout => e
-          Rails.logger.error "[GroqProvider] TIMEOUT #{e.class}: #{e.message}"
-          raise AiService::TimeoutError, "Groq request timed out (#{e.class})"
+        rescue Net::ReadTimeout, Net::OpenTimeout, SocketError, Errno::ECONNREFUSED => e
+          Rails.logger.error "[GroqProvider] NETWORK ERROR #{e.class}: #{e.message}"
+          raise AiService::ProviderUnavailableError, "Groq network error (#{e.class})"
         rescue JSON::ParserError => e
           Rails.logger.error "[GroqProvider] JSON PARSE ERROR: #{e.message}"
           raise AiService::ApiError, "Invalid JSON response from Groq API"

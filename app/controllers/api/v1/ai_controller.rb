@@ -38,6 +38,17 @@ module Api
           request_id: request.request_id
         }
 
+        # Issue 3 & 4: Intelligent stopping and optimization limits
+        eligibility = ResumeOptimizationEligibility.check(@resume, feature)
+        if !eligibility[:eligible]
+          return render json: { 
+            success: true, 
+            already_optimized: true, 
+            message: eligibility[:message],
+            response: "ALREADY_OPTIMIZED" # Keep format expected by frontend
+          }
+        end
+
         response_text = AiService.generate(
           user:         current_user,
           resume:       @resume,

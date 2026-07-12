@@ -1,5 +1,6 @@
 export const ROUTE_NAMES = Object.freeze({
  LANDING: 'landing',
+ FEATURES: 'features',
  LOGIN: 'login',
  SIGNUP: 'signup',
  FORGOT_PASSWORD: 'forgot-password',
@@ -8,9 +9,11 @@ export const ROUTE_NAMES = Object.freeze({
  RESUMES: 'resumes',
  RESUME_NEW: 'resume-new',
  RESUME_EDIT: 'resume-edit',
+ RESUME_OPTIMIZE: 'resume-optimize',
  COMING_SOON: 'coming-soon',
  PROFILE: 'profile',
  SETTINGS: 'settings',
+ SETTINGS_BILLING: 'settings-billing',
  ABOUT: 'about',
  CAREERS: 'careers',
  BLOG: 'blog',

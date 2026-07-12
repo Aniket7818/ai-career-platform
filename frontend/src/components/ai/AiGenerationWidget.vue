@@ -53,8 +53,10 @@
  <div class="rounded-lg bg-surface border border-violet-100 shadow-sm overflow-hidden">
  <div class="bg-violet-50/50 px-3 py-2 border-b border-violet-100 flex justify-between items-center">
  <span class="text-[10px] font-bold text-violet-700 uppercase tracking-wider">AI Output</span>
- <button @click="copyResult" class="text-violet-600 hover:text-violet-800 transition p-1 rounded hover:bg-violet-100" title="Copy to clipboard">
- <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+ <button @click="copyResult" class="text-violet-600 hover:text-violet-800 transition p-1 rounded hover:bg-violet-100 flex items-center justify-center min-w-[28px] h-7" title="Copy to clipboard" :disabled="isCopying">
+  <svg v-if="isCopying" class="size-3.5 animate-spin text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity="0.25"/><path d="M12 3a9 9 0 019 9"/></svg>
+  <span v-else-if="isCopied" class="text-emerald-600 font-bold text-[10px] flex items-center gap-0.5" style="animation: fadeIn 0.15s ease;">✓ Copied</span>
+  <svg v-else class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
  </button>
  </div>
  <div class="p-3 text-sm text-txt-secondary leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto custom-scrollbar">
@@ -68,7 +70,7 @@
  <button type="button" @click="applyResult"
  class="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-violet-600 px-4 py-2 text-xs font-bold text-white transition hover:bg-violet-700 shadow-sm active:scale-95">
  <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
- Apply to Resume
+ Apply
  </button>
  </div>
  </div>
@@ -224,6 +226,7 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import http from '../../services/http'
 import { useStore } from 'vuex'
+import ClipboardService from '../../services/clipboard'
 
 const props = defineProps({
  resumeId: { type: [String, Number], required: true },
@@ -246,6 +249,8 @@ const instructions = ref('')
 const history = ref([])
 const showHistory = ref(false)
 const previewItem = ref(null)
+const isCopying = ref(false)
+const isCopied = ref(false)
 
 const quickPrompts = [
  'Professional', 'ATS friendly', 'Shorter', 'Longer', 
@@ -314,12 +319,7 @@ const loadHistory = async () => {
  params: { resume_id: props.resumeId, feature: props.feature }
  })
  if (res.data.success) {
- history.value = res.data.history
- // If we don't have a result yet, load the latest history item
- if (!result.value && history.value.length > 0) {
- result.value = history.value[0].response_content
- metadata.value = history.value[0]
- }
+  history.value = res.data.history
  }
  } catch { /* non-critical */ }
 }
@@ -377,6 +377,13 @@ const generate = async (forceNew = false) => {
  })
 
  if (res.data.success) {
+ if (res.data.already_optimized) {
+ errorType.value = 'warning'
+ error.value = res.data.message || 'Already optimized.'
+ loading.value = false
+ return
+ }
+
  result.value = res.data.response
  metadata.value = res.data.metadata || null
  instructions.value = ''
@@ -422,11 +429,20 @@ const generate = async (forceNew = false) => {
 
 const applyResult = () => {
  emit('apply', result.value)
+ reset()
 }
 
-const copyResult = () => {
- if (result.value) {
- navigator.clipboard.writeText(result.value)
+const copyResult = async () => {
+ if (!result.value) return
+ isCopying.value = true
+ await new Promise(resolve => setTimeout(resolve, 150))
+ isCopying.value = false
+ const success = await ClipboardService.copy(result.value)
+ if (success) {
+  isCopied.value = true
+  setTimeout(() => {
+   isCopied.value = false
+  }, 2000)
  }
 }
 

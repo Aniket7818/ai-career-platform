@@ -2,7 +2,8 @@ module Api
   module V1
     class ResumesController < ApplicationController
       before_action :authenticate_api_user!
-      before_action :set_resume, only: %i[show update destroy download download_pdf]
+      before_action :set_resume, only: %i[show update destroy download download_pdf score analyze]
+      before_action :ensure_versioning_initialized, only: %i[show update score analyze]
 
       def index
         resumes = current_user.resumes.order(updated_at: :desc)
@@ -17,6 +18,8 @@ module Api
         resume = current_user.resumes.new(resume_params)
 
         if resume.save
+          # Phase 3.1: Create the initial "Original" version snapshot
+          ResumeVersionService.create_initial(resume)
           render json: { resume: ResumeSerializer.new(resume).as_json }, status: :created
         else
           render json: { errors: resume.errors.full_messages }, status: :unprocessable_entity
@@ -24,7 +27,60 @@ module Api
       end
 
       def update
+        # Temporary debug logging: DB state before update
+        content_before = @resume.content || {}
+        Rails.logger.info "[AI_PIPELINE_DEBUG] --- START RESUMES_CONTROLLER#UPDATE (ID: #{@resume.id}) ---"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Incoming Params: #{params.dig(:resume, :content).inspect}"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Headline: #{content_before.dig('personal', 'headline').inspect}"
+        if content_before["experiences"].is_a?(Array)
+          content_before["experiences"].each_with_index do |exp, idx|
+            Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Experience[#{idx}] Role: #{exp['role'].inspect} (ID: #{exp['id']})"
+          end
+        end
+        if content_before["projects"].is_a?(Array)
+          content_before["projects"].each_with_index do |proj, idx|
+            Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Project[#{idx}] Name: #{proj['projectName'].inspect} (ID: #{proj['id']})"
+          end
+        end
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Education: #{content_before['educations'].inspect}"
+        Rails.logger.info "[AI_PIPELINE_DEBUG] Current DB Certifications: #{content_before['certifications'].inspect}"
+
         if @resume.update(resume_params)
+          # Temporary debug logging: DB state after update
+          @resume.reload
+          content_after = @resume.content || {}
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Headline: #{content_after.dig('personal', 'headline').inspect}"
+          if content_after["experiences"].is_a?(Array)
+            content_after["experiences"].each_with_index do |exp, idx|
+              Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Experience[#{idx}] Role: #{exp['role'].inspect} (ID: #{exp['id']})"
+            end
+          end
+          if content_after["projects"].is_a?(Array)
+            content_after["projects"].each_with_index do |proj, idx|
+              Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Project[#{idx}] Name: #{proj['projectName'].inspect} (ID: #{proj['id']})"
+            end
+          end
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Education: #{content_after['educations'].inspect}"
+          Rails.logger.info "[AI_PIPELINE_DEBUG] Saved Certifications: #{content_after['certifications'].inspect}"
+          Rails.logger.info "[AI_PIPELINE_DEBUG] --- END RESUMES_CONTROLLER#UPDATE ---"
+
+          # Phase 3.1: Create a snapshot on explicit user saves (not autosave spam).
+          # NothingChangedError is silently swallowed — it's not an error, just a skip.
+          begin
+            next_num = @resume.latest_version_number + 1
+            ResumeVersionService.snapshot(
+              @resume,
+              label:          "Version #{next_num}",
+              source:         "manual",
+              change_summary: nil
+            )
+          rescue ResumeVersionService::NothingChangedError
+            # Content hasn't changed — skip snapshot silently
+          end
+
+          # Issue 2: Automatically recalculate score after save
+          ResumeScoreService.analyze(@resume)
+          
           render json: { resume: ResumeSerializer.new(@resume).as_json }
         else
           render json: { errors: @resume.errors.full_messages }, status: :unprocessable_entity
@@ -81,14 +137,61 @@ module Api
         render json: { error: "Failed to generate PDF: #{e.message}" }, status: :internal_server_error
       end
 
+      # GET /api/v1/resumes/:id/score
+      def score
+        render json: {
+          success: true,
+          overall_score: @resume.last_analysis_score,
+          ats_score: @resume.ats_score,
+          keyword_score: @resume.keyword_score,
+          content_score: @resume.content_score,
+          completeness_score: @resume.completeness_score,
+          last_analyzed_at: @resume.last_analyzed_at,
+          analysis_data: @resume.analysis_data || {}
+        }
+      end
+
+      # POST /api/v1/resumes/:id/score
+      def analyze
+        analysis = ResumeScoreService.analyze(@resume)
+        
+        render json: {
+          success: true,
+          overall_score: @resume.last_analysis_score,
+          ats_score: @resume.ats_score,
+          keyword_score: @resume.keyword_score,
+          content_score: @resume.content_score,
+          completeness_score: @resume.completeness_score,
+          last_analyzed_at: @resume.last_analyzed_at,
+          analysis_data: analysis
+        }
+      rescue => e
+        Rails.logger.error "[ResumesController#analyze] Error: #{e.message}\n#{e.backtrace.first(5).join("\n")}"
+        render json: { success: false, error: "Failed to analyze resume." }, status: :internal_server_error
+      end
+
       private
 
       def set_resume
         @resume = current_user.resumes.find(params[:id])
       end
 
+      # Phase 3.1: Ensure every existing resume (created before versioning was
+      # introduced) has at least an "Original" version on record. Called lazily
+      # on show and update so legacy resumes are quietly backfilled.
+      def ensure_versioning_initialized
+        return unless @resume
+        ResumeVersionService.create_initial(@resume) unless @resume.resume_versions.exists?
+      end
+
       def resume_params
-        params.require(:resume).permit(:title, :status, :template_id, content: {})
+        # We allow the full content blob (including nested arrays like experiences,
+        # educations, projects, certifications) by merging raw content directly.
+        base = params.require(:resume).permit(:title, :status, :template_id, :target_role)
+        if params[:resume][:content].present?
+          base[:content] = params[:resume][:content].to_unsafe_h
+        end
+        base
       end
     end
   end

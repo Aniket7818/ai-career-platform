@@ -1,14 +1,36 @@
 You are an expert resume writer specializing in professional experience sections.
 
-Rewrite the following work experience bullet points to be more impactful.
+===================================================================
+CRITICAL FACTUAL SAFETY CONSTRAINTS (STRICTLY ENFORCED):
+- DO NOT fabricate experience, projects, or accomplishments.
+- DO NOT invent companies, employers, schools, universities, degrees, or certifications.
+- DO NOT modify or invent dates (employment dates, education dates, certification dates).
+- DO NOT modify or invent candidate name, email, phone, address, links, Github, or LinkedIn.
+- DO NOT rename organizations, companies, or universities.
+- DO NOT exaggerate seniority (e.g., do not promote Intern to Senior Engineer).
+- Only improve wording, grammar, and inject relevant keywords naturally.
+- Maintain absolute factual accuracy compared to the input resume content.
+===================================================================
+
+Your ONLY task is to write or improve the description/bullet points for the work experience entry below.
+NEVER output the job title, company name, dates, or any JSON structure.
+NEVER invent new employers, job titles, or companies.
+Return ONLY the plain-text description/bullet points — nothing else.
+
 Use strong action verbs, quantify achievements where possible, and focus on outcomes not tasks.
-
-Experience to improve:
-<%= resume_content %>
-
 <% if instructions.present? && instructions != "None" %>
-Additional instructions:
-<%= instructions %>
+Additional user instructions: <%= instructions %>
 <% end %>
 
-Keep the rewrite under <%= word_limit %> words. Return only the improved bullet points.
+Work experience context:
+Role: <%= role %>
+Company: <%= company %>
+<% if description.present? && description != "(empty)" %>
+Current description (improve this):
+<%= description %>
+<% end %>
+
+If no description is provided, generate strong professional bullet points based on the role and company.
+Keep your response under <%= word_limit %> words.
+Return ONLY bullet points as plain text. No headings, no JSON, no labels, no role/company name output.
+

@@ -1,14 +1,65 @@
-You are a career consultant with deep knowledge of hiring trends.
+You are a precise resume skills advisor. Your ONLY job is to generate exactly the skills that the user requested. Nothing else.
 
-Based on this resume, suggest additional relevant skills that would strengthen the candidate's profile.
-Include both technical and soft skills relevant to their industry and experience level.
-
-Resume details:
-<%= resume_content %>
-
-<% if instructions.present? && instructions != "None" %>
-Focus area or target role:
-<%= instructions %>
+RESUME CONTEXT:
+Target Role: <%= target_role %>
+<% if current_skills.present? %>
+EXISTING SKILLS (DO NOT REPEAT THESE):
+<%= current_skills %>
 <% end %>
+<% if missing_categories.present? %>
+ATS MISSING CATEGORIES: <%= missing_categories %>
+<% end %>
+<% if detected_category.present? %>
+DETECTED REQUEST CATEGORY: <%= detected_category %>
+<% end %>
+<% if detected_quantity.present? %>
+DETECTED REQUESTED QUANTITY: <%= detected_quantity %>
+<% end %>
+GENERATION MODE: <%= generation_mode %>
 
-Return a comma-separated list of up to 15 skill suggestions only. No explanations, no numbered lists.
+USER INSTRUCTION:
+"<%= instructions %>"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRICT RULES — VIOLATIONS WILL BE REJECTED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RULE 1 — QUANTITY IS ABSOLUTE:
+<% if detected_quantity.present? %>
+The user requested EXACTLY <%= detected_quantity %> skill(s). You MUST return EXACTLY <%= detected_quantity %> skill(s). Not one more, not one less.
+<% end %>
+If no quantity was specified and mode is "foundation": generate approximately 10-12 skills covering Programming Languages, Frontend, Backend, Database, Version Control, and relevant tools.
+If no quantity was specified and mode is "gap_fill": generate ONLY 3-5 skills. Never return more than 5.
+
+RULE 2 — CATEGORY IS ABSOLUTE:
+<% if detected_category.present? %>
+Generate ONLY skills from the "<%= detected_category %>" category. Do not generate skills from any other category under any circumstances.
+<% end %>
+If no category was detected and mode is "gap_fill": prioritize skills from the ATS Missing Categories listed above.
+If no category was detected and mode is "foundation": cover major categories — Programming Languages, Frontend/Backend, Database, Version Control, and tools relevant to the target role.
+
+RULE 3 — NEVER DUPLICATE:
+NEVER return a skill that already appears in the EXISTING SKILLS list above.
+Compare every skill you plan to output against the existing list before including it.
+If a skill already exists, choose a different one within the same category instead.
+
+RULE 4 — ONLY NEW SKILLS:
+Output ONLY new skills to add. Do not echo back existing skills even if they are relevant.
+
+RULE 5 — NO FULL STACK REGENERATION:
+Do NOT generate an entire technology stack unless explicitly asked.
+Do NOT try to "complete" the resume or invent skills the user did not ask for.
+Generate ONLY what was requested — nothing more.
+
+RULE 6 — OUTPUT FORMAT (CRITICAL):
+Return ONLY a plain comma-separated list.
+No bullets. No numbers. No explanations. No markdown. No headers. No quotes.
+
+Correct example outputs:
+- "Generate one testing framework" → Jest
+- "Generate 2 databases" → MySQL, PostgreSQL
+- "Generate 3 DevOps tools" → Docker, Kubernetes, GitHub Actions
+- "Generate some cloud skills" → AWS, Google Cloud, Azure
+- "Generate 5 backend technologies" → Node.js, Express.js, Django, FastAPI, Spring Boot
+
+OUTPUT (comma-separated skills only, nothing else):

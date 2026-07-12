@@ -61,34 +61,35 @@
  </div>
  </nav>
 
- <div class="relative shrink-0 space-y-3 border-t border-white/10 p-5">
- <RouterLink class="block overflow-hidden rounded-2xl border border-brand/25 bg-gradient-to-br from-brand/20 to-brand/5 p-4 transition hover:border-brand/40" to="/coming-soon" @click="close">
- <p class="text-xs font-bold uppercase tracking-wider text-brand">{{ t('nav.comingSoon') }}</p>
- <p class="mt-1 text-sm text-txt-muted">{{ t('dashboard.upgradeTeaser') }}</p>
- <span class="mt-3 inline-flex text-xs font-semibold text-mint">{{ t('dashboard.exploreRoadmap') }} →</span>
+ <div class="relative shrink-0 space-y-2 sm:space-y-3 border-t border-white/10 p-3.5 sm:p-5">
+ <RouterLink class="block overflow-hidden rounded-xl border border-brand/25 bg-gradient-to-br from-brand/20 to-brand/5 p-3 sm:p-4 transition hover:border-brand/40" to="/coming-soon" @click="close">
+ <p class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-brand">{{ t('nav.comingSoon') }}</p>
+ <p class="mt-0.5 sm:mt-1 text-xs sm:text-sm text-txt-muted">{{ t('dashboard.upgradeTeaser') }}</p>
+ <span class="mt-2 sm:mt-3 inline-flex text-[10px] sm:text-xs font-semibold text-mint">{{ t('dashboard.exploreRoadmap') }} →</span>
  </RouterLink>
 
- <div class="flex items-center gap-3">
- <span class="grid size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-indigo-600 text-sm font-bold">
+ <div class="flex items-center gap-2 sm:gap-3">
+ <span class="grid size-9 sm:size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-indigo-600 text-xs sm:text-sm font-bold">
  <img v-if="user?.avatar" :src="user.avatar" alt="" class="size-full object-cover" />
  <template v-else>{{ initials }}</template>
  </span>
  <div class="min-w-0 flex-1">
- <div class="flex items-center gap-2">
- <p class="truncate text-sm font-semibold">{{ user?.full_name || user?.username || user?.email }}</p>
- <div v-if="user?.verified" class="size-2 shrink-0 rounded-full bg-green-500" title="Verified" />
- <div v-else class="size-2 shrink-0 rounded-full bg-orange-500" title="Pending / Not Verified" />
+ <div class="flex items-center gap-1.5 sm:gap-2">
+ <p class="truncate text-xs sm:text-sm font-semibold">{{ user?.full_name || user?.username || user?.email }}</p>
+ <div v-if="user?.verified" class="size-1.5 sm:size-2 shrink-0 rounded-full bg-green-500" title="Verified" />
+ <div v-else class="size-1.5 sm:size-2 shrink-0 rounded-full bg-orange-500" title="Pending / Not Verified" />
  </div>
- <p class="truncate text-xs text-txt-disabled">{{ user?.email }}</p>
+ <p class="truncate text-[10px] sm:text-xs text-txt-disabled">{{ user?.email }}</p>
  </div>
  </div>
- <button class="w-full rounded-xl bg-surface px-3 py-2.5 text-sm font-semibold text-txt-primary transition hover:bg-surface-hover" @click="logout">{{ t('nav.logout') }}</button>
+ <button class="w-full rounded-xl bg-surface px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-txt-primary transition hover:bg-surface-hover" @click="logout">{{ t('nav.logout') }}</button>
  </div>
  </aside>
 
- <div class="flex min-h-screen w-full min-w-0 flex-col lg:h-full lg:min-h-0 lg:overflow-hidden" :class="isComingSoon ? 'bg-surface' : ''">
- <header v-if="!isComingSoon" class="sticky top-0 z-30 shrink-0 border-b border-border bg-surface/90 px-4 py-3 backdrop-blur sm:px-5 lg:static lg:px-8">
- <div class="flex items-center gap-3">
+ <div class="flex min-h-screen w-full min-w-0 flex-col lg:h-full lg:min-h-0 lg:overflow-hidden">
+ <header class="sticky top-0 z-30 shrink-0 border-b border-border bg-surface/90 px-4 py-3 backdrop-blur sm:px-5 lg:static lg:px-8">
+ <div class="flex items-center justify-between w-full">
+ <div class="flex items-center gap-3 min-w-0">
  <button
  type="button"
  class="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-surface text-txt-primary shadow-sm transition hover:bg-background lg:hidden"
@@ -99,24 +100,20 @@
  </button>
  <p class="min-w-0 truncate text-sm font-semibold text-txt-primary sm:text-base">{{ pageTitle }}</p>
  </div>
- </header>
-
- <header v-else class="sticky top-0 z-30 shrink-0 border-b border-white/10 bg-surface/95 px-4 py-3 backdrop-blur sm:px-5 lg:static lg:px-8">
- <div class="flex items-center gap-3">
  <button
- type="button"
- class="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-surface/5 text-white transition hover:bg-surface/10 lg:hidden"
- aria-label="Open menu"
- @click="open"
+ v-if="showBackButton"
+ @click="goBack"
+ class="inline-flex items-center gap-1.5 bg-surface text-txt-secondary border border-border px-3 py-1.5 rounded-xl text-xs font-extrabold shadow-sm hover:bg-surface-hover hover:text-brand hover:border-brand/30 transition-all active:scale-[0.98] shrink-0"
+ aria-label="Go back to previous page"
  >
- <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+ <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+ <span>Go Back</span>
  </button>
- <p class="min-w-0 truncate text-sm font-semibold text-white sm:text-base">{{ pageTitle }}</p>
  </div>
  </header>
 
  <main
- class="min-w-0 flex-1 lg:overflow-y-auto lg:overscroll-contain"
+ class="min-w-0 flex-1 lg:overflow-y-auto lg:overscroll-contain bg-background"
  :class="isComingSoon ? 'w-full p-0' : 'w-full p-4 sm:p-5 lg:p-8'"
  >
  <slot />
@@ -141,6 +138,21 @@ const store = useStore()
 const { isOpen, open, close } = useMobileNav()
 const user = computed(() => store.state.auth.user)
 const isComingSoon = computed(() => route.name === ROUTE_NAMES.COMING_SOON)
+
+const showBackButton = computed(() => {
+  const subPages = [
+    'interview-prep-bookmarks',
+    'interview-prep-completed',
+    'interview-prep-history',
+    ROUTE_NAMES.INTERVIEW_PREP_SUBJECT,
+    ROUTE_NAMES.INTERVIEW_PREP_QUESTION
+  ]
+  return subPages.includes(route.name)
+})
+
+const goBack = () => {
+  router.back()
+}
 
 const navItems = computed(() => [
  { to: '/', icon: 'dashboard', label: 'Home' },
