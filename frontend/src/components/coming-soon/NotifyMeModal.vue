@@ -8,7 +8,7 @@
  <form class="mt-5 space-y-4" @submit.prevent="submit">
  <div>
  <label class="text-xs font-semibold uppercase tracking-wide text-txt-disabled">{{ t('auth.email') }}</label>
- <input v-model="email" type="email" required class="mt-1.5 w-full rounded-xl border border-white/10 bg-surface px-4 py-2.5 text-white placeholder:text-txt-muted" :placeholder="t('comingSoon.modal.emailPlaceholder')" />
+ <input v-model="email" type="email" required class="mt-1.5 w-full rounded-xl border border-white/10 bg-surface px-4 py-2.5 text-txt-primary placeholder:text-txt-muted" :placeholder="t('comingSoon.modal.emailPlaceholder')" />
  </div>
  <ErrorState v-if="error" :message="error" />
  <div class="flex gap-3">

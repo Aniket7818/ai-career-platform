@@ -1,6 +1,10 @@
 <template>
  <AppShell>
- <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in pb-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in pb-16 relative">
+    <!-- Ambient Background Mesh Glows -->
+    <div class="absolute top-0 left-1/4 w-72 h-72 bg-brand/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 right-10 w-72 h-72 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+    <div class="absolute bottom-10 left-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
  
  <!-- Breadcrumbs -->
  <nav class="flex text-xs font-bold text-txt-disabled mb-8 uppercase tracking-wider" aria-label="Breadcrumb">
@@ -37,37 +41,48 @@
  </div>
  
  <!-- List View -->
- <div v-else-if="filteredItems.length > 0" class="bg-surface rounded-3xl border border-border shadow-sm overflow-hidden">
- <div class="divide-y divide-slate-100 ">
- <div v-for="item in filteredItems" :key="item.questionId" class="group transition-colors hover:bg-background relative">
+ <div v-else-if="filteredItems.length > 0" class="space-y-4">
+ <div v-for="item in filteredItems" :key="item.questionId" class="group relative block bg-surface rounded-2xl p-5 sm:p-6 shadow-sm border border-border hover:shadow-xl hover:border-border-hover transition-all duration-300 transform hover:-translate-y-0.5 overflow-hidden">
+ <!-- Difficulty Left Border -->
+ <div class="absolute left-0 top-0 bottom-0 w-1.5 transition-colors"
+ :class="{
+ 'bg-emerald-500': item.difficulty === 'Easy',
+ 'bg-amber-500': item.difficulty === 'Intermediate',
+ 'bg-rose-500': item.difficulty === 'Hard',
+ 'bg-slate-400': !item.difficulty
+ }"
+ ></div>
+
  <RouterLink 
  :to="{ name: 'interview-prep-question', params: { subject: item.subjectSlug, question_id: item.questionId } }" 
- class="block p-4 sm:p-6 focus:outline-none focus:bg-background "
+ class="block focus:outline-none pl-2"
  >
- <div class="flex flex-col sm:flex-row sm:items-center gap-4">
- 
+ <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+ <div class="flex-1 min-w-0">
  <!-- Topic & Difficulty Badges -->
- <div class="shrink-0 w-full sm:w-32 flex flex-row sm:flex-col gap-2">
- <span class="inline-flex items-center text-[10px] font-black uppercase tracking-wider text-txt-muted bg-surface-hover px-2.5 py-1 rounded-md border border-border/50 w-fit">
- {{ item.subjectSlug }}
+ <div class="flex flex-wrap items-center gap-2 mb-3">
+ <span class="inline-flex items-center text-[10px] font-black uppercase tracking-wider text-txt-muted bg-surface-hover px-2.5 py-1 rounded-md border border-border/50">
+ {{ item.subjectSlug.replace(/_/g, ' ') }}
  </span>
- <span class="inline-flex items-center text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border w-fit"
+ <span class="inline-flex items-center text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border"
  :class="{
- 'bg-emerald-50 text-emerald-700 border-emerald-200/50 ': item.difficulty === 'Easy',
- 'bg-amber-50 text-amber-700 border-amber-200/50 ': item.difficulty === 'Intermediate',
- 'bg-rose-50 text-rose-700 border-rose-200/50 ': item.difficulty === 'Hard',
- 'bg-background text-txt-secondary border-border/50 ': !item.difficulty
- }">
+ 'bg-emerald-50 text-emerald-700 border-emerald-200/50': item.difficulty === 'Easy',
+ 'bg-amber-50 text-amber-700 border-amber-200/50': item.difficulty === 'Intermediate',
+ 'bg-rose-50 text-rose-700 border-rose-200/50': item.difficulty === 'Hard',
+ 'bg-background text-txt-secondary border-border/50': !item.difficulty
+ }"
+ >
  {{ item.difficulty || 'Mixed' }}
  </span>
+ <span v-if="item.topic" class="inline-flex items-center text-[11px] font-bold text-txt-muted bg-surface-hover rounded-md px-2 py-0.5 border border-border/50">
+ {{ item.topic }}
+ </span>
  </div>
- 
+
  <!-- Title -->
- <div class="flex-1 min-w-0 pr-4">
- <h3 class="text-base sm:text-lg font-bold text-txt-primary group-hover:text-brand transition-colors mb-1 truncate">{{ item.title }}</h3>
- <div class="flex items-center gap-3">
- <span v-if="item.topic" class="text-xs font-semibold text-txt-muted">{{ item.topic }}</span>
- </div>
+ <h3 class="text-lg sm:text-xl font-bold text-txt-primary group-hover:text-brand transition-colors line-clamp-2 leading-tight pr-4">
+ {{ item.title }}
+ </h3>
  </div>
 
  <!-- Actions -->
@@ -77,10 +92,10 @@
  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
  Done
  </div>
- <button class="p-1.5 rounded-lg transition-colors text-amber-500 bg-amber-50 hover:bg-amber-100 " v-if="isBookmarked(item.subjectSlug, item.questionId)" @click="toggleBookmark($event, item.subjectSlug, item.questionId)" title="Remove Bookmark">
+ <button class="p-1.5 rounded-lg transition-colors text-amber-500 bg-amber-50 hover:bg-amber-100 shrink-0" v-if="isBookmarked(item.subjectSlug, item.questionId)" @click.stop.prevent="toggleBookmark($event, item.subjectSlug, item.questionId)" title="Remove Bookmark">
  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
  </button>
- <div class="flex items-center text-brand font-bold text-sm bg-brand/5 px-4 py-2 rounded-xl group-hover:bg-brand group-hover:text-white transition-all shadow-sm">
+ <div class="flex items-center text-brand font-bold text-sm bg-brand/5 px-4 py-2 rounded-xl group-hover:bg-brand group-hover:text-white transition-all shadow-sm shrink-0">
  Solve
  <svg class="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -92,7 +107,6 @@
  </RouterLink>
  </div>
  </div>
- </div>
 
  <!-- Empty State -->
  <div v-else class="text-center py-32 bg-surface rounded-3xl border border-dashed border-border-hover shadow-sm mt-8">
@@ -101,7 +115,7 @@
  </div>
  <h3 class="text-2xl font-extrabold text-txt-primary mb-2">{{ emptyTitle }}</h3>
  <p class="text-txt-muted mb-8 max-w-md mx-auto">{{ emptyDesc }}</p>
- <RouterLink :to="{ name: 'interview-prep' }" class="inline-flex rounded-xl bg-surface px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-brand transition-colors">
+ <RouterLink :to="{ name: 'interview-prep' }" class="inline-flex rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-brand/90 transition-colors">
  Browse Questions
  </RouterLink>
  </div>

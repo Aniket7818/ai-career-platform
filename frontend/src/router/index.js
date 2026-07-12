@@ -22,9 +22,8 @@ import InterviewPrepSubject from '../modules/interview-prep/InterviewPrepSubject
 import InterviewPrepQuestion from '../modules/interview-prep/InterviewPrepQuestion.vue'
 
 const staticPages = [
+ { path: '/features', name: ROUTE_NAMES.FEATURES, pageKey: 'features' },
  { path: '/about', name: ROUTE_NAMES.ABOUT, pageKey: 'about' },
- { path: '/careers', name: ROUTE_NAMES.CAREERS, pageKey: 'careers' },
- { path: '/blog', name: ROUTE_NAMES.BLOG, pageKey: 'blog' },
  { path: '/contact', name: ROUTE_NAMES.CONTACT, pageKey: 'contact' },
  { path: '/help', name: ROUTE_NAMES.HELP, pageKey: 'help' },
  { path: '/faq', name: ROUTE_NAMES.FAQ, pageKey: 'faq' },
@@ -40,6 +39,8 @@ const staticPages = [
 const routes = [
  { path: '/', name: ROUTE_NAMES.LANDING, component: LandingPage },
  { path: '/coming-soon', name: ROUTE_NAMES.COMING_SOON, component: ComingSoonPage },
+ { path: '/careers', redirect: '/' },
+ { path: '/blog', redirect: '/' },
  ...staticPages.map(({ path, name, pageKey }) => ({ path, name, component: StaticPage, meta: { pageKey } })),
  { path: '/login', name: ROUTE_NAMES.LOGIN, component: AuthGateway, props: { mode: 'login' }, meta: { guestOnly: true } },
  { path: '/signup', name: ROUTE_NAMES.SIGNUP, component: AuthGateway, props: { mode: 'signup' }, meta: { guestOnly: true } },

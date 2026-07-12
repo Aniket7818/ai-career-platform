@@ -92,21 +92,6 @@
     </div>
   </section>
 
-
-
-  <section class="w-full max-w-full bg-[#0b1220] py-14 text-white sm:py-20 border-y border-white/5">
-    <div class="page-container">
-      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-wider text-mint">{{ t('nav.comingSoon') }}</p>
-          <h2 class="mt-3 text-3xl font-bold lg:text-4xl text-white">{{ t('comingSoon.title') }}</h2>
-          <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-400">{{ t('comingSoon.subtitle') }}</p>
-        </div>
-        <RouterLink class="inline-flex w-full justify-center rounded-md bg-brand px-6 py-3 font-semibold text-white shadow-lg shadow-brand/25 transition hover:bg-brand/90 sm:w-auto" to="/coming-soon">{{ t('comingSoon.notifyMe') }}</RouterLink>
-      </div>
-    </div>
-  </section>
-
   <section class="w-full max-w-full bg-background py-14 sm:py-20">
  <div class="page-container">
  <div class="text-center">

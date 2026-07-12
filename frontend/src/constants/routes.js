@@ -1,5 +1,6 @@
 export const ROUTE_NAMES = Object.freeze({
  LANDING: 'landing',
+ FEATURES: 'features',
  LOGIN: 'login',
  SIGNUP: 'signup',
  FORGOT_PASSWORD: 'forgot-password',

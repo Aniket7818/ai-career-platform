@@ -9,6 +9,7 @@ module FeatureKeys
   CAREER_ROADMAP = "career_roadmap"
   PLACEMENT_HUB = "placement_hub"
   AI_RESUME_ASSISTANT = "ai_resume_assistant"
+  GENERAL_WAITLIST = "general_waitlist"
 
   ALL = [
     AI_ATS_CHECKER,
@@ -20,6 +21,7 @@ module FeatureKeys
     JOB_TRACKER,
     CAREER_ROADMAP,
     PLACEMENT_HUB,
-    AI_RESUME_ASSISTANT
+    AI_RESUME_ASSISTANT,
+    GENERAL_WAITLIST
   ].freeze
 end
